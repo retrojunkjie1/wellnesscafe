@@ -1,3 +1,3 @@
 # Wellcafeland
 
-# YOURREPO
+AI-powered Wellness Café Landing Page
