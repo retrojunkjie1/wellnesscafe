@@ -1,0 +1,47 @@
+/* src/Views/HomePage.css */
+.wellcafe-homepage {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  transition: background-color 0.5s ease;
+}
+
+.wellcafe-homepage.calm {
+  background-color: #cfe9e9;
+}
+
+.wellcafe-homepage.energy {
+  background-color: #ffe4b5;
+}
+
+.wellcafe-box {
+  width: 180px;
+  height: 180px;
+  margin: 2rem auto;
+  border-radius: 12px;
+  transition: all 0.4s ease-in-out;
+}
+
+.wellcafe-box.calm {
+  background-color: #8ddad5;
+}
+
+.wellcafe-box.energy {
+  background-color: #ff914d;
+}
+
+.wellcafe-button {
+  background-color: #2b7a78;
+  border: none;
+  color: white;
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.wellcafe-button:hover {
+  background-color: #205d5c;
+}
