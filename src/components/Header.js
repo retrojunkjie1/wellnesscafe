@@ -1,19 +1,25 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import './Header.css';
+import founderImage from '../assets/images/wellnesscafe-bowl-v2.png'; // replace with your actual image path
 
-const Header = () => (
-  <header className="header">
-    <div className="logo">WellnessCafe</div>
-    <nav>
-      <Link to="/">Home</Link>
-      <Link to="/product">Product</Link>
-      <Link to="/tools">Tools</Link>
-      <Link to="/events">Events</Link>
-      <Link to="/spiritual">Spiritual</Link>
-      <Link to="/blog">Blog</Link>
-    </nav>
-  </header>
-);
+const Header = () => {
+  return (
+    <header className="header-container">
+      <div className="header-text">
+        <h1 className="header-line line1">
+          Holding <span className="highlight">Company.</span>
+        </h1>        <h1 className="header-line line2">
+          AI SaaS <span className="highlight">Investor.</span>
+        </h1>
+        <h1 className="header-line line3">
+          Webcafe <span className="highlight">AI.</span>
+        </h1>
+      </div>
+      <div className="header-image">
+        <img src={founderImage} alt="Founder portrait" />
+      </div>
+    </header>
+  );
+};
 
 export default Header;
