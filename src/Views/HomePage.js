@@ -80,9 +80,7 @@ const HomePage=()=>{
             <button className="wellcafe-button" onClick={toggleColor}>Toggle theme</button>
             {!user && (<Link className="ghost-btn" to="/login">Login to personalize</Link>)}
           </div>
-          <div className="hero-bowl-glow" aria-hidden="true">
-            <img src={require('../assets/images/wellnesscafe-bowl-v2.png')} alt="" className="hero-bowl-image" />
-          </div>
+          <div className="hero-bowl-glow" aria-hidden="true" />
         </section>
 
         {loading && (<div className="card loading">Loading your wellness space…</div>)}

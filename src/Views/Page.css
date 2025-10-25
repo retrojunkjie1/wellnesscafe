@@ -1,35 +1,8 @@
 .page{color:var(--text);}
 .page .container{max-width:1150px;margin:0 auto;padding:96px 20px 40px}
-.page-hero{padding:24px 0 10px;text-align:center;position:relative}
+.page-hero{padding:24px 0 10px;text-align:center}
 .page-hero h1{font-size:40px;margin:0 0 8px}
 .page-hero p{color:var(--muted);max-width:720px;margin:0 auto}
-
-.about-bowl-container {
-  position: absolute;
-  top: 0;
-  right: 10%;
-  width: 150px;
-  height: 150px;
-  pointer-events: none;
-}
-
-.about-bowl-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  opacity: 0.3;
-  filter: blur(2px);
-  animation: gentle-rotate 20s linear infinite;
-}
-
-@keyframes gentle-rotate {
-  from {
-    transform: rotate(0deg) scale(0.95);
-  }
-  to {
-    transform: rotate(360deg) scale(1.05);
-  }
-}
 .section{margin:24px 0}
 .section h2{font-size:22px;margin:0 0 8px}
 .section p{color:var(--muted)}
@@ -39,22 +12,7 @@
 .kpi .n{font-size:24px;font-weight:800}
 
 @media(max-width:900px){.two-col{grid-template-columns:1fr}}
-@media(max-width:900px){
-  .about-bowl-container {
-    right: 5%;
-    width: 120px;
-    height: 120px;
-  }
-}
-
-@media(max-width:600px){
-  .page .container{padding:80px 14px 28px}
-  .page-hero h1{font-size:30px}
-  
-  .about-bowl-container {
-    display: none; /* Hide on mobile for cleaner layout */
-  }
-}
+@media(max-width:600px){.page .container{padding:80px 14px 28px}.page-hero h1{font-size:30px}}
 
 /* Shared cards and grids for pages */
 .card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
