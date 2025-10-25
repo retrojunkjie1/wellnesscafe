@@ -9,6 +9,9 @@ const AboutPage = () => (
       <div className="page-hero">
         <h1>About WellnessCafe</h1>
         <p>A small team with a big heart — building tools that feel like a friend.</p>
+        <div className="about-bowl-container">
+          <img src={require('../assets/images/wellnesscafe-bowl-v2.png')} alt="" className="about-bowl-image" />
+        </div>
       </div>
       <section className="card-grid section">
         <div className="p-card">
