@@ -1,28 +1,29 @@
 
 // src/Views/HomePage.js
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import './HomePage.css';
+
+// Use the consolidated Header component from src/components
+import Header from '../components/Header';
 
 const HomePage = () => {
     const [colorMode, setColorMode] = useState('calm');
 
     const toggleColor = () => {
-        setColorMode(prev => prev === 'calm' ? 'energy' : 'calm');
+        setColorMode((prev) => (prev === 'calm' ? 'energy' : 'calm'));
     };
 
-    return (
-        <div className={`wellcafe-homepage ${colorMode}`}>
-            <h1>Welcome to WellnessCafe</h1>
-            <h1>Find Personal Coach</h1>
-            <p>Experience a smarter way to relax, recover, and reconnect—powered by AI wellness intelligence.</p>
-
-            <div className={`wellcafe-box ${colorMode}`}></div>
-            
-            <button className="wellcafe-button" onClick={toggleColor}>
-                Switch Mood
-            </button>
-        </div>
-    );
+        return (
+            <div className={`wellcafe-homepage ${colorMode}`}>
+                <Header />
+                <main className="homepage-content">
+                    <p>Welcome to WellnessCafe — your curated place for calm & clarity.</p>
+                    <button className="theme-toggle" onClick={toggleColor}>
+                        Toggle theme
+                    </button>
+                </main>
+            </div>
+        );
 };
 
 export default HomePage;
