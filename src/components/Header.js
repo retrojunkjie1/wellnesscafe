@@ -1,6 +1,6 @@
 import React from 'react';
 import './Header.css';
-import founderImage from '../assets/images/wellnesscafe-bowl-v2.png'; // replace with your actual image path
+import founderImage from '../assets/images/wellnesscafe-bowl-v2.png'; // Replace with your actual image path
 
 const Header = () => {
   return (
@@ -8,7 +8,8 @@ const Header = () => {
       <div className="header-text">
         <h1 className="header-line line1">
           Holding <span className="highlight">Company.</span>
-        </h1>        <h1 className="header-line line2">
+        </h1>
+        <h1 className="header-line line2">
           AI SaaS <span className="highlight">Investor.</span>
         </h1>
         <h1 className="header-line line3">
@@ -16,7 +17,7 @@ const Header = () => {
         </h1>
       </div>
       <div className="header-image">
-        <img src={founderImage} alt="Founder portrait" />
+        <img src={founderImage} alt="WellnessCafe Founder" />
       </div>
     </header>
   );
