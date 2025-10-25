@@ -2,6 +2,7 @@
 import React,{useEffect,useMemo,useState} from 'react';
 import './HomePage.css';
 import Header from '../components/Header';
+import { Link } from 'react-router-dom';
 import {auth,db} from '../firebase';
 import {onAuthStateChanged} from 'firebase/auth';
 import {doc,getDoc,setDoc,updateDoc} from 'firebase/firestore';
@@ -79,7 +80,7 @@ const HomePage=()=>{
           <p className="hero-sub">Never miss a moment of calm, balance, or connection.</p>
           <div className="hero-cta">
             <button className="wellcafe-button" onClick={toggleColor}>Toggle theme</button>
-            {!user && (<a className="ghost-btn" href="/login">Login to personalize</a>)}
+            {!user && (<Link className="ghost-btn" to="/login">Login to personalize</Link>)}
           </div>
           <div className="hero-bowl-glow" aria-hidden="true" />
         </section>
@@ -117,7 +118,7 @@ const HomePage=()=>{
                     {aiFlags.map((t,idx)=>(<li key={idx}>{t}</li>))}
                   </ul>
                 )}
-                <a className="ghost-btn" href="/check-in">Do a 2-min check-in</a>
+                <Link className="ghost-btn" to="/check-in">Do a 2-min check-in</Link>
               </div>
 
               <div className="card">
@@ -129,28 +130,28 @@ const HomePage=()=>{
                 </div>
                 <div className="row">
                   <button className="wellcafe-button" onClick={saveInterests}>Save</button>
-                  <a className="ghost-btn" href="/programs">Explore programs</a>
+                  <Link className="ghost-btn" to="/programs">Explore programs</Link>
                 </div>
               </div>
             </section>
 
             <section className="grid">
-              <a className="card link" href="/events">
+              <Link className="card link" to="/events">
                 <h3 className="card-title">Live Events & NA/AA</h3>
                 <p className="muted">Find today’s meetings, yoga & acuwellness sessions.</p>
-              </a>
-              <a className="card link" href="/tools">
+              </Link>
+              <Link className="card link" to="/tools">
                 <h3 className="card-title">Recovery Tools</h3>
                 <p className="muted">Trigger tracker, cravings log, daily intentions, breath timer.</p>
-              </a>
-              <a className="card link" href="/spiritual">
+              </Link>
+              <Link className="card link" to="/spiritual">
                 <h3 className="card-title">Spiritual Counseling</h3>
                 <p className="muted">Group circles, 1:1 guidance, mindful rituals.</p>
-              </a>
-              <a className="card link" href="/assist">
+              </Link>
+              <Link className="card link" to="/assist">
                 <h3 className="card-title">Government Assistance</h3>
                 <p className="muted">Curated benefits, housing, food & healthcare links.</p>
-              </a>
+              </Link>
             </section>
           </>
         )}
@@ -160,10 +161,10 @@ const HomePage=()=>{
         <div className="wc-footer-inner">
           <span>© {new Date().getFullYear()} WellnessCafe AI</span>
           <nav className="wc-footer-nav">
-            <a href="/about">About</a>
-            <a href="/blog">Blog</a>
-            <a href="/changelog">Changelog</a>
-            <a href="/privacy">Privacy</a>
+            <Link to="/about">About</Link>
+            <Link to="/blog">Blog</Link>
+            <Link to="/changelog">Changelog</Link>
+            <Link to="/privacy">Privacy</Link>
           </nav>
         </div>
       </footer>

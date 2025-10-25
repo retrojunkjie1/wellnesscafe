@@ -1,0 +1,41 @@
+.page{color:var(--text);}
+.page .container{max-width:1150px;margin:0 auto;padding:96px 20px 40px}
+.page-hero{padding:24px 0 10px;text-align:center}
+.page-hero h1{font-size:40px;margin:0 0 8px}
+.page-hero p{color:var(--muted);max-width:720px;margin:0 auto}
+.section{margin:24px 0}
+.section h2{font-size:22px;margin:0 0 8px}
+.section p{color:var(--muted)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.kpis{display:flex;gap:12px;flex-wrap:wrap}
+.kpi{background:var(--card);border-radius:12px;padding:12px 14px;min-width:140px}
+.kpi .n{font-size:24px;font-weight:800}
+
+@media(max-width:900px){.two-col{grid-template-columns:1fr}}
+@media(max-width:600px){.page .container{padding:80px 14px 28px}.page-hero h1{font-size:30px}}
+
+/* Shared cards and grids for pages */
+.card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.p-card{background:var(--card);border:none;border-radius:14px;padding:16px}
+.p-card h3{margin:0 0 6px}
+.p-card p{margin:0;color:var(--muted)}
+
+/* Pricing */
+.pricing{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.plan{background:var(--card);border:none;border-radius:14px;padding:16px;display:flex;flex-direction:column}
+.plan .price{font-size:28px;font-weight:800;margin:4px 0 8px}
+.plan ul{margin:0;padding-left:18px;color:var(--muted)}
+.plan .cta{margin-top:auto}
+
+/* FAQ */
+.faq details{background:var(--card);border:none;border-radius:12px;padding:12px 14px;margin:10px 0}
+.faq summary{cursor:pointer;font-weight:600}
+.faq p{margin:8px 0 0;color:var(--muted)}
+
+/* CTA */
+.cta-banner{margin:22px 0;background:linear-gradient(90deg, var(--brand), var(--brand-2));color:#0b0c12;border-radius:16px;padding:18px 20px;text-align:center}
+.cta-banner .btn{display:inline-block;margin-top:8px;background:#0b0c12;color:#fff;padding:10px 16px;border-radius:10px;text-decoration:none}
+
+@media(max-width:900px){
+	.card-grid,.pricing{grid-template-columns:1fr}
+}

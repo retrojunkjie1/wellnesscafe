@@ -1,20 +1,11 @@
 /* src/components/Header.css */
-.header {
-  background: radial-gradient(circle at center, #0d0d1a 0%, #050510 100%);
-  color: #fff;
-  font-family: 'Inter', sans-serif;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: hidden;
-}
+.header{background:transparent;color:#fff;font-family:'Inter', sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;overflow:hidden}
 
 .navbar {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 24px 32px;
+  padding: 18px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -56,10 +47,16 @@
   color: #fff;
 }
 
-.navbar-actions {
-  display: flex;
-  gap: 16px;
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(10,10,20,0.8);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  z-index: 100;
 }
+
 
 .login-btn, .trial-btn {
   background: transparent;
@@ -85,13 +82,23 @@
   filter: brightness(1.2);
 }
 
-.hero-section {
-  min-height: 80vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(155,120,255,0.25), transparent 70%);
+  transform: translate(-50%, -40%);
+  filter: blur(60px);
+  z-index: 0;
 }
+.hero-image img {
+  position: relative;
+  z-index: 1;
+}
+
 
 
 .announcement {
@@ -111,6 +118,7 @@
   margin-bottom: 16px;
   background: linear-gradient(90deg, #ffffff, #b5b5ff);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -131,4 +139,18 @@
 @keyframes glow {
   from {filter: drop-shadow(0 0 20px rgba(155,120,255,0.4));}
   to {filter: drop-shadow(0 0 60px rgba(155,120,255,1));}
+}
+
+/* Ensure hero content clears the fixed navbar */
+.hero-section{position:relative; padding-top:96px; padding-bottom:32px; text-align:center}
+
+/* Mobile adjustments: remove borders, simplify layout */
+@media (max-width: 600px){
+  .navbar{padding: 14px 16px}
+  .navbar-links{display:none}
+  .login-btn{border:none; background:rgba(255,255,255,0.1)}
+  .trial-btn{padding:10px 16px}
+  .hero-title{font-size: 2rem}
+  .hero-subtitle{font-size: 1rem; margin-bottom: 28px}
+  .hero-image img{width: 320px; max-width: 88vw}
 }

@@ -1,47 +1,79 @@
 /* src/Views/HomePage.css */
-.wellcafe-homepage {
-  text-align: center;
-  padding: 4rem 2rem;
-  background-color: #f5f5f5;
-  min-height: 100vh;
-  transition: background-color 0.5s ease;
+:root{--ok:#2ecc71;--warn:#ffb02e}
+*{box-sizing:border-box}
+.wellcafe-homepage{min-height:100vh;color:var(--text)}
+.wellcafe-homepage.calm{--brand:#8b7cf6}
+.wellcafe-homepage.energy{--brand:#ff8a4d;--brand-2:#ffd1b3;background:radial-gradient(60% 120% at 50% 0%,#1b1111 0%,#0f0f12 60%)}
+.homepage-content{max-width:1150px;margin:0 auto;padding:56px 20px}
+
+/* Hero */
+.hero{position:relative;text-align:center;padding:48px 0 28px}
+.hero-badge{display:inline-block;padding:8px 14px;border-radius:999px;background:rgba(139,124,246,0.15);color:var(--brand-2);font-weight:600}
+.hero-title{margin:18px 0 8px;font-size:48px;line-height:1.08;letter-spacing:-0.02em}
+.brand{color:var(--brand)}
+.hero-sub{color:var(--muted);font-size:18px;margin:0 auto 18px;max-width:680px}
+.hero-cta{display:flex;gap:12px;justify-content:center;align-items:center}
+.hero-bowl-glow{position:absolute;left:50%;transform:translateX(-50%);top:220px;width:360px;height:360px;border-radius:50%;filter:blur(48px);background:radial-gradient(closest-side,rgba(139,124,246,0.45),rgba(139,124,246,0));pointer-events:none;animation:glow 4.5s ease-in-out infinite alternate}
+@keyframes glow{from{opacity:.55;transform:translateX(-50%) scale(.95)}to{opacity:.9;transform:translateX(-50%) scale(1)}}
+
+/* Cards & layout */
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:22px 0}
+.card{background:var(--card);border:1px solid #1b2343;border-radius:16px;padding:18px 18px}
+.card.link{text-decoration:none;transition:transform .15s ease, border-color .15s ease}
+.card.link:hover{transform:translateY(-3px);border-color:#2b3a73}
+.card-title{margin:0 0 8px 0;font-size:20px}
+.loading{opacity:.8}
+
+/* Buttons */
+.wellcafe-button{background:var(--brand);border:none;color:#0b0c12;padding:10px 18px;font-weight:700;border-radius:10px;cursor:pointer}
+.wellcafe-button:hover{filter:brightness(1.06)}
+.ghost-btn{display:inline-block;border:1px solid #2b335a;color:var(--text);padding:10px 16px;border-radius:10px;text-decoration:none}
+.row{display:flex;gap:10px;align-items:center;margin-top:10px}
+
+/* Chips & pills */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.chip{background:var(--chip);border:1px solid #24305f;border-radius:999px;padding:6px 10px;font-size:12px}
+.pill-grid{display:flex;flex-wrap:wrap;gap:8px}
+.pill{border-radius:999px;border:1px solid #2e3a70;background:#0f1430;color:var(--text);padding:8px 12px;cursor:pointer}
+.pill.on{background:rgba(139,124,246,0.18);border-color:var(--brand);}
+
+/* Progress */
+.progress-wrap{width:100%;height:10px;background:#0c1026;border:1px solid #1b2343;border-radius:999px;overflow:hidden;margin:12px 0}
+.progress-bar{height:100%;background:linear-gradient(90deg,var(--brand),var(--brand-2));}
+
+/* Alerts */
+.alerts{list-style:none;margin:10px 0 0 0;padding:0}
+.alerts li{padding:8px 10px;border:1px solid #3a2a1a;background:rgba(255,176,46,0.12);border-radius:8px;margin-bottom:8px}
+
+/* Footer */
+.wc-footer{margin-top:28px;border-top:1px solid #1a2144}
+.wc-footer-inner{display:flex;justify-content:space-between;align-items:center;max-width:1150px;margin:0 auto;padding:16px 20px;color:var(--muted)}
+.wc-footer-nav a{color:var(--muted);text-decoration:none;margin-left:12px}
+.wc-footer-nav a:hover{color:var(--text)}
+
+@media (max-width:900px){
+  .grid{grid-template-columns:1fr}
+  .hero-title{font-size:36px}
 }
 
-.wellcafe-homepage.calm {
-  background-color: #cfe9e9;
-}
+/* Mobile refinements: remove borders and tighten spacing */
+@media (max-width:600px){
+  .homepage-content{padding:40px 14px}
+  .hero{padding:36px 0 16px}
+  .hero-title{font-size:30px; line-height:1.15}
+  .hero-sub{font-size:16px; margin-bottom:14px}
+  .hero-badge{padding:6px 12px}
+  .hero-cta{gap:10px}
+  .hero-bowl-glow{top:200px; width:260px; height:260px; filter:blur(36px)}
 
-.wellcafe-homepage.energy {
-  background-color: #ffe4b5;
-}
-
-.wellcafe-box {
-  width: 180px;
-  height: 180px;
-  margin: 2rem auto;
-  border-radius: 12px;
-  transition: all 0.4s ease-in-out;
-}
-
-.wellcafe-box.calm {
-  background-color: #8ddad5;
-}
-
-.wellcafe-box.energy {
-  background-color: #ff914d;
-}
-
-.wellcafe-button {
-  background-color: #2b7a78;
-  border: none;
-  color: white;
-  padding: 0.75rem 2rem;
-  font-size: 1.1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.wellcafe-button:hover {
-  background-color: #205d5c;
+  .grid{gap:14px; margin:18px 0}
+  .card{border:none; border-radius:14px; padding:14px 14px; box-shadow:0 6px 22px rgba(0,0,0,0.25)}
+  .ghost-btn{border:none; background:rgba(255,255,255,0.08)}
+  .chip{border:none}
+  .pill{border:none}
+  .progress-wrap{border:none; background:#0d1230}
+  .alerts li{border:none; background:rgba(255,176,46,0.18)}
+  .wc-footer{border-top:none}
+  .wc-footer-inner{padding:14px}
+  .wellcafe-button{padding:10px 16px}
 }

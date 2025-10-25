@@ -1,5 +1,6 @@
 // src/components/Header.js
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Header.css';
 import wellnessCafeBowl from '../assets/images/wellnesscafe-bowl-v1.png';
 import wellnessCafelogo from '../assets/images/logo512.png';
@@ -14,16 +15,16 @@ const Header = () => {
         </div>
 
         <ul className="navbar-links">
-          <li><a href="#product">Product</a></li>
-          <li><a href="#pricing">Pricing</a></li>
-          <li><a href="#company">Company</a></li>
-          <li><a href="#blog">Blog</a></li>
-          <li><a href="#changelog">Changelog</a></li>
+          <li><Link to="/product">Product</Link></li>
+          <li><Link to="/pricing">Pricing</Link></li>
+          <li><Link to="/company">Company</Link></li>
+          <li><Link to="/blog">Blog</Link></li>
+          <li><Link to="/changelog">Changelog</Link></li>
         </ul>
 
         <div className="navbar-actions">
-          <button className="login-btn">Login</button>
-          <button className="trial-btn">Start free trial</button>
+          <Link className="login-btn" to="/login">Login</Link>
+          <Link className="trial-btn" to="/signup">Start free trial</Link>
         </div>
       </nav>
 
