@@ -1,17 +1,9 @@
-// Import the functions you need from the SDKs you need
+// src/firebase.js
 import { initializeApp } from 'firebase/app';
-// Import analytics only if available in the environment
-let getAnalytics;
-try {
-  // lazy require to avoid issues in non-browser test environments
-  // eslint-disable-next-line global-require
-  getAnalytics = require('firebase/analytics').getAnalytics;
-} catch (e) {
-  getAnalytics = null;
-}
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
-// Use environment variables for secrets and avoid committing them.
-// Create a .env.local with REACT_APP_FIREBASE_* values in development.
+// Read config from environment variables (see .env.example)
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY || '',
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN || '',
@@ -22,20 +14,28 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID || ''
 };
 
-// Initialize Firebase only when an API key is provided to avoid runtime errors
+// Initialize only when an API key is present to avoid runtime errors in tests/CI
 let app = null;
-let analytics = null;
-if (firebaseConfig.apiKey) {
-  app = initializeApp(firebaseConfig);
-  if (getAnalytics) {
-    try {
-      analytics = getAnalytics(app);
-    } catch (err) {
-      // analytics may fail in non-browser environments; ignore safely
-      // eslint-disable-next-line no-console
-      console.warn('Firebase analytics not initialized:', err.message || err);
-    }
+try {
+  if (firebaseConfig.apiKey) {
+    app = initializeApp(firebaseConfig);
   }
+} catch (e) {
+  // eslint-disable-next-line no-console
+  console.warn('Firebase initialization skipped:', e?.message || e);
 }
 
-export { app, analytics, firebaseConfig };
+export const auth = app ? getAuth(app) : null;
+export const db = app ? getFirestore(app) : null;
+/*
+Firestore data model (example):
+
+users/{uid} {
+  displayName: string,
+  interests: string[],          // ['yoga','acuwellness','na','mindfulness']
+  goals: { dailyMinutes: number, weeklyMeetings: number, streak: number, progress: number }, // 0..100
+  lastCheckIn: string,          // ISO date
+  riskScore: number,            // 0..100 (server/update function later)
+  alerts: string[]              // optional, e.g., ['Missed 2 check-ins','High craving log']
+}
+*/
