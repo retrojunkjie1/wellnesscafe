@@ -1,8 +1,10 @@
 import React from 'react';
 import './Page.css';
+import Header from '../components/Header';
 
 const ProductPage = () => (
-  <div className="page">
+  <div className="page product-page">
+    <Header />
     <main className="container">
       <div className="page-hero">
         <h1>Product</h1>

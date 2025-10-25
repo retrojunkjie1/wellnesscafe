@@ -1,9 +1,10 @@
 import React from 'react';
 import './Page.css';
-// Header is provided by Layout
+import Header from '../components/Header';
 
 const BlogPage = () => (
-  <div className="page">
+  <div className="page blog-page">
+    <Header />
     <main className="container">
       <div className="page-hero">
         <h1>Blog</h1>

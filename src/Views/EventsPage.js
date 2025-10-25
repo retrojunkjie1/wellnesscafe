@@ -1,9 +1,10 @@
 import React from 'react';
 import './Page.css';
-// Header is provided by Layout
+import Header from '../components/Header';
 
 const EventsPage = () => (
-  <div className="page">
+  <div className="page events-page">
+    <Header />
     <main className="container">
       <div className="page-hero">
         <h1>Events & Meetings</h1>
