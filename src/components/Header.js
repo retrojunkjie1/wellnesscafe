@@ -10,10 +10,10 @@ const Header = () => {
           Holding <span className="highlight">Company.</span>
         </h1>
         <h1 className="header-line line2">
-          AI SaaS <span className="highlight">Investor.</span>
+          AI Wellness <span className="highlight">Investor.</span>
         </h1>
         <h1 className="header-line line3">
-          Webcafe <span className="highlight">AI.</span>
+          Wellnesscafe <span className="highlight">AI.</span>
         </h1>
       </div>
       <div className="header-image">
