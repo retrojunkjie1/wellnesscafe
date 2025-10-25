@@ -10,10 +10,24 @@ const AboutPage = () => (
         <h1>About WellnessCafe</h1>
         <p>A small team with a big heart — building tools that feel like a friend.</p>
       </div>
-      <section className="section">
-        <h2>Why we started</h2>
-        <p>We’ve walked the path and know the power of tiny, consistent steps and community support.</p>
+      <section className="card-grid section">
+        <div className="p-card">
+          <h3>Why we started</h3>
+          <p>We’ve walked the path and know the power of tiny, consistent steps and community support.</p>
+        </div>
+        <div className="p-card">
+          <h3>Our approach</h3>
+          <p>Tiny rituals, gentle AI, and community. No overwhelm — just practical care that fits your day.</p>
+        </div>
+        <div className="p-card">
+          <h3>What matters</h3>
+          <p>Calm, consistency, connection. Your agency and privacy come first.</p>
+        </div>
       </section>
+      <div className="cta-banner">
+        Have a story or idea to share? We’re listening.
+        <a className="btn" href="/contact">Say hello</a>
+      </div>
     </main>
   </div>
 );

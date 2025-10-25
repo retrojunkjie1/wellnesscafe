@@ -1,7 +1,6 @@
 // src/Views/HomePage.js
 import React,{useEffect,useMemo,useState} from 'react';
 import './HomePage.css';
-import Header from '../components/Header';
 import { Link } from 'react-router-dom';
 import {auth,db} from '../firebase';
 import {onAuthStateChanged} from 'firebase/auth';
@@ -72,7 +71,6 @@ const HomePage=()=>{
 
   return (
     <div className={`wellcafe-homepage ${colorMode}`}>
-      <Header />
       <main className="homepage-content">
         <section className="hero">
           <div className="hero-badge">✨ New: AI Wellness Insights</div>
@@ -157,17 +155,7 @@ const HomePage=()=>{
         )}
       </main>
 
-      <footer className="wc-footer">
-        <div className="wc-footer-inner">
-          <span>© {new Date().getFullYear()} WellnessCafe AI</span>
-          <nav className="wc-footer-nav">
-            <Link to="/about">About</Link>
-            <Link to="/blog">Blog</Link>
-            <Link to="/changelog">Changelog</Link>
-            <Link to="/privacy">Privacy</Link>
-          </nav>
-        </div>
-      </footer>
+      {/* Footer provided by Layout */}
     </div>
   );
 };

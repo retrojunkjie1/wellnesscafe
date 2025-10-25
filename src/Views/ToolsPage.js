@@ -1,11 +1,10 @@
 import React from 'react';
 import './Page.css';
-import Header from '../components/Header';
+// Header is provided by Layout
 import { Link } from 'react-router-dom';
 
 const ToolsPage = () => (
   <div className="page">
-    <Header />
     <main className="container">
       <div className="page-hero">
         <h1>Recovery Tools</h1>

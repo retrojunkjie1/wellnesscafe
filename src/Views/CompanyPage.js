@@ -24,6 +24,24 @@ const CompanyPage = () => (
           <p>We measure calm, consistency, and connection — not just clicks and time spent.</p>
         </div>
       </section>
+      <section className="two-col section">
+        <div>
+          <h2>Values</h2>
+          <ul>
+            <li>Care over growth</li>
+            <li>Safety over engagement</li>
+            <li>Humility over hype</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Ethics & Safety</h2>
+          <p>We avoid addictive patterns, pressure tactics, and dark design. Our AI aims to be calm and supportive, never prescriptive.</p>
+        </div>
+      </section>
+      <div className="cta-banner">
+        Want to partner on community wellness or research? We’d love to talk.
+        <a className="btn" href="/contact">Reach out</a>
+      </div>
     </main>
   </div>
 );

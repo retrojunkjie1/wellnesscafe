@@ -1,42 +1,26 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+// src/App.js
+import React from 'react';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+
+import Layout from './components/Layout';
 import HomePage from './Views/HomePage';
 import ProductPage from './Views/ProductPage';
-import PricingPage from './Views/PricingPage';
-import CompanyPage from './Views/CompanyPage';
-import BlogPage from './Views/BlogPage';
-import ChangelogPage from './Views/ChangelogPage';
-import EventsPage from './Views/EventsPage';
 import ToolsPage from './Views/ToolsPage';
+import EventsPage from './Views/EventsPage';
 import SpiritualPage from './Views/SpiritualPage';
-import AssistPage from './Views/AssistPage';
-import AboutPage from './Views/AboutPage';
-import PrivacyPage from './Views/PrivacyPage';
-import NotFoundPage from './Views/NotFoundPage';
-import TraumaEducationPage from './Views/TraumaEducationPage';
+import BlogPage from './Views/BlogPage';
 
-function App() {
-  return (
-    <BrowserRouter>
-      <div className="App">
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/product" element={<ProductPage />} />
-          <Route path="/pricing" element={<PricingPage />} />
-          <Route path="/company" element={<CompanyPage />} />
-          <Route path="/blog" element={<BlogPage />} />
-          <Route path="/changelog" element={<ChangelogPage />} />
-          <Route path="/events" element={<EventsPage />} />
-          <Route path="/tools" element={<ToolsPage />} />
-          <Route path="/spiritual" element={<SpiritualPage />} />
-          <Route path="/assist" element={<AssistPage />} />
-          <Route path="/trauma-education" element={<TraumaEducationPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/privacy" element={<PrivacyPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </div>
-    </BrowserRouter>
-  );
-}
+const App = () => (
+  <Router>
+    <Routes>
+      <Route path="/" element={<Layout theme="home"><HomePage /></Layout>} />
+      <Route path="/product" element={<Layout theme="product"><ProductPage /></Layout>} />
+      <Route path="/tools" element={<Layout theme="tools"><ToolsPage /></Layout>} />
+      <Route path="/events" element={<Layout theme="events"><EventsPage /></Layout>} />
+      <Route path="/spiritual" element={<Layout theme="spiritual"><SpiritualPage /></Layout>} />
+      <Route path="/blog" element={<Layout theme="blog"><BlogPage /></Layout>} />
+    </Routes>
+  </Router>
+);
 
 export default App;
