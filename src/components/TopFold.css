@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+.topfold-container{
+  position:relative;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:85vh;
+  width:100%;
+  overflow:hidden;
+  background:linear-gradient(135deg,#1b133b 0%,#7a5af8 45%,#cbb4ff 80%,#f3e8d2 100%);
+  color:#fff;
+}
+
+.topfold-gradient{
+  position:absolute;
+  inset:0;
+  opacity:0.6;
+  background:radial-gradient(circle at top left,#ffffff20 0%,transparent 70%);
+}
+
+.topfold-content{
+  position:relative;
+  text-align:center;
+  z-index:2;
+  max-width:800px;
+  padding:2rem;
+}
+
+.topfold-title{
+  font-family:'Inter',sans-serif;
+  font-weight:700;
+  font-size:3.5rem;
+  line-height:1.2;
+  margin-bottom:1rem;
+  background:linear-gradient(90deg,#fff 0%,#f3e8d2 50%,#d1b4ff 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.highlight{
+  background:linear-gradient(90deg,#cbb4ff,#f3e8d2);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.topfold-sub{
+  font-size:1.25rem;
+  font-weight:400;
+  color:#e0d6ff;
+  margin-bottom:2rem;
+  letter-spacing:0.5px;
+}
+
+.topfold-btn{
+  background:#fff;
+  color:#2d1b4e;
+  border:none;
+  padding:0.9rem 2.5rem;
+  border-radius:40px;
+  font-weight:600;
+  font-size:1rem;
+  cursor:pointer;
+  transition:all 0.3s ease;
+}
+
+.topfold-btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 6px 20px rgba(255,255,255,0.3);
+}
+
+/* Responsive */
+@media(max-width:768px){
+  .topfold-container{
+    height:70vh;
+    background:linear-gradient(160deg,#1b133b 0%,#7a5af8 60%,#cbb4ff 100%);
+  }
+
+  .topfold-title{
+    font-size:2.4rem;
+  }
+
+  .topfold-sub{
+    font-size:1.1rem;
+  }
+}

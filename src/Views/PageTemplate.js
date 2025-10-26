@@ -35,7 +35,7 @@ const PageTemplate = ({ title, intro, features, ctaText, pageType }) => {
 
   return (
     <div className={`page luxury-page ${getGradientClass()}`}>
-      <Header />
+      <Header image={getPageImage()} title={title} />
 
       {/* === LUXURY HERO SECTION === */}
       <section className="page-hero luxury-hero">

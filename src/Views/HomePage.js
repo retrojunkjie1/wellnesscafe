@@ -6,7 +6,7 @@ import homeHeaderImage from '../assets/images/HomePage-header-v1.png';
 const HomePage = () => {
   return (
     <div className="homepage">
-      <Header />
+      <Header image={homeHeaderImage} title="WellnessCafe" />
       
       {/* === LUXURY HERO HEADER === */}
       <section className="luxury-hero">
