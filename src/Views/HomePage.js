@@ -1,7 +1,7 @@
 // src/Views/HomePage.js
 import React,{useEffect,useMemo,useState} from 'react';
 import './HomePage.css';
-import { Link } from 'react-router-dom';
+import Header from '../components/Header';
 import {auth,db} from '../firebase';
 import {onAuthStateChanged} from 'firebase/auth';
 import {doc,getDoc,setDoc,updateDoc} from 'firebase/firestore';
@@ -19,15 +19,10 @@ const HomePage=()=>{
 
   // Auth + profile bootstrap
   useEffect(()=>{
-    if(!auth || !db){
-      // Firebase not configured; skip auth bootstrap
-      setLoading(false);
-      return;
-    }
     const unsub=onAuthStateChanged(auth,async(u)=>{
       setUser(u||null);
       if(!u){setProfile(null);setLoading(false);return;}
-      const ref = doc(db, 'users', 'demoUser001');
+      const ref=doc(db,'users',u.uid);
       const snap=await getDoc(ref);
       if(!snap.exists()){
         const seed={displayName:u.displayName||'Friend',interests:['recovery-tools','na-aa'],goals:{dailyMinutes:10,weeklyMeetings:1,streak:0,progress:0},lastCheckIn:new Date().toISOString(),riskScore:12,alerts:[]};
@@ -63,7 +58,7 @@ const HomePage=()=>{
   };
 
   const saveInterests=async()=>{
-    if(!user || !db){return;}
+    if(!user){return;}
     const ref=doc(db,'users',user.uid);
     await updateDoc(ref,{interests:editInterests});
     setProfile((p)=>({...p,interests:editInterests}));
@@ -71,6 +66,7 @@ const HomePage=()=>{
 
   return (
     <div className={`wellcafe-homepage ${colorMode}`}>
+      <Header />
       <main className="homepage-content">
         <section className="hero">
           <div className="hero-badge">✨ New: AI Wellness Insights</div>
@@ -78,7 +74,7 @@ const HomePage=()=>{
           <p className="hero-sub">Never miss a moment of calm, balance, or connection.</p>
           <div className="hero-cta">
             <button className="wellcafe-button" onClick={toggleColor}>Toggle theme</button>
-            {!user && (<Link className="ghost-btn" to="/login">Login to personalize</Link>)}
+            {!user && (<a className="ghost-btn" href="/login">Login to personalize</a>)}
           </div>
           <div className="hero-bowl-glow" aria-hidden="true" />
         </section>
@@ -116,7 +112,7 @@ const HomePage=()=>{
                     {aiFlags.map((t,idx)=>(<li key={idx}>{t}</li>))}
                   </ul>
                 )}
-                <Link className="ghost-btn" to="/check-in">Do a 2-min check-in</Link>
+                <a className="ghost-btn" href="/check-in">Do a 2-min check-in</a>
               </div>
 
               <div className="card">
@@ -128,34 +124,44 @@ const HomePage=()=>{
                 </div>
                 <div className="row">
                   <button className="wellcafe-button" onClick={saveInterests}>Save</button>
-                  <Link className="ghost-btn" to="/programs">Explore programs</Link>
+                  <a className="ghost-btn" href="/programs">Explore programs</a>
                 </div>
               </div>
             </section>
 
-            <section className="grid">
-              <Link className="card link" to="/events">
+                        <section className="grid">
+              <a className="card link" href="/events">
                 <h3 className="card-title">Live Events & NA/AA</h3>
-                <p className="muted">Find today’s meetings, yoga & acuwellness sessions.</p>
-              </Link>
-              <Link className="card link" to="/tools">
+                <p className="muted">Find today's meetings, yoga & acuwellness sessions.</p>
+              </a>
+              <a className="card link" href="/tools">
                 <h3 className="card-title">Recovery Tools</h3>
                 <p className="muted">Trigger tracker, cravings log, daily intentions, breath timer.</p>
-              </Link>
-              <Link className="card link" to="/spiritual">
+              </a>
+              <a className="card link" href="/spiritual">
                 <h3 className="card-title">Spiritual Counseling</h3>
                 <p className="muted">Group circles, 1:1 guidance, mindful rituals.</p>
-              </Link>
-              <Link className="card link" to="/assist">
+              </a>
+              <a className="card link" href="/assist">
                 <h3 className="card-title">Government Assistance</h3>
                 <p className="muted">Curated benefits, housing, food & healthcare links.</p>
-              </Link>
+              </a>
             </section>
           </>
         )}
       </main>
 
-      {/* Footer provided by Layout */}
+      <footer className="wc-footer">
+        <div className="wc-footer-inner">
+          <span>© {new Date().getFullYear()} WellnessCafe AI</span>
+          <nav className="wc-footer-nav">
+            <a href="/about">About</a>
+            <a href="/blog">Blog</a>
+            <a href="/changelog">Changelog</a>
+            <a href="/privacy">Privacy</a>
+          </nav>
+        </div>
+      </footer>
     </div>
   );
 };

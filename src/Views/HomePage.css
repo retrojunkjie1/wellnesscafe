@@ -1,7 +1,18 @@
 /* src/Views/HomePage.css */
-:root{--ok:#2ecc71;--warn:#ffb02e}
+:root{
+  --bg: #0c0f17;
+  --bg2:#101427;
+  --brand:#8b7cf6;
+  --brand-2:#b3aaff;
+  --text:#e9ecf6;
+  --muted:#9aa2b2;
+  --card:#12182b;
+  --chip:#1a2140;
+  --ok:#2ecc71;
+  --warn:#ffb02e;
+}
 *{box-sizing:border-box}
-.wellcafe-homepage{min-height:100vh;color:var(--text)}
+.wellcafe-homepage{min-height:100vh;background:radial-gradient(60% 120% at 50% 0%,#0f1222 0%,var(--bg) 60%);color:var(--text)}
 .wellcafe-homepage.calm{--brand:#8b7cf6}
 .wellcafe-homepage.energy{--brand:#ff8a4d;--brand-2:#ffd1b3;background:radial-gradient(60% 120% at 50% 0%,#1b1111 0%,#0f0f12 60%)}
 .homepage-content{max-width:1150px;margin:0 auto;padding:56px 20px}
@@ -54,26 +65,4 @@
 @media (max-width:900px){
   .grid{grid-template-columns:1fr}
   .hero-title{font-size:36px}
-}
-
-/* Mobile refinements: remove borders and tighten spacing */
-@media (max-width:600px){
-  .homepage-content{padding:40px 14px}
-  .hero{padding:36px 0 16px}
-  .hero-title{font-size:30px; line-height:1.15}
-  .hero-sub{font-size:16px; margin-bottom:14px}
-  .hero-badge{padding:6px 12px}
-  .hero-cta{gap:10px}
-  .hero-bowl-glow{top:200px; width:260px; height:260px; filter:blur(36px)}
-
-  .grid{gap:14px; margin:18px 0}
-  .card{border:none; border-radius:14px; padding:14px 14px; box-shadow:0 6px 22px rgba(0,0,0,0.25)}
-  .ghost-btn{border:none; background:rgba(255,255,255,0.08)}
-  .chip{border:none}
-  .pill{border:none}
-  .progress-wrap{border:none; background:#0d1230}
-  .alerts li{border:none; background:rgba(255,176,46,0.18)}
-  .wc-footer{border-top:none}
-  .wc-footer-inner{padding:14px}
-  .wellcafe-button{padding:10px 16px}
 }

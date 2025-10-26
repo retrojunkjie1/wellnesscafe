@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap');
 
-/* ==== Container ==== */
 .header-container{
   display:flex;
   justify-content:space-between;
@@ -11,13 +10,11 @@
   flex-wrap:wrap;
 }
 
-/* ==== Text Section ==== */
 .header-text{
   flex:1;
   min-width:300px;
 }
 
-/* Animation */
 @keyframes fadeInUp{
   0%{opacity:0;transform:translateY(40px);}
   100%{opacity:1;transform:translateY(0);}
@@ -31,6 +28,7 @@
   line-height:1.1;
   transition:all 0.3s ease;
   animation:fadeInUp 1s ease forwards;
+  animation-fill-mode:forwards;
   opacity:0;
 }
 
@@ -42,7 +40,6 @@
   transform:translateX(8px);
 }
 
-/* ==== Highlighted Words ==== */
 .highlight{
   background:linear-gradient(90deg,#7a5af8,#b19cff);
   -webkit-background-clip:text;
@@ -50,7 +47,6 @@
   -webkit-text-fill-color:transparent;
 }
 
-/* ==== Image Section ==== */
 .header-image{
   flex:0 0 250px;
   display:flex;
@@ -73,7 +69,6 @@
   box-shadow:0 0 40px rgba(122,90,248,0.35);
 }
 
-/* ==== Responsive ==== */
 @media(max-width:768px){
   .header-container{
     flex-direction:column-reverse;

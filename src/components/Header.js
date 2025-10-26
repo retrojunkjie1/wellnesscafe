@@ -1,9 +1,9 @@
 import React from 'react';
 import './Header.css';
-import founderImage from '../assets/images/wellnesscafe-bowl-v2.png'; // replace with your actual image path
+import founderImage from '../assets/images/wellnesscafe-bowl-v2.png'; // adjust path if needed
 
-const Header=()=>{
-  return(
+const Header = () => {
+  return (
     <header className="header-container">
       <div className="header-text">
         <h1 className="header-line line1">
@@ -13,12 +13,16 @@ const Header=()=>{
           AI SaaS <span className="highlight">Investor.</span>
         </h1>
         <h1 className="header-line line3">
-          Webcafe <span className="highlight">AI.</span>
+          Wellnesscafe <span className="highlight">AI.</span>
         </h1>
       </div>
 
       <div className="header-image">
-        <img src={founderImage} alt="WellnessCafe Founder" />
+        <img 
+          src={founderImage} 
+          alt="WellnessCafe luxury bowl illustration" 
+          className="fade-in"
+        />
       </div>
     </header>
   );
