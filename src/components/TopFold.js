@@ -1,13 +1,23 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import './TopFold.css';
 
 const TopFold=()=>{
   const navigate=useNavigate();
+  const [navActive,setNavActive]=useState(false);
+
+  useEffect(()=>{
+    const handleScroll=()=>{
+      if(window.scrollY>50){setNavActive(true);}
+      else{setNavActive(false);}
+    };
+    window.addEventListener('scroll',handleScroll);
+    return()=>window.removeEventListener('scroll',handleScroll);
+  },[]);
 
   return(
     <section className="topfold-container">
-      <nav className="topfold-navbar">
+      <nav className={`topfold-navbar ${navActive?'active':''}`}>
         <div className="nav-logo">WELLNESSCAFE</div>
         <ul className="nav-links">
           <li onClick={()=>navigate('/')}>Home</li>
