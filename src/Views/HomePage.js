@@ -2,6 +2,16 @@ import React from 'react';
 import './HomePage.css';
 import Header from '../components/Header';
 import homeHeaderImage from '../assets/images/HomePage-header-v1.png';
+import TopFold from '../components/TopFold';
+
+function HomePage(){
+  return(
+    <>
+      <TopFold/>
+      {/* Your other sections go here */}
+    </>
+  );
+}
 
 const HomePage = () => {
   return (

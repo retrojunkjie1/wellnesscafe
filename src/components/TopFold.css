@@ -1,5 +1,83 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
+/* ===== Navbar ===== */
+.topfold-navbar{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:64px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(0,0,0,0.8);
+  backdrop-filter:blur(8px);
+  color:#fff;
+  padding:0 2rem;
+  box-shadow:0 2px 6px rgba(0,0,0,0.3);
+  z-index:10;
+}
+
+.nav-logo{
+  font-family:'Inter',sans-serif;
+  font-weight:700;
+  letter-spacing:1px;
+  font-size:1.1rem;
+}
+
+.nav-links{
+  list-style:none;
+  display:flex;
+  gap:2rem;
+  margin:0;
+}
+
+.nav-links li{
+  cursor:pointer;
+  font-weight:500;
+  transition:color 0.3s ease;
+}
+
+.nav-links li:hover{
+  color:#cbb4ff;
+}
+
+.nav-buttons{
+  display:flex;
+  gap:0.8rem;
+}
+
+.nav-btn{
+  border:none;
+  border-radius:8px;
+  padding:0.5rem 1.2rem;
+  font-weight:600;
+  cursor:pointer;
+  transition:all 0.3s ease;
+}
+
+.sign-in{
+  background:transparent;
+  color:#fff;
+  border:1px solid #fff;
+}
+
+.sign-in:hover{
+  background:#fff;
+  color:#2d1b4e;
+}
+
+.download{
+  background:#7a5af8;
+  color:#fff;
+}
+
+.download:hover{
+  background:#cbb4ff;
+  color:#2d1b4e;
+}
+
+/* ===== TopFold ===== */
 .topfold-container{
   position:relative;
   display:flex;
@@ -12,19 +90,13 @@
   color:#fff;
 }
 
-.topfold-gradient{
-  position:absolute;
-  inset:0;
-  opacity:0.6;
-  background:radial-gradient(circle at top left,#ffffff20 0%,transparent 70%);
-}
-
 .topfold-content{
   position:relative;
   text-align:center;
   z-index:2;
   max-width:800px;
   padding:2rem;
+  margin-top:4rem;
 }
 
 .topfold-title{
@@ -69,11 +141,18 @@
   box-shadow:0 6px 20px rgba(255,255,255,0.3);
 }
 
-/* Responsive */
+/* ===== Responsive ===== */
 @media(max-width:768px){
-  .topfold-container{
-    height:70vh;
-    background:linear-gradient(160deg,#1b133b 0%,#7a5af8 60%,#cbb4ff 100%);
+  .topfold-navbar{
+    flex-direction:column;
+    height:auto;
+    padding:1rem;
+  }
+
+  .nav-links{
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:1rem;
   }
 
   .topfold-title{
@@ -82,5 +161,9 @@
 
   .topfold-sub{
     font-size:1.1rem;
+  }
+
+  .nav-buttons{
+    margin-top:0.8rem;
   }
 }
