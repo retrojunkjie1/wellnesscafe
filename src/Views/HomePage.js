@@ -1,32 +1,11 @@
 import React from 'react';
 import './HomePage.css';
-import Header from '../components/Header';
-import homeHeaderImage from '../assets/images/HomePage-header-v1.png';
+import TopFold from '../components/TopFold';
 
 const HomePage = () => {
   return (
     <div className="homepage">
-      <Header image={homeHeaderImage} title="WellnessCafe" />
-      
-      {/* === LUXURY HERO HEADER === */}
-      <section className="luxury-hero">
-        <div className="hero-content">
-          <div className="hero-text">
-            <h1 className="luxury-title">Your Intelligent Path to Calm, Clarity & Recovery</h1>
-            <p className="luxury-subtitle">
-              WellnessCafe connects you to AI-personalized wellness tools, live programs, and holistic healing
-              experiences — designed for the modern mind and soul.
-            </p>
-            <div className="hero-actions">
-              <button className="luxury-cta-primary">Begin Your Journey</button>
-              <button className="luxury-cta-secondary">Explore Wellness</button>
-            </div>
-          </div>
-          <div className="hero-image">
-            <img src={homeHeaderImage} alt="WellnessCafe Luxury Wellness" className="luxury-header-img" />
-          </div>
-        </div>
-      </section>
+      <TopFold />
 
       {/* === LUXURY FEATURES === */}
       <section className="features-grid">
