@@ -4,6 +4,7 @@ import PageTemplate from './PageTemplate';
 const Assistance = () => {
   return (
     <PageTemplate
+      pageType="assistance"
       title="Government Assistance"
       intro="Navigate financial, housing, healthcare, and recovery programs with personalized guidance tailored to your region and needs."
       features={[

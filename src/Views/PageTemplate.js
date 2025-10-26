@@ -1,16 +1,55 @@
 import React from 'react';
 import Header from '../components/Header';
 import './PageTemplate.css';
+import productImage from '../assets/images/WellnessCafe-Product-v1.png';
+import journalImage from '../assets/images/wellnesscafe-journal-vs1.png';
+import bowlImage from '../assets/images/wellnesscafe-bowl-v1.png';
 
-const PageTemplate = ({ title, intro, features, ctaText }) => {
+const PageTemplate = ({ title, intro, features, ctaText, pageType }) => {
+  const getPageImage = () => {
+    switch(pageType) {
+      case 'recovery':
+      case 'assistance':
+        return journalImage;
+      case 'yoga':
+      case 'spiritual':
+        return bowlImage;
+      case 'acuwellness':
+      case 'events':
+      default:
+        return productImage;
+    }
+  };
+
+  const getGradientClass = () => {
+    switch(pageType) {
+      case 'recovery': return 'gradient-recovery';
+      case 'yoga': return 'gradient-yoga';
+      case 'acuwellness': return 'gradient-acuwellness';
+      case 'spiritual': return 'gradient-spiritual';
+      case 'events': return 'gradient-events';
+      case 'assistance': return 'gradient-assistance';
+      default: return 'gradient-default';
+    }
+  };
+
   return (
-    <div className="page">
+    <div className={`page luxury-page ${getGradientClass()}`}>
       <Header />
 
-      {/* === HERO SECTION === */}
-      <section className="page-hero">
-        <h1>{title}</h1>
-        <p>{intro}</p>
+      {/* === LUXURY HERO SECTION === */}
+      <section className="page-hero luxury-hero">
+        <div className="hero-container">
+          <div className="hero-content-wrapper">
+            <div className="hero-text-content">
+              <h1 className="luxury-page-title">{title}</h1>
+              <p className="luxury-page-intro">{intro}</p>
+            </div>
+            <div className="hero-image-content">
+              <img src={getPageImage()} alt={`${title} Wellness`} className="luxury-page-image" />
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* === FEATURES SECTION === */}

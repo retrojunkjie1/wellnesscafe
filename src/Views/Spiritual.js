@@ -4,6 +4,7 @@ import PageTemplate from './PageTemplate';
 const Spiritual = () => {
   return (
     <PageTemplate
+      pageType="spiritual"
       title="Spiritual Counseling"
       intro="Sacred group circles, personalized guidance, and meaningful rituals for purpose, healing, and soul transformation."
       features={[

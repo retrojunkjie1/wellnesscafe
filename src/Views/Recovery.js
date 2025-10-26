@@ -4,6 +4,7 @@ import PageTemplate from './PageTemplate';
 const Recovery = () => {
   return (
     <PageTemplate
+      pageType="recovery"
       title="Recovery Support"
       intro="AI-powered recovery tools, progress tracking, and compassionate community support for sustainable healing and transformation."
       features={[

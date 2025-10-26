@@ -4,6 +4,7 @@ import PageTemplate from './PageTemplate';
 const Acuwellness = () => {
   return (
     <PageTemplate
+      pageType="acuwellness"
       title="Acuwellness"
       intro="Blending ancient Eastern medicine with modern science, Acuwellness restores the natural harmony between body and mind."
       features={[

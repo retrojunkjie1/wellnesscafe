@@ -88,6 +88,61 @@
   background-color:#ece4ff;
 }
 
+/* Page-specific gradient themes */
+.gradient-recovery {
+  background: linear-gradient(135deg, #e8744c 0%, #ff8b6b 100%);
+}
+
+.gradient-yoga {
+  background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+}
+
+.gradient-acuwellness {
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+}
+
+.gradient-spiritual {
+  background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
+}
+
+.gradient-events {
+  background: linear-gradient(135deg, #dc2626 0%, #f87171 100%);
+}
+
+.gradient-assistance {
+  background: linear-gradient(135deg, #2563eb 0%, #60a5fa 100%);
+}
+
+/* Apply gradient to hero sections */
+.gradient-recovery .page-hero,
+.gradient-yoga .page-hero,
+.gradient-acuwellness .page-hero,
+.gradient-spiritual .page-hero,
+.gradient-events .page-hero,
+.gradient-assistance .page-hero {
+  background: inherit;
+  color: #fff;
+  border-radius: 0 0 24px 24px;
+}
+
+.gradient-recovery .page-hero h1,
+.gradient-yoga .page-hero h1,
+.gradient-acuwellness .page-hero h1,
+.gradient-spiritual .page-hero h1,
+.gradient-events .page-hero h1,
+.gradient-assistance .page-hero h1 {
+  color: #fff;
+}
+
+.gradient-recovery .page-hero p,
+.gradient-yoga .page-hero p,
+.gradient-acuwellness .page-hero p,
+.gradient-spiritual .page-hero p,
+.gradient-events .page-hero p,
+.gradient-assistance .page-hero p {
+  color: rgba(255, 255, 255, 0.9);
+}
+
 /* Responsive */
 @media(max-width:768px){
   .page-hero h1{font-size:2.2rem;}

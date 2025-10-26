@@ -18,7 +18,8 @@
   color:#7a5af8;
 }
 
-.nav-links{
+/* Desktop Navigation */
+.desktop-nav {
   list-style:none;
   display:flex;
   gap:2rem;
@@ -26,21 +27,112 @@
   padding:0;
 }
 
-.nav-links a{
+.desktop-nav a{
   text-decoration:none;
   color:#222;
   font-weight:500;
   transition:color 0.3s ease;
 }
 
-.nav-links a:hover{
+.desktop-nav a:hover{
   color:#7a5af8;
 }
 
+/* Mobile Navigation */
+.mobile-nav {
+  display: none;
+  position: relative;
+}
+
+.hamburger-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.hamburger-line {
+  width: 25px;
+  height: 3px;
+  background-color: #7a5af8;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+.hamburger-line.active:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger-line.active:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-line.active:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -6px);
+}
+
+.mobile-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+}
+
+.mobile-dropdown.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.mobile-nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 1rem 0;
+}
+
+.mobile-nav-links li {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.mobile-nav-links li:last-child {
+  border-bottom: none;
+}
+
+.mobile-nav-links a {
+  display: block;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  color: #222;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.mobile-nav-links a:hover {
+  color: #7a5af8;
+  background-color: #f8f6ff;
+}
+
 @media(max-width:768px){
-  .nav-links{
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:1rem;
+  .desktop-nav {
+    display: none;
+  }
+  
+  .mobile-nav {
+    display: block;
   }
 }

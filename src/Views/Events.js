@@ -4,6 +4,7 @@ import PageTemplate from './PageTemplate';
 const Events = () => {
   return (
     <PageTemplate
+      pageType="events"
       title="Live Events & Workshops"
       intro="Immersive community experiences, transformative workshops, and healing retreats that connect body, mind, and soul."
       features={[

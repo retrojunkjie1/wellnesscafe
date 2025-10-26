@@ -4,6 +4,7 @@ import PageTemplate from './PageTemplate';
 const Yoga = () => {
   return (
     <PageTemplate
+      pageType="yoga"
       title="Yoga & Mindfulness"
       intro="Guided movement, breathwork, and meditation to restore balance and self-awareness through ancient wisdom."
       features={[
