@@ -1,14 +1,14 @@
 .App {
-  font-family: 'Inter', sans-serif;
-  color: #222;
-  background-color: #fafafa;
+  font-family: "Inter", sans-serif;
+  color: #4a4a4a;
+  background-color: #f7f5f0;
   text-align: center;
   overflow-x: hidden;
 }
 
 /* --- Hero Section --- */
 .wellcafe-hero {
-  background: linear-gradient(135deg, #121212, #3b3b3b);
+  background: linear-gradient(135deg, #cbb4ff 0%, #d4b483 100%);
   color: #fff;
   padding: 3rem 1.5rem;
   display: flex;
@@ -35,14 +35,14 @@
 .hero-subtitle {
   font-size: 1rem;
   font-weight: 300;
-  color: #ccc;
+  color: rgba(255, 255, 255, 0.9);
   max-width: 500px;
   margin-bottom: 1.5rem;
 }
 
 .hero-link {
-  background: #f8c10a;
-  color: #000;
+  background: #fff9e9;
+  color: #4a4a4a;
   text-decoration: none;
   padding: 0.6rem 1.5rem;
   border-radius: 25px;
@@ -55,7 +55,6 @@
   background: #fff;
   color: #111;
 }
-
 
 /* --- Transition between sections --- */
 .wellcafe-content {

@@ -1,38 +1,44 @@
-:root{
-  --bg:#0c0f17;
-  --bg2:#101427;
-  --brand:#8b7cf6;
-  --brand-2:#b3aaff;
-  --text:#e9ecf6;
-  --muted:#9aa2b2;
-  --card:#12182b;
-  --chip:#1a2140;
+:root {
+  --bg: #f7f5f0;
+  --bg2: #fff9e9;
+  --brand: #d4b483;
+  --brand-2: #cbb4ff;
+  --text: #4a4a4a;
+  --muted: #6b6b6b;
+  --card: #ffffff;
+  --chip: #bfd2c1;
 }
 
-html,body,#root{
-  height:100%;
-  margin:0;
-  padding:0;
-  overflow-x:hidden;
-  box-sizing:border-box;
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
-*, *::before, *::after {
-  box-sizing:inherit;
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
 
-body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Roboto','Oxygen','Ubuntu','Cantarell','Fira Sans','Droid Sans','Helvetica Neue',sans-serif;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-  color:var(--text);
-  background:radial-gradient(60% 120% at 50% 0%, #0f1222 0%, var(--bg) 60%);
-  width:100%;
-  max-width:100vw;
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--text);
+  background: linear-gradient(135deg, #f7f5f0 0%, #fff9e9 100%);
+  width: 100%;
+  max-width: 100vw;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
