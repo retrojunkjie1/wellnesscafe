@@ -54,9 +54,9 @@ const Progress = () => {
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const checkInData = [];
-      querySnapshot.forEach((doc) => {
+      for (const doc of querySnapshot.docs) {
         checkInData.push({ id: doc.id, ...doc.data() });
-      });
+      }
       setCheckIns(checkInData);
       setLoading(false);
     });
@@ -245,16 +245,13 @@ const Progress = () => {
             </div>
             <div className="stat-item">
               <div className="stat-number">
-                {checkIns.filter((c) => c.journal && c.journal.trim()).length}
+                {checkIns.filter((c) => c.journal?.trim()).length}
               </div>
               <div className="stat-label">Journal Entries</div>
             </div>
             <div className="stat-item">
               <div className="stat-number">
-                {
-                  checkIns.filter((c) => c.gratitude && c.gratitude.trim())
-                    .length
-                }
+                {checkIns.filter((c) => c.gratitude?.trim()).length}
               </div>
               <div className="stat-label">Gratitude Notes</div>
             </div>

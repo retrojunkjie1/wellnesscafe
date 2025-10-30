@@ -15,7 +15,7 @@ const EventCalendar = () => {
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState("list"); // list, calendar, grid
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  // const [selectedDate, setSelectedDate] = useState(new Date()); // TODO: Implement calendar view
   const [filters, setFilters] = useState({
     category: "",
     location: "",
@@ -79,13 +79,13 @@ const EventCalendar = () => {
 
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
           const eventData = [];
-          querySnapshot.forEach((doc) => {
+          for (const doc of querySnapshot.docs) {
             const event = { id: doc.id, ...doc.data() };
             // Convert Firestore timestamps to Date objects
             event.startDate = event.startDate.toDate();
             event.endDate = event.endDate.toDate();
             eventData.push(event);
-          });
+          }
 
           // Client-side filtering for date ranges and other criteria
           const filtered = eventData.filter((event) => {

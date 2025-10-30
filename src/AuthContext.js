@@ -1,4 +1,12 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useMemo,
+  useCallback,
+} from "react";
+import PropTypes from "prop-types";
 import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -44,11 +52,11 @@ export const AuthProvider = ({ children }) => {
     return unsubscribe;
   }, []);
 
-  const login = async (email, password) => {
+  const login = useCallback(async (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
-  };
+  }, []);
 
-  const register = async (email, password, additionalData = {}) => {
+  const register = useCallback(async (email, password, additionalData = {}) => {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
@@ -63,9 +71,9 @@ export const AuthProvider = ({ children }) => {
       });
     }
     return userCredential;
-  };
+  }, []);
 
-  const loginWithGoogle = async () => {
+  const loginWithGoogle = useCallback(async () => {
     const provider = new GoogleAuthProvider();
     const result = await signInWithPopup(auth, provider);
     // Check if user document exists, create if not (only if Firestore is available)
@@ -81,24 +89,31 @@ export const AuthProvider = ({ children }) => {
       }
     }
     return result;
-  };
+  }, []);
 
-  const logout = async () => {
+  const logout = useCallback(async () => {
     return signOut(auth);
-  };
+  }, []);
 
-  const value = {
-    user,
-    login,
-    register,
-    loginWithGoogle,
-    logout,
-    loading,
-  };
+  const value = useMemo(
+    () => ({
+      user,
+      login,
+      register,
+      loginWithGoogle,
+      logout,
+      loading,
+    }),
+    [user, login, register, loginWithGoogle, logout, loading]
+  );
 
   return (
     <AuthContext.Provider value={value}>
       {!loading && children}
     </AuthContext.Provider>
   );
+};
+
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };

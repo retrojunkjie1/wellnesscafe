@@ -15,13 +15,11 @@
 
 // Initialize only when an API key is present to avoid runtime errors in tests/CI
 // let app = null;
-let auth = null;
-let db = null;
-
 // TEMPORARILY DISABLE FIREBASE INITIALIZATION TO PREVENT RUNTIME ERRORS
 console.warn("Firebase initialization disabled - using offline mode");
-auth = null;
-db = null;
+
+const auth = null;
+const db = null;
 
 export { auth, db };
 /*

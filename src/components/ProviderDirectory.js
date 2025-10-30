@@ -5,7 +5,6 @@ import {
   where,
   orderBy,
   limit,
-  getDocs,
   onSnapshot,
 } from "firebase/firestore";
 import { db } from "../firebase";
@@ -80,9 +79,9 @@ const ProviderDirectory = () => {
 
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
           const providerData = [];
-          querySnapshot.forEach((doc) => {
+          for (const doc of querySnapshot.docs) {
             providerData.push({ id: doc.id, ...doc.data() });
-          });
+          }
           setProviders(providerData);
           setFilteredProviders(providerData);
           setLoading(false);
@@ -334,7 +333,10 @@ const ProviderDirectory = () => {
                   step="25"
                   value={filters.maxPrice}
                   onChange={(e) =>
-                    handleFilterChange("maxPrice", parseInt(e.target.value))
+                    handleFilterChange(
+                      "maxPrice",
+                      Number.parseInt(e.target.value, 10)
+                    )
                   }
                   className="price-slider"
                 />

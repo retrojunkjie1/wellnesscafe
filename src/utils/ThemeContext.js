@@ -1,4 +1,12 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+} from "react";
+import PropTypes from "prop-types";
 
 const ThemeContext = createContext();
 
@@ -22,21 +30,28 @@ export const ThemeProvider = ({ children }) => {
     localStorage.setItem("wellnesscafe-theme", theme);
 
     // Apply theme to document root
-    document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.dataset.theme = theme;
   }, [theme]);
 
-  const toggleTheme = () => {
+  const toggleTheme = useCallback(() => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
-  };
+  }, []);
 
-  const value = {
-    theme,
-    toggleTheme,
-    isDark: theme === "dark",
-    isLight: theme === "light",
-  };
+  const value = useMemo(
+    () => ({
+      theme,
+      toggleTheme,
+      isDark: theme === "dark",
+      isLight: theme === "light",
+    }),
+    [theme, toggleTheme]
+  );
 
   return (
     <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
   );
+};
+
+ThemeProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "./Header.css";
 import defaultImage from "../assets/images/wellnesscafe-bowl-v2.png";
 import LiveUpdateBanner from "./LiveUpdateBanner";
@@ -41,6 +42,16 @@ const Header = ({ image = defaultImage, title = "Wellnesscafe" }) => {
       </header>
     </>
   );
+};
+
+Header.propTypes = {
+  image: PropTypes.string,
+  title: PropTypes.string,
+};
+
+Header.defaultProps = {
+  image: defaultImage,
+  title: "Wellnesscafe",
 };
 
 export default Header;
