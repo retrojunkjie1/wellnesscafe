@@ -1,44 +1,41 @@
 import React, { useState } from "react";
-import { useAuth } from "../../AuthContext";
-import { useNavigate } from "react-router-dom";
-import "../../components/Auth.css";
+import { useAuth } from "../AuthContext";
+import { useNavigate, useLocation } from "react-router-dom";
+import "./Auth.css";
 
-export default function Signup() {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { register, loginWithGoogle } = useAuth();
+  const { login, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/dashboard";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-
-    if (password !== confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
-
     setLoading(true);
+
     try {
-      await register(email, password);
-      navigate("/dashboard");
+      await login(email, password);
+      navigate(from, { replace: true });
     } catch (error) {
-      setError("Failed to create account. Please try again.");
+      setError("Failed to sign in. Please check your credentials.");
     }
     setLoading(false);
   };
 
-  const handleGoogleSignup = async () => {
+  const handleGoogleLogin = async () => {
     setError("");
     setLoading(true);
     try {
       await loginWithGoogle();
-      navigate("/dashboard");
+      navigate(from, { replace: true });
     } catch (error) {
-      setError("Failed to sign up with Google.");
+      setError("Failed to sign in with Google.");
     }
     setLoading(false);
   };
@@ -46,11 +43,8 @@ export default function Signup() {
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h2>Join WellnessCafe</h2>
-        <p>
-          Create your account to connect with certified facilitators and access
-          personalized recovery tools.
-        </p>
+        <h2>Welcome Back</h2>
+        <p>Sign in to your WellnessCafe account</p>
 
         {error && <div className="error-message">{error}</div>}
 
@@ -74,23 +68,11 @@ export default function Signup() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              minLength="6"
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
             />
           </div>
 
           <button type="submit" className="auth-button" disabled={loading}>
-            {loading ? "Creating Account..." : "Create Account"}
+            {loading ? "Signing In..." : "Sign In"}
           </button>
         </form>
 
@@ -99,7 +81,7 @@ export default function Signup() {
         </div>
 
         <button
-          onClick={handleGoogleSignup}
+          onClick={handleGoogleLogin}
           className="google-button"
           disabled={loading}
         >
@@ -107,13 +89,15 @@ export default function Signup() {
             src="https://developers.google.com/identity/images/g-logo.png"
             alt="Google"
           />
-          Sign up with Google
+          Sign in with Google
         </button>
 
         <p className="auth-link">
-          Already have an account? <a href="/login">Sign in</a>
+          Don't have an account? <a href="/signup">Sign up</a>
         </p>
       </div>
     </div>
   );
-}
+};
+
+export default Login;
