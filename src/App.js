@@ -1,21 +1,16 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import HomePage from './Views/HomePage';
-
-import Signup from './features/auth/Signup';
-
-// inside <Routes>
-<Route path="/signup" element={<Signup/>}/>
-
-
-// Section pages (create these files next)
-import Recovery from './Views/Recovery';
-import Yoga from './Views/Yoga';
-import Acuwellness from './Views/Acuwellness';
-import Spiritual from './Views/Spiritual';
-import Events from './Views/Events';
-import Assistance from './Views/Assistance';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import HomePage from "./Views/HomePage";
+import Signup from "./features/auth/Signup";
+import Recovery from "./Views/Recovery";
+import Yoga from "./Views/Yoga";
+import Acuwellness from "./Views/Acuwellness";
+import Spiritual from "./Views/Spiritual";
+import Events from "./Views/Events";
+import Assistance from "./Views/Assistance";
+import ProviderSignup from "./features/providers/ProviderSignup";
+import ProviderDirectory from "./features/providers/ProviderDirectory";
 
 function App() {
   return (
@@ -23,6 +18,9 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/providers" element={<ProviderDirectory />} />
+        <Route path="/providers/apply" element={<ProviderSignup />} />
         <Route path="/recovery" element={<Recovery />} />
         <Route path="/yoga" element={<Yoga />} />
         <Route path="/acuwellness" element={<Acuwellness />} />
