@@ -5,9 +5,10 @@ import {
   where,
   orderBy,
   limit,
+  getDocs,
   onSnapshot,
 } from "firebase/firestore";
-import { db } from "../../firebase";
+import { db } from "../firebase";
 import "./ProviderDirectory.css";
 
 const ProviderDirectory = () => {
