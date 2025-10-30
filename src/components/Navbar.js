@@ -26,6 +26,9 @@ const Navbar = () => {
           <Link to="/providers">Providers</Link>
         </li>
         <li>
+          <Link to="/about">About</Link>
+        </li>
+        <li>
           <Link to="/recovery">Recovery</Link>
         </li>
         <li>
@@ -70,6 +73,11 @@ const Navbar = () => {
             <li>
               <Link to="/providers" onClick={closeMenu}>
                 Providers
+              </Link>
+            </li>
+            <li>
+              <Link to="/about" onClick={closeMenu}>
+                About
               </Link>
             </li>
             <li>

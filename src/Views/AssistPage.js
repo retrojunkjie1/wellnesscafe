@@ -1,11 +1,13 @@
 import React from 'react';
 import './Page.css';
+import PanoramicHero from '../components/PanoramicHero';
 import Header from '../components/Header';
 
 const AssistPage = () => (
   <div className="page">
     <Header />
     <main className="container">
+      <PanoramicHero />
       <div className="page-hero">
         <h1>Government Assistance</h1>
         <p>Curated links to benefits, housing, food, and healthcare resources near you.</p>

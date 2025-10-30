@@ -1,11 +1,13 @@
 import React from 'react';
 import './Page.css';
+import PanoramicHero from '../components/PanoramicHero';
 import Header from '../components/Header';
 
 const PrivacyPage = () => (
   <div className="page">
     <Header />
     <main className="container">
+      <PanoramicHero />
       <div className="page-hero">
         <h1>Privacy</h1>
         <p>Your data, your choice. We practice privacy-first design and clear controls.</p>

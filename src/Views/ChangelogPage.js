@@ -1,11 +1,13 @@
 import React from 'react';
 import './Page.css';
+import PanoramicHero from '../components/PanoramicHero';
 import Header from '../components/Header';
 
 const ChangelogPage = () => (
   <div className="page">
     <Header />
     <main className="container">
+      <PanoramicHero />
       <div className="page-hero">
         <h1>Changelog</h1>
         <p>Follow along as we ship improvements, experiments, and gentle UI polish.</p>

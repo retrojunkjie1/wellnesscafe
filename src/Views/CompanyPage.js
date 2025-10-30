@@ -1,11 +1,13 @@
 import React from 'react';
 import './Page.css';
+import PanoramicHero from '../components/PanoramicHero';
 import Header from '../components/Header';
 
 const CompanyPage = () => (
   <div className="page">
     <Header />
     <main className="container">
+      <PanoramicHero />
       <div className="page-hero">
         <h1>Company</h1>
         <p>We’re building gentle, accessible wellness for everyone — with care, science, and community.</p>

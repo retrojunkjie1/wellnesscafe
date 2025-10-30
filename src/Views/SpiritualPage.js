@@ -1,17 +1,25 @@
-import React from 'react';
-import './Page.css';
+import React from "react";
+import "./Page.css";
 // Header is provided by Layout
+import PanoramicHero from "../components/PanoramicHero";
 
 const SpiritualPage = () => (
   <div className="page">
     <main className="container">
+      <PanoramicHero />
       <div className="page-hero">
         <h1>Spiritual Counseling</h1>
-        <p>Group circles and 1:1 guidance — gentle space to reconnect with meaning and self.</p>
+        <p>
+          Group circles and 1:1 guidance — gentle space to reconnect with
+          meaning and self.
+        </p>
       </div>
       <section className="section">
         <h2>Circles</h2>
-        <p>Weekly circles with facilitators trained in mindful, nonjudgmental support.</p>
+        <p>
+          Weekly circles with facilitators trained in mindful, nonjudgmental
+          support.
+        </p>
       </section>
       <section className="section">
         <h2>1:1 Sessions</h2>

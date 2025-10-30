@@ -1,6 +1,10 @@
 import React from "react";
 import "./HomePage.css";
 import TopFold from "../components/TopFold";
+import wellnessBowlV1 from "../assets/images/wellnesscafe-bowl-v1.png";
+import wellnessJournal from "../assets/images/wellnesscafe-journal-vs1.png";
+import wellnessProductV1 from "../assets/images/WellnessCafe-Product-v1.png";
+import wellnessBowlV2 from "../assets/images/wellnesscafe-bowl-v2.png";
 
 const HomePage = () => {
   return (
@@ -104,7 +108,7 @@ const HomePage = () => {
         <div className="news-grid">
           <div className="news-card">
             <div className="news-image">
-              <img src="/images/wellnesscafe-bowl-v1.png" alt="Wellness Bowl" />
+              <img src={wellnessBowlV1} alt="Wellness Bowl" />
             </div>
             <div className="news-content">
               <h4>The Science of Mindfulness</h4>
@@ -118,10 +122,7 @@ const HomePage = () => {
 
           <div className="news-card">
             <div className="news-image">
-              <img
-                src="/images/wellnesscafe-journal-vs1.png"
-                alt="Wellness Journal"
-              />
+              <img src={wellnessJournal} alt="Wellness Journal" />
             </div>
             <div className="news-content">
               <h4>Recovery Success Stories</h4>
@@ -135,10 +136,7 @@ const HomePage = () => {
 
           <div className="news-card">
             <div className="news-image">
-              <img
-                src="/images/WellnessCafe-Product-v1.png"
-                alt="Wellness Product"
-              />
+              <img src={wellnessProductV1} alt="Wellness Product" />
             </div>
             <div className="news-content">
               <h4>New Provider Directory</h4>
@@ -161,7 +159,7 @@ const HomePage = () => {
           <img src="/images/naaa.jpg" alt="Support Groups" />
           <img src="/images/reminder.jpg" alt="Wellness Reminders" />
           <img src="/images/rituals.jpg" alt="Daily Rituals" />
-          <img src="/images/wellnesscafe-bowl-v2.png" alt="Wellness Bowl" />
+          <img src={wellnessBowlV2} alt="Wellness Bowl" />
         </div>
       </section>
 

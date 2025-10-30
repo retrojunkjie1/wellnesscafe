@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { db, auth } from "../../firebase";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { useTheme } from "../../utils/ThemeContext";
+import { Link } from "react-router-dom";
 import "../../styles/providers.css";
 import ComplianceNotice from "../../components/ComplianceNotice";
 
 const ProviderSignup = () => {
+  const { toggleTheme, isDark } = useTheme();
   const [form, setForm] = useState({
     fullName: "",
     orgName: "",
@@ -20,14 +23,12 @@ const ProviderSignup = () => {
     country: "",
     bio: "",
     calendarUrl: "",
-    // Licensing / verification
     licenseNumber: "",
     licenseState: "",
     licenseExpires: "",
     npiNumber: "",
     verified: false,
     verificationStatus: "pending_review",
-    // Consents
     hipaaConsent: false,
     cfr42Consent: false,
     tosConsent: false,
@@ -71,7 +72,6 @@ const ProviderSignup = () => {
         years: Number(form.years || 0),
         ratePerHour: Number(form.ratePerHour || 0),
         ownerUid: uid,
-        // Enforce workflow defaults
         verified: false,
         verificationStatus: "pending_review",
         createdAt: serverTimestamp(),
@@ -107,11 +107,170 @@ const ProviderSignup = () => {
 
   return (
     <section className="pv-wrap">
-      <h1 className="pv-title">Join WellnessCafe Network</h1>
-      <p className="pv-sub">
-        Offer sessions via schedules, video and chat. Set your rates, list
-        services, and get matched to clients.
-      </p>
+      <div className="pv-header">
+        <div>
+          <h1 className="pv-title">Join WellnessCafe Network</h1>
+          <p className="pv-sub">
+            Offer sessions via schedules, video and chat. Set your rates, list
+            services, and get matched to clients.
+          </p>
+        </div>
+        <button
+          className="theme-toggle"
+          onClick={toggleTheme}
+          aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
+        >
+          {isDark ? "☀️" : "🌙"}
+        </button>
+      </div>
+
+      {/* Benefits Section */}
+      <div className="pv-benefits">
+        <Link to="/providers/benefits" className="benefit-link">
+          <div className="pv-benefit-card">
+            <div className="pv-benefit-icon">💼</div>
+            <h3>Flexible Scheduling</h3>
+            <p>
+              Set your own availability and work when it suits you best. Our
+              smart matching system connects you with clients seeking your
+              expertise.
+            </p>
+          </div>
+        </Link>
+        <Link to="/providers/benefits" className="benefit-link">
+          <div className="pv-benefit-card">
+            <div className="pv-benefit-icon">🌟</div>
+            <h3>Build Your Practice</h3>
+            <p>
+              Grow your client base through our wellness-focused community.
+              Share your unique approach and attract clients who resonate with
+              your methods.
+            </p>
+          </div>
+        </Link>
+        <Link to="/providers/benefits" className="benefit-link">
+          <div className="pv-benefit-card">
+            <div className="pv-benefit-icon">🤝</div>
+            <h3>Professional Community</h3>
+            <p>
+              Connect with fellow wellness practitioners, share insights, and
+              learn from each other in our supportive provider network.
+            </p>
+          </div>
+        </Link>
+        <Link to="/providers/benefits" className="benefit-link">
+          <div className="pv-benefit-card">
+            <div className="pv-benefit-icon">🔒</div>
+            <h3>Secure & Compliant</h3>
+            <p>
+              Rest assured with HIPAA-compliant systems and 42 CFR Part 2
+              protections. Your practice and client data are fully secured.
+            </p>
+          </div>
+        </Link>
+      </div>
+
+      {/* What to Expect Section */}
+      <div className="pv-expectations">
+        <h2>What You Can Expect</h2>
+        <div className="pv-expectation-grid">
+          <Link to="/providers/expectations" className="expectation-link">
+            <div className="pv-expectation-item">
+              <div className="pv-expectation-step">1</div>
+              <div className="pv-expectation-content">
+                <h4>Quick Approval</h4>
+                <p>
+                  Most applications are reviewed within 24-48 hours. We'll
+                  verify your credentials and get you set up to start accepting
+                  clients.
+                </p>
+              </div>
+            </div>
+          </Link>
+          <Link to="/providers/expectations" className="expectation-link">
+            <div className="pv-expectation-item">
+              <div className="pv-expectation-step">2</div>
+              <div className="pv-expectation-content">
+                <h4>Profile Setup</h4>
+                <p>
+                  Create a compelling profile showcasing your specialties,
+                  experience, and approach. Include your bio, certifications,
+                  and service offerings.
+                </p>
+              </div>
+            </div>
+          </Link>
+          <Link to="/providers/expectations" className="expectation-link">
+            <div className="pv-expectation-item">
+              <div className="pv-expectation-step">3</div>
+              <div className="pv-expectation-content">
+                <h4>Client Matching</h4>
+                <p>
+                  Our algorithm matches you with clients based on their needs,
+                  your expertise, and scheduling preferences. Start booking
+                  sessions immediately.
+                </p>
+              </div>
+            </div>
+          </Link>
+          <Link to="/providers/expectations" className="expectation-link">
+            <div className="pv-expectation-item">
+              <div className="pv-expectation-step">4</div>
+              <div className="pv-expectation-content">
+                <h4>Ongoing Support</h4>
+                <p>
+                  Access provider resources, community forums, and ongoing
+                  education. We're here to support your growth and success.
+                </p>
+              </div>
+            </div>
+          </Link>
+        </div>
+      </div>
+
+      {/* Success Stories */}
+      <div className="pv-testimonials">
+        <h2>Join Our Growing Community</h2>
+        <div className="pv-testimonial-grid">
+          <Link to="/providers/testimonials" className="testimonial-link">
+            <div className="pv-testimonial">
+              <div className="pv-testimonial-quote">
+                "WellnessCafe helped me expand my practice beyond my local area.
+                I've connected with clients who truly value holistic
+                approaches."
+              </div>
+              <div className="pv-testimonial-author">
+                <strong>Sarah M.</strong> - Licensed Acupuncturist, 8 years
+                experience
+              </div>
+            </div>
+          </Link>
+          <Link to="/providers/testimonials" className="testimonial-link">
+            <div className="pv-testimonial">
+              <div className="pv-testimonial-quote">
+                "The platform makes it easy to offer both in-person and virtual
+                sessions. My clients appreciate the flexibility."
+              </div>
+              <div className="pv-testimonial-author">
+                <strong>Michael R.</strong> - Yoga Instructor & Meditation
+                Guide, 12 years experience
+              </div>
+            </div>
+          </Link>
+          <Link to="/providers/testimonials" className="testimonial-link">
+            <div className="pv-testimonial">
+              <div className="pv-testimonial-quote">
+                "Finally, a platform that understands the unique needs of
+                wellness practitioners. The community support is invaluable."
+              </div>
+              <div className="pv-testimonial-author">
+                <strong>Dr. Lisa K.</strong> - Clinical Psychologist, 15 years
+                experience
+              </div>
+            </div>
+          </Link>
+        </div>
+      </div>
 
       <ComplianceNotice />
 
