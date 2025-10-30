@@ -39,6 +39,15 @@ const EventCalendar = () => {
   useEffect(() => {
     // Load events from Firestore
     const loadEvents = async () => {
+      // Check if Firestore is available
+      if (!db) {
+        console.warn(
+          "Firestore not available - event calendar will show empty"
+        );
+        setLoading(false);
+        return;
+      }
+
       try {
         const now = new Date();
         let startDate;

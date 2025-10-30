@@ -77,6 +77,20 @@
 .mood-emoji {
   font-size: 24px;
   margin-bottom: 4px;
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.1));
+  background: rgba(255, 255, 255, 0.8);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 0.5rem;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.mood-emoji:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .mood-label {

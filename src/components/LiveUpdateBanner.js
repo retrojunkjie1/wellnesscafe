@@ -13,6 +13,12 @@ const LiveUpdateBanner = () => {
   });
 
   useEffect(() => {
+    // Only set up Firestore listener if db is available
+    if (!db) {
+      console.warn("Firestore not available - using default announcement");
+      return;
+    }
+
     const unsubscribe = onSnapshot(
       doc(db, "announcements", "headerNotice"),
       (doc) => {

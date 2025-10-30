@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./utils/ThemeContext";
 import { AuthProvider } from "./AuthContext";
 import Navbar from "./components/Navbar";
+import NavigationButtons from "./components/NavigationButtons";
 import ProtectedRoute from "./components/ProtectedRoute";
 import HomePage from "./Views/HomePage";
 import Signup from "./features/auth/Signup";
@@ -23,6 +24,14 @@ import LeadershipPage from "./features/providers/LeadershipPage";
 import ContactPage from "./features/providers/ContactPage";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
+import ProductPage from "./Views/ProductPage";
+import ToolsPage from "./Views/ToolsPage";
+import BlogPage from "./Views/BlogPage";
+import PrivacyPage from "./Views/PrivacyPage";
+import TraumaEducationPage from "./Views/TraumaEducationPage";
+import CareersPage from "./Views/CareersPage";
+import FAQPage from "./Views/FAQPage";
+import NewsPage from "./Views/NewsPage";
 
 function App() {
   return (
@@ -30,6 +39,7 @@ function App() {
       <ThemeProvider>
         <Router>
           <Navbar />
+          <NavigationButtons />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/signup" element={<Signup />} />
@@ -59,6 +69,10 @@ function App() {
             <Route path="/spiritual" element={<Spiritual />} />
             <Route path="/events" element={<Events />} />
             <Route path="/assistance" element={<Assistance />} />
+            <Route path="/product" element={<ProductPage />} />
+            <Route path="/tools" element={<ToolsPage />} />
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/trauma-education" element={<TraumaEducationPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route
               path="/about/strategic-initiatives"
@@ -66,6 +80,10 @@ function App() {
             />
             <Route path="/about/leadership" element={<LeadershipPage />} />
             <Route path="/about/contact" element={<ContactPage />} />
+            <Route path="/about/privacy" element={<PrivacyPage />} />
+            <Route path="/about/careers" element={<CareersPage />} />
+            <Route path="/about/faq" element={<FAQPage />} />
+            <Route path="/about/news" element={<NewsPage />} />
           </Routes>
         </Router>
       </ThemeProvider>

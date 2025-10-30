@@ -19,6 +19,15 @@ const Progress = () => {
   useEffect(() => {
     if (!user) return;
 
+    // Check if Firestore is available
+    if (!db) {
+      console.warn(
+        "Firestore not available - progress tracking will show empty"
+      );
+      setLoading(false);
+      return;
+    }
+
     const now = new Date();
     let startDate;
 

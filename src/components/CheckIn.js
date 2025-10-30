@@ -28,6 +28,35 @@ const CheckIn = ({ onComplete }) => {
     e.preventDefault();
     if (!user) return;
 
+    // Check if Firestore is available
+    if (!db) {
+      console.warn(
+        "Firestore not available - check-in will be stored locally only"
+      );
+      if (onComplete) {
+        onComplete({
+          userId: user.uid,
+          date: new Date().toISOString().split("T")[0],
+          timestamp: new Date(),
+          mood,
+          energy: parseInt(energy),
+          stress: parseInt(stress),
+          sleep: parseInt(sleep),
+          gratitude,
+          journal,
+          completed: true,
+        });
+      }
+      // Reset form
+      setMood("");
+      setEnergy("");
+      setStress("");
+      setSleep("");
+      setGratitude("");
+      setJournal("");
+      return;
+    }
+
     setLoading(true);
     try {
       const checkInData = {

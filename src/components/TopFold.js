@@ -67,10 +67,46 @@ const TopFold = () => {
         </h1>
         <p className="topfold-sub">
           Discover calm intelligence through design, ritual, and mindful
-          innovation.
+          innovation. Your comprehensive wellness platform for recovery,
+          mindfulness, and personal growth.
         </p>
+        <div className="topfold-features">
+          <div className="feature-item" onClick={() => navigate("/recovery")}>
+            <span className="feature-icon">🧠</span>
+            <span>AI-Powered Recovery Support</span>
+          </div>
+          <div className="feature-item" onClick={() => navigate("/yoga")}>
+            <span className="feature-icon">🧘</span>
+            <span>Guided Mindfulness & Yoga</span>
+          </div>
+          <div
+            className="feature-item"
+            onClick={() => navigate("/acuwellness")}
+          >
+            <span className="feature-icon">🌿</span>
+            <span>Acuwellness Integration</span>
+          </div>
+          <div className="feature-item" onClick={() => navigate("/events")}>
+            <span className="feature-icon">👥</span>
+            <span>Community Events & Support</span>
+          </div>
+        </div>
+        <div className="topfold-stats">
+          <div className="stat-item">
+            <span className="stat-number">10K+</span>
+            <span className="stat-label">Active Members</span>
+          </div>
+          <div className="stat-item">
+            <span className="stat-number">500+</span>
+            <span className="stat-label">Weekly Sessions</span>
+          </div>
+          <div className="stat-item">
+            <span className="stat-number">95%</span>
+            <span className="stat-label">Success Rate</span>
+          </div>
+        </div>
         <button className="topfold-btn" onClick={() => navigate("/product")}>
-          Explore Product
+          Start Your Journey
         </button>
       </div>
     </section>

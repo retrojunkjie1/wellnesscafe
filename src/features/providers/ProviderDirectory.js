@@ -68,6 +68,15 @@ const ProviderDirectory = () => {
   useEffect(() => {
     // Load all providers initially
     const loadProviders = async () => {
+      // Check if Firestore is available
+      if (!db) {
+        console.warn(
+          "Firestore not available - provider directory will show empty"
+        );
+        setLoading(false);
+        return;
+      }
+
       try {
         const q = query(
           collection(db, "providers"),

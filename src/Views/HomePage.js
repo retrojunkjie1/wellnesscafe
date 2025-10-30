@@ -5,6 +5,7 @@ import wellnessBowlV1 from "../assets/images/wellnesscafe-bowl-v1.png";
 import wellnessJournal from "../assets/images/wellnesscafe-journal-vs1.png";
 import wellnessProductV1 from "../assets/images/WellnessCafe-Product-v1.png";
 import wellnessBowlV2 from "../assets/images/wellnesscafe-bowl-v2.png";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   return (
@@ -13,71 +14,71 @@ const HomePage = () => {
 
       {/* === LUXURY FEATURES === */}
       <section className="features-grid">
-        <div className="feature-card">
-          <div className="feature-image">
-            <img src="/images/recovery.jpg" alt="Recovery Support" />
+        <Link to="/recovery" className="feature-card-link">
+          <div className="feature-card">
+            <div className="feature-icon-large">🧠</div>
+            <h3>Addiction Recovery</h3>
+            <p>
+              AI-assisted relapse prevention, progress tracking, and real-time
+              emotional monitoring.
+            </p>
           </div>
-          <h3>Addiction Recovery</h3>
-          <p>
-            AI-assisted relapse prevention, progress tracking, and real-time
-            emotional monitoring.
-          </p>
-        </div>
+        </Link>
 
-        <div className="feature-card">
-          <div className="feature-image">
-            <img src="/images/yoga.jpg" alt="Yoga & Mindfulness" />
+        <Link to="/yoga" className="feature-card-link">
+          <div className="feature-card">
+            <div className="feature-icon-large">🧘</div>
+            <h3>Yoga & Mindfulness</h3>
+            <p>
+              Guided movement, breathwork, and meditation to restore balance and
+              self-awareness.
+            </p>
           </div>
-          <h3>Yoga & Mindfulness</h3>
-          <p>
-            Guided movement, breathwork, and meditation to restore balance and
-            self-awareness.
-          </p>
-        </div>
+        </Link>
 
-        <div className="feature-card">
-          <div className="feature-image">
-            <img src="/images/acuwellness.jpg" alt="Acuwellness" />
+        <Link to="/acuwellness" className="feature-card-link">
+          <div className="feature-card">
+            <div className="feature-icon-large">🌿</div>
+            <h3>Acuwellness</h3>
+            <p>
+              Blending Eastern Medicine and modern therapy — your path to
+              energetic harmony.
+            </p>
           </div>
-          <h3>Acuwellness</h3>
-          <p>
-            Blending Eastern Medicine and modern therapy — your path to
-            energetic harmony.
-          </p>
-        </div>
+        </Link>
 
-        <div className="feature-card">
-          <div className="feature-image">
-            <img src="/images/spiritual.jpg" alt="Spiritual Counseling" />
+        <Link to="/spiritual" className="feature-card-link">
+          <div className="feature-card">
+            <div className="feature-icon-large">🙏</div>
+            <h3>Spiritual Counseling</h3>
+            <p>
+              Private or group sessions exploring purpose, healing, and
+              transformation.
+            </p>
           </div>
-          <h3>Spiritual Counseling</h3>
-          <p>
-            Private or group sessions exploring purpose, healing, and
-            transformation.
-          </p>
-        </div>
+        </Link>
 
-        <div className="feature-card">
-          <div className="feature-image">
-            <img src="/images/events.jpg" alt="Live Events" />
+        <Link to="/events" className="feature-card-link">
+          <div className="feature-card">
+            <div className="feature-icon-large">👥</div>
+            <h3>Live Events</h3>
+            <p>
+              Community wellness workshops and retreats for body, mind, and
+              connection.
+            </p>
           </div>
-          <h3>Live Events</h3>
-          <p>
-            Community wellness workshops and retreats for body, mind, and
-            connection.
-          </p>
-        </div>
+        </Link>
 
-        <div className="feature-card">
-          <div className="feature-image">
-            <img src="/images/assistance.jpg" alt="Government Assistance" />
+        <Link to="/assistance" className="feature-card-link">
+          <div className="feature-card">
+            <div className="feature-icon-large">🏛️</div>
+            <h3>Government Assistance</h3>
+            <p>
+              Find and connect with financial and recovery programs tailored to
+              your region.
+            </p>
           </div>
-          <h3>Government Assistance</h3>
-          <p>
-            Find and connect with financial and recovery programs tailored to
-            your region.
-          </p>
-        </div>
+        </Link>
       </section>
 
       {/* === VIDEO SHOWCASE === */}

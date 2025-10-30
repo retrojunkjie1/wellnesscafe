@@ -27,10 +27,14 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        // Get additional user data from Firestore
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        const userData = userDoc.exists() ? userDoc.data() : {};
-        setUser({ ...user, ...userData });
+        // Get additional user data from Firestore if available
+        if (db) {
+          const userDoc = await getDoc(doc(db, "users", user.uid));
+          const userData = userDoc.exists() ? userDoc.data() : {};
+          setUser({ ...user, ...userData });
+        } else {
+          setUser(user);
+        }
       } else {
         setUser(null);
       }
@@ -50,27 +54,31 @@ export const AuthProvider = ({ children }) => {
       email,
       password
     );
-    // Create user document in Firestore
-    await setDoc(doc(db, "users", userCredential.user.uid), {
-      email: userCredential.user.email,
-      createdAt: new Date(),
-      ...additionalData,
-    });
+    // Create user document in Firestore if available
+    if (db) {
+      await setDoc(doc(db, "users", userCredential.user.uid), {
+        email: userCredential.user.email,
+        createdAt: new Date(),
+        ...additionalData,
+      });
+    }
     return userCredential;
   };
 
   const loginWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     const result = await signInWithPopup(auth, provider);
-    // Check if user document exists, create if not
-    const userDoc = await getDoc(doc(db, "users", result.user.uid));
-    if (!userDoc.exists()) {
-      await setDoc(doc(db, "users", result.user.uid), {
-        email: result.user.email,
-        displayName: result.user.displayName,
-        photoURL: result.user.photoURL,
-        createdAt: new Date(),
-      });
+    // Check if user document exists, create if not (only if Firestore is available)
+    if (db) {
+      const userDoc = await getDoc(doc(db, "users", result.user.uid));
+      if (!userDoc.exists()) {
+        await setDoc(doc(db, "users", result.user.uid), {
+          email: result.user.email,
+          displayName: result.user.displayName,
+          photoURL: result.user.photoURL,
+          createdAt: new Date(),
+        });
+      }
     }
     return result;
   };

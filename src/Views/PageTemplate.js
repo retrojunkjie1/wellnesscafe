@@ -1,35 +1,42 @@
-import React from 'react';
-import Header from '../components/Header';
-import './PageTemplate.css';
-import productImage from '../assets/images/WellnessCafe-Product-v1.png';
-import journalImage from '../assets/images/wellnesscafe-journal-vs1.png';
-import bowlImage from '../assets/images/wellnesscafe-bowl-v1.png';
+import React from "react";
+import Header from "../components/Header";
+import "./PageTemplate.css";
+import productImage from "../assets/images/WellnessCafe-Product-v1.png";
+import journalImage from "../assets/images/wellnesscafe-journal-vs1.png";
+import bowlImage from "../assets/images/wellnesscafe-bowl-v1.png";
 
 const PageTemplate = ({ title, intro, features, ctaText, pageType }) => {
   const getPageImage = () => {
-    switch(pageType) {
-      case 'recovery':
-      case 'assistance':
+    switch (pageType) {
+      case "recovery":
+      case "assistance":
         return journalImage;
-      case 'yoga':
-      case 'spiritual':
+      case "yoga":
+      case "spiritual":
         return bowlImage;
-      case 'acuwellness':
-      case 'events':
+      case "acuwellness":
+      case "events":
       default:
         return productImage;
     }
   };
 
   const getGradientClass = () => {
-    switch(pageType) {
-      case 'recovery': return 'gradient-recovery';
-      case 'yoga': return 'gradient-yoga';
-      case 'acuwellness': return 'gradient-acuwellness';
-      case 'spiritual': return 'gradient-spiritual';
-      case 'events': return 'gradient-events';
-      case 'assistance': return 'gradient-assistance';
-      default: return 'gradient-default';
+    switch (pageType) {
+      case "recovery":
+        return "gradient-recovery";
+      case "yoga":
+        return "gradient-yoga";
+      case "acuwellness":
+        return "gradient-acuwellness";
+      case "spiritual":
+        return "gradient-spiritual";
+      case "events":
+        return "gradient-events";
+      case "assistance":
+        return "gradient-assistance";
+      default:
+        return "gradient-default";
     }
   };
 
@@ -46,7 +53,11 @@ const PageTemplate = ({ title, intro, features, ctaText, pageType }) => {
               <p className="luxury-page-intro">{intro}</p>
             </div>
             <div className="hero-image-content">
-              <img src={getPageImage()} alt={`${title} Wellness`} className="luxury-page-image" />
+              <img
+                src={getPageImage()}
+                alt={`${title} Wellness`}
+                className="luxury-page-image"
+              />
             </div>
           </div>
         </div>
@@ -56,6 +67,9 @@ const PageTemplate = ({ title, intro, features, ctaText, pageType }) => {
       <section className="page-features">
         {features.map((feature, index) => (
           <div key={index} className="feature-card">
+            <div className="wellness-icon-card wellness-icon-sm">
+              {feature.icon}
+            </div>
             <h3>{feature.title}</h3>
             <p>{feature.desc}</p>
           </div>
