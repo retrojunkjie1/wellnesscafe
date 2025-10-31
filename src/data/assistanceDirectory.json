@@ -1,0 +1,119 @@
+[
+  {
+    "category": "Recovery Centers",
+    "name": "Foundry Steamboat Springs",
+    "type": "Inpatient/Outpatient Treatment",
+    "contact": {
+      "phone": "(970) 870-2449",
+      "website": "https://foundrytreatmentcenter.com",
+      "email": "info@foundrytreatmentcenter.com"
+    },
+    "location": "Steamboat Springs, CO",
+    "state": "CO",
+    "description": "Comprehensive substance use recovery programs combining therapy, mindfulness, and wellness."
+  },
+  {
+    "category": "Sober Living Homes",
+    "name": "Travis House",
+    "type": "Men’s Transitional Home",
+    "contact": {
+      "phone": "(303) 555-8721",
+      "website": "https://travishousecolorado.org",
+      "email": "support@travishouse.org"
+    },
+    "location": "Denver, CO",
+    "state": "CO",
+    "description": "Safe, structured housing supporting men in early recovery with peer accountability."
+  },
+  {
+    "category": "Sober Living Homes",
+    "name": "Oxford House",
+    "type": "Peer-Run Sober Housing",
+    "contact": {
+      "phone": "(800) 689-6411",
+      "website": "https://www.oxfordhouse.org",
+      "email": "info@oxfordhouse.org"
+    },
+    "location": "Multiple States",
+    "state": "MULTI",
+    "description": "Network of democratically run, self-supporting and drug-free homes."
+  },
+  {
+    "category": "Crisis & Hotlines",
+    "name": "988 Suicide & Crisis Lifeline",
+    "type": "24/7 Crisis Support",
+    "contact": {
+      "phone": "988",
+      "website": "https://988lifeline.org",
+      "email": ""
+    },
+    "location": "United States",
+    "state": "US",
+    "description": "Free and confidential support for people in distress, prevention and crisis resources."
+  },
+  {
+    "category": "Legal Aid",
+    "name": "Colorado Legal Services",
+    "type": "Civil Legal Aid",
+    "contact": {
+      "phone": "(303) 837-1313",
+      "website": "https://www.coloradolegalservices.org",
+      "email": ""
+    },
+    "location": "Colorado",
+    "state": "CO",
+    "description": "Legal help for low-income Coloradans in civil cases including housing and benefits."
+  },
+  {
+    "category": "Financial Assistance",
+    "name": "Benefits.gov",
+    "type": "Program Finder",
+    "contact": {
+      "phone": "",
+      "website": "https://www.benefits.gov",
+      "email": ""
+    },
+    "location": "United States",
+    "state": "US",
+    "description": "Official U.S. government website for finding benefit and assistance programs."
+  },
+  {
+    "category": "Housing Assistance",
+    "name": "HUD Resource Locator",
+    "type": "Housing & Urban Development",
+    "contact": {
+      "phone": "(202) 708-1112",
+      "website": "https://resources.hud.gov",
+      "email": ""
+    },
+    "location": "United States",
+    "state": "US",
+    "description": "Find HUD offices, affordable housing, and homeless service providers."
+  },
+  {
+    "category": "Healthcare Navigation",
+    "name": "Medicaid Enrollment (CO)",
+    "type": "State Medicaid",
+    "contact": {
+      "phone": "(800) 221-3943",
+      "website": "https://www.healthfirstcolorado.com",
+      "email": ""
+    },
+    "location": "Colorado",
+    "state": "CO",
+    "description": "Health First Colorado (Colorado's Medicaid Program) information and enrollment."
+  },
+  {
+    "category": "Employment & Education",
+    "name": "Colorado Workforce Centers",
+    "type": "Job Placement & Training",
+    "contact": {
+      "phone": "(303) 318-8000",
+      "website": "https://cdle.colorado.gov/wfc",
+      "email": ""
+    },
+    "location": "Colorado",
+    "state": "CO",
+    "description": "Job search assistance, training, and career services statewide."
+  }
+]

@@ -1,0 +1,210 @@
+:root {
+  --ad-glass: rgba(255, 255, 255, 0.1);
+  --ad-border: rgba(255, 255, 255, 0.25);
+  --ad-title: rgba(255, 255, 255, 0.96);
+  --ad-text: rgba(255, 255, 255, 0.86);
+  --ad-muted: rgba(255, 255, 255, 0.7);
+  --ad-glow: #bda6ff;
+}
+.assistance-section {
+  position: relative;
+  padding: 4rem 8%;
+  background: linear-gradient(160deg, #0b0f0c 0%, #0f1813 70%, #172420 100%),
+    url("/assets/images/assistance-bg-dark.jpg") center/cover no-repeat;
+  color: #fff;
+}
+.assistance-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: radial-gradient(
+      ellipse at top,
+      rgba(122, 90, 248, 0.08),
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(212, 180, 131, 0.08),
+      transparent 50%
+    );
+  pointer-events: none;
+}
+.assistance-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.assistance-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+.assistance-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #f7f7f7 0%, #d4b483 40%, #cbb4ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.3px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+}
+.assistance-sub {
+  color: var(--ad-text);
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+}
+.ad-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 1.5rem 0 2.5rem;
+}
+.ad-search {
+  flex: 1 1 320px;
+  max-width: 520px;
+}
+.ad-search input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--ad-border);
+  background: var(--ad-glass);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  color: var(--ad-title);
+  outline: none;
+  transition: box-shadow 0.2s ease;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.ad-search input::placeholder {
+  color: var(--ad-muted);
+}
+.ad-search input:focus {
+  box-shadow: 0 0 0 2px rgba(189, 166, 255, 0.35);
+}
+.ad-select {
+  flex: 0 0 220px;
+}
+.ad-select select {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--ad-border);
+  background: var(--ad-glass);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  color: var(--ad-title);
+}
+.ad-cta {
+  flex: 0 0 auto;
+}
+.ad-cta a {
+  display: inline-block;
+  padding: 0.9rem 1.2rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #d4b483 0%, #cbb4ff 100%);
+  color: #1a1a2e;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 10px 30px rgba(203, 180, 255, 0.25);
+}
+.ad-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+.ad-card {
+  background: var(--ad-glass);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--ad-border);
+  border-radius: 16px;
+  padding: 1.2rem;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
+  transition: transform 0.25s ease, box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+.ad-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 46px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.38);
+}
+.ad-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  cursor: pointer;
+}
+.ad-icon {
+  font-size: 1.4rem;
+}
+.ad-card-title {
+  font-weight: 800;
+  color: var(--ad-title);
+}
+.ad-count {
+  margin-left: auto;
+  color: var(--ad-muted);
+  font-size: 0.85rem;
+}
+.ad-card-body {
+  margin-top: 0.9rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 0.9rem;
+}
+.ad-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding: 0.6rem;
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+.ad-item:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+.ad-item .ad-item-title {
+  color: var(--ad-title);
+  font-weight: 700;
+}
+.ad-item .ad-item-meta {
+  color: var(--ad-muted);
+  font-size: 0.85rem;
+}
+.ad-item .ad-links {
+  margin-left: auto;
+  display: flex;
+  gap: 0.6rem;
+}
+.ad-link {
+  display: inline-block;
+  padding: 0.35rem 0.6rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: var(--ad-text);
+  text-decoration: none;
+}
+.ad-footer {
+  text-align: center;
+  margin-top: 2rem;
+  color: var(--ad-muted);
+  font-size: 0.9rem;
+}
+@media (max-width: 768px) {
+  .ad-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ad-select {
+    width: 100%;
+  }
+  .ad-cta {
+    text-align: center;
+  }
+}
