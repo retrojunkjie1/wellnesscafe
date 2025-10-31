@@ -10,7 +10,8 @@
   position: relative;
   padding: 4rem 8%;
   background: linear-gradient(160deg, #0b0f0c 0%, #0f1813 70%, #172420 100%),
-    url("/assets/images/assistance-bg-dark.jpg") center/cover no-repeat;
+    url("/assets/images/assistance-bg-dark.jpg") center/cover no-repeat,
+    url("/assets/images/assistance-bg-dark.svg") center/cover no-repeat;
   color: #fff;
 }
 .assistance-overlay {
@@ -135,28 +136,35 @@
   box-shadow: 0 16px 46px rgba(0, 0, 0, 0.4);
   border-color: rgba(255, 255, 255, 0.38);
 }
-.ad-card-header {
+.ad-card-click {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.8rem;
+  text-align: center;
+  color: inherit;
   cursor: pointer;
-}
-.ad-icon {
-  font-size: 1.4rem;
 }
 .ad-card-title {
   font-weight: 800;
   color: var(--ad-title);
+  margin: 0.25rem 0 0.4rem;
 }
-.ad-count {
-  margin-left: auto;
-  color: var(--ad-muted);
-  font-size: 0.85rem;
+.ad-card-desc {
+  color: var(--ad-text);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0 0 0.4rem;
 }
-.ad-card-body {
-  margin-top: 0.9rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-  padding-top: 0.9rem;
+.ad-learn {
+  color: rgba(212, 180, 131, 0.95);
+  font-weight: 700;
+  font-size: 0.9rem;
 }
 .ad-item {
   display: flex;
@@ -195,6 +203,68 @@
   margin-top: 2rem;
   color: var(--ad-muted);
   font-size: 0.9rem;
+}
+
+/* Modal */
+.ad-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.ad-modal {
+  background: var(--ad-glass);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--ad-border);
+  border-radius: 16px;
+  width: min(720px, 92vw);
+  max-height: 80vh;
+  overflow: auto;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.5);
+}
+.ad-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1rem 0.5rem;
+  position: sticky;
+  top: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(11, 15, 12, 0.8),
+    rgba(15, 24, 19, 0.8)
+  );
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  z-index: 1;
+}
+.ad-modal-title {
+  color: var(--ad-title);
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+.ad-modal-close {
+  margin-left: auto;
+  appearance: none;
+  -webkit-appearance: none;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  color: var(--ad-title);
+  font-weight: 700;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+}
+.ad-modal-body {
+  padding: 0.75rem;
 }
 @media (max-width: 768px) {
   .ad-actions {

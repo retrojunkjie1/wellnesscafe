@@ -1,4 +1,6 @@
 import React, { useMemo, useState } from "react";
+// Reuse the unified glass icon system from PageTemplate for transparent icons
+import "../../Views/PageTemplate.css";
 import "./AssistanceDirectory.css";
 import data from "../../data/assistanceDirectory.json";
 
@@ -21,7 +23,7 @@ const unique = (arr) => Array.from(new Set(arr));
 const AssistanceDirectory = () => {
   const [query, setQuery] = useState("");
   const [stateFilter, setStateFilter] = useState("ALL");
-  const [expanded, setExpanded] = useState({});
+  const [modalCat, setModalCat] = useState(null);
 
   const categories = useMemo(() => unique(data.map((d) => d.category)), []);
   const states = useMemo(
@@ -51,9 +53,46 @@ const AssistanceDirectory = () => {
     return map;
   }, [filtered]);
 
-  const toggle = (cat) => {
-    setExpanded((prev) => ({ ...prev, [cat]: !prev[cat] }));
-  };
+  const categoryMeta = useMemo(
+    () => ({
+      "Recovery Centers": {
+        title: "Recovery Centers",
+        desc: "Inpatient and outpatient treatment with holistic recovery programs.",
+      },
+      "Sober Living Homes": {
+        title: "Sober Living Homes",
+        desc: "Safe, peer-supported housing for sustained recovery.",
+      },
+      "Legal Aid": {
+        title: "Legal Aid & Advocacy",
+        desc: "Civil legal support, tenant rights, benefits, and more.",
+      },
+      "Financial Assistance": {
+        title: "Financial Assistance",
+        desc: "Find public benefits, grants, and cost-of-care help.",
+      },
+      "Housing Assistance": {
+        title: "Housing Assistance",
+        desc: "Affordable housing, HUD resources, homeless services.",
+      },
+      "Healthcare Navigation": {
+        title: "Healthcare Navigation",
+        desc: "Medicaid options, coverage, and care coordination.",
+      },
+      "Crisis & Hotlines": {
+        title: "Emergency & Crisis Intervention",
+        desc: "24/7 hotlines, safety planning, and rapid response.",
+      },
+      "Employment & Education": {
+        title: "Employment & Education",
+        desc: "Job search, training, and upskilling programs.",
+      },
+    }),
+    []
+  );
+
+  const openModal = (cat) => setModalCat(cat);
+  const closeModal = () => setModalCat(null);
 
   return (
     <section
@@ -107,74 +146,100 @@ const AssistanceDirectory = () => {
         <div className="ad-grid">
           {categories.map((cat) => {
             const items = grouped[cat] || [];
-            const isOpen = !!expanded[cat];
+            const meta = categoryMeta[cat] || {
+              title: cat,
+              desc: `${items.length} verified resources in this category.`,
+            };
             return (
               <article key={cat} className="ad-card">
-                <div
-                  className="ad-card-header"
-                  onClick={() => {
-                    toggle(cat);
-                  }}
-                  role="button"
-                  aria-expanded={isOpen}
+                <button
+                  type="button"
+                  className="ad-card-click"
+                  onClick={() => openModal(cat)}
+                  aria-label={`Open ${meta.title} resources`}
                 >
-                  <span className="ad-icon" aria-hidden>
+                  <div
+                    className="wellness-icon-card wellness-icon wellness-icon-sm"
+                    aria-hidden
+                  >
                     {iconForCategory(cat)}
-                  </span>
-                  <span className="ad-card-title">{cat}</span>
-                  <span className="ad-count">{items.length}</span>
-                </div>
-                {isOpen && (
-                  <div className="ad-card-body">
-                    {items.map((it) => {
-                      return (
-                        <div key={it.name + it.location} className="ad-item">
-                          <div>
-                            <div className="ad-item-title">{it.name}</div>
-                            <div className="ad-item-meta">
-                              {it.type} • {it.location}
-                            </div>
-                          </div>
-                          <div className="ad-links">
-                            {it.contact?.phone && (
-                              <a
-                                className="ad-link"
-                                href={`tel:${it.contact.phone.replace(
-                                  /[^+\d]/g,
-                                  ""
-                                )}`}
-                              >
-                                Call
-                              </a>
-                            )}
-                            {it.contact?.website && (
-                              <a
-                                className="ad-link"
-                                href={it.contact.website}
-                                target="_blank"
-                                rel="noreferrer"
-                              >
-                                Site
-                              </a>
-                            )}
-                            {it.contact?.email && it.contact.email !== "" && (
-                              <a
-                                className="ad-link"
-                                href={`mailto:${it.contact.email}`}
-                              >
-                                Email
-                              </a>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })}
                   </div>
-                )}
+                  <h3 className="ad-card-title">{meta.title}</h3>
+                  <p className="ad-card-desc">{meta.desc}</p>
+                  <span className="ad-learn">Learn more →</span>
+                </button>
               </article>
             );
           })}
         </div>
+
+        {modalCat && (
+          <div className="ad-modal-backdrop" role="dialog" aria-modal="true">
+            <div className="ad-modal" role="document">
+              <div className="ad-modal-header">
+                <div
+                  className="wellness-icon-card wellness-icon wellness-icon-sm"
+                  aria-hidden
+                >
+                  {iconForCategory(modalCat)}
+                </div>
+                <h3 className="ad-modal-title">
+                  {categoryMeta[modalCat]?.title || modalCat}
+                </h3>
+                <button
+                  className="ad-modal-close"
+                  onClick={closeModal}
+                  aria-label="Close"
+                >
+                  ✕
+                </button>
+              </div>
+              <div className="ad-modal-body">
+                {(grouped[modalCat] || []).map((it) => (
+                  <div key={it.name + it.location} className="ad-item">
+                    <div>
+                      <div className="ad-item-title">{it.name}</div>
+                      <div className="ad-item-meta">
+                        {it.type} • {it.location}
+                      </div>
+                    </div>
+                    <div className="ad-links">
+                      {it.contact?.phone && (
+                        <a
+                          className="ad-link"
+                          href={`tel:${it.contact.phone.replace(
+                            /[^+\d]/g,
+                            ""
+                          )}`}
+                        >
+                          Call
+                        </a>
+                      )}
+                      {it.contact?.website && (
+                        <a
+                          className="ad-link"
+                          href={it.contact.website}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          Site
+                        </a>
+                      )}
+                      {it.contact?.email && it.contact.email !== "" && (
+                        <a
+                          className="ad-link"
+                          href={`mailto:${it.contact.email}`}
+                        >
+                          Email
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="ad-footer">
           “Built with clarity — powered by WellnessCafe Intelligence © 2025”
