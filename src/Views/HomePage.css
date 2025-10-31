@@ -321,10 +321,14 @@
 
 .gallery-section h2 {
   font-size: 2.5rem;
-  font-weight: 700;
-  color: #ffffff;
+  font-weight: 800;
   text-align: center;
   margin-bottom: 3rem;
+  background: linear-gradient(135deg, #f7f7f7 0%, #d4b483 40%, #cbb4ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
 }
 
 .gallery-grid {
@@ -369,17 +373,48 @@
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
 }
-
-/* Feature Cards */
-.feature-card-link {
-  text-decoration: none;
-  color: inherit;
-  transition: transform 0.3s ease;
-  display: block;
+/* Glassy cards for community images */
+.gallery-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 16px;
+  padding: 8px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+  transition: transform 0.25s ease, box-shadow 0.25s ease,
+    border-color 0.25s ease;
 }
-
-.feature-card-link:hover {
-  transform: translateY(-5px);
+.gallery-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+.gallery-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+  transition: transform 0.3s ease;
+}
+.gallery-card:hover img {
+  transform: scale(1.02);
+}
+.gallery-card figcaption {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  background: rgba(0, 0, 0, 0.35);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  line-height: 1.2;
 }
 
 .feature-card {

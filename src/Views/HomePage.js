@@ -155,12 +155,30 @@ const HomePage = () => {
       <section className="gallery-section">
         <h2>WellnessCafe Community</h2>
         <div className="gallery-grid">
-          <img src="/images/checkin.jpg" alt="Daily Check-in" />
-          <img src="/images/community.jpg" alt="Community Support" />
-          <img src="/images/naaa.jpg" alt="Support Groups" />
-          <img src="/images/reminder.jpg" alt="Wellness Reminders" />
-          <img src="/images/rituals.jpg" alt="Daily Rituals" />
-          <img src={wellnessBowlV2} alt="Wellness Bowl" />
+          <figure className="gallery-card">
+            <img src="/images/checkin.jpg" alt="Daily Check-in" />
+            <figcaption>Daily Check-in</figcaption>
+          </figure>
+          <figure className="gallery-card">
+            <img src="/images/community.jpg" alt="Community Support" />
+            <figcaption>Community Support</figcaption>
+          </figure>
+          <figure className="gallery-card">
+            <img src="/images/naaa.jpg" alt="Support Groups" />
+            <figcaption>Support Groups</figcaption>
+          </figure>
+          <figure className="gallery-card">
+            <img src="/images/reminder.jpg" alt="Wellness Reminders" />
+            <figcaption>Wellness Reminders</figcaption>
+          </figure>
+          <figure className="gallery-card">
+            <img src="/images/rituals.jpg" alt="Daily Rituals" />
+            <figcaption>Daily Rituals</figcaption>
+          </figure>
+          <figure className="gallery-card">
+            <img src={wellnessBowlV2} alt="Wellness Bowl" />
+            <figcaption>Wellness Bowl</figcaption>
+          </figure>
         </div>
       </section>
 
