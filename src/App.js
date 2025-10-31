@@ -12,7 +12,7 @@ import Yoga from "./Views/Yoga";
 import Acuwellness from "./Views/Acuwellness";
 import Spiritual from "./Views/Spiritual";
 import EventsPage from "./Views/EventsPage";
-import Assistance from "./Views/Assistance";
+import AssistPage from "./Views/AssistPage";
 import ProviderSignup from "./features/providers/ProviderSignup";
 import ProviderDirectory from "./features/providers/ProviderDirectory";
 import BenefitsDetail from "./features/providers/BenefitsDetail";
@@ -32,6 +32,7 @@ import TraumaEducationPage from "./Views/TraumaEducationPage";
 import CareersPage from "./Views/CareersPage";
 import FAQPage from "./Views/FAQPage";
 import NewsPage from "./Views/NewsPage";
+import ResourceDetail from "./Views/ResourceDetail";
 
 function App() {
   return (
@@ -68,7 +69,8 @@ function App() {
             <Route path="/acuwellness" element={<Acuwellness />} />
             <Route path="/spiritual" element={<Spiritual />} />
             <Route path="/events" element={<EventsPage />} />
-            <Route path="/assistance" element={<Assistance />} />
+            <Route path="/assistance" element={<AssistPage />} />
+            <Route path="/assistance/:slug" element={<ResourceDetail />} />
             <Route path="/product" element={<ProductPage />} />
             <Route path="/tools" element={<ToolsPage />} />
             <Route path="/blog" element={<BlogPage />} />

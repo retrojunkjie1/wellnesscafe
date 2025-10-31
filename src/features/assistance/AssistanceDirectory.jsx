@@ -1,4 +1,5 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 // Reuse the unified glass icon system from PageTemplate for transparent icons
 import "../../Views/PageTemplate.css";
 import "./AssistanceDirectory.css";
@@ -14,6 +15,7 @@ const iconForCategory = (cat) => {
     "Healthcare Navigation": "💊",
     "Crisis & Hotlines": "📞",
     "Employment & Education": "🎓",
+    "Resource Hubs": "🧭",
   };
   return map[cat] || "📚";
 };
@@ -24,6 +26,14 @@ const AssistanceDirectory = () => {
   const [query, setQuery] = useState("");
   const [stateFilter, setStateFilter] = useState("ALL");
   const [modalCat, setModalCat] = useState(null);
+  const navigate = useNavigate();
+
+  const slugify = (s) =>
+    String(s)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
+  const resourceSlug = (it) => `${slugify(it.category)}-${slugify(it.name)}`;
 
   const categories = useMemo(() => unique(data.map((d) => d.category)), []);
   const states = useMemo(
@@ -58,34 +68,92 @@ const AssistanceDirectory = () => {
       "Recovery Centers": {
         title: "Recovery Centers",
         desc: "Inpatient and outpatient treatment with holistic recovery programs.",
+        bullets: [
+          "Detox, residential, PHP/IOP/OP",
+          "Medication-Assisted Treatment (MAT)",
+          "Family, peer, and aftercare support",
+          "Grants and sliding-scale options",
+        ],
       },
       "Sober Living Homes": {
         title: "Sober Living Homes",
         desc: "Safe, peer-supported housing for sustained recovery.",
+        bullets: [
+          "Drug-free housing with accountability",
+          "House meetings, curfews, and chores",
+          "Transition planning and job support",
+          "Scholarships and low-cost beds (varies)",
+        ],
       },
       "Legal Aid": {
         title: "Legal Aid & Advocacy",
         desc: "Civil legal support, tenant rights, benefits, and more.",
+        bullets: [
+          "Evictions, housing conditions, benefits appeals",
+          "Protection orders and family law assistance",
+          "Immigration and disability rights",
+          "Pro bono and low-cost services",
+        ],
       },
       "Financial Assistance": {
         title: "Financial Assistance",
         desc: "Find public benefits, grants, and cost-of-care help.",
+        bullets: [
+          "SSI/SSDI, TANF, SNAP/EBT",
+          "LIHEAP utility assistance",
+          "Emergency cash and rental aid",
+          "Program finder and eligibility guidance",
+        ],
       },
       "Housing Assistance": {
         title: "Housing Assistance",
         desc: "Affordable housing, HUD resources, homeless services.",
+        bullets: [
+          "Section 8/HCV and public housing",
+          "Continuum of Care and rapid rehousing",
+          "Emergency shelter placement",
+          "Fair housing and tenant protections",
+        ],
       },
       "Healthcare Navigation": {
         title: "Healthcare Navigation",
         desc: "Medicaid options, coverage, and care coordination.",
+        bullets: [
+          "Medicaid/CHIP/Medicare enrollment",
+          "Marketplace plans and subsidies",
+          "Primary care and specialist referrals",
+          "Behavioral health coverage and parity",
+        ],
       },
       "Crisis & Hotlines": {
         title: "Emergency & Crisis Intervention",
         desc: "24/7 hotlines, safety planning, and rapid response.",
+        bullets: [
+          "988 Suicide & Crisis Lifeline",
+          "DV shelters and safety planning",
+          "Utility shut-off and eviction prevention",
+          "Emergency food and transportation",
+        ],
       },
       "Employment & Education": {
         title: "Employment & Education",
         desc: "Job search, training, and upskilling programs.",
+        bullets: [
+          "Workforce centers and resume help",
+          "Vocational rehab and apprenticeships",
+          "GED and adult education",
+          "Job Corps and tuition support",
+        ],
+      },
+      "Resource Hubs": {
+        title: "Resource Hubs",
+        desc: "One-stop directories to search local help across many needs.",
+        bullets: [
+          "Food, housing, money, care, education, work",
+          "Browse by ZIP code and contact directly",
+          "National and local nonprofit programs",
+          "Filter for cost, language, and eligibility",
+        ],
       },
     }),
     []
@@ -94,10 +162,38 @@ const AssistanceDirectory = () => {
   const openModal = (cat) => setModalCat(cat);
   const closeModal = () => setModalCat(null);
 
+  const bgStyle = {
+    backgroundImage: `linear-gradient(160deg, #0b0f0c 0%, #0f1813 70%, #172420 100%), url(${process.env.PUBLIC_URL}/assets/images/assistance-bg-dark.jpg), url(${process.env.PUBLIC_URL}/assets/images/assistance-bg-dark.svg)`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+  };
+
+  const modalRef = useRef(null);
+
+  useEffect(() => {
+    if (!modalCat) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") {
+        closeModal();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    // focus modal for accessibility
+    const t = setTimeout(() => {
+      modalRef.current?.focus();
+    }, 0);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      clearTimeout(t);
+    };
+  }, [modalCat]);
+
   return (
     <section
       className="assistance-section"
       aria-label="WellnessCafe Assistance Whitebook"
+      style={bgStyle}
     >
       <div className="assistance-overlay"></div>
       <div className="assistance-container">
@@ -174,8 +270,20 @@ const AssistanceDirectory = () => {
         </div>
 
         {modalCat && (
-          <div className="ad-modal-backdrop" role="dialog" aria-modal="true">
-            <div className="ad-modal" role="document">
+          <div
+            className="ad-modal-backdrop"
+            role="dialog"
+            aria-modal="true"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) closeModal();
+            }}
+          >
+            <div
+              className="ad-modal"
+              role="document"
+              tabIndex={-1}
+              ref={modalRef}
+            >
               <div className="ad-modal-header">
                 <div
                   className="wellness-icon-card wellness-icon wellness-icon-sm"
@@ -194,9 +302,37 @@ const AssistanceDirectory = () => {
                   ✕
                 </button>
               </div>
-              <div className="ad-modal-body">
+              <div className="ad-links">
+                {categoryMeta[modalCat] && (
+                  <div className="ad-category-info">
+                    <div className="ad-section-title">
+                      What this category offers
+                    </div>
+                    <p className="ad-category-desc">
+                      {categoryMeta[modalCat].desc}
+                    </p>
+                    {categoryMeta[modalCat].bullets && (
+                      <ul className="ad-bullets">
+                        {categoryMeta[modalCat].bullets.map((b) => (
+                          <li key={b}>{b}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                )}
                 {(grouped[modalCat] || []).map((it) => (
                   <div key={it.name + it.location} className="ad-item">
+                    {it.contact?.website && (
+                      <a
+                        className="ad-link"
+                        href={it.contact.website}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`Open official site for ${it.name}`}
+                      >
+                        Apply
+                      </a>
+                    )}
                     <div>
                       <div className="ad-item-title">{it.name}</div>
                       <div className="ad-item-meta">
@@ -215,16 +351,16 @@ const AssistanceDirectory = () => {
                           Call
                         </a>
                       )}
-                      {it.contact?.website && (
-                        <a
-                          className="ad-link"
-                          href={it.contact.website}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          Site
-                        </a>
-                      )}
+                      <button
+                        type="button"
+                        className="ad-link"
+                        onClick={() =>
+                          navigate(`/assistance/${resourceSlug(it)}`)
+                        }
+                        aria-label={`Open details for ${it.name}`}
+                      >
+                        Details
+                      </button>
                       {it.contact?.email && it.contact.email !== "" && (
                         <a
                           className="ad-link"
@@ -234,6 +370,82 @@ const AssistanceDirectory = () => {
                         </a>
                       )}
                     </div>
+                    {(it.description ||
+                      it.services ||
+                      it.eligibility ||
+                      it.howToApply ||
+                      it.documents ||
+                      it.hours ||
+                      it.languages ||
+                      it.cost ||
+                      it.notes) && (
+                      <details className="ad-details">
+                        <summary>More details</summary>
+                        {it.description && (
+                          <p className="ad-detail-text">{it.description}</p>
+                        )}
+                        {Array.isArray(it.services) &&
+                          it.services.length > 0 && (
+                            <div className="ad-detail-block">
+                              <div className="ad-detail-title">Services</div>
+                              <ul className="ad-bullets">
+                                {it.services.map((s) => (
+                                  <li key={s}>{s}</li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        {it.eligibility && (
+                          <div className="ad-detail-block">
+                            <div className="ad-detail-title">Eligibility</div>
+                            <p className="ad-detail-text">{it.eligibility}</p>
+                          </div>
+                        )}
+                        {it.howToApply && (
+                          <div className="ad-detail-block">
+                            <div className="ad-detail-title">How to apply</div>
+                            <p className="ad-detail-text">{it.howToApply}</p>
+                          </div>
+                        )}
+                        {Array.isArray(it.documents) &&
+                          it.documents.length > 0 && (
+                            <div className="ad-detail-block">
+                              <div className="ad-detail-title">
+                                Documents to prepare
+                              </div>
+                              <ul className="ad-bullets">
+                                {it.documents.map((d) => (
+                                  <li key={d}>{d}</li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        {it.hours && (
+                          <div className="ad-detail-grid">
+                            <span>Hours</span>
+                            <span>{it.hours}</span>
+                          </div>
+                        )}
+                        {it.languages && (
+                          <div className="ad-detail-grid">
+                            <span>Languages</span>
+                            <span>{it.languages}</span>
+                          </div>
+                        )}
+                        {it.cost && (
+                          <div className="ad-detail-grid">
+                            <span>Cost</span>
+                            <span>{it.cost}</span>
+                          </div>
+                        )}
+                        {it.notes && (
+                          <div className="ad-detail-block">
+                            <div className="ad-detail-title">Notes</div>
+                            <p className="ad-detail-text">{it.notes}</p>
+                          </div>
+                        )}
+                      </details>
+                    )}
                   </div>
                 ))}
               </div>
