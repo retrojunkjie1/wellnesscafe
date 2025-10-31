@@ -24,7 +24,7 @@ WellnessCafe is a comprehensive wellness platform that combines ancient healing 
 
 ## 🚀 Quick Start
 
-\`\`\`bash
+```bash
 # Clone the repository
 git clone https://github.com/yourusername/wellcafeland.git
 cd wellcafeland
@@ -34,7 +34,7 @@ npm install
 
 # Start development server
 npm start
-\`\`\`
+```
 
 Visit [http://localhost:3000](http://localhost:3000) to see the app.
 
@@ -49,34 +49,34 @@ Visit [http://localhost:3000](http://localhost:3000) to see the app.
 
 ### 1. Clone and Install
 
-\`\`\`bash
+```bash
 git clone https://github.com/yourusername/wellcafeland.git
 cd wellcafeland
 npm install
-\`\`\`
+```
 
 ### 2. Firebase Configuration
 
-Create \`.env.local\` in the project root:
+Create `.env.local` in the project root:
 
-\`\`\`env
+```env
 REACT_APP_FIREBASE_API_KEY=your_api_key
 REACT_APP_FIREBASE_AUTH_DOMAIN=your_auth_domain
 REACT_APP_FIREBASE_PROJECT_ID=your_project_id
 REACT_APP_FIREBASE_STORAGE_BUCKET=your_storage_bucket
 REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
 REACT_APP_FIREBASE_APP_ID=your_app_id
-\`\`\`
+```
 
 ### 3. Start Development
 
-\`\`\`bash
+```bash
 npm start
-\`\`\`
+```
 
 ## 📁 Project Structure
 
-\`\`\`
+```
 wellcafeland/
 ├── public/                 # Static assets
 │   ├── index.html
@@ -107,24 +107,24 @@ wellcafeland/
 ├── firebase.json         # Firebase configuration
 ├── package.json          # Dependencies
 └── README.md            # This file
-\`\`\`
+```
 
 ## 🔑 Key Routes
 
 | Route | Component | Description |
 |-------|-----------|-------------|
-| \`/\` | HomePage | Landing page with features |
-| \`/recovery\` | Recovery | Addiction recovery tools |
-| \`/yoga\` | Yoga | Yoga and mindfulness |
-| \`/acuwellness\` | Acuwellness | Eastern medicine |
-| \`/spiritual\` | Spiritual | Spiritual counseling |
-| \`/events\` | Events | Community events |
-| \`/assistance\` | Assistance | Government aid navigation |
-| \`/providers\` | ProvidersPage | Provider directory |
-| \`/providers/apply\` | ProviderSignup | Provider application |
-| \`/dashboard\` | Dashboard | User dashboard (protected) |
-| \`/about\` | AboutPage | About WellnessCafe |
-| \`/contact\` | ContactPage | Contact information |
+| `/` | HomePage | Landing page with features |
+| `/recovery` | Recovery | Addiction recovery tools |
+| `/yoga` | Yoga | Yoga and mindfulness |
+| `/acuwellness` | Acuwellness | Eastern medicine |
+| `/spiritual` | Spiritual | Spiritual counseling |
+| `/events` | Events | Community events |
+| `/assistance` | Assistance | Government aid navigation |
+| `/providers` | ProvidersPage | Provider directory |
+| `/providers/apply` | ProviderSignup | Provider application |
+| `/dashboard` | Dashboard | User dashboard (protected) |
+| `/about` | AboutPage | About WellnessCafe |
+| `/contact` | ContactPage | Contact information |
 
 ## 🔒 Security & Compliance
 
@@ -136,24 +136,24 @@ wellcafeland/
 
 ## 📜 Available Scripts
 
-\`\`\`bash
+```bash
 npm start          # Start development server (port 3000)
 npm run build      # Build production bundle
 npm test           # Run test suite
 npm run eject      # Eject from Create React App
-\`\`\`
+```
 
 ## 🚀 Deployment
 
 ### Firebase Hosting
 
-\`\`\`bash
+```bash
 # Build production bundle
 npm run build
 
 # Deploy to Firebase
 firebase deploy
-\`\`\`
+```
 
 See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
 
@@ -161,7 +161,7 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
 
 ### Join Our Network
 
-1. Visit \`/providers/apply\`
+1. Visit `/providers/apply`
 2. Complete verification process
 3. Set up profile and availability
 4. Start accepting clients (24-48 hours)
@@ -177,13 +177,13 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
 
 We welcome contributions! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
 
-\`\`\`bash
+```bash
 # Fork and clone
 git checkout -b feature/AmazingFeature
 git commit -m 'Add AmazingFeature'
 git push origin feature/AmazingFeature
 # Open Pull Request
-\`\`\`
+```
 
 ## 📊 Project Stats
 
