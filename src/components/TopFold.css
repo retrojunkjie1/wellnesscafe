@@ -190,7 +190,7 @@
 .topfold-content {
   position: relative;
   text-align: center;
-  z-index: 3;
+  z-index: 5; /* lift entire content block above anything below */
   max-width: min(800px, 90vw);
   padding: clamp(1rem, 5vw, 2rem);
   margin: 4rem auto 0;
@@ -314,6 +314,8 @@
   gap: 2rem;
   margin-bottom: 3rem;
   flex-wrap: wrap;
+  position: relative;
+  z-index: 6; /* bring the 10K / 500+ / 95% row forward */
 }
 
 .topfold-stats .stat-item {
@@ -325,6 +327,10 @@
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.15);
   min-width: 120px;
+  position: relative;
+  z-index: 7; /* ensure each card sits on top */
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .topfold-stats .stat-number {
