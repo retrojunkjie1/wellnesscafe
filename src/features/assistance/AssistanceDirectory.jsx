@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 // Reuse the unified glass icon system from PageTemplate for transparent icons
 import "../../Views/PageTemplate.css";
 import "./AssistanceDirectory.css";
@@ -27,6 +27,7 @@ const AssistanceDirectory = () => {
   const [stateFilter, setStateFilter] = useState("ALL");
   const [modalCat, setModalCat] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const slugify = (s) =>
     String(s)
@@ -159,7 +160,22 @@ const AssistanceDirectory = () => {
     []
   );
 
-  const openModal = (cat) => setModalCat(cat);
+  const track = (event, payload = {}) => {
+    try {
+      if (window && Array.isArray(window.dataLayer)) {
+        window.dataLayer.push({ event, ...payload });
+      }
+      // eslint-disable-next-line no-console
+      console.log(`[analytics] ${event}`, payload);
+    } catch (e) {
+      /* no-op */
+    }
+  };
+
+  const openModal = (cat) => {
+    setModalCat(cat);
+    track("assistance_category_open", { category: cat });
+  };
   const closeModal = () => setModalCat(null);
 
   const bgStyle = {
@@ -188,6 +204,62 @@ const AssistanceDirectory = () => {
       clearTimeout(t);
     };
   }, [modalCat]);
+
+  // Initialize filters from URL on mount
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const q = params.get("q");
+    const st = params.get("state");
+    if (q) setQuery(q);
+    if (st) setStateFilter(st);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Persist filters to URL without reload
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (query) params.set("q", query);
+    else params.delete("q");
+    if (stateFilter && stateFilter !== "ALL") params.set("state", stateFilter);
+    else params.delete("state");
+    const search = params.toString();
+    const next = search
+      ? `?${search}${location.hash || ""}`
+      : `${location.hash || ""}`;
+    if (next !== `${location.search}${location.hash || ""}`) {
+      navigate(
+        {
+          pathname: location.pathname,
+          search: search || undefined,
+          hash: location.hash,
+        },
+        { replace: true }
+      );
+    }
+  }, [
+    query,
+    stateFilter,
+    navigate,
+    location.pathname,
+    location.search,
+    location.hash,
+  ]);
+
+  // Deep-link support: auto-open category via ?open=<Category> or #<Category>
+  useEffect(() => {
+    if (modalCat) return;
+    const params = new URLSearchParams(location.search);
+    const open =
+      params.get("open") || decodeURIComponent(location.hash.replace(/^#/, ""));
+    if (!open) return;
+    const target = categories.find(
+      (c) => c && c.toLowerCase() === String(open).toLowerCase()
+    );
+    if (target) {
+      setTimeout(() => openModal(target), 0);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.search, location.hash, categories.length]);
 
   return (
     <section
@@ -296,6 +368,27 @@ const AssistanceDirectory = () => {
                 </h3>
                 <button
                   className="ad-modal-close"
+                  onClick={() => {
+                    const url = `${
+                      window.location.origin
+                    }/assistance?open=${encodeURIComponent(modalCat)}`;
+                    try {
+                      navigator.clipboard?.writeText(url);
+                      track("assistance_share_category", {
+                        category: modalCat,
+                      });
+                    } catch (e) {
+                      // eslint-disable-next-line no-console
+                      console.log("Share copy failed", e);
+                    }
+                  }}
+                  aria-label="Share category"
+                  title="Copy share link"
+                >
+                  ⤴︎
+                </button>
+                <button
+                  className="ad-modal-close"
                   onClick={closeModal}
                   aria-label="Close"
                 >
@@ -329,6 +422,12 @@ const AssistanceDirectory = () => {
                         target="_blank"
                         rel="noreferrer"
                         aria-label={`Open official site for ${it.name}`}
+                        onClick={() =>
+                          track("assistance_apply_click", {
+                            name: it.name,
+                            category: it.category,
+                          })
+                        }
                       >
                         Apply
                       </a>
@@ -347,6 +446,12 @@ const AssistanceDirectory = () => {
                             /[^+\d]/g,
                             ""
                           )}`}
+                          onClick={() =>
+                            track("assistance_call_click", {
+                              name: it.name,
+                              category: it.category,
+                            })
+                          }
                         >
                           Call
                         </a>
@@ -354,9 +459,13 @@ const AssistanceDirectory = () => {
                       <button
                         type="button"
                         className="ad-link"
-                        onClick={() =>
-                          navigate(`/assistance/${resourceSlug(it)}`)
-                        }
+                        onClick={() => {
+                          track("assistance_details_click", {
+                            name: it.name,
+                            category: it.category,
+                          });
+                          navigate(`/assistance/${resourceSlug(it)}`);
+                        }}
                         aria-label={`Open details for ${it.name}`}
                       >
                         Details
@@ -365,6 +474,12 @@ const AssistanceDirectory = () => {
                         <a
                           className="ad-link"
                           href={`mailto:${it.contact.email}`}
+                          onClick={() =>
+                            track("assistance_email_click", {
+                              name: it.name,
+                              category: it.category,
+                            })
+                          }
                         >
                           Email
                         </a>

@@ -31,6 +31,7 @@ const iconForCategory = (cat) => {
 const ResourceDetail = () => {
   const { slug } = useParams();
   const [confirmLeave, setConfirmLeave] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const match = useMemo(() => {
     const bySlug = (it) =>
@@ -55,6 +56,18 @@ const ResourceDetail = () => {
   }
 
   const it = match;
+
+  const track = (event, payload = {}) => {
+    try {
+      if (window && Array.isArray(window.dataLayer)) {
+        window.dataLayer.push({ event, ...payload });
+      }
+      // eslint-disable-next-line no-console
+      console.log(`[analytics] ${event}`, payload);
+    } catch (e) {
+      /* no-op */
+    }
+  };
 
   const goToOfficial = () => {
     if (!it?.contact?.website) return;
@@ -183,6 +196,26 @@ const ResourceDetail = () => {
               Email
             </a>
           )}
+          <button
+            type="button"
+            className="btn rd-btn"
+            onClick={() => {
+              try {
+                navigator.clipboard?.writeText(window.location.href);
+                setCopied(true);
+                track("assistance_share_detail", {
+                  name: it.name,
+                  category: it.category,
+                });
+                setTimeout(() => setCopied(false), 1600);
+              } catch (e) {
+                // eslint-disable-next-line no-console
+                console.log("Share copy failed", e);
+              }
+            }}
+          >
+            {copied ? "Copied" : "Share"}
+          </button>
           {it.contact?.website && (
             <button
               type="button"
@@ -196,7 +229,13 @@ const ResourceDetail = () => {
         </div>
 
         <div className="rd-back">
-          <Link to="/assistance" className="rd-inline-link">
+          <Link
+            to={`/assistance?open=${encodeURIComponent(it.category)}`}
+            className="rd-inline-link"
+            onClick={() =>
+              track("assistance_back_to_category", { category: it.category })
+            }
+          >
             ← Back to Assistance
           </Link>
         </div>
