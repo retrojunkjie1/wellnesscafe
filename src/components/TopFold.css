@@ -333,13 +333,34 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
+/* Gentle gradient ring to make stats pop without overpowering */
+.topfold-stats .stat-item::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  bottom: -2px;
+  left: -2px;
+  border-radius: inherit;
+  background: radial-gradient(
+    140% 100% at 50% 0%,
+    rgba(189, 166, 255, 0.35) 0%,
+    rgba(189, 166, 255, 0.15) 25%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  z-index: -1;
+  pointer-events: none;
+  filter: blur(0.2px);
+}
+
 .topfold-stats .stat-number {
   display: block;
   font-size: 2rem;
   font-weight: 800;
   color: #ffffff;
   margin-bottom: 0.5rem;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3),
+    0 6px 18px rgba(189, 166, 255, 0.25), 0 0 2px rgba(255, 255, 255, 0.6);
 }
 
 .topfold-stats .stat-label {
