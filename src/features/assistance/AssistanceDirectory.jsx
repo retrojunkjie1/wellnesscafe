@@ -178,6 +178,30 @@ const AssistanceDirectory = () => {
   };
   const closeModal = () => setModalCat(null);
 
+  // Robust clipboard helper with fallback for older/iOS browsers
+  const copyToClipboard = async (text) => {
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+        return true;
+      }
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      const ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      return ok;
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log("Clipboard copy failed", e);
+      return false;
+    }
+  };
+
   const bgStyle = {
     backgroundImage: `linear-gradient(160deg, #0b0f0c 0%, #0f1813 70%, #172420 100%), url(${process.env.PUBLIC_URL}/assets/images/assistance-bg-dark.jpg), url(${process.env.PUBLIC_URL}/assets/images/assistance-bg-dark.svg)`,
     backgroundPosition: "center",
@@ -297,48 +321,36 @@ const AssistanceDirectory = () => {
               }}
               aria-label="Filter by state"
             >
-              {states.map((s) => {
-                return (
-                  <option key={s} value={s}>
-                    {s}
-                  </option>
-                );
-              })}
+              {states.map((s) => (
+                <option key={s} value={s}>
+                  {s}
+                </option>
+              ))}
             </select>
-          </div>
-          <div className="ad-cta">
-            <a href="/providers/join">Join as a Provider</a>
           </div>
         </div>
 
         <div className="ad-grid">
-          {categories.map((cat) => {
-            const items = grouped[cat] || [];
-            const meta = categoryMeta[cat] || {
-              title: cat,
-              desc: `${items.length} verified resources in this category.`,
-            };
-            return (
-              <article key={cat} className="ad-card">
-                <button
-                  type="button"
-                  className="ad-card-click"
-                  onClick={() => openModal(cat)}
-                  aria-label={`Open ${meta.title} resources`}
+          {Object.entries(categoryMeta).map(([cat, meta]) => (
+            <article key={cat} className="ad-card">
+              <button
+                type="button"
+                className="ad-card-click"
+                onClick={() => openModal(cat)}
+                aria-label={`Open ${meta.title} resources`}
+              >
+                <div
+                  className="wellness-icon-card wellness-icon wellness-icon-sm"
+                  aria-hidden
                 >
-                  <div
-                    className="wellness-icon-card wellness-icon wellness-icon-sm"
-                    aria-hidden
-                  >
-                    {iconForCategory(cat)}
-                  </div>
-                  <h3 className="ad-card-title">{meta.title}</h3>
-                  <p className="ad-card-desc">{meta.desc}</p>
-                  <span className="ad-learn">Learn more →</span>
-                </button>
-              </article>
-            );
-          })}
+                  {iconForCategory(cat)}
+                </div>
+                <h3 className="ad-card-title">{meta.title}</h3>
+                <p className="ad-card-desc">{meta.desc}</p>
+                <span className="ad-learn">Learn more →</span>
+              </button>
+            </article>
+          ))}
         </div>
 
         {modalCat && (
@@ -368,19 +380,15 @@ const AssistanceDirectory = () => {
                 </h3>
                 <button
                   className="ad-modal-close"
-                  onClick={() => {
+                  onClick={async () => {
                     const url = `${
                       window.location.origin
                     }/assistance?open=${encodeURIComponent(modalCat)}`;
-                    try {
-                      navigator.clipboard?.writeText(url);
-                      track("assistance_share_category", {
-                        category: modalCat,
-                      });
-                    } catch (e) {
-                      // eslint-disable-next-line no-console
-                      console.log("Share copy failed", e);
-                    }
+                    const ok = await copyToClipboard(url);
+                    track("assistance_share_category", {
+                      category: modalCat,
+                      ok,
+                    });
                   }}
                   aria-label="Share category"
                   title="Copy share link"
