@@ -11,7 +11,7 @@ import Recovery from "./Views/Recovery";
 import Yoga from "./Views/Yoga";
 import Acuwellness from "./Views/Acuwellness";
 import Spiritual from "./Views/Spiritual";
-import Events from "./Views/Events";
+import EventsPage from "./Views/EventsPage";
 import Assistance from "./Views/Assistance";
 import ProviderSignup from "./features/providers/ProviderSignup";
 import ProviderDirectory from "./features/providers/ProviderDirectory";
@@ -67,7 +67,7 @@ function App() {
             <Route path="/yoga" element={<Yoga />} />
             <Route path="/acuwellness" element={<Acuwellness />} />
             <Route path="/spiritual" element={<Spiritual />} />
-            <Route path="/events" element={<Events />} />
+            <Route path="/events" element={<EventsPage />} />
             <Route path="/assistance" element={<Assistance />} />
             <Route path="/product" element={<ProductPage />} />
             <Route path="/tools" element={<ToolsPage />} />
