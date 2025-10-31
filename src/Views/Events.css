@@ -3,6 +3,8 @@
   min-height: 100vh;
   padding: 6rem 2rem 4rem;
   color: #fff;
+  position: relative;
+  z-index: 2; /* ensure content is above PanoramicHero background */
 }
 
 .wc-events-filters {
