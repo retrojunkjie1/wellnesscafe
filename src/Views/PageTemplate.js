@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Header from "../components/Header";
 import "./PageTemplate.css";
 import productImage from "../assets/images/WellnessCafe-Product-v1.png";
@@ -83,6 +84,20 @@ const PageTemplate = ({ title, intro, features, ctaText, pageType }) => {
       </section>
     </div>
   );
+};
+
+PageTemplate.propTypes = {
+  title: PropTypes.string.isRequired,
+  intro: PropTypes.string.isRequired,
+  features: PropTypes.arrayOf(
+    PropTypes.shape({
+      icon: PropTypes.node.isRequired,
+      title: PropTypes.string.isRequired,
+      desc: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  ctaText: PropTypes.string.isRequired,
+  pageType: PropTypes.string.isRequired,
 };
 
 export default PageTemplate;
