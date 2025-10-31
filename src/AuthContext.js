@@ -33,6 +33,13 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // If Firebase auth is not available, set loading to false immediately
+    if (!auth) {
+      console.warn("Firebase auth is disabled - running in offline mode");
+      setLoading(false);
+      return;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         // Get additional user data from Firestore if available
