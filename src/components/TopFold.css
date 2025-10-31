@@ -293,7 +293,7 @@
   flex-wrap: wrap;
 }
 
-.stat-item {
+.topfold-stats .stat-item {
   text-align: center;
   background: rgba(255, 255, 255, 0.08);
   -webkit-backdrop-filter: blur(10px);
@@ -304,7 +304,7 @@
   min-width: 120px;
 }
 
-.stat-number {
+.topfold-stats .stat-number {
   display: block;
   font-size: 2rem;
   font-weight: 800;
@@ -313,7 +313,7 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.stat-label {
+.topfold-stats .stat-label {
   color: #f0f0f0;
   font-size: 0.85rem;
   font-weight: 500;
@@ -516,12 +516,12 @@
     margin-bottom: 2.5rem;
   }
 
-  .stat-item {
+  .topfold-stats .stat-item {
     padding: 1rem;
     min-width: 100px;
   }
 
-  .stat-number {
+  .topfold-stats .stat-number {
     font-size: 1.5rem;
   }
 }
