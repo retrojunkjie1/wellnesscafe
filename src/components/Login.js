@@ -23,6 +23,8 @@ const Login = () => {
       await login(email, password);
       navigate(from, { replace: true });
     } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error("Login error:", error);
       setError("Failed to sign in. Please check your credentials.");
     }
     setLoading(false);
@@ -35,6 +37,8 @@ const Login = () => {
       await loginWithGoogle();
       navigate(from, { replace: true });
     } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error("Google login error:", error);
       setError("Failed to sign in with Google.");
     }
     setLoading(false);
@@ -89,7 +93,7 @@ const Login = () => {
             src="https://developers.google.com/identity/images/g-logo.png"
             alt="Google"
           />
-          Sign in with Google
+          <span style={{ marginLeft: 8 }}>Sign in with Google</span>
         </button>
 
         <p className="auth-link">

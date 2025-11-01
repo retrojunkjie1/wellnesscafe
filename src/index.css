@@ -1,12 +1,13 @@
 :root {
-  --bg: #f7f5f0;
-  --bg2: #fff9e9;
+  --bg: #111827;
+  --bg2: #1f2937;
   --brand: #d4b483;
   --brand-2: #cbb4ff;
-  --text: #4a4a4a;
-  --muted: #6b6b6b;
-  --card: #ffffff;
-  --chip: #bfd2c1;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --card: #1f2937;
+  --chip: #374151;
+  --on-dark-text: #ffffff; /* shared token for text on dark overlays */
 }
 
 html,
@@ -33,7 +34,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--text);
-  background: linear-gradient(135deg, #f0f4f8 0%, #e8f4f8 100%);
+  background: var(--bg);
   width: 100%;
   max-width: 100vw;
 }

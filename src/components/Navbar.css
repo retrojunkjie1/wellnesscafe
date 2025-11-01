@@ -126,8 +126,8 @@
 }
 
 .mobile-nav-links a:hover {
-  color: #7a5af8;
-  background-color: #f8f6ff;
+  color: #5a3fd8; /* darker purple for contrast */
+  background-color: #efe9ff; /* slightly deeper backdrop for AA */
 }
 
 /* Auth Buttons */

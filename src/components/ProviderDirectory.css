@@ -199,7 +199,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #2d3748; /* darker text for contrast */
   font-weight: 600;
   font-size: 18px;
 }
@@ -332,7 +332,7 @@
 
 .appointment-badge.hybrid {
   background: #f0e68c;
-  color: #856404;
+  color: #5a3d00; /* deeper for contrast */
 }
 
 .provider-actions {
@@ -363,7 +363,7 @@
 
 .contact-btn {
   background: linear-gradient(135deg, #c4a484 0%, #a89070 100%);
-  color: white;
+  color: #2d3748; /* dark text for contrast on light gradient */
 }
 
 .contact-btn:hover {

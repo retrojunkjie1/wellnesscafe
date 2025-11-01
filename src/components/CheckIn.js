@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { useAuth } from "../AuthContext";
 import { doc, setDoc, collection, addDoc } from "firebase/firestore";
 import { db } from "../firebase";
@@ -39,9 +40,9 @@ const CheckIn = ({ onComplete }) => {
           date: new Date().toISOString().split("T")[0],
           timestamp: new Date(),
           mood,
-          energy: parseInt(energy),
-          stress: parseInt(stress),
-          sleep: parseInt(sleep),
+          energy: Number.parseInt(energy, 10),
+          stress: Number.parseInt(stress, 10),
+          sleep: Number.parseInt(sleep, 10),
           gratitude,
           journal,
           completed: true,
@@ -64,9 +65,9 @@ const CheckIn = ({ onComplete }) => {
         date: new Date().toISOString().split("T")[0], // YYYY-MM-DD format
         timestamp: new Date(),
         mood,
-        energy: parseInt(energy),
-        stress: parseInt(stress),
-        sleep: parseInt(sleep),
+        energy: Number.parseInt(energy, 10),
+        stress: Number.parseInt(stress, 10),
+        sleep: Number.parseInt(sleep, 10),
         gratitude,
         journal,
         completed: true,
@@ -112,10 +113,10 @@ const CheckIn = ({ onComplete }) => {
 
       <form onSubmit={handleSubmit} className="checkin-form">
         {/* Mood Selection */}
-        <div className="form-section">
-          <label className="section-label">
+        <fieldset className="form-section">
+          <legend className="section-label">
             How is your overall mood today?
-          </label>
+          </legend>
           <div className="mood-options">
             {moodOptions.map((option) => (
               <button
@@ -131,11 +132,11 @@ const CheckIn = ({ onComplete }) => {
               </button>
             ))}
           </div>
-        </div>
+        </fieldset>
 
         {/* Energy Rating */}
-        <div className="form-section">
-          <label className="section-label">Energy Level (1-10)</label>
+        <fieldset className="form-section">
+          <legend className="section-label">Energy Level (1-10)</legend>
           <div className="rating-options">
             {ratingOptions.map((num) => (
               <button
@@ -154,11 +155,11 @@ const CheckIn = ({ onComplete }) => {
             <span>Low Energy</span>
             <span>High Energy</span>
           </div>
-        </div>
+        </fieldset>
 
         {/* Stress Rating */}
-        <div className="form-section">
-          <label className="section-label">Stress Level (1-10)</label>
+        <fieldset className="form-section">
+          <legend className="section-label">Stress Level (1-10)</legend>
           <div className="rating-options">
             {ratingOptions.map((num) => (
               <button
@@ -177,11 +178,11 @@ const CheckIn = ({ onComplete }) => {
             <span>Low Stress</span>
             <span>High Stress</span>
           </div>
-        </div>
+        </fieldset>
 
         {/* Sleep Rating */}
-        <div className="form-section">
-          <label className="section-label">Sleep Quality (1-10)</label>
+        <fieldset className="form-section">
+          <legend className="section-label">Sleep Quality (1-10)</legend>
           <div className="rating-options">
             {ratingOptions.map((num) => (
               <button
@@ -200,13 +201,11 @@ const CheckIn = ({ onComplete }) => {
             <span>Poor Sleep</span>
             <span>Great Sleep</span>
           </div>
-        </div>
+        </fieldset>
 
         {/* Gratitude */}
         <div className="form-section">
-          <label className="section-label">
-            What are you grateful for today?
-          </label>
+          <p className="section-label">What are you grateful for today?</p>
           <textarea
             value={gratitude}
             onChange={(e) => setGratitude(e.target.value)}
@@ -218,7 +217,7 @@ const CheckIn = ({ onComplete }) => {
 
         {/* Journal */}
         <div className="form-section">
-          <label className="section-label">Journal Entry (Optional)</label>
+          <p className="section-label">Journal Entry (Optional)</p>
           <textarea
             value={journal}
             onChange={(e) => setJournal(e.target.value)}
@@ -242,3 +241,4 @@ const CheckIn = ({ onComplete }) => {
 };
 
 export default CheckIn;
+CheckIn.propTypes = { onComplete: PropTypes.func };

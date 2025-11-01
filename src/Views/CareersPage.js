@@ -11,7 +11,8 @@ const CareersPage = () => (
       <div className="page-hero">
         <h1>Careers</h1>
         <p>
-          Join our mission to advance wellness technology and compassionate care
+          Join our mission to advance calm, privacy-first wellness technology
+          and compassionate care.
         </p>
       </div>
       <section className="section">

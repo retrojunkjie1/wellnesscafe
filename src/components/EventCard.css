@@ -16,13 +16,16 @@
 
 .wc-event-body {
   padding: 1rem 1.25rem;
+  background: rgba(0, 0, 0, 0.45); /* ensure contrast behind text */
+  border-bottom-left-radius: 1.25rem;
+  border-bottom-right-radius: 1.25rem;
 }
 
 .wc-event h3 {
   font-size: 1.1rem;
   font-weight: 600;
   margin: 0.5rem 0;
-  color: #fff;
+  color: var(--on-dark-text);
 }
 
 .wc-event-date,
@@ -41,7 +44,7 @@
 .wc-event-btn {
   background: linear-gradient(120deg, #8b6aff, #bda6ff);
   border: none;
-  color: #fff;
+  color: var(--on-dark-text);
   border-radius: 0.5rem;
   padding: 0.45rem 1rem;
   cursor: pointer;

@@ -1,3 +1,4 @@
+/* global globalThis */
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 // Reuse the unified glass icon system from PageTemplate for transparent icons
@@ -23,6 +24,7 @@ const iconForCategory = (cat) => {
 const unique = (arr) => Array.from(new Set(arr));
 
 const AssistanceDirectory = () => {
+  // Note: we rely on window in this app environment
   const [query, setQuery] = useState("");
   const [stateFilter, setStateFilter] = useState("ALL");
   const [modalCat, setModalCat] = useState(null);
@@ -32,8 +34,8 @@ const AssistanceDirectory = () => {
   const slugify = (s) =>
     String(s)
       .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/(^-|-$)/g, "");
+      .replaceAll(/[^a-z0-9]+/g, "-")
+      .replaceAll(/(^-|-$)/g, "");
   const resourceSlug = (it) => `${slugify(it.category)}-${slugify(it.name)}`;
 
   const categories = useMemo(() => unique(data.map((d) => d.category)), []);
@@ -57,10 +59,10 @@ const AssistanceDirectory = () => {
 
   const grouped = useMemo(() => {
     const map = {};
-    filtered.forEach((item) => {
+    for (const item of filtered) {
       map[item.category] = map[item.category] || [];
       map[item.category].push(item);
-    });
+    }
     return map;
   }, [filtered]);
 
@@ -162,13 +164,14 @@ const AssistanceDirectory = () => {
 
   const track = (event, payload = {}) => {
     try {
-      if (window && Array.isArray(window.dataLayer)) {
-        window.dataLayer.push({ event, ...payload });
+      if (globalThis && Array.isArray(globalThis.dataLayer)) {
+        globalThis.dataLayer.push({ event, ...payload });
       }
       // eslint-disable-next-line no-console
       console.log(`[analytics] ${event}`, payload);
     } catch (e) {
-      /* no-op */
+      // eslint-disable-next-line no-console
+      console.warn("[analytics] track failed", e);
     }
   };
 
@@ -181,20 +184,12 @@ const AssistanceDirectory = () => {
   // Robust clipboard helper with fallback for older/iOS browsers
   const copyToClipboard = async (text) => {
     try {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(text);
+      if (globalThis.navigator?.clipboard && globalThis.isSecureContext) {
+        await globalThis.navigator.clipboard.writeText(text);
         return true;
       }
-      const ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.left = "-9999px";
-      document.body.appendChild(ta);
-      ta.focus();
-      ta.select();
-      const ok = document.execCommand("copy");
-      document.body.removeChild(ta);
-      return ok;
+      // Fallback disabled to avoid deprecated execCommand; report failure
+      return false;
     } catch (e) {
       // eslint-disable-next-line no-console
       console.log("Clipboard copy failed", e);
@@ -218,13 +213,13 @@ const AssistanceDirectory = () => {
         closeModal();
       }
     };
-    window.addEventListener("keydown", onKey);
+    globalThis.addEventListener?.("keydown", onKey);
     // focus modal for accessibility
     const t = setTimeout(() => {
       modalRef.current?.focus();
     }, 0);
     return () => {
-      window.removeEventListener("keydown", onKey);
+      globalThis.removeEventListener?.("keydown", onKey);
       clearTimeout(t);
     };
   }, [modalCat]);
@@ -354,20 +349,24 @@ const AssistanceDirectory = () => {
         </div>
 
         {modalCat && (
-          <div
+          <dialog
             className="ad-modal-backdrop"
-            role="dialog"
-            aria-modal="true"
+            open
+            onCancel={(e) => {
+              e.preventDefault();
+              closeModal();
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Escape") {
+                e.preventDefault();
+                closeModal();
+              }
+            }}
             onClick={(e) => {
               if (e.target === e.currentTarget) closeModal();
             }}
           >
-            <div
-              className="ad-modal"
-              role="document"
-              tabIndex={-1}
-              ref={modalRef}
-            >
+            <div className="ad-modal" tabIndex={-1} ref={modalRef}>
               <div className="ad-modal-header">
                 <div
                   className="wellness-icon-card wellness-icon wellness-icon-sm"
@@ -382,7 +381,7 @@ const AssistanceDirectory = () => {
                   className="ad-modal-close"
                   onClick={async () => {
                     const url = `${
-                      window.location.origin
+                      globalThis.location.origin
                     }/assistance?open=${encodeURIComponent(modalCat)}`;
                     const ok = await copyToClipboard(url);
                     track("assistance_share_category", {
@@ -450,7 +449,7 @@ const AssistanceDirectory = () => {
                       {it.contact?.phone && (
                         <a
                           className="ad-link"
-                          href={`tel:${it.contact.phone.replace(
+                          href={`tel:${it.contact.phone.replaceAll(
                             /[^+\d]/g,
                             ""
                           )}`}
@@ -573,7 +572,7 @@ const AssistanceDirectory = () => {
                 ))}
               </div>
             </div>
-          </div>
+          </dialog>
         )}
 
         <div className="ad-footer">

@@ -201,21 +201,21 @@
 }
 
 .pv-ok {
-  color: #28a745;
+  color: #0f5132; /* darker success text for contrast */
   font-weight: 500;
   padding: 0.5rem;
-  background: rgba(40, 167, 69, 0.2);
+  background: #d1e7dd; /* high-contrast success background */
   border-radius: 4px;
-  border: 1px solid rgba(40, 167, 69, 0.3);
+  border: 1px solid #badbcc;
 }
 
 .pv-err {
-  color: #dc3545;
+  color: #842029; /* darker danger text for contrast */
   font-weight: 500;
   padding: 0.5rem;
-  background: rgba(220, 53, 69, 0.2);
+  background: #f8d7da; /* high-contrast danger background */
   border-radius: 4px;
-  border: 1px solid rgba(220, 53, 69, 0.3);
+  border: 1px solid #f5c2c7;
 }
 
 /* Benefits Section */

@@ -1,7 +1,7 @@
 .App {
   font-family: "Inter", sans-serif;
-  color: #4a4a4a;
-  background-color: #f7f5f0;
+  color: var(--text);
+  background-color: var(--bg);
   text-align: center;
   overflow-x: hidden;
 }
@@ -9,7 +9,7 @@
 /* --- Hero Section --- */
 .wellcafe-hero {
   background: linear-gradient(135deg, #9973e8 0%, #b88a4d 100%);
-  color: #fff;
+  color: var(--on-dark-text);
   padding: 3rem 1.5rem;
   display: flex;
   flex-direction: column;
@@ -17,6 +17,24 @@
   justify-content: center;
   min-height: 50vh; /* reduced height */
   text-align: center;
+  position: relative;
+}
+
+.wellcafe-hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wellcafe-hero > * {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-logo {
@@ -41,8 +59,8 @@
 }
 
 .hero-link {
-  background: #fff9e9;
-  color: #4a4a4a;
+  background: var(--brand);
+  color: var(--bg);
   text-decoration: none;
   padding: 0.6rem 1.5rem;
   border-radius: 25px;
@@ -52,13 +70,13 @@
 }
 
 .hero-link:hover {
-  background: #fff;
-  color: #111;
+  background: var(--brand-2);
+  color: var(--bg);
 }
 
 /* --- Transition between sections --- */
 .wellcafe-content {
-  background-color: #fff;
+  background-color: var(--bg2);
   padding: 4rem 1.5rem;
-  border-top: 6px solid #f8c10a;
+  border-top: 6px solid var(--brand);
 }

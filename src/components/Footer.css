@@ -20,14 +20,14 @@
 }
 
 .footer-link-button:hover {
-  color: #ffffff;
+  color: var(--on-dark-text);
   text-decoration: underline;
 }
 
 .footer-link-button:focus {
   outline: 2px solid #4a90e2;
   outline-offset: 2px;
-  color: #ffffff;
+  color: var(--on-dark-text);
 }
 
 /* Footer Navigation */
@@ -40,7 +40,7 @@
 }
 
 .nav-section h4 {
-  color: #fff;
+  color: var(--on-dark-text);
   margin-bottom: 1rem;
   font-size: 1.1rem;
   font-weight: 600;
@@ -65,7 +65,7 @@
 
 .nav-section a:hover,
 .nav-section button:hover {
-  color: #fff;
+  color: var(--on-dark-text);
   text-decoration: underline;
 }
 
@@ -83,7 +83,7 @@
 }
 
 .social-link:hover {
-  color: #fff;
+  color: var(--on-dark-text);
 }
 
 .social-link svg {
@@ -101,7 +101,7 @@
 }
 
 .footer-newsletter h4 {
-  color: #fff;
+  color: var(--on-dark-text);
   margin-bottom: 0.5rem;
   font-size: 1.2rem;
 }
@@ -125,7 +125,7 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  color: var(--on-dark-text);
   font-size: 0.9rem;
 }
 
@@ -136,7 +136,7 @@
 .newsletter-button {
   padding: 0.75rem 1.5rem;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: #f8f9fa;
+  color: var(--on-dark-text);
   border: none;
   border-radius: 6px;
   cursor: pointer;

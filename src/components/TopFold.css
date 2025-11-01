@@ -14,7 +14,7 @@
   background: rgba(0, 0, 0, 0.25);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
-  color: #fff;
+  color: var(--on-dark-text);
   padding: 0 clamp(1rem, 5vw, 2rem);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   z-index: 1001;
@@ -69,10 +69,10 @@
 }
 
 .sign-in {
-  background: rgba(255, 255, 255, 0.25);
-  color: #ffffff;
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  background: rgba(255, 255, 255, 0.9);
+  color: #0b0f0c;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  text-shadow: none;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
@@ -141,6 +141,23 @@
       rgb(10, 46, 26) 100%
     );
   color: #fff;
+}
+
+/* Additional overlay to ensure AA contrast for text over media */
+.topfold-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.25) 0%,
+    rgba(0, 0, 0, 0.35) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
 }
 
 /* Panoramic Background */

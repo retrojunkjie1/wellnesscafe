@@ -46,8 +46,8 @@
 
 .time-range-selector button.active {
   border-color: #c4a484;
-  background: #fefbf8;
-  color: #c4a484;
+  background: #fff4e0; /* slightly deeper for contrast */
+  color: #6b4f1d; /* darker accent for better readability */
 }
 
 /* No Data State */

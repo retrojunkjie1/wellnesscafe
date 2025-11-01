@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./TopFold.css";
-// TODO: Uncomment these imports once panoramic images are generated
 import heroPanorama from "../assets/images/wellnesscafe -HomePage-header-v1.png";
-// import loungePanorama from '../assets/images/wellness-lounge-panorama.png';
-// import zenLandscapePanorama from '../assets/images/meditation-landscape-panorama.png';
 
 const TopFold = () => {
   const navigate = useNavigate();
@@ -26,7 +23,6 @@ const TopFold = () => {
     <section className="topfold-container">
       {/* Panoramic Hero Background */}
       <div className="panoramic-background">
-        {/* TODO: Uncomment once hero-panorama.png is generated */}
         <img
           src={heroPanorama}
           alt="WellnessCafe Hero Panorama"
@@ -37,12 +33,24 @@ const TopFold = () => {
       <nav className={`topfold-navbar ${navActive ? "active" : ""}`}>
         <div className="nav-logo">WELLNESSCAFE</div>
         <ul className="nav-links">
-          <li onClick={() => navigate("/")}>Home</li>
-          <li onClick={() => navigate("/product")}>Product</li>
-          <li onClick={() => navigate("/tools")}>Tools</li>
-          <li onClick={() => navigate("/events")}>Events</li>
-          <li onClick={() => navigate("/spiritual")}>Spiritual</li>
-          <li onClick={() => navigate("/blog")}>Blog</li>
+          <li>
+            <button onClick={() => navigate("/")}>Home</button>
+          </li>
+          <li>
+            <button onClick={() => navigate("/product")}>Product</button>
+          </li>
+          <li>
+            <button onClick={() => navigate("/tools")}>Tools</button>
+          </li>
+          <li>
+            <button onClick={() => navigate("/events")}>Events</button>
+          </li>
+          <li>
+            <button onClick={() => navigate("/spiritual")}>Spiritual</button>
+          </li>
+          <li>
+            <button onClick={() => navigate("/blog")}>Blog</button>
+          </li>
         </ul>
         <div className="nav-buttons">
           <button
@@ -71,25 +79,28 @@ const TopFold = () => {
           mindfulness, and personal growth.
         </p>
         <div className="topfold-features">
-          <div className="feature-item" onClick={() => navigate("/recovery")}>
+          <button
+            className="feature-item"
+            onClick={() => navigate("/recovery")}
+          >
             <span className="feature-icon">🧠</span>
             <span>AI-Powered Recovery Support</span>
-          </div>
-          <div className="feature-item" onClick={() => navigate("/yoga")}>
+          </button>
+          <button className="feature-item" onClick={() => navigate("/yoga")}>
             <span className="feature-icon">🧘</span>
             <span>Guided Mindfulness & Yoga</span>
-          </div>
-          <div
+          </button>
+          <button
             className="feature-item"
             onClick={() => navigate("/acuwellness")}
           >
             <span className="feature-icon">🌿</span>
             <span>Acuwellness Integration</span>
-          </div>
-          <div className="feature-item" onClick={() => navigate("/events")}>
+          </button>
+          <button className="feature-item" onClick={() => navigate("/events")}>
             <span className="feature-icon">👥</span>
             <span>Community Events & Support</span>
-          </div>
+          </button>
         </div>
         <div className="topfold-stats">
           <div className="stat-item">

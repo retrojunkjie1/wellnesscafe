@@ -96,7 +96,7 @@
 .view-toggle button.active {
   border-color: #c4a484;
   background: #047caf;
-  color: #c4a484;
+  color: var(--on-dark-text);
 }
 
 /* Events Section */
@@ -140,7 +140,7 @@
 
 .event-category {
   background: #c4a484;
-  color: rgb(1, 123, 150);
+  color: #2d3748; /* darker text on light badge */
   padding: 4px 8px;
   border-radius: 12px;
   font-size: 12px;
@@ -157,13 +157,13 @@
 }
 
 .event-status.live {
-  background: #fed7d7;
-  color: #c53030;
+  background: #f8d7da;
+  color: #842029; /* bootstrap-like high contrast */
 }
 
 .event-status.today {
-  background: #fef5e7;
-  color: #d69e2e;
+  background: #fff3cd;
+  color: #664d03; /* bootstrap-like high contrast */
 }
 
 .event-status.upcoming {
@@ -178,6 +178,7 @@
 
 .event-content {
   padding: 20px;
+  background: #ffffff; /* ensure dark text remains readable on card */
 }
 
 .event-title {
@@ -283,7 +284,7 @@
 
 .register-btn {
   background: linear-gradient(135deg, #c4a484 0%, #a89070 100%);
-  color: white;
+  color: #2d3748; /* dark text for contrast on light gradient */
 }
 
 .register-btn:hover {

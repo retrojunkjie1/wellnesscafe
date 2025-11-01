@@ -137,8 +137,8 @@
   border-color: rgba(255, 255, 255, 0.38);
 }
 .ad-card-click {
-  appearance: none;
   -webkit-appearance: none;
+  appearance: none;
   background: transparent;
   border: 0;
   padding: 0;
@@ -208,7 +208,11 @@
 /* Modal */
 .ad-modal-backdrop {
   position: fixed;
-  inset: 0;
+  /* inset fallback for older Safari */
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   background: rgba(0, 0, 0, 0.55);
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
@@ -233,6 +237,7 @@
   align-items: center;
   gap: 0.75rem;
   padding: 1rem 1rem 0.5rem;
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   background: linear-gradient(
@@ -252,8 +257,8 @@
 }
 .ad-modal-close {
   margin-left: auto;
-  appearance: none;
   -webkit-appearance: none;
+  appearance: none;
   background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 10px;

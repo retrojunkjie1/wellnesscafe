@@ -1,3 +1,4 @@
+/* global globalThis */
 import React, { useMemo, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import data from "../data/assistanceDirectory.json";
@@ -9,8 +10,8 @@ import "../features/assistance/AssistanceDirectory.css";
 const slugify = (s) => {
   return String(s)
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
+    .replaceAll(/[^a-z0-9]+/g, "-")
+    .replaceAll(/(^-|-$)/g, "");
 };
 
 const iconForCategory = (cat) => {
@@ -59,35 +60,39 @@ const ResourceDetail = () => {
 
   const track = (event, payload = {}) => {
     try {
-      if (window && Array.isArray(window.dataLayer)) {
-        window.dataLayer.push({ event, ...payload });
+      if (globalThis && Array.isArray(globalThis.dataLayer)) {
+        globalThis.dataLayer.push({ event, ...payload });
       }
       // eslint-disable-next-line no-console
       console.log(`[analytics] ${event}`, payload);
     } catch (e) {
-      /* no-op */
+      // eslint-disable-next-line no-console
+      console.warn("[analytics] track failed", e);
     }
   };
 
   const goToOfficial = () => {
     if (!it?.contact?.website) return;
     setConfirmLeave(false);
-    window.open(it.contact.website, "_blank", "noopener,noreferrer");
+    globalThis.open?.(it.contact.website, "_blank", "noopener,noreferrer");
   };
 
   const linkify = (text) => {
     if (!text) return null;
     const parts = String(text).split(/(https?:\/\/[^\s)]+)|(www\.[^\s)]+)/gi);
-    return parts.map((part, idx) => {
+    let keyCounter = 0;
+    return parts.map((part) => {
       if (!part) return null;
-      const url = part.startsWith("http")
-        ? part
-        : part.startsWith("www.")
-        ? `https://${part}`
-        : null;
+      let url = null;
+      if (part.startsWith("http")) {
+        url = part;
+      } else if (part.startsWith("www.")) {
+        url = `https://${part}`;
+      }
+      const k = `seg-${keyCounter++}-${part}`;
       return url ? (
         <a
-          key={idx}
+          key={k}
           className="rd-inline-link"
           href={url}
           target="_blank"
@@ -96,7 +101,7 @@ const ResourceDetail = () => {
           {part}
         </a>
       ) : (
-        <span key={idx}>{part}</span>
+        <span key={k}>{part}</span>
       );
     });
   };
@@ -186,7 +191,7 @@ const ResourceDetail = () => {
           {it.contact?.phone && (
             <a
               className="btn rd-btn"
-              href={`tel:${String(it.contact.phone).replace(/[^+\d]/g, "")}`}
+              href={`tel:${String(it.contact.phone).replaceAll(/[^+\d]/g, "")}`}
             >
               Call
             </a>
@@ -201,7 +206,7 @@ const ResourceDetail = () => {
             className="btn rd-btn"
             onClick={() => {
               try {
-                navigator.clipboard?.writeText(window.location.href);
+                navigator.clipboard?.writeText(globalThis.location?.href ?? "");
                 setCopied(true);
                 track("assistance_share_detail", {
                   name: it.name,
@@ -241,15 +246,12 @@ const ResourceDetail = () => {
         </div>
 
         {confirmLeave && (
-          <div
+          <dialog
             className="rd-leave-backdrop"
-            role="dialog"
-            aria-modal="true"
-            onClick={(e) => {
-              if (e.target === e.currentTarget) setConfirmLeave(false);
-            }}
+            open
+            onClose={() => setConfirmLeave(false)}
           >
-            <div className="rd-leave-modal" role="document">
+            <div className="rd-leave-modal">
               <h3 className="rd-h3">You’re leaving WellnessCafe</h3>
               <p className="rd-text">
                 We’ll open the official site in a new tab so you can complete
@@ -267,7 +269,7 @@ const ResourceDetail = () => {
                 </button>
               </div>
             </div>
-          </div>
+          </dialog>
         )}
       </div>
     </section>

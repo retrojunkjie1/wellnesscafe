@@ -39,8 +39,8 @@ const AssistPage = () => {
       <main className="container">
         <PanoramicHero />
         <GlassSection
-          title="Assistance & Resources"
-          subtitle="Discover funding, policy updates, and verified state wellness programs."
+          title="Government Assistance & Support Programs"
+          subtitle="Navigate financial aid, housing, healthcare, and recovery resources with guidance tailored to your region."
           items={assistanceItems}
         />
         <AssistanceDirectory />

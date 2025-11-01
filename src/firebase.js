@@ -1,27 +1,26 @@
 // src/firebase.js
-// TEMPORARILY DISABLED FIREBASE INITIALIZATION TO PREVENT RUNTIME ERRORS
-// TODO: Re-enable when Firebase project is properly configured
+// Initializes Firebase when env config is available; otherwise falls back to offline mode.
+import { initializeApp, getApps } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { firebaseConfig } from "./firebase/firebaseConfig";
 
-// Read config from environment variables (see .env.example)
-// const firebaseConfig = {
-//   apiKey: process.env.REACT_APP_FIREBASE_API_KEY || "",
-//   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN || "",
-//   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID || "",
-//   storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET || "",
-//   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID || "",
-//   appId: process.env.REACT_APP_FIREBASE_APP_ID || "",
-//   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID || "",
-// };
+let app = null;
+try {
+  if (firebaseConfig.apiKey) {
+    app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+  } else {
+    // eslint-disable-next-line no-console
+    console.warn("Firebase config not found - running in offline mode");
+  }
+} catch (err) {
+  // eslint-disable-next-line no-console
+  console.error("Firebase initialization failed:", err);
+}
 
-// Initialize only when an API key is present to avoid runtime errors in tests/CI
-// let app = null;
-// TEMPORARILY DISABLE FIREBASE INITIALIZATION TO PREVENT RUNTIME ERRORS
-console.warn("Firebase initialization disabled - using offline mode");
+export const auth = app ? getAuth(app) : null;
+export const db = app ? getFirestore(app) : null;
 
-const auth = null;
-const db = null;
-
-export { auth, db };
 /*
 Firestore data model (example):
 

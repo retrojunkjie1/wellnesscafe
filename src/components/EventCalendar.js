@@ -35,6 +35,24 @@ const EventCalendar = () => {
     "Yoga",
   ];
 
+  // Date range filter helper (component scope to avoid deep nesting)
+  const filterByDateRange = (event, now, startDate, dateRange) => {
+    const eventDate = event.startDate;
+    if (dateRange === "past") {
+      return eventDate < now;
+    }
+    if (dateRange === "thisWeek") {
+      const weekEnd = new Date(startDate.getTime() + 6 * 24 * 60 * 60 * 1000);
+      return eventDate >= startDate && eventDate <= weekEnd;
+    }
+    if (dateRange === "thisMonth") {
+      const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+      return eventDate >= startDate && eventDate <= monthEnd;
+    }
+    // upcoming (default)
+    return eventDate >= now;
+  };
+
   useEffect(() => {
     // Load events from Firestore
     const loadEvents = async () => {
@@ -87,28 +105,12 @@ const EventCalendar = () => {
           }
 
           // Client-side filtering for date ranges and other criteria
-          const filtered = eventData.filter((event) => {
-            const eventDate = event.startDate;
-
-            // Date range filtering
-            if (filters.dateRange === "past") {
-              return eventDate < now;
-            } else if (filters.dateRange === "thisWeek") {
-              const weekEnd = new Date(
-                startDate.getTime() + 6 * 24 * 60 * 60 * 1000
-              );
-              return eventDate >= startDate && eventDate <= weekEnd;
-            } else if (filters.dateRange === "thisMonth") {
-              const monthEnd = new Date(
-                now.getFullYear(),
-                now.getMonth() + 1,
-                0
-              );
-              return eventDate >= startDate && eventDate <= monthEnd;
-            } else {
-              return eventDate >= now;
+          const filtered = [];
+          for (const evt of eventData) {
+            if (filterByDateRange(evt, now, startDate, filters.dateRange)) {
+              filtered.push(evt);
             }
-          });
+          }
 
           setEvents(filtered);
           setFilteredEvents(filtered);

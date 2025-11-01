@@ -26,6 +26,8 @@ export default function Signup() {
       await register(email, password);
       navigate("/dashboard");
     } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error("Signup error:", error);
       setError("Failed to create account. Please try again.");
     }
     setLoading(false);
@@ -38,6 +40,8 @@ export default function Signup() {
       await loginWithGoogle();
       navigate("/dashboard");
     } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error("Google signup error:", error);
       setError("Failed to sign up with Google.");
     }
     setLoading(false);
@@ -107,7 +111,7 @@ export default function Signup() {
             src="https://developers.google.com/identity/images/g-logo.png"
             alt="Google"
           />
-          Sign up with Google
+          <span style={{ marginLeft: 8 }}>Sign up with Google</span>
         </button>
 
         <p className="auth-link">

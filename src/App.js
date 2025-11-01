@@ -15,6 +15,7 @@ import EventsPage from "./Views/EventsPage";
 import AssistPage from "./Views/AssistPage";
 import ProviderSignup from "./features/providers/ProviderSignup";
 import ProviderDirectory from "./features/providers/ProviderDirectory";
+import ProvidersPage from "./Views/ProvidersPage";
 import BenefitsDetail from "./features/providers/BenefitsDetail";
 import ExpectationsDetail from "./features/providers/ExpectationsDetail";
 import TestimonialsDetail from "./features/providers/TestimonialsDetail";
@@ -53,7 +54,11 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="/providers" element={<ProviderDirectory />} />
+            <Route path="/providers" element={<ProvidersPage />} />
+            <Route
+              path="/providers/directory"
+              element={<ProviderDirectory />}
+            />
             <Route path="/providers/apply" element={<ProviderSignup />} />
             <Route path="/providers/benefits" element={<BenefitsDetail />} />
             <Route

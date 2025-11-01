@@ -239,9 +239,18 @@ const ProviderDirectory = () => {
       <div className="directory-header">
         <h1>Find Your Wellness Provider</h1>
         <p>
-          Connect with licensed professionals who can support your wellness
-          journey
+          Connect with licensed professionals who support recovery, mindfulness,
+          and holistic care. Browse specialties, appointment types, languages,
+          insurance options, and price.
         </p>
+        <div className="directory-cta">
+          <a className="btn" href="/providers/apply">
+            Apply to Join the Network
+          </a>
+          <a className="btn secondary" href="/providers/benefits">
+            See Provider Benefits
+          </a>
+        </div>
       </div>
 
       {/* Search and Filters */}

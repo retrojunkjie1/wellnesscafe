@@ -66,8 +66,15 @@ const PageTemplate = ({ title, intro, features, ctaText, pageType }) => {
 
       {/* === FEATURES SECTION === */}
       <section className="page-features">
-        {features.map((feature, index) => (
-          <div key={index} className="feature-card">
+        <video
+          autoPlay
+          loop
+          muted
+          className="video-background"
+          src="https://videos.pexels.com/video-files/8388215/8388215-sd_640_360_25fps.mp4"
+        />
+        {features.map((feature) => (
+          <div key={feature.title} className="feature-card">
             <div className="wellness-icon-card wellness-icon-sm">
               {feature.icon}
             </div>

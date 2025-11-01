@@ -277,7 +277,7 @@ const ProviderSignup = () => {
       <form className="pv-form" onSubmit={handleSubmit}>
         <div className="pv-grid">
           <label>
-            Full name
+            <span className="pv-label">Full name</span>
             <input
               name="fullName"
               value={form.fullName}
@@ -286,11 +286,11 @@ const ProviderSignup = () => {
             />
           </label>
           <label>
-            Organization (optional)
+            <span className="pv-label">Organization (optional)</span>
             <input name="orgName" value={form.orgName} onChange={onChange} />
           </label>
           <label>
-            Email
+            <span className="pv-label">Email</span>
             <input
               name="email"
               type="email"
@@ -300,11 +300,11 @@ const ProviderSignup = () => {
             />
           </label>
           <label>
-            Phone
+            <span className="pv-label">Phone</span>
             <input name="phone" value={form.phone} onChange={onChange} />
           </label>
           <label>
-            Role
+            <span className="pv-label">Role</span>
             <select name="role" value={form.role} onChange={onChange}>
               {roles.map((r) => (
                 <option key={r} value={r}>
@@ -314,7 +314,7 @@ const ProviderSignup = () => {
             </select>
           </label>
           <label>
-            Years experience
+            <span className="pv-label">Years experience</span>
             <input
               name="years"
               type="number"
@@ -324,7 +324,7 @@ const ProviderSignup = () => {
             />
           </label>
           <label>
-            Rate per hour (USD)
+            <span className="pv-label">Rate per hour (USD)</span>
             <input
               name="ratePerHour"
               type="number"
@@ -334,15 +334,15 @@ const ProviderSignup = () => {
             />
           </label>
           <label>
-            City
+            <span className="pv-label">City</span>
             <input name="city" value={form.city} onChange={onChange} />
           </label>
           <label>
-            Country
+            <span className="pv-label">Country</span>
             <input name="country" value={form.country} onChange={onChange} />
           </label>
           <label>
-            Calendar link (Cal/Calendly)
+            <span className="pv-label">Calendar link (Cal/Calendly)</span>
             <input
               name="calendarUrl"
               value={form.calendarUrl}
@@ -352,7 +352,7 @@ const ProviderSignup = () => {
         </div>
 
         <label>
-          Certifications
+          <span className="pv-label">Certifications</span>
           <textarea
             name="certifications"
             rows="2"
@@ -361,7 +361,7 @@ const ProviderSignup = () => {
           />
         </label>
         <label>
-          Bio
+          <span className="pv-label">Bio</span>
           <textarea
             name="bio"
             rows="4"
@@ -373,7 +373,7 @@ const ProviderSignup = () => {
 
         <div className="pv-grid">
           <label>
-            License Number
+            <span className="pv-label">License Number</span>
             <input
               name="licenseNumber"
               value={form.licenseNumber}
@@ -381,7 +381,7 @@ const ProviderSignup = () => {
             />
           </label>
           <label>
-            License State/Region
+            <span className="pv-label">License State/Region</span>
             <input
               name="licenseState"
               value={form.licenseState}
@@ -389,7 +389,7 @@ const ProviderSignup = () => {
             />
           </label>
           <label>
-            License Expiry
+            <span className="pv-label">License Expiry</span>
             <input
               name="licenseExpires"
               type="date"
@@ -398,7 +398,7 @@ const ProviderSignup = () => {
             />
           </label>
           <label>
-            NPI (if applicable)
+            <span className="pv-label">NPI (if applicable)</span>
             <input
               name="npiNumber"
               value={form.npiNumber}
