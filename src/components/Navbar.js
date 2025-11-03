@@ -34,28 +34,19 @@ const Navbar = () => {
           <Link to="/">Home</Link>
         </li>
         <li>
+          <Link to="/news">News</Link>
+        </li>
+        <li>
           <Link to="/providers">Providers</Link>
-        </li>
-        <li>
-          <Link to="/about">About</Link>
-        </li>
-        <li>
-          <Link to="/recovery">Recovery</Link>
-        </li>
-        <li>
-          <Link to="/yoga">Yoga</Link>
-        </li>
-        <li>
-          <Link to="/acuwellness">Acuwellness</Link>
-        </li>
-        <li>
-          <Link to="/spiritual">Spiritual</Link>
         </li>
         <li>
           <Link to="/events">Events</Link>
         </li>
         <li>
           <Link to="/assistance">Assistance</Link>
+        </li>
+        <li>
+          <Link to="/about">About</Link>
         </li>
       </ul>
 
@@ -105,33 +96,13 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
+              <Link to="/news" onClick={closeMenu}>
+                News
+              </Link>
+            </li>
+            <li>
               <Link to="/providers" onClick={closeMenu}>
                 Providers
-              </Link>
-            </li>
-            <li>
-              <Link to="/about" onClick={closeMenu}>
-                About
-              </Link>
-            </li>
-            <li>
-              <Link to="/recovery" onClick={closeMenu}>
-                Recovery
-              </Link>
-            </li>
-            <li>
-              <Link to="/yoga" onClick={closeMenu}>
-                Yoga
-              </Link>
-            </li>
-            <li>
-              <Link to="/acuwellness" onClick={closeMenu}>
-                Acuwellness
-              </Link>
-            </li>
-            <li>
-              <Link to="/spiritual" onClick={closeMenu}>
-                Spiritual
               </Link>
             </li>
             <li>
@@ -142,6 +113,11 @@ const Navbar = () => {
             <li>
               <Link to="/assistance" onClick={closeMenu}>
                 Assistance
+              </Link>
+            </li>
+            <li>
+              <Link to="/about" onClick={closeMenu}>
+                About
               </Link>
             </li>
             {user ? (
