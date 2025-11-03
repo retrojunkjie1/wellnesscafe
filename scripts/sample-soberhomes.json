@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Example Recovery House (Men)",
+    "city": "Orlando",
+    "type": "Sober living - men",
+    "description": "Structured 12-step supportive environment with curfew and weekly meetings.",
+    "apply": "Call intake line and complete interview.",
+    "categories": ["12-step", "curfew", "employment support"],
+    "contact": "https://example.org/recovery-house-men"
+  },
+  {
+    "name": "Healing Path Women’s Residence",
+    "city": "Tampa",
+    "type": "Sober living - women",
+    "description": "Women-only recovery residence with trauma-informed groups.",
+    "apply": "Submit online form; phone interview required.",
+    "categories": ["women", "trauma-informed"],
+    "contact": {
+      "website": "https://example.org/healing-path",
+      "phone": "+1-555-123-4567"
+    }
+  },
+  {
+    "name": "Palm Coast MAT-Friendly Home",
+    "city": "Palm Coast",
+    "type": "Sober living (MAT-friendly)",
+    "description": "Supports Suboxone and Methadone with proof of prescription.",
+    "apply": "Provide prescriber info; verification required.",
+    "categories": ["MAT", "veterans"],
+    "contact": "https://example.org/palm-coast-mat"
+  }
+]

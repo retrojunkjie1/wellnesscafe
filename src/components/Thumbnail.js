@@ -6,7 +6,7 @@ import "./Thumbnail.css";
 const DEFAULT_FALLBACK = "/images/naaa.jpg";
 
 const isHttpLike = (u) => /^https?:\/\//i.test(u || "");
-const isAbsolute = (u) => /^\//.test(u || "");
+const isAbsolute = (u) => String(u || "").startsWith("/");
 
 // Normalize various src forms to a safe, HTTPS-capable URL for the browser
 const normalizeSrc = (src) => {
@@ -25,7 +25,7 @@ const normalizeSrc = (src) => {
   return s;
 };
 
-const Thumbnail = ({ src, alt, className = "", onClick, role = "img" }) => {
+const Thumbnail = ({ src, alt, className = "", onClick, role }) => {
   const [url, setUrl] = useState(() => normalizeSrc(src));
 
   useEffect(() => {
@@ -44,7 +44,9 @@ const Thumbnail = ({ src, alt, className = "", onClick, role = "img" }) => {
           const r = ref(storage, s);
           const dl = await getDownloadURL(r);
           setUrl(dl);
-        } catch (_e) {
+        } catch (error_) {
+          // eslint-disable-next-line no-console
+          console.warn("thumbnail gs:// resolve failed", error_);
           setUrl(DEFAULT_FALLBACK);
         }
       })();
@@ -54,13 +56,31 @@ const Thumbnail = ({ src, alt, className = "", onClick, role = "img" }) => {
   }, [src]);
 
   const handleError = (e) => {
-    if (url !== DEFAULT_FALLBACK) {
-      setUrl(DEFAULT_FALLBACK);
-    } else {
-      // Avoid infinite loops; detach handler if already fallback
-      if (e?.currentTarget) e.currentTarget.onerror = null;
-    }
+    if (url === DEFAULT_FALLBACK) return;
+    setUrl(DEFAULT_FALLBACK);
   };
+
+  if (onClick) {
+    // Use a real button for interactivity to satisfy a11y linters
+    const ariaLabel = alt ? { "aria-label": alt } : {};
+    return (
+      <button
+        type="button"
+        className={`wc-thumb-btn ${className}`}
+        onClick={onClick}
+        {...ariaLabel}
+      >
+        <img
+          src={url}
+          alt={alt || ""}
+          onError={handleError}
+          className="wc-thumb"
+          loading="lazy"
+          decoding="async"
+        />
+      </button>
+    );
+  }
 
   return (
     <img
@@ -68,8 +88,6 @@ const Thumbnail = ({ src, alt, className = "", onClick, role = "img" }) => {
       alt={alt || ""}
       onError={handleError}
       className={`wc-thumb ${className}`}
-      onClick={onClick}
-      role={role}
       loading="lazy"
       decoding="async"
     />

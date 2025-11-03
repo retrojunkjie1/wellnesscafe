@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import React, { useRef, useState } from "react";
 import { Pause, Radio } from "lucide-react";
 
@@ -19,7 +20,12 @@ const RadioPlayer = () => {
 
   return (
     <div className="fixed bottom-5 right-5 backdrop-blur-md bg-emerald-800/90 text-white border border-white/15 rounded-full shadow-lg p-3 flex items-center justify-center cursor-pointer hover:bg-emerald-700/90 transition-all">
-      <audio ref={audioRef} src={streamUrl} preload="none" />
+      <audio
+        ref={audioRef}
+        src={streamUrl}
+        preload="none"
+        aria-label="Ambient radio stream"
+      />
       <button onClick={togglePlay} aria-label="Toggle radio">
         {playing ? <Pause size={20} /> : <Radio size={20} />}
       </button>

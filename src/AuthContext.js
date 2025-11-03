@@ -15,7 +15,15 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  getDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import { auth, db } from "./firebase";
 
 const AuthContext = createContext();
@@ -43,11 +51,27 @@ export const AuthProvider = ({ children }) => {
 
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        // Get additional user data from Firestore if available
         if (db) {
           const userDoc = await getDoc(doc(db, "users", user.uid));
           const userData = userDoc.exists() ? userDoc.data() : {};
-          setUser({ ...user, ...userData });
+          // detect provider role by ownership
+          let role = userData.role || null;
+          let providerIds = [];
+          try {
+            const q = query(
+              collection(db, "providers"),
+              where("ownerUid", "==", user.uid)
+            );
+            const snap = await getDocs(q);
+            if (!snap.empty) {
+              role = role || "provider";
+              providerIds = snap.docs.map((d) => d.id);
+            }
+          } catch (error_) {
+            // eslint-disable-next-line no-console
+            console.warn("provider-role detect failed", error_);
+          }
+          setUser({ ...user, ...userData, role, providerIds });
         } else {
           setUser(user);
         }

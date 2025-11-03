@@ -46,14 +46,15 @@ const NewsTicker = () => {
         onClick={() => setOpen((v) => !v)}
         aria-pressed={open}
         aria-label={open ? "Hide live news" : "Show live news"}
+        type="button"
       >
         {open ? "Hide Live News" : "Show Live News"}
       </button>
       {open && (
-        <div className="news-ticker">
+        <div className="news-ticker" aria-live="polite">
           <div className="news-track">
             {content.concat(content).map((t, i) => (
-              <span className="news-item" key={i}>
+              <span className="news-item" key={`${t}-${i}`}>
                 {t}
               </span>
             ))}

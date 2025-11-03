@@ -5,9 +5,14 @@ import "./PageBanner.css";
 const normalizeBg = (src) => {
   if (!src) return "";
   let s = String(src).trim();
-  if (/^http:\/\//i.test(s)) s = s.replace(/^http:\/\//i, "https://");
+  const low = s.toLowerCase();
+  if (low.startsWith("http://")) s = s.replace(/^http:\/\//i, "https://");
   // If relative without leading slash, make it absolute to work under ngrok/prod
-  if (!/^https?:\/\//i.test(s) && !/^\//.test(s)) {
+  if (
+    !low.startsWith("http://") &&
+    !low.startsWith("https://") &&
+    !s.startsWith("/")
+  ) {
     s = `/${s.replace(/^\.\//, "")}`;
   }
   return s;
@@ -18,10 +23,17 @@ const PageBanner = ({ imageSrc, altText, overlayClasses = "", children }) => {
   return (
     <section
       className={`page-banner ${overlayClasses}`}
-      role="img"
-      aria-label={altText || ""}
       style={{ backgroundImage: `url(${bg})` }}
     >
+      {/* Visually-hidden img for accessibility since background images aren't announced */}
+      {bg ? (
+        <img
+          src={bg}
+          alt={altText || ""}
+          className="sr-only"
+          aria-hidden={false}
+        />
+      ) : null}
       <div className="page-banner-inner">{children}</div>
     </section>
   );

@@ -7,6 +7,7 @@ WellnessCafe is a comprehensive wellness platform that combines ancient healing 
 ## 🌟 Features
 
 ### For Clients
+
 - **🧠 AI-Powered Recovery Support** - Advanced progress tracking, relapse prevention, and personalized coping strategies
 - **🧘 Yoga & Mindfulness** - Guided movement, breathwork, and meditation practices
 - **🌿 Acuwellness** - Traditional Chinese medicine, acupuncture, and Eastern healing modalities
@@ -16,6 +17,7 @@ WellnessCafe is a comprehensive wellness platform that combines ancient healing 
 - **📊 Daily Check-ins** - Track mood, energy, stress, and sleep with intelligent insights
 
 ### For Practitioners
+
 - **💼 Flexible Scheduling** - Set your own availability and work remotely
 - **🌟 Build Your Practice** - Expand your client base through our wellness community
 - **🤝 Professional Network** - Connect with peers and collaborate
@@ -76,7 +78,7 @@ npm start
 
 ## 📁 Project Structure
 
-```
+```text
 wellcafeland/
 ├── public/                 # Static assets
 │   ├── index.html
@@ -111,20 +113,20 @@ wellcafeland/
 
 ## 🔑 Key Routes
 
-| Route | Component | Description |
-|-------|-----------|-------------|
-| `/` | HomePage | Landing page with features |
-| `/recovery` | Recovery | Addiction recovery tools |
-| `/yoga` | Yoga | Yoga and mindfulness |
-| `/acuwellness` | Acuwellness | Eastern medicine |
-| `/spiritual` | Spiritual | Spiritual counseling |
-| `/events` | Events | Community events |
-| `/assistance` | Assistance | Government aid navigation |
-| `/providers` | ProvidersPage | Provider directory |
-| `/providers/apply` | ProviderSignup | Provider application |
-| `/dashboard` | Dashboard | User dashboard (protected) |
-| `/about` | AboutPage | About WellnessCafe |
-| `/contact` | ContactPage | Contact information |
+| Route              | Component      | Description                |
+| ------------------ | -------------- | -------------------------- |
+| `/`                | HomePage       | Landing page with features |
+| `/recovery`        | Recovery       | Addiction recovery tools   |
+| `/yoga`            | Yoga           | Yoga and mindfulness       |
+| `/acuwellness`     | Acuwellness    | Eastern medicine           |
+| `/spiritual`       | Spiritual      | Spiritual counseling       |
+| `/events`          | Events         | Community events           |
+| `/assistance`      | Assistance     | Government aid navigation  |
+| `/providers`       | ProvidersPage  | Provider directory         |
+| `/providers/apply` | ProviderSignup | Provider application       |
+| `/dashboard`       | Dashboard      | User dashboard (protected) |
+| `/about`           | AboutPage      | About WellnessCafe         |
+| `/contact`         | ContactPage    | Contact information        |
 
 ## 🔒 Security & Compliance
 
@@ -157,6 +159,27 @@ firebase deploy
 
 See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
 
+### AI Assistant (Gemini via Firebase Functions)
+
+This project includes an optional AI assistant powered by Google Gemini, exposed at `/api/aiAsk`.
+
+Setup:
+
+```bash
+# Set your Gemini API key as a Functions secret
+firebase functions:secrets:set GENAI_API_KEY
+
+# Deploy only the function
+firebase deploy --only functions
+```
+
+Notes:
+
+- The function id is `aiAsk` and is wired in `firebase.json` to `/api/aiAsk`.
+- Frontend widget lives in `src/components/AskWellnessAI.jsx` and is embedded on the Sober Homes state page.
+- For safety, do not expose API keys in client code. Use Functions secrets as shown above.
+- On state pages, the assistant is context-aware and includes the top local listings in its prompt for more grounded answers.
+
 ## 👥 For Providers
 
 ### Join Our Network
@@ -167,6 +190,7 @@ See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
 4. Start accepting clients (24-48 hours)
 
 ### Benefits
+
 - Remote work flexibility
 - Competitive earnings
 - Professional community
@@ -195,9 +219,9 @@ git push origin feature/AmazingFeature
 ## 📞 Contact
 
 - **Website**: [wellnesscafe.com](https://wellnesscafe.com)
-- **Email**: info@wellnesscafe.com
-- **Provider Support**: providers@wellnesscafe.com
-- **Client Services**: clients@wellnesscafe.com
+- **Email**: <mailto:info@wellnesscafe.com>
+- **Provider Support**: <mailto:providers@wellnesscafe.com>
+- **Client Services**: <mailto:clients@wellnesscafe.com>
 - **Phone**: 1-800-WELLNESS (1-800-935-5677)
 
 ## 📄 License
@@ -213,6 +237,6 @@ This project is licensed under the MIT License - see [LICENSE](./LICENSE) for de
 
 ---
 
-**WellnessCafe** - *Clarity. Balance. Precision.*
+**WellnessCafe** - _Clarity. Balance. Precision._
 
 Discover calm intelligence through design, ritual, and mindful innovation.

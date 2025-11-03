@@ -54,7 +54,12 @@ const Navbar = () => {
       <div className="auth-buttons">
         {user ? (
           <>
-            <Link to="/dashboard" className="auth-btn dashboard-btn">
+            <Link
+              to={
+                user.role === "provider" ? "/providers/dashboard" : "/dashboard"
+              }
+              className="auth-btn dashboard-btn"
+            >
               Dashboard
             </Link>
             <button onClick={handleLogout} className="auth-btn logout-btn">
@@ -123,7 +128,14 @@ const Navbar = () => {
             {user ? (
               <>
                 <li>
-                  <Link to="/dashboard" onClick={closeMenu}>
+                  <Link
+                    to={
+                      user.role === "provider"
+                        ? "/providers/dashboard"
+                        : "/dashboard"
+                    }
+                    onClick={closeMenu}
+                  >
                     Dashboard
                   </Link>
                 </li>

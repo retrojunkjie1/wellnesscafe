@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../AuthContext";
+import { db } from "../firebase";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./Auth.css";
 
@@ -8,7 +10,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { login, loginWithGoogle } = useAuth();
+  const { login, loginWithGoogle, authEnabled } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -20,8 +22,25 @@ const Login = () => {
     setLoading(true);
 
     try {
-      await login(email, password);
-      navigate(from, { replace: true });
+      const cred = await login(email, password);
+      let dest = from;
+      try {
+        const uid = cred?.user?.uid;
+        if (db && uid) {
+          const q = query(
+            collection(db, "providers"),
+            where("ownerUid", "==", uid)
+          );
+          const snap = await getDocs(q);
+          if (!snap.empty) {
+            dest = "/providers/dashboard";
+          }
+        }
+      } catch (error_) {
+        // eslint-disable-next-line no-console
+        console.warn("provider-detect failed", error_);
+      }
+      navigate(dest, { replace: true });
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error("Login error:", error);
@@ -34,8 +53,25 @@ const Login = () => {
     setError("");
     setLoading(true);
     try {
-      await loginWithGoogle();
-      navigate(from, { replace: true });
+      const res = await loginWithGoogle();
+      let dest = from;
+      try {
+        const uid = res?.user?.uid;
+        if (db && uid) {
+          const q = query(
+            collection(db, "providers"),
+            where("ownerUid", "==", uid)
+          );
+          const snap = await getDocs(q);
+          if (!snap.empty) {
+            dest = "/providers/dashboard";
+          }
+        }
+      } catch (error_) {
+        // eslint-disable-next-line no-console
+        console.warn("provider-detect failed", error_);
+      }
+      navigate(dest, { replace: true });
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error("Google login error:", error);
@@ -50,6 +86,11 @@ const Login = () => {
         <h2>Welcome Back</h2>
         <p>Sign in to your WellnessCafe account</p>
 
+        {!authEnabled && (
+          <output className="error-message">
+            Sign-in is unavailable in this preview. Please try again later.
+          </output>
+        )}
         {error && <div className="error-message">{error}</div>}
 
         <form onSubmit={handleSubmit}>
@@ -75,7 +116,11 @@ const Login = () => {
             />
           </div>
 
-          <button type="submit" className="auth-button" disabled={loading}>
+          <button
+            type="submit"
+            className="auth-button"
+            disabled={loading || !authEnabled}
+          >
             {loading ? "Signing In..." : "Sign In"}
           </button>
         </form>
@@ -87,7 +132,7 @@ const Login = () => {
         <button
           onClick={handleGoogleLogin}
           className="google-button"
-          disabled={loading}
+          disabled={loading || !authEnabled}
         >
           <img
             src="https://developers.google.com/identity/images/g-logo.png"

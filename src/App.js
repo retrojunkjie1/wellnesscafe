@@ -35,6 +35,9 @@ import FAQPage from "./Views/FAQPage";
 import NewsPage from "./Views/NewsPage";
 import NewsBlogsPage from "./Views/NewsBlogsPage";
 import ResourceDetail from "./Views/ResourceDetail";
+import ProviderDashboard from "./features/providers/ProviderDashboard";
+import AdminImport from "./features/providers/AdminImport";
+import SoberHomesState from "./Views/SoberHomesState";
 
 function App() {
   return (
@@ -52,6 +55,22 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/providers/dashboard"
+              element={
+                <ProtectedRoute>
+                  <ProviderDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/providers/admin/import"
+              element={
+                <ProtectedRoute roles={["admin", "provider"]}>
+                  <AdminImport />
                 </ProtectedRoute>
               }
             />
@@ -93,6 +112,10 @@ function App() {
             <Route path="/about/faq" element={<FAQPage />} />
             <Route path="/about/news" element={<NewsPage />} />
             <Route path="/news" element={<NewsBlogsPage />} />
+            <Route
+              path="/resources/soberLivingHomes/:state"
+              element={<SoberHomesState />}
+            />
           </Routes>
         </Router>
       </ThemeProvider>

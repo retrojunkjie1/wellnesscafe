@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Thumbnail from "../../components/Thumbnail";
 
 const GOOGLE_NEWS_FEED =
@@ -7,6 +7,18 @@ const GOOGLE_NEWS_FEED =
 const NewsFeed = () => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // Newest uploaded JPEGs under public/images used as high-quality fallbacks
+  const jpegFallbacks = useMemo(
+    () => [
+      "/images/rituals.jpg",
+      "/images/community.jpg",
+      "/images/reminder.jpg",
+      "/images/checkin.jpg",
+      "/images/naaa.jpg",
+    ],
+    []
+  );
 
   const MEDIASSTACK_API = `https://api.mediastack.com/v1/news?access_key=${
     process.env.REACT_APP_MEDIASTACK_API_KEY || ""
@@ -86,17 +98,17 @@ const NewsFeed = () => {
 
   // Convert any HTML (including escaped entities) to plain text
   const htmlToText = (input) => {
-    try {
+    const raw = String(input || "");
+    if (typeof DOMParser !== "undefined") {
       const parser = new DOMParser();
-      const doc = parser.parseFromString(String(input || ""), "text/html");
+      const doc = parser.parseFromString(raw, "text/html");
       const txt = doc.body ? doc.body.textContent || "" : "";
-      return txt.replace(/\s+/g, " ").trim();
-    } catch (e) {
-      return String(input || "")
-        .replace(/<[^>]*>/g, " ")
-        .replace(/\s+/g, " ")
-        .trim();
+      if (txt) return txt.replaceAll(/\s+/g, " ").trim();
     }
+    return raw
+      .replaceAll(/<[^>]*>/g, " ")
+      .replaceAll(/\s+/g, " ")
+      .trim();
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -112,10 +124,17 @@ const NewsFeed = () => {
           const unique = Array.from(
             new Map(all.map((i) => [i.link, i])).values()
           );
-          const categorized = unique.map((a) => ({
-            ...a,
-            category: categorize(a),
-          }));
+          const categorized = unique.map((a, idx) => {
+            // Prefer JPEG thumbnails; if missing or PNG, pick a fallback JPEG in rotation
+            const needsJpeg =
+              !a.thumbnail || /\.png(\?.*)?$/i.test(String(a.thumbnail));
+            const fallback = jpegFallbacks[idx % jpegFallbacks.length];
+            return {
+              ...a,
+              thumbnail: needsJpeg ? fallback : a.thumbnail,
+              category: categorize(a),
+            };
+          });
           setArticles(categorized);
         } catch (e) {
           // eslint-disable-next-line no-console
@@ -155,11 +174,11 @@ const NewsFeed = () => {
             {group.cat}
           </h3>
           <div className="grid md:grid-cols-3 gap-8">
-            {group.items.slice(0, 6).map((a, i) => {
+            {group.items.slice(0, 6).map((a) => {
               const safeDesc = htmlToText(a.description);
               return (
                 <a
-                  key={i}
+                  key={a.link}
                   href={a.link}
                   target="_blank"
                   rel="noopener noreferrer"

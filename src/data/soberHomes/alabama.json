@@ -1,0 +1,146 @@
+{
+  "state": "Alabama",
+  "category": "Sober Living Homes",
+  "homes": [
+    {
+      "name": "Oxford House (Network)",
+      "city": "Multiple cities (Birmingham, Huntsville, Mobile, Montgomery, Tuscaloosa)",
+      "type": "Peer-run sober living for men, women, and families",
+      "apply": "Go to Oxford House directory → choose Alabama house → call the listed number → short phone screen → in-person interview → bring first week’s rent/deposit.",
+      "contact": "https://www.oxfordhouse.org"
+    },
+    {
+      "name": "The Lovelady Center",
+      "city": "Birmingham",
+      "type": "Faith-based sober living for women (children allowed)",
+      "apply": "Call intake office for pre-screening; they’ll schedule arrival date and checklist.",
+      "contact": "https://www.loveladycenter.org"
+    },
+    {
+      "name": "The Foundry Ministries",
+      "city": "Bessemer",
+      "type": "Christian recovery and reentry housing for men and women",
+      "apply": "Online or phone application; they’ll confirm intake appointment.",
+      "contact": "https://foundryministries.com"
+    },
+    {
+      "name": "Brother Bryan Mission",
+      "city": "Birmingham",
+      "type": "Men’s recovery and transitional sober housing",
+      "apply": "Call for intake interview and orientation date.",
+      "contact": "https://bryanmission.com"
+    },
+    {
+      "name": "Fellowship House",
+      "city": "Birmingham",
+      "type": "Residential recovery and halfway housing",
+      "apply": "Call admissions; they’ll provide screening and bed date.",
+      "contact": "https://fshbhm.org"
+    },
+    {
+      "name": "A Reprieve for Men (Bradford)",
+      "city": "Tuscaloosa",
+      "type": "12-Step structured recovery home for men",
+      "apply": "Call Reprieve admissions for assessment and insurance setup.",
+      "contact": "https://www.bradfordhealth.com/a-reprieve-for-men"
+    },
+    {
+      "name": "A Reprieve for Women (Bradford)",
+      "city": "Tuscaloosa",
+      "type": "12-Step structured recovery home for women",
+      "apply": "Call admissions for phone assessment; bring ID and medical info.",
+      "contact": "https://www.bradfordhealth.com/a-reprieve-for-women"
+    },
+    {
+      "name": "Waterfront Rescue Mission",
+      "city": "Mobile",
+      "type": "Transitional housing and recovery program for men",
+      "apply": "Call Mobile office to schedule intake interview and screening.",
+      "contact": "https://waterfrontmission.org"
+    },
+    {
+      "name": "The Shoulder",
+      "city": "Spanish Fort",
+      "type": "Faith-based treatment and sober living program",
+      "apply": "Call to schedule phone intake; they’ll provide intake requirements.",
+      "contact": "https://theshoulder.org"
+    },
+    {
+      "name": "Rapha Treatment Center",
+      "city": "Attalla",
+      "type": "Christian men’s recovery and sober home",
+      "apply": "Call office; complete intake form; receive approval.",
+      "contact": "https://raphatreatment.com"
+    },
+    {
+      "name": "Wings of Life Recovery",
+      "city": "Mobile",
+      "type": "Faith-based recovery community housing for men and women",
+      "apply": "Call intake coordinator to confirm space and required documents.",
+      "contact": "https://wingsoflife.com"
+    },
+    {
+      "name": "Home of Grace for Women",
+      "city": "Eight Mile",
+      "type": "Faith-based sober residential program for women",
+      "apply": "Complete application online and pay intake fee before arrival.",
+      "contact": "https://homeofgraceforwomen.com"
+    },
+    {
+      "name": "7 Springs Ministries – Coastal Rehab Women’s Center",
+      "city": "Foley",
+      "type": "Long-term faith-based sober housing for women",
+      "apply": "Phone or online inquiry → interview → acceptance letter.",
+      "contact": "https://7springsministries.org"
+    },
+    {
+      "name": "CED Fellowship House Inc",
+      "city": "Gadsden",
+      "type": "Men’s recovery housing with structured fees",
+      "apply": "Call and pay intake fee ($250); they assign bed date.",
+      "contact": "https://cedfellowshiphouse.org"
+    },
+    {
+      "name": "Drug Alternative Program",
+      "city": "Huntsville",
+      "type": "Faith-based recovery housing for men",
+      "apply": "Call Huntsville office; submit intake packet; confirm date.",
+      "contact": "https://drugalternativeprogram.org"
+    },
+    {
+      "name": "The Life House – Alabama Men",
+      "city": "Montgomery",
+      "type": "Men’s faith-based sober living",
+      "apply": "Phone screening; confirm rules and intake schedule.",
+      "contact": "https://thelifehouseinc.org"
+    },
+    {
+      "name": "Recovery & Sober Living House (211 Alabama)",
+      "city": "Various",
+      "type": "Transitional housing listed on 211 Connects Alabama",
+      "apply": "Call number listed on 211 directory; provide ID and documents.",
+      "contact": "https://211connectsalabama.org"
+    },
+    {
+      "name": "New Life for Women",
+      "city": "Gadsden",
+      "type": "Residential recovery for women",
+      "apply": "Complete application and financial plan; intake scheduled.",
+      "contact": "https://newlifeforwomen.com"
+    },
+    {
+      "name": "Alabama Teen Challenge – Women’s Center",
+      "city": "Hayden",
+      "type": "Christian long-term recovery housing for women",
+      "apply": "Apply online or by phone; interview and pay intake fee.",
+      "contact": "https://alabamateenchallenge.org"
+    },
+    {
+      "name": "Alabama Teen Challenge – Men’s Center South",
+      "city": "Bay Minette",
+      "type": "Faith-based recovery and sober living for men",
+      "apply": "Call for intake; complete screening; arrange payment.",
+      "contact": "https://alabamateenchallenge.org"
+    }
+  ]
+}

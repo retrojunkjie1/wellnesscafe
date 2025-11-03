@@ -366,7 +366,12 @@ const ProviderDirectory = () => {
                 <div className="provider-avatar">
                   {provider.profileImage ? (
                     <Thumbnail
-                      src={provider.profileImage}
+                      src={(() => {
+                        const src = String(provider.profileImage || "");
+                        return /\.png(\?.*)?$/i.test(src)
+                          ? src.replace(/\.png(\?.*)?$/i, ".jpg")
+                          : src;
+                      })()}
                       alt={provider.name}
                     />
                   ) : (

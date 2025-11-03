@@ -1,5 +1,5 @@
 import React from "react";
-import heroPanorama from "../assets/images/wellnesscafe -HomePage-header-v1.png";
+import heroPanorama from "../assets/images/HomePage-header-v1.png";
 
 const PanoramicHero = () => {
   return (
