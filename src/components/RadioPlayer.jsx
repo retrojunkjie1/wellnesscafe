@@ -18,10 +18,10 @@ const RadioPlayer = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 bg-emerald-800 text-white rounded-full shadow-lg p-4 flex items-center justify-center cursor-pointer hover:bg-emerald-700 transition-all">
+    <div className="fixed bottom-5 right-5 backdrop-blur-md bg-emerald-800/90 text-white border border-white/15 rounded-full shadow-lg p-3 flex items-center justify-center cursor-pointer hover:bg-emerald-700/90 transition-all">
       <audio ref={audioRef} src={streamUrl} preload="none" />
       <button onClick={togglePlay} aria-label="Toggle radio">
-        {playing ? <Pause size={26} /> : <Radio size={26} />}
+        {playing ? <Pause size={20} /> : <Radio size={20} />}
       </button>
     </div>
   );

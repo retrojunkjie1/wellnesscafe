@@ -84,6 +84,21 @@ const NewsFeed = () => {
     return "Community";
   };
 
+  // Convert any HTML (including escaped entities) to plain text
+  const htmlToText = (input) => {
+    try {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(String(input || ""), "text/html");
+      const txt = doc.body ? doc.body.textContent || "" : "";
+      return txt.replace(/\s+/g, " ").trim();
+    } catch (e) {
+      return String(input || "")
+        .replace(/<[^>]*>/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+  };
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(
     () => {
@@ -140,31 +155,38 @@ const NewsFeed = () => {
             {group.cat}
           </h3>
           <div className="grid md:grid-cols-3 gap-8">
-            {group.items.slice(0, 6).map((a, i) => (
-              <a
-                key={i}
-                href={a.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block rounded-2xl overflow-hidden bg-white shadow-md hover:shadow-xl transition-all"
-              >
-                {a.thumbnail ? (
-                  <Thumbnail
-                    src={a.thumbnail}
-                    alt={a.title}
-                    className="h-56 w-full object-cover"
-                  />
-                ) : null}
-                <div className="p-5">
-                  <h4 className="text-lg font-semibold text-emerald-900 line-clamp-2">
-                    {a.title}
-                  </h4>
-                  <p className="text-gray-600 text-sm line-clamp-3 mt-1">
-                    {a.description}
-                  </p>
-                </div>
-              </a>
-            ))}
+            {group.items.slice(0, 6).map((a, i) => {
+              const safeDesc = htmlToText(a.description);
+              return (
+                <a
+                  key={i}
+                  href={a.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block rounded-2xl overflow-hidden bg-white ring-1 ring-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
+                >
+                  {a.thumbnail ? (
+                    <div className="aspect-[16/9] w-full bg-gray-100">
+                      <Thumbnail
+                        src={a.thumbnail}
+                        alt={a.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ) : null}
+                  <div className="p-5">
+                    <h4 className="text-base md:text-lg font-semibold text-emerald-900 line-clamp-2">
+                      {a.title}
+                    </h4>
+                    {safeDesc ? (
+                      <p className="text-gray-600 text-sm line-clamp-3 mt-1">
+                        {safeDesc}
+                      </p>
+                    ) : null}
+                  </div>
+                </a>
+              );
+            })}
           </div>
         </section>
       ))}
