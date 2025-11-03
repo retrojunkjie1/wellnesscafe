@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Play, Pause, Radio } from "lucide-react";
+import { Pause, Radio } from "lucide-react";
 
 const RadioPlayer = () => {
   const [playing, setPlaying] = useState(false);

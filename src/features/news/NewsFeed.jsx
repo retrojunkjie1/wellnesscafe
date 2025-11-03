@@ -84,30 +84,35 @@ const NewsFeed = () => {
     return "Community";
   };
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const [g, m] = await Promise.all([
-          fetchGoogleNews(),
-          fetchMediastackNews(),
-        ]);
-        const all = [...g, ...m];
-        const unique = Array.from(
-          new Map(all.map((i) => [i.link, i])).values()
-        );
-        const categorized = unique.map((a) => ({
-          ...a,
-          category: categorize(a),
-        }));
-        setArticles(categorized);
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error("News load failed", e);
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(
+    () => {
+      (async () => {
+        try {
+          const [g, m] = await Promise.all([
+            fetchGoogleNews(),
+            fetchMediastackNews(),
+          ]);
+          const all = [...g, ...m];
+          const unique = Array.from(
+            new Map(all.map((i) => [i.link, i])).values()
+          );
+          const categorized = unique.map((a) => ({
+            ...a,
+            category: categorize(a),
+          }));
+          setArticles(categorized);
+        } catch (e) {
+          // eslint-disable-next-line no-console
+          console.error("News load failed", e);
+        } finally {
+          setLoading(false);
+        }
+      })();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   if (loading) {
     return (

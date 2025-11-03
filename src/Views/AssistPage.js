@@ -1,6 +1,5 @@
 import React from "react";
 import "./Page.css";
-import PanoramicHero from "../components/PanoramicHero";
 import PageBanner from "../components/PageBanner";
 import Header from "../components/Header";
 import GlassSection from "../components/GlassSection";
@@ -43,7 +42,6 @@ const AssistPage = () => {
         overlayClasses="pb-overlay-emerald"
       />
       <main className="container">
-        
         <GlassSection
           title="Government Assistance & Support Programs"
           subtitle="Navigate financial aid, housing, healthcare, and recovery resources with guidance tailored to your region."
