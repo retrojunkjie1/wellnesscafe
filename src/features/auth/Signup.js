@@ -9,7 +9,7 @@ export default function Signup() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { register, loginWithGoogle } = useAuth();
+  const { register, loginWithGoogle, authEnabled } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -28,7 +28,20 @@ export default function Signup() {
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error("Signup error:", error);
-      setError("Failed to create account. Please try again.");
+      const code = error?.code || error?.message || "unknown";
+      const map = {
+        "auth/email-already-in-use": "That email is already in use.",
+        "auth/invalid-email": "Please enter a valid email address.",
+        "auth/weak-password":
+          "Please choose a stronger password (min 6 characters).",
+        "auth/network-request-failed":
+          "Network error. Check your connection and try again.",
+        "auth-disabled": "Signups are temporarily unavailable.",
+      };
+      const friendly =
+        map[code] ||
+        (String(code).includes("auth-disabled") ? map["auth-disabled"] : null);
+      setError(friendly || "Failed to create account. Please try again.");
     }
     setLoading(false);
   };
@@ -42,7 +55,12 @@ export default function Signup() {
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error("Google signup error:", error);
-      setError("Failed to sign up with Google.");
+      const code = error?.code || error?.message || "unknown";
+      setError(
+        String(code).includes("auth-disabled")
+          ? "Signups are temporarily unavailable."
+          : "Failed to sign up with Google."
+      );
     }
     setLoading(false);
   };
@@ -56,6 +74,12 @@ export default function Signup() {
           personalized recovery tools.
         </p>
 
+        {!authEnabled && (
+          <div className="error-message" role="status">
+            Signups are temporarily unavailable in this preview. Please try
+            again later.
+          </div>
+        )}
         {error && <div className="error-message">{error}</div>}
 
         <form onSubmit={handleSubmit}>
@@ -93,7 +117,11 @@ export default function Signup() {
             />
           </div>
 
-          <button type="submit" className="auth-button" disabled={loading}>
+          <button
+            type="submit"
+            className="auth-button"
+            disabled={loading || !authEnabled}
+          >
             {loading ? "Creating Account..." : "Create Account"}
           </button>
         </form>
@@ -105,7 +133,7 @@ export default function Signup() {
         <button
           onClick={handleGoogleSignup}
           className="google-button"
-          disabled={loading}
+          disabled={loading || !authEnabled}
         >
           <img
             src="https://developers.google.com/identity/images/g-logo.png"

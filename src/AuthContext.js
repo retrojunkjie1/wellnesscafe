@@ -31,6 +31,7 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const authEnabled = Boolean(auth);
 
   useEffect(() => {
     // If Firebase auth is not available, set loading to false immediately
@@ -60,10 +61,12 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = useCallback(async (email, password) => {
+    if (!auth) throw new Error("auth-disabled");
     return signInWithEmailAndPassword(auth, email, password);
   }, []);
 
   const register = useCallback(async (email, password, additionalData = {}) => {
+    if (!auth) throw new Error("auth-disabled");
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
@@ -81,6 +84,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const loginWithGoogle = useCallback(async () => {
+    if (!auth) throw new Error("auth-disabled");
     const provider = new GoogleAuthProvider();
     const result = await signInWithPopup(auth, provider);
     // Check if user document exists, create if not (only if Firestore is available)
@@ -99,6 +103,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const logout = useCallback(async () => {
+    if (!auth) return; // already offline/no-op
     return signOut(auth);
   }, []);
 
@@ -110,8 +115,9 @@ export const AuthProvider = ({ children }) => {
       loginWithGoogle,
       logout,
       loading,
+      authEnabled,
     }),
-    [user, login, register, loginWithGoogle, logout, loading]
+    [user, login, register, loginWithGoogle, logout, loading, authEnabled]
   );
 
   return (
