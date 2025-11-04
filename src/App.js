@@ -41,6 +41,7 @@ import AdminImport from "./features/providers/AdminImport";
 import SoberHomesState from "./Views/SoberHomesState";
 import RadioPlayer from "./components/RadioPlayer.jsx";
 import AdminUsers from "./features/admin/AdminUsers.jsx";
+import CheckInPage from "./Views/CheckInPage";
 
 function App() {
   return (
@@ -117,6 +118,14 @@ function App() {
             <Route path="/assistance" element={<AssistPage />} />
             <Route path="/assistance/:slug" element={<ResourceDetail />} />
             <Route path="/product" element={<ProductPage />} />
+            <Route
+              path="/check-in"
+              element={
+                <ProtectedRoute requireVerified>
+                  <CheckInPage />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/tools" element={<ToolsPage />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/trauma-education" element={<TraumaEducationPage />} />
