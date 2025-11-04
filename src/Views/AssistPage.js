@@ -11,25 +11,29 @@ const AssistPage = () => {
       key: "government-aid",
       icon: "🏛️",
       title: "Government Aid",
-      desc: "Connect with Colorado behavioral health programs.",
+      desc: "Connect with behavioral health and public programs.",
+      href: "/assistance?open=Healthcare%20Navigation",
     },
     {
       key: "funding-grants",
       icon: "💰",
       title: "Funding & Grants",
       desc: "Financial support for providers and clients.",
+      href: "/assistance?open=Financial%20Assistance",
     },
     {
       key: "policies-laws",
       icon: "📜",
       title: "Policies & Laws",
       desc: "Stay updated with ASAM 4th Edition standards.",
+      href: "/assistance?open=Legal%20Aid",
     },
     {
       key: "crisis-resources",
       icon: "📞",
       title: "Crisis Resources",
       desc: "Find 988 and local crisis support hotlines.",
+      href: "/assistance?open=Crisis%20%26%20Hotlines",
     },
   ];
 
