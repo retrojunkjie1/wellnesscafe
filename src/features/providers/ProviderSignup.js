@@ -65,6 +65,13 @@ const ProviderSignup = () => {
       });
       return;
     }
+    if (!auth?.currentUser) {
+      setStatus({
+        ok: false,
+        msg: "Please sign in or create an account before submitting your provider application.",
+      });
+      return;
+    }
     try {
       const uid = auth?.currentUser?.uid || null;
       await addDoc(collection(db, "providers"), {

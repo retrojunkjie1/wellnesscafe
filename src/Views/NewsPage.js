@@ -1,13 +1,14 @@
 import React from "react";
 import "./Page.css";
 import PanoramicHero from "../components/PanoramicHero";
+import newsBg from "../assets/images/news-blog.png";
 import Header from "../components/Header";
 
 const NewsPage = () => (
   <div className="page">
     <Header />
     <main className="container">
-      <PanoramicHero />
+      <PanoramicHero src={newsBg} alt="News section background" />
       <div className="page-hero">
         <h1>News & Updates</h1>
         <p>

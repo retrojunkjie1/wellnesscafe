@@ -14,6 +14,7 @@ import {
   signOut,
   GoogleAuthProvider,
   signInWithPopup,
+  sendEmailVerification,
 } from "firebase/auth";
 import {
   doc,
@@ -96,6 +97,13 @@ export const AuthProvider = ({ children }) => {
       email,
       password
     );
+    try {
+      // Fire-and-forget email verification; errors are non-fatal
+      await sendEmailVerification(userCredential.user);
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.warn("email verification send failed", e);
+    }
     // Create user document in Firestore if available
     if (db) {
       await setDoc(doc(db, "users", userCredential.user.uid), {

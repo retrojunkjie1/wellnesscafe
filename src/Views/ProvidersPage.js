@@ -2,13 +2,14 @@ import React from "react";
 import "./Page.css";
 import Header from "../components/Header";
 import PanoramicHero from "../components/PanoramicHero";
+import providerBg from "../assets/images/serene-wellness.png";
 
 const ProvidersPage = () => {
   return (
     <div className="page">
       <Header />
       <main className="container">
-        <PanoramicHero />
+        <PanoramicHero src={providerBg} alt="Providers section background" />
         <div className="page-hero">
           <h1>Wellness Provider Network</h1>
           <p>

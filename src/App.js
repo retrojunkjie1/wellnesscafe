@@ -36,8 +36,11 @@ import NewsPage from "./Views/NewsPage";
 import NewsBlogsPage from "./Views/NewsBlogsPage";
 import ResourceDetail from "./Views/ResourceDetail";
 import ProviderDashboard from "./features/providers/ProviderDashboard";
+import AdminVerify from "./features/providers/AdminVerify";
 import AdminImport from "./features/providers/AdminImport";
 import SoberHomesState from "./Views/SoberHomesState";
+import RadioPlayer from "./components/RadioPlayer.jsx";
+import AdminUsers from "./features/admin/AdminUsers.jsx";
 
 function App() {
   return (
@@ -46,6 +49,7 @@ function App() {
         <Router>
           <Navbar />
           <NavigationButtons />
+          <RadioPlayer />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/signup" element={<Signup />} />
@@ -53,7 +57,7 @@ function App() {
             <Route
               path="/dashboard"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute requireVerified>
                   <Dashboard />
                 </ProtectedRoute>
               }
@@ -61,7 +65,7 @@ function App() {
             <Route
               path="/providers/dashboard"
               element={
-                <ProtectedRoute>
+                <ProtectedRoute roles={["provider", "admin"]} requireVerified>
                   <ProviderDashboard />
                 </ProtectedRoute>
               }
@@ -69,12 +73,28 @@ function App() {
             <Route
               path="/providers/admin/import"
               element={
-                <ProtectedRoute roles={["admin", "provider"]}>
+                <ProtectedRoute roles={["admin", "provider"]} requireVerified>
                   <AdminImport />
                 </ProtectedRoute>
               }
             />
             <Route path="/providers" element={<ProvidersPage />} />
+            <Route
+              path="/admin/users"
+              element={
+                <ProtectedRoute roles={["admin"]} requireVerified>
+                  <AdminUsers />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/providers/admin/verify"
+              element={
+                <ProtectedRoute roles={["admin"]} requireVerified>
+                  <AdminVerify />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/providers/directory"
               element={<ProviderDirectory />}

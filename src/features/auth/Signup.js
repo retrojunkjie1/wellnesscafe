@@ -23,7 +23,7 @@ export default function Signup() {
 
     setLoading(true);
     try {
-      await register(email, password);
+      await register(email, password, { role: "user" });
       navigate("/dashboard");
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -75,10 +75,10 @@ export default function Signup() {
         </p>
 
         {!authEnabled && (
-          <div className="error-message" role="status">
+          <output className="error-message">
             Signups are temporarily unavailable in this preview. Please try
             again later.
-          </div>
+          </output>
         )}
         {error && <div className="error-message">{error}</div>}
 

@@ -2,6 +2,7 @@ import React from "react";
 import "./Page.css";
 import Header from "../components/Header";
 import PanoramicHero from "../components/PanoramicHero";
+import productBg from "../assets/images/WellnessCafe-Product-v2.png";
 import GlassSection from "../components/GlassSection";
 
 const ProductPage = () => {
@@ -11,24 +12,28 @@ const ProductPage = () => {
       icon: "🧘‍♂️",
       title: "Guided Mindfulness",
       desc: "Meditations and breathing for daily balance.",
+      href: "/yoga",
     },
     {
       key: "ai-recovery",
       icon: "🧠",
       title: "AI Recovery Support",
       desc: "Detect early relapse patterns and track mood.",
+      href: "/product",
     },
     {
       key: "acuwellness",
       icon: "🌿",
       title: "AcuWellness",
       desc: "Integrate Eastern energy alignment practices.",
+      href: "/acuwellness",
     },
     {
       key: "community-meetings",
       icon: "👥",
       title: "Community Meetings",
       desc: "Group events and local wellness sessions.",
+      href: "/events",
     },
   ];
 
@@ -36,7 +41,7 @@ const ProductPage = () => {
     <div className="page product-page">
       <Header />
       <main className="container">
-        <PanoramicHero />
+        <PanoramicHero src={productBg} alt="Product section background" />
         <GlassSection
           title="Our Product"
           subtitle="WellnessCafe blends AI, mindfulness, and design to help you stay balanced every day."
