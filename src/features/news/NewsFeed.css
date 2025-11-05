@@ -1,6 +1,6 @@
 :root{
-  /* adjustable tint for readability on image backgrounds */
-  --news-overlay: linear-gradient(to bottom, rgba(17,24,39,0.55), rgba(17,24,39,0.35) 30%, rgba(17,24,39,0.2) 60%, rgba(17,24,39,0.35));
+  /* remove heavy overlay to avoid bold dark band on header */
+  --news-overlay: none;
 }
 
 .news-wrap{
@@ -12,6 +12,7 @@
   background-size: cover;
   background-position: center;
   background-image: var(--news-bg, none);
+  background-attachment: fixed; /* infinite feel while content scrolls */
 }
 .news-wrap::after{
   content: "";

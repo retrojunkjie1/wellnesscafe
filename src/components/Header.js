@@ -2,12 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./Header.css";
 import defaultImage from "../assets/images/wellnesscafe-bowl-v2.png";
-import LiveUpdateBanner from "./LiveUpdateBanner";
 
 const Header = ({ image = defaultImage, title = "Wellnesscafe" }) => {
   return (
     <>
-      <LiveUpdateBanner />
       <header className="header-container">
         <div className="header-content">
           <div className="tagline">
