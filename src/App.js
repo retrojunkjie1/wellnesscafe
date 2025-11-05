@@ -41,6 +41,7 @@ import AdminImport from "./features/providers/AdminImport";
 import SoberHomesState from "./Views/SoberHomesState";
 import AdminUsers from "./features/admin/AdminUsers.jsx";
 import AdminAssistants from "./features/admin/AdminAssistants.jsx";
+import AssistantsPage from "./Views/AssistantsPage";
 import CheckInPage from "./Views/CheckInPage";
 
 function App() {
@@ -148,6 +149,7 @@ function App() {
             <Route path="/about/faq" element={<FAQPage />} />
             <Route path="/about/news" element={<NewsPage />} />
             <Route path="/news" element={<NewsBlogsPage />} />
+            <Route path="/assistants/:type" element={<AssistantsPage />} />
             <Route
               path="/resources/soberLivingHomes/:state"
               element={<SoberHomesState />}

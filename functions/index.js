@@ -172,6 +172,8 @@ exports.syncAssistants = functions.pubsub
         admin.initializeApp();
       }
       const db = admin.firestore();
+      const cfg = functions.config() || {};
+      const sources = cfg.sources || {};
 
       // Helper: batched upserts to reduce write costs
       const upsertBatch = async (collectionPath, docs) => {
@@ -240,17 +242,46 @@ exports.syncAssistants = functions.pubsub
         return out;
       };
 
-      // Fetchers (skeletons) — replace with real API integrations
+      // Fetch helpers
+      const fetchJson = async (url, { timeoutMs = 20000 } = {}) => {
+        if (!url) return null;
+        const ctrl = new AbortController();
+        const t = setTimeout(() => ctrl.abort(), timeoutMs);
+        try {
+          const res = await fetch(url, { signal: ctrl.signal, headers: { 'accept': 'application/json' } });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return await res.json();
+        } finally {
+          clearTimeout(t);
+        }
+      };
+
+      // Config-driven fetchers (supply JSON URLs via: firebase functions:config:set sources.samhsa_url=...)
       const fetchSamhsa = async () => {
-        // Example placeholder: use findtreatment.gov CSV/JSON if available with a key
-        // Return [] to avoid outbound calls in default
-        return [];
+        const url = sources.samhsa_url; // expects JSON array
+        const data = await fetchJson(url);
+        if (!Array.isArray(data)) return [];
+        return data.map((r) => ({ ...r, source: 'SAMHSA' }));
       };
       const fetchOpenReferral = async () => {
-        return [];
+        const url = sources.openref_url; // expects HSDS-like JSON array
+        const data = await fetchJson(url);
+        if (!Array.isArray(data)) return [];
+        return data.map((r) => ({ ...r, source: 'OpenReferral' }));
       };
       const fetchStateFeeds = async () => {
-        return [];
+        const urls = String(sources.state_urls || '')
+          .split(/[\s,]+/)
+          .map((s) => s.trim())
+          .filter(Boolean);
+        if (!urls.length) return [];
+        const lists = await Promise.all(
+          urls.map(async (u) => {
+            const arr = await fetchJson(u);
+            return Array.isArray(arr) ? arr : [];
+          })
+        );
+        return lists.flat().map((r) => ({ ...r, source: 'State' }));
       };
 
       const [samhsa, openref, states] = await Promise.all([
@@ -260,7 +291,17 @@ exports.syncAssistants = functions.pubsub
       ]);
 
       const allRaw = [...samhsa, ...openref, ...states];
-      const normalized = allRaw
+      // De-dup by name+city+state key, prefer verified listings
+      const pickKey = (r) => `${(r.name||'').toLowerCase()}|${(r.city||'').toLowerCase()}|${(r.state||'').toUpperCase()}`;
+      const merged = new Map();
+      for (const r of allRaw) {
+        const k = pickKey(r);
+        const curr = merged.get(k);
+        if (!curr) merged.set(k, r);
+        else if (r.verified && !curr.verified) merged.set(k, r);
+      }
+      const uniqueRaw = Array.from(merged.values());
+      const normalized = uniqueRaw
         .map((r) => sanitize({ ...r, type: "sobriety", source: r.source }))
         .filter((d) => d.name && d.state);
 
