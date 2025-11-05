@@ -115,7 +115,7 @@ const RadioPlayer = () => {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-40 backdrop-blur-md bg-emerald-900/80 text-white border border-white/15 rounded-2xl shadow-lg px-3 py-2 flex items-center gap-2">
+    <div className="fixed right-4 md:bottom-4 bottom-24 z-40 backdrop-blur-md bg-emerald-900/80 text-white border border-white/15 rounded-2xl shadow-lg px-3 py-2 flex items-center gap-2">
       <audio
         ref={audioRef}
         preload="none"

@@ -8,7 +8,7 @@ const NewsPage = () => (
   <div className="page">
     <Header />
     <main className="container">
-  <PanoramicHero src={newsBg} alt="News section background" />
+      <PanoramicHero src={newsBg} alt="News section background" />
       <div className="page-hero">
         <h1>News & Updates</h1>
         <p>
