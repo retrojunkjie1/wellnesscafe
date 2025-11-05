@@ -24,6 +24,26 @@ const STATIONS = [
     name: "SomaFM Lush",
     url: "https://ice1.somafm.com/lush-128-mp3",
   },
+  {
+    id: "spacestation",
+    name: "SomaFM Space Station",
+    url: "https://ice3.somafm.com/spacestation-128-mp3",
+  },
+  {
+    id: "deepspace",
+    name: "SomaFM Deep Space One",
+    url: "https://ice3.somafm.com/deepspaceone-128-mp3",
+  },
+  {
+    id: "npr",
+    name: "NPR News (Live)",
+    url: "https://npr-ice.streamguys1.com/live.mp3",
+  },
+  {
+    id: "bbcws",
+    name: "BBC World Service",
+    url: "https://stream.live.vc.bbcmedia.co.uk/bbc_world_service",
+  },
 ];
 
 const loadPref = (key, fallback) => {
@@ -46,7 +66,7 @@ const savePref = (key, value) => {
   }
 };
 
-const RadioPlayer = () => {
+const RadioPlayer = ({variant="floating"}) => {
   const [stationId, setStationId] = useState(() =>
     loadPref("wc-radio-station", STATIONS[0].id)
   );
@@ -115,17 +135,34 @@ const RadioPlayer = () => {
     }
   };
 
+  const isNavbar = variant === "navbar";
+
   return (
-    <div className="fixed right-4 md:bottom-4 bottom-24 z-40 backdrop-blur-md bg-emerald-900/80 text-white border border-white/15 rounded-2xl shadow-lg px-3 py-2 flex items-center gap-2">
+    <div
+      className={
+        isNavbar
+          ? "relative z-40 text-inherit px-0 py-0 flex items-center gap-2"
+          : "fixed right-4 md:bottom-4 bottom-24 z-40 text-white rounded-2xl shadow-lg px-3 py-2 flex items-center gap-2"
+      }
+      style={
+        isNavbar
+          ? undefined
+          : {background: "transparent", backdropFilter: "none", border: "0"}
+      }
+    >
       <audio
         ref={audioRef}
         preload="none"
         aria-label={`${current.name} radio stream`}
       />
       <div className="flex items-center gap-1 pr-1">
-        <IconBadge size="sm" ariaLabel="Radio">
-          <Waves size={16} aria-hidden className="opacity-90" />
-        </IconBadge>
+        {isNavbar ? (
+          <Waves size={16} aria-hidden className="opacity-80" />
+        ) : (
+          <IconBadge size="sm" ariaLabel="Radio">
+            <Waves size={16} aria-hidden className="opacity-90" />
+          </IconBadge>
+        )}
         <span className="text-xs tracking-wide opacity-90 hidden sm:inline">
           Radio
         </span>
@@ -133,7 +170,11 @@ const RadioPlayer = () => {
       <select
         value={stationId}
         onChange={onTune}
-        className="bg-transparent text-white/90 text-xs border border-white/20 rounded-md px-2 py-1 focus:outline-none focus:ring-1 focus:ring-white/30"
+        className={
+          isNavbar
+            ? "bg-transparent text-current text-xs border border-current/30 rounded-md px-2 py-1 focus:outline-none focus:ring-1 focus:ring-current/40"
+            : "bg-transparent text-white/90 text-xs border border-white/20 rounded-md px-2 py-1 focus:outline-none focus:ring-1 focus:ring-white/30"
+        }
         aria-label="Choose station"
       >
         {STATIONS.map((s) => (
@@ -145,7 +186,11 @@ const RadioPlayer = () => {
       <button
         type="button"
         onClick={togglePlay}
-        className="ml-1 inline-flex items-center gap-1 rounded-md border border-white/25 px-2 py-1 text-xs font-medium hover:bg-white/10 focus:outline-none focus:ring-1 focus:ring-white/30"
+        className={
+          isNavbar
+            ? "ml-1 inline-flex items-center gap-1 rounded-md border border-current/30 px-2 py-1 text-xs font-medium hover:bg-current/10 focus:outline-none focus:ring-1 focus:ring-current/30"
+            : "ml-1 inline-flex items-center gap-1 rounded-md border border-white/25 px-2 py-1 text-xs font-medium hover:bg-white/10 focus:outline-none focus:ring-1 focus:ring-white/30"
+        }
         aria-label={playing ? "Pause radio" : "Play radio"}
         title={playing ? "Pause radio" : "Play radio"}
       >

@@ -14,12 +14,9 @@
   box-sizing: border-box;
 }
 
-.nav-logo {
-  font-family: "Space Grotesk", sans-serif;
-  font-weight: 700;
-  font-size: 1.8rem;
-  color: #d4b483;
-}
+.nav-brand {display:flex; flex-direction:column; align-items:flex-start; gap:4px;}
+.nav-logo {font-family: "Space Grotesk", sans-serif; font-weight:700; font-size:1.2rem; color:#d4b483; text-decoration:none;}
+.nav-under {line-height:1;}
 
 /* Desktop Navigation */
 .desktop-nav {
@@ -216,4 +213,6 @@
   .mobile-nav {
     display: block;
   }
+
+  .nav-under {margin-top: 2px;}
 }

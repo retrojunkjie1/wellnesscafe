@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import "./Navbar.css";
+import RadioPlayer from "./RadioPlayer.jsx";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -26,7 +27,14 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <div className="nav-logo">WellnessCafe</div>
+      <div className="nav-brand">
+        <Link to="/" className="nav-logo" aria-label="Go to homepage">
+          WELLNESSCAFE
+        </Link>
+        <div className="nav-under">
+          <RadioPlayer variant="navbar" />
+        </div>
+      </div>
 
       {/* Desktop Navigation */}
       <ul className="nav-links desktop-nav">
@@ -78,7 +86,7 @@ const Navbar = () => {
         )}
       </div>
 
-      {/* Mobile Hamburger Menu */}
+  {/* Mobile Hamburger Menu */}
       <div className="mobile-nav">
         <button className="hamburger-btn" onClick={toggleMenu}>
           <span

@@ -39,7 +39,6 @@ import ProviderDashboard from "./features/providers/ProviderDashboard";
 import AdminVerify from "./features/providers/AdminVerify";
 import AdminImport from "./features/providers/AdminImport";
 import SoberHomesState from "./Views/SoberHomesState";
-import RadioPlayer from "./components/RadioPlayer.jsx";
 import AdminUsers from "./features/admin/AdminUsers.jsx";
 import CheckInPage from "./Views/CheckInPage";
 
@@ -50,7 +49,6 @@ function App() {
         <Router>
           <Navbar />
           <NavigationButtons />
-          <RadioPlayer />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/signup" element={<Signup />} />

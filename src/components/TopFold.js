@@ -83,22 +83,30 @@ const TopFold = () => {
             className="feature-item"
             onClick={() => navigate("/recovery")}
           >
-            <span className="feature-icon wellness-icon wellness-icon-sm wellness-icon-card">🧠</span>
+            <span className="feature-icon wellness-icon wellness-icon-sm wellness-icon-card">
+              🧠
+            </span>
             <span>AI-Powered Recovery Support</span>
           </button>
           <button className="feature-item" onClick={() => navigate("/yoga")}>
-            <span className="feature-icon wellness-icon wellness-icon-sm wellness-icon-card">🧘</span>
+            <span className="feature-icon wellness-icon wellness-icon-sm wellness-icon-card">
+              🧘
+            </span>
             <span>Guided Mindfulness & Yoga</span>
           </button>
           <button
             className="feature-item"
             onClick={() => navigate("/acuwellness")}
           >
-            <span className="feature-icon wellness-icon wellness-icon-sm wellness-icon-card">🌿</span>
+            <span className="feature-icon wellness-icon wellness-icon-sm wellness-icon-card">
+              🌿
+            </span>
             <span>Acuwellness Integration</span>
           </button>
           <button className="feature-item" onClick={() => navigate("/events")}>
-            <span className="feature-icon wellness-icon wellness-icon-sm wellness-icon-card">👥</span>
+            <span className="feature-icon wellness-icon wellness-icon-sm wellness-icon-card">
+              👥
+            </span>
             <span>Community Events & Support</span>
           </button>
         </div>
