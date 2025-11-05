@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/media-has-caption */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Pause, Play, Waves } from "lucide-react";
 import IconBadge from "./IconBadge";
 
@@ -66,6 +66,25 @@ const savePref = (key, value) => {
   }
 };
 
+const loadJSON = (key, fallback) => {
+  try {
+    const v = localStorage.getItem(key);
+    if (!v) return fallback;
+    return JSON.parse(v);
+  } catch (error_) {
+    console.warn("radio: loadJSON failed", error_);
+    return fallback;
+  }
+};
+
+const saveJSON = (key, value) => {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (error_) {
+    console.warn("radio: saveJSON failed", error_);
+  }
+};
+
 const RadioPlayer = ({ variant = "floating" }) => {
   const [stationId, setStationId] = useState(() =>
     loadPref("wc-radio-station", STATIONS[0].id)
@@ -75,7 +94,13 @@ const RadioPlayer = ({ variant = "floating" }) => {
   );
   const audioRef = useRef(null);
 
-  const current = STATIONS.find((s) => s.id === stationId) || STATIONS[0];
+  const [customs, setCustoms] = useState(() => loadJSON("wc-radio-customs", []));
+  const [showEditor, setShowEditor] = useState(false);
+  const [newName, setNewName] = useState("");
+  const [newUrl, setNewUrl] = useState("");
+  const [error, setError] = useState("");
+  const stations = useMemo(() => [...STATIONS, ...customs], [customs]);
+  const current = stations.find((s) => s.id === stationId) || stations[0];
 
   useEffect(() => {
     savePref("wc-radio-station", stationId);
@@ -123,7 +148,7 @@ const RadioPlayer = ({ variant = "floating" }) => {
     setStationId(nextId);
     const el = audioRef.current;
     if (!el) return;
-    el.src = (STATIONS.find((s) => s.id === nextId) || STATIONS[0]).url;
+    el.src = (stations.find((s) => s.id === nextId) || stations[0]).url;
     if (playing) {
       try {
         await el.play();
@@ -132,6 +157,38 @@ const RadioPlayer = ({ variant = "floating" }) => {
         console.warn("radio: tune+play failed", error_);
         setPlaying(false);
       }
+    }
+  };
+
+  const validateUrl = (url) => /^https?:\/\//i.test(url);
+
+  const addCustom = async () => {
+    setError("");
+    const name = newName.trim();
+    const url = newUrl.trim();
+    if (!name) { setError("Please enter a station name"); return; }
+    if (!validateUrl(url)) { setError("Enter a valid http(s) stream URL"); return; }
+    const id = `custom-${Date.now()}`;
+    const next = [...customs, { id, name, url }];
+    setCustoms(next);
+    saveJSON("wc-radio-customs", next);
+    setStationId(id);
+    setShowEditor(false);
+    setNewName("");
+    setNewUrl("");
+    // try autoplay if already playing
+    const el = audioRef.current;
+    if (el && playing) {
+      try { await el.play(); } catch (error_) { console.warn("radio: custom play failed", error_); }
+    }
+  };
+
+  const removeCustom = (id) => {
+    const next = customs.filter((c) => c.id !== id);
+    setCustoms(next);
+    saveJSON("wc-radio-customs", next);
+    if (stationId === id && next.length) {
+      setStationId(next[0].id);
     }
   };
 
@@ -177,12 +234,25 @@ const RadioPlayer = ({ variant = "floating" }) => {
         }
         aria-label="Choose station"
       >
-        {STATIONS.map((s) => (
+        {stations.map((s) => (
           <option key={s.id} value={s.id} className="text-black">
             {s.name}
           </option>
         ))}
       </select>
+      <button
+        type="button"
+        onClick={() => setShowEditor((v) => !v)}
+        className={
+          isNavbar
+            ? "ml-1 inline-flex items-center gap-1 rounded-md border border-current/30 px-2 py-1 text-xs font-medium hover:bg-current/10"
+            : "ml-1 inline-flex items-center gap-1 rounded-md border border-white/25 px-2 py-1 text-xs font-medium hover:bg-white/10"
+        }
+        title="Add custom station"
+        aria-label="Add custom station"
+      >
+        +
+      </button>
       <button
         type="button"
         onClick={togglePlay}
@@ -197,6 +267,62 @@ const RadioPlayer = ({ variant = "floating" }) => {
         {playing ? <Pause size={14} /> : <Play size={14} />}
         <span>{playing ? "Pause" : "Play"}</span>
       </button>
+
+      {showEditor && (
+        <div
+          className={
+            isNavbar
+              ? "absolute mt-10 left-0 z-50 bg-black/70 text-white border border-white/20 rounded-md p-2 w-[260px]"
+              : "absolute mt-10 right-0 z-50 bg-white/90 text-black border border-black/20 rounded-md p-2 w-[260px]"
+          }
+          role="dialog"
+          aria-label="Add custom station"
+        >
+          <div className="mb-2 text-xs opacity-90">Add custom station</div>
+          <div className="flex flex-col gap-2">
+            <input
+              type="text"
+              value={newName}
+              onChange={(e) => setNewName(e.target.value)}
+              placeholder="Station name"
+              className={isNavbar ? "bg-black/40 text-white text-xs border border-white/25 rounded px-2 py-1" : "bg-white text-black text-xs border border-black/25 rounded px-2 py-1"}
+            />
+            <input
+              type="url"
+              value={newUrl}
+              onChange={(e) => setNewUrl(e.target.value)}
+              placeholder="https://example.com/stream.mp3"
+              className={isNavbar ? "bg-black/40 text-white text-xs border border-white/25 rounded px-2 py-1" : "bg-white text-black text-xs border border-black/25 rounded px-2 py-1"}
+            />
+            {error && (
+              <div className="text-[11px] text-red-300">{error}</div>
+            )}
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={addCustom}
+                className={isNavbar ? "inline-flex items-center gap-1 rounded-md border border-white/30 px-2 py-1 text-xs hover:bg-white/10" : "inline-flex items-center gap-1 rounded-md border border-black/30 px-2 py-1 text-xs hover:bg-black/5"}
+              >Save</button>
+              <button
+                type="button"
+                onClick={() => { setShowEditor(false); setError(""); }}
+                className={isNavbar ? "inline-flex items-center gap-1 rounded-md border border-white/20 px-2 py-1 text-xs hover:bg-white/5" : "inline-flex items-center gap-1 rounded-md border border-black/20 px-2 py-1 text-xs hover:bg-black/5"}
+              >Cancel</button>
+            </div>
+            {customs.length > 0 && (
+              <div className="pt-2 border-t border-current/20 text-xs">
+                <div className="opacity-80 mb-1">Your stations</div>
+                {customs.map((c) => (
+                  <div key={c.id} className="flex items-center justify-between gap-2 py-0.5">
+                    <button type="button" className="underline" onClick={() => setStationId(c.id)}>{c.name}</button>
+                    <button type="button" aria-label={`Remove ${c.name}`} title={`Remove ${c.name}`} onClick={() => removeCustom(c.id)}>×</button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
