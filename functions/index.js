@@ -159,6 +159,100 @@ exports.aiAsk = functions.https.onRequest(async (req, res) => {
 });
 
 /**
+ * Image proxy to ensure remote thumbnails load reliably and are cacheable under our domain.
+ * Usage: /imgProxy?u=<encoded URL>
+ */
+exports.imgProxy = functions.https.onRequest(async (req, res) => {
+  const url = String(req.query.u || "").trim();
+  if (!/^https?:\/\//i.test(url)) {
+    return res.status(400).send("Bad url");
+  }
+  try {
+    const upstream = await fetch(url, {
+      redirect: "follow",
+      headers: { "user-agent": "WellnessCafeBot/1.0" },
+    });
+    if (!upstream.ok) {
+      return res.status(502).send("Upstream error");
+    }
+    const type = upstream.headers.get("content-type") || "image/jpeg";
+    res.set("content-type", type);
+    res.set("cache-control", "public, max-age=3600, s-maxage=86400");
+    const buf = Buffer.from(await upstream.arrayBuffer());
+    return res.status(200).send(buf);
+  } catch (e) {
+    console.error("imgProxy error", e);
+    return res.status(500).send("Proxy failed");
+  }
+});
+
+/**
+ * Article reader: fetches external article and extracts readable content server-side.
+ * Returns JSON { title, byline, content, siteName, url, image }.
+ * Usage: /articleRead?u=<encoded URL>
+ */
+exports.articleRead = functions.https.onRequest(async (req, res) => {
+  const url = String(req.query.u || "").trim();
+  if (!/^https?:\/\//i.test(url)) {
+    return res.status(400).json({ error: "Bad url" });
+  }
+  try {
+    const [{ JSDOM }, { Readability }, sanitizeHtml] = await Promise.all([
+      import("jsdom"),
+      import("@mozilla/readability"),
+      import("sanitize-html").then((m) => m.default || m),
+    ]);
+    const resp = await fetch(url, {
+      redirect: "follow",
+      headers: { "user-agent": "WellnessCafeReader/1.0" },
+    });
+    if (!resp.ok) {
+      return res.status(502).json({ error: "Fetch failed" });
+    }
+    const html = await resp.text();
+    const dom = new JSDOM(html, { url });
+    const reader = new Readability(dom.window.document);
+    const article = reader.parse();
+    if (!article) {
+      return res.status(200).json({ title: "", content: "", url });
+    }
+    const cleaned = sanitizeHtml(article.content || "", {
+      allowedTags: sanitizeHtml.defaults.allowedTags.concat([
+        "img",
+        "figure",
+        "figcaption",
+      ]),
+      allowedAttributes: {
+        a: ["href", "name", "target", "rel"],
+        img: ["src", "alt", "title"],
+        '*': ["class"]
+      },
+      transformTags: {
+        a: (tagName, attribs) => ({
+          tagName: "a",
+          attribs: {
+            ...attribs,
+            target: "_blank",
+            rel: "noopener noreferrer",
+          },
+        }),
+      },
+    });
+    return res.status(200).json({
+      title: article.title || "",
+      byline: article.byline || "",
+      siteName: article.siteName || "",
+      image: article.image || "",
+      url,
+      content: cleaned,
+    });
+  } catch (e) {
+    console.error("articleRead error", e);
+    return res.status(500).json({ error: "Reader failed" });
+  }
+});
+
+/**
  * Scheduled sync: fetch external provider directories (SAMHSA, OpenReferral, State)
  * and upsert into Firestore. Runs weekly early Monday.
  * Configure relevant API keys as needed via functions:secrets

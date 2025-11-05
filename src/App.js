@@ -34,6 +34,7 @@ import CareersPage from "./Views/CareersPage";
 import FAQPage from "./Views/FAQPage";
 import NewsPage from "./Views/NewsPage";
 import NewsBlogsPage from "./Views/NewsBlogsPage";
+import ArticleReader from "./features/news/ArticleReader.jsx";
 import ResourceDetail from "./Views/ResourceDetail";
 import ProviderDashboard from "./features/providers/ProviderDashboard";
 import AdminVerify from "./features/providers/AdminVerify";
@@ -149,6 +150,7 @@ function App() {
             <Route path="/about/faq" element={<FAQPage />} />
             <Route path="/about/news" element={<NewsPage />} />
             <Route path="/news" element={<NewsBlogsPage />} />
+            <Route path="/news/read" element={<ArticleReader />} />
             <Route path="/assistants/:type" element={<AssistantsPage />} />
             <Route
               path="/resources/soberLivingHomes/:state"

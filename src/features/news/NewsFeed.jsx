@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import "./NewsFeed.css";
 import Thumbnail from "../../components/Thumbnail";
 
@@ -126,13 +127,12 @@ const NewsFeed = () => {
             new Map(all.map((i) => [i.link, i])).values()
           );
           const categorized = unique.map((a, idx) => {
-            // Prefer JPEG thumbnails; if missing or PNG, pick a fallback JPEG in rotation
-            const needsJpeg =
-              !a.thumbnail || /\.png(\?.*)?$/i.test(String(a.thumbnail));
+            // Use source thumbnails when present; only fallback if missing
             const fallback = jpegFallbacks[idx % jpegFallbacks.length];
+            const thumb = a?.thumbnail?.trim?.() ? a.thumbnail : fallback;
             return {
               ...a,
-              thumbnail: needsJpeg ? fallback : a.thumbnail,
+              thumbnail: thumb,
               category: categorize(a),
             };
           });
@@ -185,17 +185,17 @@ const NewsFeed = () => {
             {group.items.slice(0, 6).map((a) => {
               const safeDesc = htmlToText(a.description);
               return (
-                <a
+                <Link
                   key={a.link}
-                  href={a.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  to={`/news/read?u=${encodeURIComponent(a.link)}`}
                   className="block rounded-2xl overflow-hidden bg-white ring-1 ring-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
                 >
                   {a.thumbnail ? (
                     <div className="aspect-[16/9] w-full bg-gray-100">
                       <Thumbnail
-                        src={a.thumbnail}
+                        src={`${process.env.PUBLIC_URL}/__/functions/imgProxy?u=${encodeURIComponent(
+                          a.thumbnail
+                        )}`}
                         alt={a.title}
                         className="w-full h-full object-cover"
                       />
@@ -211,7 +211,7 @@ const NewsFeed = () => {
                       </p>
                     ) : null}
                   </div>
-                </a>
+                </Link>
               );
             })}
           </div>
