@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import "./NewsFeed.css";
 import Thumbnail from "../../components/Thumbnail";
 
 const GOOGLE_NEWS_FEED =
@@ -163,8 +164,15 @@ const NewsFeed = () => {
     })
   );
 
+  // Choose background: Steamboat for a calmer wellness vibe by default
+  const bgUrl = `${process.env.PUBLIC_URL}/images/steamboat.jpg`;
+
   return (
-    <div className="bg-gray-50 px-6 md:px-12 py-14">
+    <section
+      className="news-wrap news-bg-steamboat"
+      style={{ "--news-bg": `url(${bgUrl})` }}
+    >
+      <div className="news-content px-6 md:px-12 py-14">
       <h2 className="text-3xl font-semibold text-emerald-800 text-center mb-12">
         Live Wellness & Mindfulness News
       </h2>
@@ -209,7 +217,8 @@ const NewsFeed = () => {
           </div>
         </section>
       ))}
-    </div>
+      </div>
+    </section>
   );
 };
 
