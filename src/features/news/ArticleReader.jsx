@@ -37,7 +37,14 @@ const ArticleReader = ()=>{
     return <div className="px-6 md:px-12 py-10 text-gray-400">Loading article…</div>;
   }
   if(error){
-    return <div className="px-6 md:px-12 py-10 text-red-300">{error}</div>;
+    return (
+      <div className="px-6 md:px-12 py-10 text-red-300">
+        <p className="mb-3">{error}</p>
+        {url ? (
+          <a href={url} target="_blank" rel="noopener noreferrer" className="text-emerald-300 underline">Open at source</a>
+        ) : null}
+      </div>
+    );
   }
   const title = data?.title || "Untitled";
   const site = data?.siteName ? ` — ${data.siteName}` : "";
