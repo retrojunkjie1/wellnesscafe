@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import React, { useEffect, useRef, useState } from "react";
 import { Pause, Play, Waves } from "lucide-react";
+import IconBadge from "./IconBadge";
 
 const STATIONS = [
   {
@@ -122,7 +123,9 @@ const RadioPlayer = () => {
         aria-label={`${current.name} radio stream`}
       />
       <div className="flex items-center gap-1 pr-1">
-        <Waves size={18} aria-hidden className="opacity-80" />
+        <IconBadge size="sm" ariaLabel="Radio">
+          <Waves size={16} aria-hidden className="opacity-90" />
+        </IconBadge>
         <span className="text-xs tracking-wide opacity-90 hidden sm:inline">
           Radio
         </span>

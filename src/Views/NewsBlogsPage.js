@@ -10,7 +10,7 @@ const NewsBlogsPage = () => {
       <PageBanner imageSrc={banner} altText="Wellness news background">
         <NewsTicker />
       </PageBanner>
-  <NewsFeed />
+      <NewsFeed />
     </div>
   );
 };
