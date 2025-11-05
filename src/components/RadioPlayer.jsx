@@ -66,7 +66,7 @@ const savePref = (key, value) => {
   }
 };
 
-const RadioPlayer = ({variant="floating"}) => {
+const RadioPlayer = ({ variant = "floating" }) => {
   const [stationId, setStationId] = useState(() =>
     loadPref("wc-radio-station", STATIONS[0].id)
   );
@@ -147,7 +147,7 @@ const RadioPlayer = ({variant="floating"}) => {
       style={
         isNavbar
           ? undefined
-          : {background: "transparent", backdropFilter: "none", border: "0"}
+          : { background: "transparent", backdropFilter: "none", border: "0" }
       }
     >
       <audio

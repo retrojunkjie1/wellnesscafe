@@ -86,7 +86,7 @@ const Navbar = () => {
         )}
       </div>
 
-  {/* Mobile Hamburger Menu */}
+      {/* Mobile Hamburger Menu */}
       <div className="mobile-nav">
         <button className="hamburger-btn" onClick={toggleMenu}>
           <span
