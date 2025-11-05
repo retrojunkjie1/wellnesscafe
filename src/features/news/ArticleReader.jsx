@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
+import { fnUrl } from "../../utils/functionsBase";
 
 const useQuery = ()=>{
   const { search } = useLocation();
@@ -17,7 +18,7 @@ const ArticleReader = ()=>{
     if(!url){ setError("Missing article url"); setLoading(false); return; }
     (async()=>{
       try{
-        const endpoint = `${process.env.PUBLIC_URL}/__/functions/articleRead?u=${encodeURIComponent(url)}`;
+        const endpoint = `${fnUrl("articleRead")}?u=${encodeURIComponent(url)}`;
         const res = await fetch(endpoint);
         if(!res.ok){ throw new Error(`HTTP ${res.status}`); }
         const json = await res.json();
@@ -49,7 +50,7 @@ const ArticleReader = ()=>{
       </div>
       {data?.image ? (
         <div className="rounded-xl overflow-hidden mb-6">
-          <img src={`${process.env.PUBLIC_URL}/__/functions/imgProxy?u=${encodeURIComponent(data.image)}`} alt="" className="w-full h-auto" />
+          <img src={`${fnUrl("imgProxy")}?u=${encodeURIComponent(data.image)}`} alt="" className="w-full h-auto" />
         </div>
       ): null}
       <article className="prose prose-invert max-w-none">

@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import "./NewsFeed.css";
+import { fnUrl } from "../../utils/functionsBase";
 import Thumbnail from "../../components/Thumbnail";
 
 const GOOGLE_NEWS_FEED =
@@ -193,9 +194,7 @@ const NewsFeed = () => {
                   {a.thumbnail ? (
                     <div className="aspect-[16/9] w-full bg-gray-100">
                       <Thumbnail
-                        src={`${process.env.PUBLIC_URL}/__/functions/imgProxy?u=${encodeURIComponent(
-                          a.thumbnail
-                        )}`}
+                        src={`${fnUrl("imgProxy")}?u=${encodeURIComponent(a.thumbnail)}`}
                         alt={a.title}
                         className="w-full h-full object-cover"
                       />

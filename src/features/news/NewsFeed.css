@@ -28,7 +28,4 @@
   z-index: 1;
 }
 
-/* Background variants: drop your images in public/images */
-/* The actual image is applied via CSS variable --news-bg from the component */
-.news-bg-steamboat{}
-.news-bg-denver{}
+/* Background handled via CSS variable --news-bg from the component */
