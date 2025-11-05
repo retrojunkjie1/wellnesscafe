@@ -157,3 +157,147 @@ exports.aiAsk = functions.https.onRequest(async (req, res) => {
     }
   });
 });
+
+/**
+ * Scheduled sync: fetch external provider directories (SAMHSA, OpenReferral, State)
+ * and upsert into Firestore. Runs weekly early Monday.
+ * Configure relevant API keys as needed via functions:secrets
+ */
+exports.syncAssistants = functions.pubsub
+  .schedule("every monday 03:00")
+  .timeZone("America/New_York")
+  .onRun(async () => {
+    try {
+      if (!admin.apps?.length) {
+        admin.initializeApp();
+      }
+      const db = admin.firestore();
+
+      // Helper: batched upserts to reduce write costs
+      const upsertBatch = async (collectionPath, docs) => {
+        if (!docs || !docs.length) return 0;
+        let count = 0;
+        const CHUNK = 400;
+        for (let i = 0; i < docs.length; i += CHUNK) {
+          const chunk = docs.slice(i, i + CHUNK);
+          const batch = db.batch();
+          for (const d of chunk) {
+            const baseId = (d.name || d.id || `${Date.now()}-${Math.random()}`)
+              .toString()
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/g, "-")
+              .replace(/(^-|-$)/g, "");
+            const ref = db.collection(collectionPath).doc(baseId);
+            batch.set(ref, d, { merge: true });
+          }
+          await batch.commit();
+          count += chunk.length;
+        }
+        return count;
+      };
+
+      // Normalization mirroring src/schemas/assistantSchema.js (simplified in CF)
+      const sanitize = (input) => {
+        const toStr = (v) => (typeof v === "string" ? v.trim() : "");
+        const toArr = (v) =>
+          Array.isArray(v)
+            ? v.map(String).map((s) => s.trim()).filter(Boolean)
+            : typeof v === "string"
+            ? v.split(/[|/,;]+/).map((s) => s.trim()).filter(Boolean)
+            : [];
+        const out = {
+          type: ["housing", "legal", "funding", "sobriety"].includes(
+            input?.type
+          )
+            ? input.type
+            : "sobriety",
+          name: toStr(input?.name),
+          source: toStr(input?.source || "external"),
+          verified: Boolean(input?.verified),
+          contact: {
+            phone: toStr(input?.contact?.phone || input?.phone),
+            email: toStr(input?.contact?.email || input?.email),
+            url: toStr(input?.contact?.url || input?.website || input?.url),
+          },
+          applyOnline: Boolean(
+            input?.applyOnline || input?.has_application || input?.application_url
+          ),
+          applicationUrl: toStr(input?.applicationUrl || input?.application_url),
+          description: toStr(input?.description || input?.summary),
+          address: {
+            street: toStr(input?.address?.street || input?.street),
+            city: toStr(input?.address?.city || input?.city),
+            state: toStr(input?.address?.state || input?.state || input?.state_code),
+            zip: toStr(input?.address?.zip || input?.zip || input?.postal_code),
+          },
+          insurance: toArr(input?.insurance || input?.insurance_types),
+          gender: toArr(input?.gender || input?.genders_served),
+          cost: toStr(input?.cost || input?.fee || input?.payment_options),
+          tags: toArr(input?.tags || input?.categories),
+        };
+        out.city = out.address.city;
+        out.state = out.address.state;
+        return out;
+      };
+
+      // Fetchers (skeletons) — replace with real API integrations
+      const fetchSamhsa = async () => {
+        // Example placeholder: use findtreatment.gov CSV/JSON if available with a key
+        // Return [] to avoid outbound calls in default
+        return [];
+      };
+      const fetchOpenReferral = async () => {
+        return [];
+      };
+      const fetchStateFeeds = async () => {
+        return [];
+      };
+
+      const [samhsa, openref, states] = await Promise.all([
+        fetchSamhsa(),
+        fetchOpenReferral(),
+        fetchStateFeeds(),
+      ]);
+
+      const allRaw = [...samhsa, ...openref, ...states];
+      const normalized = allRaw
+        .map((r) => sanitize({ ...r, type: "sobriety", source: r.source }))
+        .filter((d) => d.name && d.state);
+
+      // Upsert into assistant collection and state-indexed soberHomes path
+      const assistantCount = await upsertBatch("assistant_sobriety", normalized);
+
+      // Optional: mirror to soberHomes/{state}/homes for fast state views
+      const byState = new Map();
+      for (const d of normalized) {
+        const key = (d.state || "").toLowerCase();
+        if (!byState.has(key)) byState.set(key, []);
+        byState.get(key).push({
+          name: d.name,
+          city: d.city,
+          type: "Sober living / recovery",
+          verified: d.verified,
+          categories: d.tags,
+          insurance: d.insurance,
+          description: d.description,
+          address: [d.address?.street, d.city, d.state, d.address?.zip]
+            .filter(Boolean)
+            .join(", "),
+          contact:
+            d.contact?.url || d.contact?.phone || d.contact?.email || "",
+        });
+      }
+      let mirrorCount = 0;
+      for (const [state, rows] of byState.entries()) {
+        mirrorCount += await upsertBatch(`soberHomes/${state}/homes`, rows);
+      }
+
+      console.log(
+        `syncAssistants: upserted ${assistantCount} assistants; mirrored ${mirrorCount} state home entries.`
+      );
+      return null;
+    } catch (err) {
+      console.error("syncAssistants failed", err);
+      return null;
+    }
+  });

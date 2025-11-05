@@ -40,6 +40,7 @@ import AdminVerify from "./features/providers/AdminVerify";
 import AdminImport from "./features/providers/AdminImport";
 import SoberHomesState from "./Views/SoberHomesState";
 import AdminUsers from "./features/admin/AdminUsers.jsx";
+import AdminAssistants from "./features/admin/AdminAssistants.jsx";
 import CheckInPage from "./Views/CheckInPage";
 
 function App() {
@@ -91,6 +92,14 @@ function App() {
               element={
                 <ProtectedRoute roles={["admin"]} requireVerified>
                   <AdminVerify />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/assistants"
+              element={
+                <ProtectedRoute roles={["admin"]} requireVerified>
+                  <AdminAssistants />
                 </ProtectedRoute>
               }
             />
