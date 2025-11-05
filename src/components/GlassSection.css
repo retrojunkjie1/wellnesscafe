@@ -2,21 +2,15 @@
   text-align: center;
   padding: 6rem 2rem 4rem;
   color: #fff;
-  background: linear-gradient(160deg, #0b0f0c 0%, #0f1813 70%, #172420 100%);
+  /* Remove background to let the global/infinite background show through */
+  background: transparent;
   position: relative;
   overflow: hidden;
 }
 
+/* Remove dark overlay as well for a fully transparent section */
 .wc-glass-section::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.18);
-  z-index: 0;
-  pointer-events: none;
+  content: none;
 }
 
 .wc-glass-title {

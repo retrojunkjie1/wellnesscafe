@@ -94,7 +94,9 @@ const RadioPlayer = ({ variant = "floating" }) => {
   );
   const audioRef = useRef(null);
 
-  const [customs, setCustoms] = useState(() => loadJSON("wc-radio-customs", []));
+  const [customs, setCustoms] = useState(() =>
+    loadJSON("wc-radio-customs", [])
+  );
   const [showEditor, setShowEditor] = useState(false);
   const [newName, setNewName] = useState("");
   const [newUrl, setNewUrl] = useState("");
@@ -166,8 +168,14 @@ const RadioPlayer = ({ variant = "floating" }) => {
     setError("");
     const name = newName.trim();
     const url = newUrl.trim();
-    if (!name) { setError("Please enter a station name"); return; }
-    if (!validateUrl(url)) { setError("Enter a valid http(s) stream URL"); return; }
+    if (!name) {
+      setError("Please enter a station name");
+      return;
+    }
+    if (!validateUrl(url)) {
+      setError("Enter a valid http(s) stream URL");
+      return;
+    }
     const id = `custom-${Date.now()}`;
     const next = [...customs, { id, name, url }];
     setCustoms(next);
@@ -179,7 +187,11 @@ const RadioPlayer = ({ variant = "floating" }) => {
     // try autoplay if already playing
     const el = audioRef.current;
     if (el && playing) {
-      try { await el.play(); } catch (error_) { console.warn("radio: custom play failed", error_); }
+      try {
+        await el.play();
+      } catch (error_) {
+        console.warn("radio: custom play failed", error_);
+      }
     }
   };
 
@@ -285,37 +297,74 @@ const RadioPlayer = ({ variant = "floating" }) => {
               value={newName}
               onChange={(e) => setNewName(e.target.value)}
               placeholder="Station name"
-              className={isNavbar ? "bg-black/40 text-white text-xs border border-white/25 rounded px-2 py-1" : "bg-white text-black text-xs border border-black/25 rounded px-2 py-1"}
+              className={
+                isNavbar
+                  ? "bg-black/40 text-white text-xs border border-white/25 rounded px-2 py-1"
+                  : "bg-white text-black text-xs border border-black/25 rounded px-2 py-1"
+              }
             />
             <input
               type="url"
               value={newUrl}
               onChange={(e) => setNewUrl(e.target.value)}
               placeholder="https://example.com/stream.mp3"
-              className={isNavbar ? "bg-black/40 text-white text-xs border border-white/25 rounded px-2 py-1" : "bg-white text-black text-xs border border-black/25 rounded px-2 py-1"}
+              className={
+                isNavbar
+                  ? "bg-black/40 text-white text-xs border border-white/25 rounded px-2 py-1"
+                  : "bg-white text-black text-xs border border-black/25 rounded px-2 py-1"
+              }
             />
-            {error && (
-              <div className="text-[11px] text-red-300">{error}</div>
-            )}
+            {error && <div className="text-[11px] text-red-300">{error}</div>}
             <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={addCustom}
-                className={isNavbar ? "inline-flex items-center gap-1 rounded-md border border-white/30 px-2 py-1 text-xs hover:bg-white/10" : "inline-flex items-center gap-1 rounded-md border border-black/30 px-2 py-1 text-xs hover:bg-black/5"}
-              >Save</button>
+                className={
+                  isNavbar
+                    ? "inline-flex items-center gap-1 rounded-md border border-white/30 px-2 py-1 text-xs hover:bg-white/10"
+                    : "inline-flex items-center gap-1 rounded-md border border-black/30 px-2 py-1 text-xs hover:bg-black/5"
+                }
+              >
+                Save
+              </button>
               <button
                 type="button"
-                onClick={() => { setShowEditor(false); setError(""); }}
-                className={isNavbar ? "inline-flex items-center gap-1 rounded-md border border-white/20 px-2 py-1 text-xs hover:bg-white/5" : "inline-flex items-center gap-1 rounded-md border border-black/20 px-2 py-1 text-xs hover:bg-black/5"}
-              >Cancel</button>
+                onClick={() => {
+                  setShowEditor(false);
+                  setError("");
+                }}
+                className={
+                  isNavbar
+                    ? "inline-flex items-center gap-1 rounded-md border border-white/20 px-2 py-1 text-xs hover:bg-white/5"
+                    : "inline-flex items-center gap-1 rounded-md border border-black/20 px-2 py-1 text-xs hover:bg-black/5"
+                }
+              >
+                Cancel
+              </button>
             </div>
             {customs.length > 0 && (
               <div className="pt-2 border-t border-current/20 text-xs">
                 <div className="opacity-80 mb-1">Your stations</div>
                 {customs.map((c) => (
-                  <div key={c.id} className="flex items-center justify-between gap-2 py-0.5">
-                    <button type="button" className="underline" onClick={() => setStationId(c.id)}>{c.name}</button>
-                    <button type="button" aria-label={`Remove ${c.name}`} title={`Remove ${c.name}`} onClick={() => removeCustom(c.id)}>×</button>
+                  <div
+                    key={c.id}
+                    className="flex items-center justify-between gap-2 py-0.5"
+                  >
+                    <button
+                      type="button"
+                      className="underline"
+                      onClick={() => setStationId(c.id)}
+                    >
+                      {c.name}
+                    </button>
+                    <button
+                      type="button"
+                      aria-label={`Remove ${c.name}`}
+                      title={`Remove ${c.name}`}
+                      onClick={() => removeCustom(c.id)}
+                    >
+                      ×
+                    </button>
                   </div>
                 ))}
               </div>

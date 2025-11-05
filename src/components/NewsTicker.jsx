@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import "./NewsTicker.css";
 
 const GOOGLE_NEWS_FEED =
@@ -32,12 +33,18 @@ const NewsTicker = () => {
     };
   }, []);
 
-  const content = items.length
-    ? items
-    : [
-        "Live wellness updates loading…",
-        "Mindfulness • Nutrition • Recovery • Community",
-      ];
+  // Site-specific updates to include in ticker (e.g., compliance/effective notices)
+  const siteUpdates = useMemo(
+    () => [
+      "Effective October 30, 2025, Welcome to WellnessCafe AI — Your journey to wellness begins here.",
+    ],
+    []
+  );
+
+  const content = (items.length ? items : [
+    "Live wellness updates loading…",
+    "Mindfulness • Nutrition • Recovery • Community",
+  ]).concat(siteUpdates);
 
   return (
     <div className="news-ticker-root">
@@ -54,9 +61,14 @@ const NewsTicker = () => {
         <div className="news-ticker" aria-live="polite">
           <div className="news-track">
             {content.concat(content).map((t, i) => (
-              <span className="news-item" key={`${t}-${i}`}>
+              <Link
+                to="/news"
+                className="news-item"
+                key={`${t}-${i}`}
+                aria-label={`Read more: ${t}`}
+              >
                 {t}
-              </span>
+              </Link>
             ))}
           </div>
         </div>

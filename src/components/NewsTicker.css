@@ -42,13 +42,26 @@
   gap: 1.25rem;
   white-space: nowrap;
   will-change: transform;
-  animation: marquee 30s linear infinite;
+  animation: marquee 48s linear infinite;
   padding-left: 1rem;
 }
 .news-item {
   color: #fff;
   opacity: 0.9;
   font-size: 0.875rem;
+  text-decoration: none;
+  outline: none;
+}
+
+/* Pause scroll on hover/focus to improve readability */
+.news-ticker:hover .news-track,
+.news-ticker:focus-within .news-track {
+  animation-play-state: paused;
+}
+
+.news-item:focus,
+.news-item:hover {
+  text-decoration: underline;
 }
 
 @keyframes marquee {
