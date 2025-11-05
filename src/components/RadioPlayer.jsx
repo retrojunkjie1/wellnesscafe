@@ -205,7 +205,6 @@ const RadioPlayer = ({ variant = "floating" }) => {
   };
 
   const isNavbar = variant === "navbar";
-
   return (
     <div
       className={
@@ -232,64 +231,85 @@ const RadioPlayer = ({ variant = "floating" }) => {
             <Waves size={16} aria-hidden className="opacity-90" />
           </IconBadge>
         )}
-        <span className="text-xs tracking-wide opacity-90 hidden sm:inline">
-          Radio
-        </span>
+        {!isNavbar && (
+          <span className="text-xs tracking-wide opacity-90 hidden sm:inline">
+            Radio
+          </span>
+        )}
       </div>
-      <select
-        value={stationId}
-        onChange={onTune}
-        className={
-          isNavbar
-            ? "bg-transparent text-current text-xs border border-current/30 rounded-md px-2 py-1 focus:outline-none focus:ring-1 focus:ring-current/40"
-            : "bg-transparent text-white/90 text-xs border border-white/20 rounded-md px-2 py-1 focus:outline-none focus:ring-1 focus:ring-white/30"
-        }
-        aria-label="Choose station"
-      >
-        {stations.map((s) => (
-          <option key={s.id} value={s.id} className="text-black">
-            {s.name}
-          </option>
-        ))}
-      </select>
-      <button
-        type="button"
-        onClick={() => setShowEditor((v) => !v)}
-        className={
-          isNavbar
-            ? "ml-1 inline-flex items-center gap-1 rounded-md border border-current/30 px-2 py-1 text-xs font-medium hover:bg-current/10"
-            : "ml-1 inline-flex items-center gap-1 rounded-md border border-white/25 px-2 py-1 text-xs font-medium hover:bg-white/10"
-        }
-        title="Add custom station"
-        aria-label="Add custom station"
-      >
-        +
-      </button>
+      {!isNavbar && (
+        <select
+          value={stationId}
+          onChange={onTune}
+          className={
+            isNavbar
+              ? "bg-transparent text-current text-xs border border-current/30 rounded-md px-2 py-1 focus:outline-none focus:ring-1 focus:ring-current/40"
+              : "bg-transparent text-white/90 text-xs border border-white/20 rounded-md px-2 py-1 focus:outline-none focus:ring-1 focus:ring-white/30"
+          }
+          aria-label="Choose station"
+        >
+          {stations.map((s) => (
+            <option key={s.id} value={s.id} className="text-black">
+              {s.name}
+            </option>
+          ))}
+        </select>
+      )}
+      {isNavbar && (
+        <button
+          type="button"
+          onClick={() => setShowEditor((v) => !v)}
+          className="ml-1 inline-flex items-center gap-1 rounded-md border border-current/30 px-1.5 py-1 text-[11px] font-medium hover:bg-current/10"
+          title="Tune station and manage"
+          aria-label="Tune station and manage"
+        >
+          Tune
+        </button>
+      )}
       <button
         type="button"
         onClick={togglePlay}
         className={
           isNavbar
-            ? "ml-1 inline-flex items-center gap-1 rounded-md border border-current/30 px-2 py-1 text-xs font-medium hover:bg-current/10 focus:outline-none focus:ring-1 focus:ring-current/30"
+            ? "ml-1 inline-flex items-center gap-1 rounded-md border border-current/30 px-1.5 py-1 text-[11px] font-medium hover:bg-current/10 focus:outline-none focus:ring-1 focus:ring-current/30"
             : "ml-1 inline-flex items-center gap-1 rounded-md border border-white/25 px-2 py-1 text-xs font-medium hover:bg-white/10 focus:outline-none focus:ring-1 focus:ring-white/30"
         }
         aria-label={playing ? "Pause radio" : "Play radio"}
         title={playing ? "Pause radio" : "Play radio"}
       >
         {playing ? <Pause size={14} /> : <Play size={14} />}
-        <span>{playing ? "Pause" : "Play"}</span>
+        {!isNavbar && <span>{playing ? "Pause" : "Play"}</span>}
       </button>
 
       {showEditor && (
         <div
           className={
             isNavbar
-              ? "absolute mt-10 left-0 z-50 bg-black/70 text-white border border-white/20 rounded-md p-2 w-[260px]"
+              ? "absolute mt-10 left-0 z-50 bg-black/70 text-white border border-white/20 rounded-md p-2 w-[280px]"
               : "absolute mt-10 right-0 z-50 bg-white/90 text-black border border-black/20 rounded-md p-2 w-[260px]"
           }
           role="dialog"
-          aria-label="Add custom station"
+          aria-label="Radio options"
         >
+          {isNavbar && (
+            <div className="mb-2">
+              <label className="block text-[11px] opacity-80 mb-1">
+                Station
+              </label>
+              <select
+                value={stationId}
+                onChange={onTune}
+                className="w-full bg-black/40 text-white text-xs border border-white/25 rounded px-2 py-1"
+                aria-label="Choose station"
+              >
+                {stations.map((s) => (
+                  <option key={s.id} value={s.id} className="text-black">
+                    {s.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
           <div className="mb-2 text-xs opacity-90">Add custom station</div>
           <div className="flex flex-col gap-2">
             <input

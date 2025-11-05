@@ -19,28 +19,18 @@ const normalizeBg = (src) => {
 };
 
 const PageBanner = ({ imageSrc, altText, overlayClasses = "", children }) => {
-  const bg = normalizeBg(imageSrc);
+  // We intentionally avoid rendering a background image so the global site background stays consistent.
+  // imageSrc is accepted for backward compatibility but not applied.
+  const _bg = normalizeBg(imageSrc); // eslint-disable-line no-unused-vars
   return (
-    <section
-      className={`page-banner ${overlayClasses}`}
-      style={{ backgroundImage: `url(${bg})` }}
-    >
-      {/* Visually-hidden img for accessibility since background images aren't announced */}
-      {bg ? (
-        <img
-          src={bg}
-          alt={altText || ""}
-          className="sr-only"
-          aria-hidden={false}
-        />
-      ) : null}
+    <section className={`page-banner ${overlayClasses}`}>
       <div className="page-banner-inner">{children}</div>
     </section>
   );
 };
 
 PageBanner.propTypes = {
-  imageSrc: PropTypes.string.isRequired,
+  imageSrc: PropTypes.string, // optional; background is unified globally
   altText: PropTypes.string,
   overlayClasses: PropTypes.string,
   children: PropTypes.node,
