@@ -49,7 +49,8 @@ All icons now feature:
 }
 
 .page {
-  background-color: var(--bg-primary);
+  /* Let the global Aspen-6 background show through everywhere */
+  background: transparent;
   min-height: 100vh;
   width: 100%;
   max-width: 100vw;
