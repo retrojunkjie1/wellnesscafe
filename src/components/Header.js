@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./Header.css";
 import defaultImage from "../assets/images/wellnesscafe-bowl-v2.png";
+import logo from "../logo.svg";
 
 const Header = ({ image = defaultImage, title = "Wellnesscafe" }) => {
   return (
@@ -9,7 +10,7 @@ const Header = ({ image = defaultImage, title = "Wellnesscafe" }) => {
       <header className="header-container">
         <div className="header-content">
           <div className="tagline">
-            <span className="tagline-icon">☕</span>
+            <img src={logo} alt="" className="tagline-icon-img" />
             <span className="tagline-text">automate thoughtfully.</span>
           </div>
 

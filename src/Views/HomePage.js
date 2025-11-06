@@ -16,7 +16,9 @@ const HomePage = () => {
       <section className="features-grid">
         <Link to="/recovery" className="feature-card-link">
           <div className="feature-card">
-            <div className="feature-icon-large">🧠</div>
+            <div className="feature-image">
+              <img src={wellnessBowlV2} alt="Addiction Recovery" />
+            </div>
             <h3>Addiction Recovery</h3>
             <p>
               AI-assisted relapse prevention, progress tracking, and real-time
@@ -27,7 +29,9 @@ const HomePage = () => {
 
         <Link to="/yoga" className="feature-card-link">
           <div className="feature-card">
-            <div className="feature-icon-large">🧘</div>
+            <div className="feature-image">
+              <img src={wellnessJournal} alt="Yoga & Mindfulness" />
+            </div>
             <h3>Yoga & Mindfulness</h3>
             <p>
               Guided movement, breathwork, and meditation to restore balance and
@@ -38,7 +42,9 @@ const HomePage = () => {
 
         <Link to="/acuwellness" className="feature-card-link">
           <div className="feature-card">
-            <div className="feature-icon-large">🌿</div>
+            <div className="feature-image">
+              <img src={wellnessBowlV1} alt="Acuwellness" />
+            </div>
             <h3>Acuwellness</h3>
             <p>
               Blending Eastern Medicine and modern therapy — your path to
@@ -49,7 +55,9 @@ const HomePage = () => {
 
         <Link to="/spiritual" className="feature-card-link">
           <div className="feature-card">
-            <div className="feature-icon-large">🙏</div>
+            <div className="feature-image">
+              <img src={wellnessProductV1} alt="Spiritual Counseling" />
+            </div>
             <h3>Spiritual Counseling</h3>
             <p>
               Private or group sessions exploring purpose, healing, and
@@ -60,7 +68,9 @@ const HomePage = () => {
 
         <Link to="/events" className="feature-card-link">
           <div className="feature-card">
-            <div className="feature-icon-large">👥</div>
+            <div className="feature-image">
+              <img src="/logo192.png" alt="Live Events" />
+            </div>
             <h3>Live Events</h3>
             <p>
               Community wellness workshops and retreats for body, mind, and
@@ -71,7 +81,9 @@ const HomePage = () => {
 
         <Link to="/assistance" className="feature-card-link">
           <div className="feature-card">
-            <div className="feature-icon-large">🏛️</div>
+            <div className="feature-image">
+              <img src="/logo512.png" alt="Government Assistance" />
+            </div>
             <h3>Government Assistance</h3>
             <p>
               Find and connect with financial and recovery programs tailored to
