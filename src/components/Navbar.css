@@ -31,6 +31,7 @@
 .nav-under {
   line-height: 1;
   color: var(--brand);
+  margin-top: 2px;
 }
 
 /* Desktop Navigation */
@@ -228,14 +229,10 @@
     display: block;
   }
 
-  .nav-under {
-    margin-top: 2px;
-  }
+  .nav-under { margin-top: 4px; }
 }
 
-/* Prevent overlap between brand+radio and menu around tablet widths */
-@media (max-width: 1024px) {
-  .nav-under {
-    display: none;
-  }
+/* Keep radio under the brand on all breakpoints; fine-tune spacing on tablets */
+@media (max-width: 1024px){
+  .nav-brand{ gap: 2px; }
 }

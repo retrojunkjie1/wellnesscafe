@@ -6,6 +6,7 @@
 const functions = require("firebase-functions");
 const cors = require("cors")({ origin: true });
 const admin = require("firebase-admin");
+const newsProxyApp = require("./newsProxy");
 
 // Lazy-load SDK to reduce cold start cost
 let GoogleGenerativeAI;
@@ -455,3 +456,6 @@ exports.syncAssistants = functions.pubsub
       return null;
     }
   });
+
+// Express app that handles /api/news and /api/image
+exports.api = functions.https.onRequest(newsProxyApp);

@@ -67,13 +67,6 @@ const PageTemplate = ({ title, intro, features, ctaText, pageType }) => {
 
       {/* === FEATURES SECTION === */}
       <section className="page-features">
-        <video
-          autoPlay
-          loop
-          muted
-          className="video-background"
-          src="https://videos.pexels.com/video-files/8388215/8388215-sd_640_360_25fps.mp4"
-        />
         {features.map((feature) => {
           const content = (
             <>

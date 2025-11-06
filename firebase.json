@@ -7,6 +7,7 @@
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       { "source": "/api/aiAsk", "function": "aiAsk" },
+      { "source": "/api/**", "function": "api" },
       {
         "source": "**",
         "destination": "/index.html"

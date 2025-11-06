@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Page.css";
 import "./Events.css";
 import Header from "../components/Header";
@@ -44,17 +44,49 @@ const seedEvents = [
   },
 ];
 
-const EventsPage = () => {
+const EventsPage = ()=>{
   const [category, setCategory] = useState("All");
   const [location, setLocation] = useState("All");
   const [filtered, setFiltered] = useState(seedEvents);
+  const [events, setEvents] = useState(seedEvents);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const handleFilter = () => {
-    const list = seedEvents.filter(
-      (e) =>
-        (category === "All" || e.category === category) &&
-        (location === "All" || e.location.includes(location))
-    );
+  useEffect(()=>{
+    const load = async ()=>{
+      try{
+        // Primary: curated JSON in /public (can later replace with Firestore or external API)
+        const res = await fetch("/data/events.json", { cache: "no-store" });
+        if (res.ok){
+          const data = await res.json();
+          if (Array.isArray(data) && data.length){
+            const withIds = data.map((e, i)=>({ id: e.id || i+1, ...e }));
+            setEvents(withIds);
+            setFiltered(withIds);
+            return;
+          }
+        }
+        // Fallback to seeds if no data
+        setEvents(seedEvents);
+        setFiltered(seedEvents);
+      }catch(err){
+        // eslint-disable-next-line no-console
+        console.error("Events load error", err);
+        setError("We couldn’t load Colorado events. Showing a sample preview.");
+        setEvents(seedEvents);
+        setFiltered(seedEvents);
+      }finally{
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  const applyFilters = ()=>{
+    const list = events.filter((e)=>(
+      (category === "All" || e.category === category) &&
+      (location === "All" || e.location.includes(location))
+    ));
     setFiltered(list);
   };
 
@@ -72,7 +104,7 @@ const EventsPage = () => {
         <div className="wc-events-filters">
           <select
             value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            onChange={(e)=> setCategory(e.target.value)}
           >
             <option>All</option>
             <option>Yoga & Mindfulness</option>
@@ -83,7 +115,7 @@ const EventsPage = () => {
 
           <select
             value={location}
-            onChange={(e) => setLocation(e.target.value)}
+            onChange={(e)=> setLocation(e.target.value)}
           >
             <option>All</option>
             <option>Denver CO</option>
@@ -91,15 +123,18 @@ const EventsPage = () => {
             <option>Steamboat Springs CO</option>
             <option>Colorado Springs CO</option>
           </select>
-
-          <button onClick={handleFilter}>Filter</button>
+          <button onClick={applyFilters}>Filter</button>
         </div>
-
-        <div className="wc-events-grid">
-          {filtered.map((e) => (
-            <EventCard key={e.id} event={e} />
-          ))}
-        </div>
+        {error ? <p style={{ textAlign: "center", opacity: 0.85 }}>{error}</p> : null}
+        {loading ? (
+          <p style={{ textAlign: "center", opacity: 0.8 }}>Loading events…</p>
+        ) : (
+          <div className="wc-events-grid">
+            {filtered.map((e)=> (
+              <EventCard key={e.id} event={e} />
+            ))}
+          </div>
+        )}
       </section>
     </div>
   );

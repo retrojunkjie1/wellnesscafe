@@ -13,6 +13,8 @@
   /* Single site-wide background image (Aspen-6) with an infinite feel */
   background: #0b1220 url("./assets/images/Aspen-6.png") no-repeat center/cover fixed;
   --on-dark-text: #ffffff; /* shared token for text on dark overlays */
+  /* Rich heading gradient for all headers */
+  --wc-heading-gradient: linear-gradient(135deg, #f7f7f7 0%, #d4b483 40%, #cbb4ff 100%);
 }
 
 html,
@@ -23,6 +25,13 @@ body,
   padding: 0;
   overflow-x: hidden;
   box-sizing: border-box;
+
+/* Unified page vertical rhythm */
+.page .wc-glass-title { margin-top: 0; }
+.page main, .page section { scroll-margin-top: 84px; }
+
+/* Subtle enhancement: focus ring for interactive glass cards */
+.news-card:focus-visible, .wc-glass-card:focus-visible { outline: 2px solid var(--brand, #b388ff); outline-offset: 2px; }
 }
 
 *,
@@ -65,8 +74,24 @@ code {
   body{ background-attachment: scroll; }
 }
 
-/* Show floating radio on mobile/tablet only */
-.radio-mobile-only{ display: none; }
-@media (max-width: 1024px){
-  .radio-mobile-only{ display: block; }
+/* removed floating radio; radio now lives under brand in Navbar across breakpoints */
+
+/* Rich headings across the site */
+h1, h2, h3, h4, .heading-rich {
+  background: var(--wc-heading-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.35);
+  font-weight: 800;
+}
+
+/* Opt-out utility for places that need plain text color */
+.heading-plain{
+  background: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  -webkit-text-fill-color: currentColor !important;
+  text-shadow: none !important;
+  font-weight: inherit !important;
 }

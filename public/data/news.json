@@ -1,0 +1,47 @@
+[
+  {
+    "title": "Colorado expands behavioral health services for youth statewide",
+    "description": "New investments through the Behavioral Health Administration increase access to crisis and outpatient services for children and teens.",
+    "link": "https://bha.colorado.gov/announcements",
+    "image_url": "/assets/default-thumbnail.png",
+    "creator": ["bha.colorado.gov"],
+    "pubDate": "2025-10-01T10:00:00Z",
+    "source": "bha.colorado.gov"
+  },
+  {
+    "title": "CDPHE shares fall respiratory illness guidance for Coloradans",
+    "description": "Colorado Department of Public Health & Environment outlines steps to reduce spread of flu, COVID-19, and RSV this season.",
+    "link": "https://cdphe.colorado.gov/",
+    "image_url": "/assets/default-thumbnail.png",
+    "creator": ["cdphe.colorado.gov"],
+    "pubDate": "2025-09-20T12:00:00Z",
+    "source": "cdphe.colorado.gov"
+  },
+  {
+    "title": "Denver Public Health highlights free naloxone access points",
+    "description": "Naloxone is available at pharmacies and community sites across Denver; DPH shares locations and training resources.",
+    "link": "https://www.denvergov.org/Government/Departments/Public-Health-Environment",
+    "image_url": "/assets/default-thumbnail.png",
+    "creator": ["denvergov.org"],
+    "pubDate": "2025-09-12T15:30:00Z",
+    "source": "denvergov.org"
+  },
+  {
+    "title": "Colorado Medicaid (Health First Colorado) adds mental health benefits",
+    "description": "Members can access expanded outpatient behavioral health services with no copay at participating providers.",
+    "link": "https://www.healthfirstcolorado.com/",
+    "image_url": "/assets/default-thumbnail.png",
+    "creator": ["healthfirstcolorado.com"],
+    "pubDate": "2025-08-28T09:15:00Z",
+    "source": "healthfirstcolorado.com"
+  },
+  {
+    "title": "Boulder County shares fall wellness events and community clinics",
+    "description": "Workshops and walk-in clinics support mental health, substance use recovery, and family services this fall.",
+    "link": "https://www.bouldercounty.org/families/disease/",
+    "image_url": "/assets/default-thumbnail.png",
+    "creator": ["bouldercounty.org"],
+    "pubDate": "2025-08-15T14:00:00Z",
+    "source": "bouldercounty.org"
+  }
+]

@@ -1,307 +1,141 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import sampleData from "./newsSample.json";
 import "./NewsFeed.css";
-import { fnUrl } from "../../utils/functionsBase";
-import Thumbnail from "../../components/Thumbnail";
-
-const GOOGLE_NEWS_FEED =
-  "https://news.google.com/rss/topics/CAAqIQgKIhtDQkFTRGdvSUwyMHZNR3QwTlRFU0FtVnVLQUFQAQ?ceid=US:en&oc=3";
-
-const CATEGORY_QUERIES = {
-  Mindfulness:
-    'mindfulness OR meditation OR "breath work" OR "breathwork" OR zen OR yoga',
-  Nutrition:
-    'nutrition OR diet OR "healthy eating" OR recipe OR superfood',
-  Recovery:
-    'addiction recovery OR sobriety OR therapy OR rehab OR "harm reduction"',
-  Community:
-    'community health OR wellbeing OR "mental health support" OR outreach',
-};
 
 const NewsFeed = () => {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [selectedArticle, setSelectedArticle] = useState("");
+  const [articleHTML, setArticleHTML] = useState("");
 
-  // Newest uploaded JPEGs under public/images used as high-quality fallbacks
-  const jpegFallbacks = useMemo(
-    () => [
-      "/images/rituals.jpg",
-      "/images/community.jpg",
-      "/images/reminder.jpg",
-      "/images/checkin.jpg",
-      "/images/naaa.jpg",
-    ],
-    []
-  );
-
-  const MEDIASSTACK_API = `https://api.mediastack.com/v1/news?access_key=${
-    process.env.REACT_APP_MEDIASTACK_API_KEY || ""
-  }&languages=en&keywords=wellness,mindfulness,health`;
-
-  const fetchGoogleNews = async () => {
-    try {
-      const res = await fetch(
-        `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
-          GOOGLE_NEWS_FEED
-        )}`
-      );
-      const data = await res.json();
-      return (
-        data.items?.map((a) => ({
-          title: a.title,
-          description: a.description,
-          link: a.link,
-          thumbnail: a.thumbnail || a.enclosure?.link || "",
-          author: a.author || "",
-        })) || []
-      );
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.warn("Google News fetch failed", err);
-      return [];
-    }
-  };
-
-  const fetchGoogleSearch = async (query, category) => {
-    try {
-      const rss = `https://news.google.com/rss/search?q=${encodeURIComponent(
-        query
-      )}&hl=en-US&gl=US&ceid=US:en`;
-      const res = await fetch(
-        `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
-          rss
-        )}`
-      );
-      const data = await res.json();
-      const items =
-        data.items?.map((a) => ({
-          title: a.title,
-          description: a.description,
-          link: a.link,
-          thumbnail: a.thumbnail || a.enclosure?.link || "",
-          author: a.author || "",
-          _forcedCategory: category,
-        })) || [];
-      return items;
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.warn("Google search feed failed", { category, err });
-      return [];
-    }
-  };
-
-  const fetchMediastackNews = async () => {
-    try {
-      if (!process.env.REACT_APP_MEDIASTACK_API_KEY) {
-        return [];
-      } // optional
-      const res = await fetch(MEDIASSTACK_API);
-      const data = await res.json();
-      return (
-        data.data?.map((a) => ({
-          title: a.title,
-          description: a.description,
-          link: a.url,
-          thumbnail: a.image || "",
-          author: a.source || a.author || "",
-        })) || []
-      );
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.warn("Mediastack error:", err);
-      return [];
-    }
-  };
-
-  const categorize = (article) => {
-    const t = `${article.title || ""} ${
-      article.description || ""
-    }`.toLowerCase();
-    if (
-      t.includes("mindful") ||
-      t.includes("meditation") ||
-      t.includes("breath")
-    )
-      return "Mindfulness";
-    if (
-      t.includes("food") ||
-      t.includes("diet") ||
-      t.includes("nutrition") ||
-      t.includes("recipe")
-    )
-      return "Nutrition";
-    if (
-      t.includes("recovery") ||
-      t.includes("therapy") ||
-      t.includes("addiction") ||
-      t.includes("sobriety")
-    )
-      return "Recovery";
-    return "Community";
-  };
-
-  const isHttp = (u)=> /^https?:\/\//i.test(String(u||""));
-
-  // Try to extract first image URL from an HTML description
-  const extractImgFromHtml = (html) => {
-    const raw = String(html || "");
-    const m = raw.match(/<img[^>]+src=["']([^"'>]+)["']/i);
-    if (m && m[1]) return m[1];
-    return "";
-  };
-
-  // Convert any HTML (including escaped entities) to plain text
-  const htmlToText = (input) => {
-    const raw = String(input || "");
-    if (typeof DOMParser !== "undefined") {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(raw, "text/html");
-      const txt = doc.body ? doc.body.textContent || "" : "";
-      if (txt) return txt.replaceAll(/\s+/g, " ").trim();
-    }
-    return raw
-      .replaceAll(/<[^>]*>/g, " ")
-      .replaceAll(/\s+/g, " ")
-      .trim();
-  };
-
-  const sourceNameOf = (link)=>{
-    try{
-      const u = new URL(link);
-      return (u.hostname||"").replace(/^www\./,"");
-    }catch{
-      return "";
-    }
-  };
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(
-    () => {
-      (async () => {
-        try {
-          const [g, m, sMind, sNutr, sRec, sComm] = await Promise.all([
-            fetchGoogleNews(),
-            fetchMediastackNews(),
-            fetchGoogleSearch(CATEGORY_QUERIES.Mindfulness, "Mindfulness"),
-            fetchGoogleSearch(CATEGORY_QUERIES.Nutrition, "Nutrition"),
-            fetchGoogleSearch(CATEGORY_QUERIES.Recovery, "Recovery"),
-            fetchGoogleSearch(CATEGORY_QUERIES.Community, "Community"),
-          ]);
-          const all = [...g, ...m, ...sMind, ...sNutr, ...sRec, ...sComm];
-          const unique = Array.from(
-            new Map(all.map((i) => [i.link, i])).values()
-          );
-          const categorized = unique.map((a, idx) => {
-            // Prefer the source image; only fallback if missing
-            const fallback = jpegFallbacks[idx % jpegFallbacks.length];
-            const rawThumb = a?.thumbnail?.trim?.() || extractImgFromHtml(a?.description);
-            const thumb = rawThumb ? rawThumb : fallback;
-            // Derive a clean display source, hiding Google wrapper domains
-            const rawAuthor = (a.author || "").trim();
-            const domain = sourceNameOf(a.link);
-            let displaySource = rawAuthor;
-            if (!displaySource || /google\s*news/i.test(displaySource)) {
-              // Try to parse from title suffix: "Title - Publisher"
-              const parts = String(a.title || "").split(" - ");
-              const guess = parts.length > 1 ? parts[parts.length - 1].trim() : "";
-              if (guess && !/news\.google\./i.test(guess)) displaySource = guess;
-            }
-            if (!displaySource || /news\.google\./i.test(domain)) {
-              // Fallback to domain when it's not a Google wrapper
-              if (domain && !/news\.google\./i.test(domain)) displaySource = domain;
-            }
-            return {
-              ...a,
-              thumbnail: thumb,
-              source: displaySource || "",
-              category: a._forcedCategory || categorize(a),
-            };
-          });
-          setArticles(categorized);
-        } catch (e) {
-          // eslint-disable-next-line no-console
-          console.error("News load failed", e);
-        } finally {
-          setLoading(false);
+  useEffect(() => {
+    const load = async ()=>{
+      try {
+        // Fully-local first: curated JSON under /public
+        const res = await fetch("/data/news.json", { cache: "no-store" });
+        if (res.ok){
+          const data = await res.json();
+          const items = Array.isArray(data)
+            ? data
+            : Array.isArray(data.results)
+            ? data.results
+            : [];
+          if (items.length){
+            setArticles(items);
+            return;
+          }
         }
-      })();
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
+        // Fallback to bundled sample data
+        setArticles(sampleData);
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error("Error loading news:", err);
+        setArticles(sampleData);
+        setError("We couldn’t load news from the network. Showing a local sample.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  const readTime = (text) => {
+    const words = String(text || "").split(/\s+/).filter(Boolean).length;
+    const mins = Math.max(1, Math.round(words / 200));
+    return `${mins} min read`;
+  };
+
+  const sourceOf = (link, fallback="")=>{
+    try{
+      const u = new URL(String(link||""));
+      // If it's a Google News redirect, don't display that — try to extract domain from search params
+      if (u.hostname.includes("news.google.")){
+        const urlParam = u.searchParams.get("url") || u.searchParams.get("u");
+        if (urlParam){
+          const inner = new URL(urlParam);
+          return inner.hostname.replace(/^www\./, "");
+        }
+        return fallback || "";
+      }
+      return u.hostname.replace(/^www\./, "");
+    }catch{return fallback || "";}
+  };
+
+  const proxiedImage = (src)=>{
+    const s = String(src||"");
+    if (!s) return "";
+    if (s.startsWith("http://") || s.startsWith("https://")){
+      return `/api/image?url=${encodeURIComponent(s)}`;
+    }
+    return s; // local asset
+  };
+
+  const openArticle = async (url)=>{
+    try{
+      setSelectedArticle(url);
+      setArticleHTML("");
+      const res = await fetch(`/api/news?url=${encodeURIComponent(url)}`);
+      const html = await res.text();
+      setArticleHTML(html || "");
+    }catch(err){
+      // eslint-disable-next-line no-console
+      console.error("Article load failed", err);
+      setArticleHTML("<p style='opacity:0.8'>Unable to load article at this time.</p>");
+    }
+  };
 
   if (loading) {
     return (
-      <p className="text-center mt-10 text-gray-500">
-        Loading live wellness news...
-      </p>
+      <div className="newsfeed-container">
+        <h2 className="newsfeed-title">Top Stories</h2>
+        <p style={{ textAlign: "center", opacity: 0.8 }}>Loading…</p>
+      </div>
     );
   }
 
-  const grouped = ["Mindfulness", "Nutrition", "Recovery", "Community"].map(
-    (cat) => ({
-      cat,
-      items: articles.filter((a) => a.category === cat),
-    })
-  );
+  if (selectedArticle){
+    return (
+      <div className="newsfeed-container">
+        <button className="news-link" onClick={()=>{ setSelectedArticle(""); setArticleHTML(""); }}>← Back to News</button>
+        <div className="article-content" dangerouslySetInnerHTML={{ __html: articleHTML }} />
+      </div>
+    );
+  }
 
   return (
-    <section className="news-wrap">
-      <div className="news-content px-6 md:px-12 py-14">
-      <h2 className="text-3xl font-semibold text-emerald-800 text-center mb-12">
-        Live Wellness & Mindfulness News
-      </h2>
-      {grouped.map((group) => (
-        <section key={group.cat} className="mb-12">
-          <h3 className="text-2xl font-semibold text-emerald-700 mb-6">
-            {group.cat}
-          </h3>
-          <div className="grid md:grid-cols-3 gap-8">
-            {group.items.slice(0, 6).map((a) => {
-              const safeDesc = htmlToText(a.description);
-              const useProxy = isHttp(a.thumbnail);
-              const thumbSrc = useProxy
-                ? `${fnUrl("imgProxy")}?u=${encodeURIComponent(a.thumbnail)}`
-                : a.thumbnail; // local fallbacks shouldn't go through proxy
-              return (
-                <Link
-                  key={a.link}
-                  to={`/news/read?u=${encodeURIComponent(a.link)}`}
-                  className="block rounded-2xl overflow-hidden bg-white ring-1 ring-gray-100 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"
-                >
-                  {a.thumbnail ? (
-                    <div className="aspect-[16/9] w-full bg-gray-100">
-                      <Thumbnail
-                        src={thumbSrc}
-                        alt={a.title}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  ) : null}
-                  <div className="p-5">
-                    <h4 className="text-base md:text-lg font-semibold text-emerald-900 line-clamp-2">
-                      {a.title}
-                    </h4>
-                    {safeDesc ? (
-                      <p className="text-gray-600 text-sm line-clamp-3 mt-1">
-                        {safeDesc}
-                      </p>
-                    ) : null}
-                    <div className="mt-3 flex items-center justify-between text-xs text-gray-500">
-                      {a.source ? (
-                        <span className="truncate">{a.source}</span>
-                      ) : <span />}
-                      <span aria-hidden="true">→</span>
-                    </div>
-                  </div>
-                </Link>
-              );
-            })}
+    <div className="newsfeed-container">
+      <h2 className="newsfeed-title heading-rich">Top Stories</h2>
+      {error ? (
+        <p style={{ textAlign: "center", opacity: 0.85 }}>{error}</p>
+      ) : null}
+      <div className="news-grid">
+        {articles.map((item, i) => (
+          <div key={i} className="news-card" onClick={()=> openArticle(item.link)}>
+            {item.image_url ? (
+              <img src={proxiedImage(item.image_url)} alt={item.title} className="news-img" />
+            ) : (
+              <div className="news-placeholder" />
+            )}
+            <div className="news-meta">
+              <p className="news-author">{item.creator?.[0] || sourceOf(item.link, item.source || "") || "Source"}</p>
+              <p className="news-date">
+                {item.pubDate
+                  ? new Date(item.pubDate).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                    })
+                  : ""} 
+                • {readTime(item.description)}
+              </p>
+            </div>
+            <h3 className="news-headline heading-rich">{item.title}</h3>
+            <p className="news-desc">{(item.description || "").slice(0, 150)}…</p>
+            <span className="read-inline">Read Article →</span>
           </div>
-        </section>
-      ))}
+        ))}
       </div>
-    </section>
+    </div>
   );
 };
 

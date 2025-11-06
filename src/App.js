@@ -4,7 +4,6 @@ import { ThemeProvider } from "./utils/ThemeContext";
 import { AuthProvider } from "./AuthContext";
 import Navbar from "./components/Navbar";
 import NavigationButtons from "./components/NavigationButtons";
-import RadioPlayer from "./components/RadioPlayer.jsx";
 import ProtectedRoute from "./components/ProtectedRoute";
 import HomePage from "./Views/HomePage";
 import Signup from "./features/auth/Signup";
@@ -34,7 +33,7 @@ import TraumaEducationPage from "./Views/TraumaEducationPage";
 import CareersPage from "./Views/CareersPage";
 import FAQPage from "./Views/FAQPage";
 import NewsPage from "./Views/NewsPage";
-import NewsBlogsPage from "./Views/NewsBlogsPage";
+import NewsFeed from "./features/news/NewsFeed.jsx";
 import ArticleReader from "./features/news/ArticleReader.jsx";
 import ResourceDetail from "./Views/ResourceDetail";
 import ProviderDashboard from "./features/providers/ProviderDashboard";
@@ -52,10 +51,6 @@ function App() {
       <ThemeProvider>
         <Router>
           <Navbar />
-          {/* Mobile/Tablet floating radio (hidden on desktop) */}
-          <div className="radio-mobile-only">
-            <RadioPlayer />
-          </div>
           <NavigationButtons />
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -158,7 +153,7 @@ function App() {
             <Route path="/about/careers" element={<CareersPage />} />
             <Route path="/about/faq" element={<FAQPage />} />
             <Route path="/about/news" element={<NewsPage />} />
-            <Route path="/news" element={<NewsBlogsPage />} />
+            <Route path="/news" element={<NewsFeed />} />
             <Route path="/news/read" element={<ArticleReader />} />
             <Route path="/assistants/:type" element={<AssistantsPage />} />
             <Route

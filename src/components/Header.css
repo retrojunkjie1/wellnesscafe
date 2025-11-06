@@ -25,7 +25,8 @@
 .tagline {
   display:flex;
   align-items:center;
-  gap:0.5rem;
+  justify-content:space-between; /* panoramic: icons to far ends */
+  width:100%;
   margin-bottom:4rem;
   opacity:0;
   animation:fadeInUp 1s ease forwards;
@@ -39,17 +40,27 @@
 
 /* Image-based tagline icon */
 .tagline-icon-img{
-  width:18px;
-  height:18px;
+  width:8px;  /* less than half original size */
+  height:8px;
   display:inline-block;
   object-fit:contain;
   filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
 }
 
 .tagline-text {
-  font-size:1rem;
+  font-size:0.95rem;
   color:#888;
   font-weight:400;
+  margin: 0 0.75rem;
+}
+
+/* Right-side bold brand icon for panoramic balance */
+.tagline-icon-right-img{
+  width:22px;
+  height:22px;
+  display:inline-block;
+  object-fit:contain;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.25));
 }
 
 .main-content {
@@ -211,6 +222,5 @@
 
   .tagline {
     margin-bottom:2rem;
-    justify-content:center;
   }
 }

@@ -11,10 +11,13 @@ const Header = ({ image = defaultImage, title = "Wellnesscafe" }) => {
       <header className="header-container">
         <div className="header-content">
           <div className="tagline">
-            <Link to="/" aria-label="Go to homepage">
-              <img src={logo} alt="WellnessCafe" className="tagline-icon-img" />
+            <Link to="/" aria-label="Go to homepage" className="tagline-left">
+              <img src={logo} alt="Holding company" className="tagline-icon-img" />
             </Link>
-            <span className="tagline-text">automate thoughtfully.</span>
+            <span className="tagline-text" aria-hidden="true"></span>
+            <Link to="/" aria-label="Brand mark" className="tagline-right">
+              <img src="/logo192.png" alt="Brand icon" className="tagline-icon-right-img" />
+            </Link>
           </div>
 
           <div className="main-content">
