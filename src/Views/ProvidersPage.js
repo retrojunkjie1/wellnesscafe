@@ -1,15 +1,13 @@
 import React from "react";
 import "./Page.css";
-import Header from "../components/Header";
 import PanoramicHero from "../components/PanoramicHero";
-import providerBg from "../assets/images/serene-wellness.png";
+import steamboatBg from "../assets/images/steamboat 07_52_55 AM.png";
 
 const ProvidersPage = () => {
   return (
     <div className="page">
-      <Header />
       <main className="container">
-        <PanoramicHero src={providerBg} alt="Providers section background" />
+  <PanoramicHero src={steamboatBg} alt="Providers section background" />
         <div className="page-hero">
           <h1>Wellness Provider Network</h1>
           <p>
@@ -17,10 +15,7 @@ const ProvidersPage = () => {
             Explore benefits, view the directory, and apply to start serving
             clients.
           </p>
-          <div
-            className="hero-actions"
-            style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}
-          >
+          <div className="hero-actions">
             <a className="btn" href="/providers/directory">
               Browse Directory
             </a>

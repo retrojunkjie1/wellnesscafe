@@ -30,3 +30,10 @@
 }
 
 /* Background handled via CSS variable --news-bg from the component */
+
+/* Mobile/tablet: avoid fixed-attachment jank */
+@media (max-width: 1024px){
+  .news-wrap{
+    background-attachment: scroll;
+  }
+}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./TopFold.css";
-import heroPanorama from "../assets/images/HomePage-header-v1.png";
+import heroPanorama from "../assets/images/steamboat 07_52_55 AM.png";
 
 const TopFold = () => {
   const navigate = useNavigate();

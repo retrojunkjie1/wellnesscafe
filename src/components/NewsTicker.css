@@ -42,7 +42,7 @@
   gap: 1.25rem;
   white-space: nowrap;
   will-change: transform;
-  animation: marquee 120s linear infinite; /* slow down scroll speed */
+  animation: marquee 90s linear infinite; /* continuous, but not too slow */
   padding-left: 1rem;
 }
 .news-item {
@@ -51,12 +51,6 @@
   font-size: 0.875rem;
   text-decoration: none;
   outline: none;
-}
-
-/* Pause scroll on hover/focus to improve readability */
-.news-ticker:hover .news-track,
-.news-ticker:focus-within .news-track {
-  animation-play-state: paused;
 }
 
 .news-item:focus,
@@ -70,5 +64,14 @@
   }
   100% {
     transform: translateX(-50%);
+  }
+}
+
+/* Mobile performance guards */
+@media (max-width: 768px) {
+  .news-ticker {
+    background: rgba(17, 24, 39, 0.12);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }

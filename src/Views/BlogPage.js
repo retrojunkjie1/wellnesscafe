@@ -2,13 +2,17 @@ import React from "react";
 import "./Page.css";
 import Header from "../components/Header";
 import PageBanner from "../components/PageBanner";
+import LiveBackground from "../components/LiveBackground";
+import steamboat_07_52_55 from "../assets/images/steamboat 07_52_55 AM.png";
 
 const BlogPage = () => (
   <div className="page blog-page">
+    {/* Alive layered background with subtle parallax */}
+    <LiveBackground images={[steamboat_07_52_55, steamboat_07_52_55, steamboat_07_52_55]} intensity={10} />
     <Header />
     <PageBanner
-      imageSrc={`${process.env.PUBLIC_URL}/images/reminder.jpg`}
-      altText="Wellness resources still life"
+      imageSrc=""
+      altText="Blog panoramic banner"
       overlayClasses=""
     />
     <main className="container">

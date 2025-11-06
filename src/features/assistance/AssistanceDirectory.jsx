@@ -197,8 +197,9 @@ const AssistanceDirectory = () => {
     }
   };
 
+  const steamboatBg = require("../../assets/images/steamboat 07_52_55 AM.png");
   const bgStyle = {
-    backgroundImage: `linear-gradient(160deg, #0b0f0c 0%, #0f1813 70%, #172420 100%), url(${process.env.PUBLIC_URL}/assets/images/assistance-bg-dark.jpg), url(${process.env.PUBLIC_URL}/assets/images/assistance-bg-dark.svg)`,
+    backgroundImage: `linear-gradient(160deg, #0b0f0c 0%, #0f1813 70%, #172420 100%), url(${steamboatBg})`,
     backgroundPosition: "center",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",

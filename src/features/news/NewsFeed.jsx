@@ -3,9 +3,21 @@ import { Link } from "react-router-dom";
 import "./NewsFeed.css";
 import { fnUrl } from "../../utils/functionsBase";
 import Thumbnail from "../../components/Thumbnail";
+import steamboatBg from "../../assets/images/steamboat 07_52_55 AM.png";
 
 const GOOGLE_NEWS_FEED =
   "https://news.google.com/rss/topics/CAAqIQgKIhtDQkFTRGdvSUwyMHZNR3QwTlRFU0FtVnVLQUFQAQ?ceid=US:en&oc=3";
+
+const CATEGORY_QUERIES = {
+  Mindfulness:
+    'mindfulness OR meditation OR "breath work" OR "breathwork" OR zen OR yoga',
+  Nutrition:
+    'nutrition OR diet OR "healthy eating" OR recipe OR superfood',
+  Recovery:
+    'addiction recovery OR sobriety OR therapy OR rehab OR "harm reduction"',
+  Community:
+    'community health OR wellbeing OR "mental health support" OR outreach',
+};
 
 const NewsFeed = () => {
   const [articles, setArticles] = useState([]);
@@ -41,11 +53,40 @@ const NewsFeed = () => {
           description: a.description,
           link: a.link,
           thumbnail: a.thumbnail || a.enclosure?.link || "",
+          author: a.author || "",
         })) || []
       );
     } catch (err) {
       // eslint-disable-next-line no-console
       console.warn("Google News fetch failed", err);
+      return [];
+    }
+  };
+
+  const fetchGoogleSearch = async (query, category) => {
+    try {
+      const rss = `https://news.google.com/rss/search?q=${encodeURIComponent(
+        query
+      )}&hl=en-US&gl=US&ceid=US:en`;
+      const res = await fetch(
+        `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(
+          rss
+        )}`
+      );
+      const data = await res.json();
+      const items =
+        data.items?.map((a) => ({
+          title: a.title,
+          description: a.description,
+          link: a.link,
+          thumbnail: a.thumbnail || a.enclosure?.link || "",
+          author: a.author || "",
+          _forcedCategory: category,
+        })) || [];
+      return items;
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.warn("Google search feed failed", { category, err });
       return [];
     }
   };
@@ -63,6 +104,7 @@ const NewsFeed = () => {
           description: a.description,
           link: a.url,
           thumbnail: a.image || "",
+          author: a.source || a.author || "",
         })) || []
       );
     } catch (err) {
@@ -99,6 +141,16 @@ const NewsFeed = () => {
     return "Community";
   };
 
+  const isHttp = (u)=> /^https?:\/\//i.test(String(u||""));
+
+  // Try to extract first image URL from an HTML description
+  const extractImgFromHtml = (html) => {
+    const raw = String(html || "");
+    const m = raw.match(/<img[^>]+src=["']([^"'>]+)["']/i);
+    if (m && m[1]) return m[1];
+    return "";
+  };
+
   // Convert any HTML (including escaped entities) to plain text
   const htmlToText = (input) => {
     const raw = String(input || "");
@@ -114,27 +166,43 @@ const NewsFeed = () => {
       .trim();
   };
 
+  const sourceNameOf = (link)=>{
+    try{
+      const u = new URL(link);
+      return (u.hostname||"").replace(/^www\./,"");
+    }catch{
+      return "";
+    }
+  };
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(
     () => {
       (async () => {
         try {
-          const [g, m] = await Promise.all([
+          const [g, m, sMind, sNutr, sRec, sComm] = await Promise.all([
             fetchGoogleNews(),
             fetchMediastackNews(),
+            fetchGoogleSearch(CATEGORY_QUERIES.Mindfulness, "Mindfulness"),
+            fetchGoogleSearch(CATEGORY_QUERIES.Nutrition, "Nutrition"),
+            fetchGoogleSearch(CATEGORY_QUERIES.Recovery, "Recovery"),
+            fetchGoogleSearch(CATEGORY_QUERIES.Community, "Community"),
           ]);
-          const all = [...g, ...m];
+          const all = [...g, ...m, ...sMind, ...sNutr, ...sRec, ...sComm];
           const unique = Array.from(
             new Map(all.map((i) => [i.link, i])).values()
           );
           const categorized = unique.map((a, idx) => {
-            // Use source thumbnails when present; only fallback if missing
+            // Prefer the source image; only fallback if missing
             const fallback = jpegFallbacks[idx % jpegFallbacks.length];
-            const thumb = a?.thumbnail?.trim?.() ? a.thumbnail : fallback;
+            const rawThumb = a?.thumbnail?.trim?.() || extractImgFromHtml(a?.description);
+            const thumb = rawThumb ? rawThumb : fallback;
+            const src = a.author || sourceNameOf(a.link);
             return {
               ...a,
               thumbnail: thumb,
-              category: categorize(a),
+              source: src,
+              category: a._forcedCategory || categorize(a),
             };
           });
           setArticles(categorized);
@@ -165,12 +233,12 @@ const NewsFeed = () => {
     })
   );
 
-  // Choose background: Steamboat for a calmer wellness vibe by default
-  const bgUrl = `${process.env.PUBLIC_URL}/images/steamboat.jpg`;
+  // Choose background: unified steamboat image with an immersive feel
+  const bgUrl = steamboatBg;
 
   return (
     <section
-      className="news-wrap news-bg-steamboat"
+      className="news-wrap"
       style={{ "--news-bg": `url(${bgUrl})` }}
     >
       <div className="news-content px-6 md:px-12 py-14">
@@ -185,6 +253,10 @@ const NewsFeed = () => {
           <div className="grid md:grid-cols-3 gap-8">
             {group.items.slice(0, 6).map((a) => {
               const safeDesc = htmlToText(a.description);
+              const useProxy = isHttp(a.thumbnail);
+              const thumbSrc = useProxy
+                ? `${fnUrl("imgProxy")}?u=${encodeURIComponent(a.thumbnail)}`
+                : a.thumbnail; // local fallbacks shouldn't go through proxy
               return (
                 <Link
                   key={a.link}
@@ -194,7 +266,7 @@ const NewsFeed = () => {
                   {a.thumbnail ? (
                     <div className="aspect-[16/9] w-full bg-gray-100">
                       <Thumbnail
-                        src={`${fnUrl("imgProxy")}?u=${encodeURIComponent(a.thumbnail)}`}
+                        src={thumbSrc}
                         alt={a.title}
                         className="w-full h-full object-cover"
                       />
@@ -209,6 +281,12 @@ const NewsFeed = () => {
                         {safeDesc}
                       </p>
                     ) : null}
+                    <div className="mt-3 flex items-center justify-between text-xs text-gray-500">
+                      <span className="truncate">
+                        {a.source || sourceNameOf(a.link)}
+                      </span>
+                      <span aria-hidden="true">→</span>
+                    </div>
                   </div>
                 </Link>
               );
