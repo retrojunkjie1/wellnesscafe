@@ -110,13 +110,13 @@ const NewsFeed = () => {
         <p style={{ textAlign: "center", opacity: 0.85 }}>{error}</p>
       ) : null}
       <div className="news-grid">
-        {articles.map((item, i) => (
+        {articles.map((item, i) => {
+          const imgSrc = item.image_url ? proxiedImage(item.image_url) : "/assets/default-thumbnail.png";
+          return (
           <div key={i} className="news-card" onClick={()=> openArticle(item.link)}>
-            {item.image_url ? (
-              <img src={proxiedImage(item.image_url)} alt={item.title} className="news-img" />
-            ) : (
-              <div className="news-placeholder" />
-            )}
+            <div className="news-img-wrap">
+              <img src={imgSrc} loading="lazy" alt={item.title || "News image"} className="news-img" />
+            </div>
             <div className="news-meta">
               <p className="news-author">{item.creator?.[0] || sourceOf(item.link, item.source || "") || "Source"}</p>
               <p className="news-date">
@@ -133,7 +133,7 @@ const NewsFeed = () => {
             <p className="news-desc">{(item.description || "").slice(0, 150)}…</p>
             <span className="read-inline">Read Article →</span>
           </div>
-        ))}
+        );})}
       </div>
     </div>
   );
