@@ -92,6 +92,7 @@ const LiveBackground = ({ images = [], intensity = 8, className = "" }) => {
             };
         return <div key={i} className={`live-layer layer-${i + 1}`} style={style} />;
       })}
+      <div className="live-dim" />
       <div className="live-vignette" />
     </div>
   );

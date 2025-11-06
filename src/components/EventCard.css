@@ -15,44 +15,53 @@
 }
 
 .wc-event-body {
-  padding: 1rem 1.25rem;
-  background: rgba(0, 0, 0, 0.45); /* ensure contrast behind text */
+  padding: 1.05rem 1.3rem 1.15rem;
+  background: rgba(20, 24, 32, 0.58); /* stronger contrast behind text */
   border-bottom-left-radius: 1.25rem;
   border-bottom-right-radius: 1.25rem;
 }
 
 .wc-event h3 {
-  font-size: 1.1rem;
+  font-size: 1.22rem;
   font-weight: 600;
-  margin: 0.5rem 0;
+  margin: 0.55rem 0 0.4rem;
   color: var(--on-dark-text);
+  letter-spacing: 0.3px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.55);
 }
 
 .wc-event-date,
 .wc-event-loc {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 0.9rem;
-  margin: 0.2rem 0;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.95rem;
+  margin: 0.25rem 0;
+  letter-spacing: 0.4px;
 }
 
 .wc-event-desc {
-  color: rgba(255, 255, 255, 0.75);
-  font-size: 0.85rem;
-  margin: 0.6rem 0 1rem;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: 0.92rem;
+  margin: 0.65rem 0 1.05rem;
+  line-height: 1.5;
+  text-shadow: 0 1px 5px rgba(0,0,0,0.5);
 }
 
 .wc-event-btn {
   background: linear-gradient(120deg, #8b6aff, #bda6ff);
   border: none;
   color: var(--on-dark-text);
-  border-radius: 0.5rem;
-  padding: 0.45rem 1rem;
+  border-radius: 0.55rem;
+  padding: 0.55rem 1.05rem;
   cursor: pointer;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.25px;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 18px -4px rgba(0,0,0,0.45), 0 2px 4px rgba(0,0,0,0.35);
 }
 
 .wc-event-btn:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   background: linear-gradient(120deg, #a08bff, #d0baff);
+  box-shadow: 0 8px 26px -6px rgba(0,0,0,0.55), 0 3px 10px rgba(0,0,0,0.5);
 }

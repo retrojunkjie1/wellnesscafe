@@ -21,24 +21,25 @@
 }
 
 .news-card {
-  background: rgba(255, 255, 255, 0.08);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 12px;
+  background: linear-gradient(rgba(20,24,32,0.74), rgba(24,28,38,0.78));
+  -webkit-backdrop-filter: blur(10px) saturate(1.1);
+  backdrop-filter: blur(10px) saturate(1.1);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 14px;
   overflow: hidden;
   width: 100%;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.35s;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
+  box-shadow: 0 8px 26px -6px rgba(0,0,0,0.55), 0 2px 6px rgba(0,0,0,0.4);
 }
 
 .news-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
-  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-5px);
+  box-shadow: 0 14px 40px -10px rgba(0,0,0,0.65), 0 4px 12px rgba(0,0,0,0.5);
+  background: linear-gradient(rgba(32,38,50,0.9), rgba(36,42,56,0.92));
 }
 
 .news-img,
@@ -50,38 +51,43 @@
 }
 
 .news-meta {
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.8);
-  padding: 0.8rem 1rem 0;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.85);
+  padding: 0.75rem 1rem 0;
   display: flex;
   justify-content: space-between;
+  letter-spacing: 0.5px;
 }
 
 .news-headline {
-  font-size: 1.05rem;
+  font-size: 1.18rem;
   font-weight: 700;
-  margin: 0.6rem 1rem;
-  line-height: 1.3;
+  margin: 0.65rem 1rem 0.55rem;
+  line-height: 1.32;
+  letter-spacing: 0.25px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.55);
 }
 
 .news-desc {
-  font-size: 0.92rem;
-  color: rgba(255, 255, 255, 0.86);
-  margin: 0 1rem 0.8rem;
-  line-height: 1.45;
+  font-size: 0.98rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 1rem 0.9rem;
+  line-height: 1.5;
+  text-shadow: 0 1px 5px rgba(0,0,0,0.5);
 }
 
 .news-card .read-inline {
   display: inline-block;
-  margin: 0 1rem 1rem;
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
+  margin: 0 1rem 1.05rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
-  color: var(--brand, #b388ff);
+  color: var(--brand, #d4b483);
   font-weight: 600;
-  opacity: 0.9;
+  opacity: 0.95;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.45);
 }
-.news-card .read-inline:hover { color: var(--brand-2, #d6b3ff); }
+.news-card .read-inline:hover { color: var(--brand-2, #cbb4ff); }
 
 .news-link {
   text-decoration: none;

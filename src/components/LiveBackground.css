@@ -26,7 +26,14 @@
   content:"";
   position:absolute;
   top:0; right:0; bottom:0; left:0;
-  background: radial-gradient(ellipse at center, rgba(0,0,0,0.0) 40%, rgba(0,0,0,0.25) 100%);
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0.06) 30%, rgba(0,0,0,0.35) 100%);
+}
+
+/* Global dim overlay for improved text contrast */
+.live-dim{
+  position:absolute;
+  inset:0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.6) 100%);
 }
 
 /* Reduced motion fallback: gentle pan */
@@ -40,5 +47,5 @@
 }
 
 @media (max-width: 768px){
-  .live-vignette{ background: radial-gradient(ellipse at center, rgba(0,0,0,0.0) 30%, rgba(0,0,0,0.28) 100%); }
+  .live-vignette{ background: radial-gradient(ellipse at center, rgba(0,0,0,0.08) 25%, rgba(0,0,0,0.36) 100%); }
 }
