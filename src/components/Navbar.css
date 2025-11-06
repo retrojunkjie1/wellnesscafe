@@ -30,6 +30,7 @@
 }
 .nav-under {
   line-height: 1;
+  color: var(--brand);
 }
 
 /* Desktop Navigation */
@@ -229,5 +230,12 @@
 
   .nav-under {
     margin-top: 2px;
+  }
+}
+
+/* Prevent overlap between brand+radio and menu around tablet widths */
+@media (max-width: 1024px) {
+  .nav-under {
+    display: none;
   }
 }

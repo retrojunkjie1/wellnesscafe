@@ -41,7 +41,17 @@ const ArticleReader = ()=>{
       <div className="px-6 md:px-12 py-10 text-red-300">
         <p className="mb-3">{error}</p>
         {url ? (
-          <a href={url} target="_blank" rel="noopener noreferrer" className="text-emerald-300 underline">Open at source</a>
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Open at source"
+            aria-label="Open at source"
+            className="inline-flex items-center gap-2 text-emerald-300 hover:text-emerald-200"
+          >
+            {/* External link icon */}
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="m15 3 6 6"/><path d="M21 3h-6v6"/></svg>
+          </a>
         ) : null}
       </div>
     );
@@ -53,7 +63,21 @@ const ArticleReader = ()=>{
     <div className="px-6 md:px-12 py-10">
       <div className="mb-6 flex items-center justify-between gap-4">
         <h1 className="text-2xl md:text-3xl font-semibold text-emerald-100">{title}<span className="opacity-60 text-sm md:text-base">{site}</span></h1>
-        <Link to="/news" className="text-sm text-emerald-300 underline">Back to News</Link>
+        <div className="flex items-center gap-3">
+          {data?.url ? (
+            <a
+              href={data.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Open at source"
+              aria-label="Open at source"
+              className="inline-flex items-center text-emerald-300 hover:text-emerald-200"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="m15 3 6 6"/><path d="M21 3h-6v6"/></svg>
+            </a>
+          ) : null}
+          <Link to="/news" className="text-sm text-emerald-300 underline">Back to News</Link>
+        </div>
       </div>
       {data?.image ? (
         <div className="rounded-xl overflow-hidden mb-6">

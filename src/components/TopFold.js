@@ -69,15 +69,17 @@ const TopFold = () => {
       </nav>
 
       <div className="topfold-content">
-        <h1 className="topfold-title">
-          WellnessCafe —{" "}
-          <span className="highlight">Clarity. Balance. Precision.</span>
-        </h1>
-        <p className="topfold-sub">
-          Discover calm intelligence through design, ritual, and mindful
-          innovation. Your comprehensive wellness platform for recovery,
-          mindfulness, and personal growth.
-        </p>
+        <div className="topfold-titlebox">
+          <h1 className="topfold-title">
+            WellnessCafe —{" "}
+            <span className="highlight">Clarity. Balance. Precision.</span>
+          </h1>
+          <p className="topfold-sub">
+            Discover calm intelligence through design, ritual, and mindful
+            innovation. Your comprehensive wellness platform for recovery,
+            mindfulness, and personal growth.
+          </p>
+        </div>
         <div className="topfold-features">
           <button
             className="feature-item"

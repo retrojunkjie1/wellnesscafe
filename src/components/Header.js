@@ -15,15 +15,17 @@ const Header = ({ image = defaultImage, title = "Wellnesscafe" }) => {
 
           <div className="main-content">
             <div className="header-text">
-              <h1 className="header-line line1">
-                Holding <span className="highlight">Company.</span>
-              </h1>
-              <h1 className="header-line line2">
-                AI SaaS <span className="highlight">Investor.</span>
-              </h1>
-              <h1 className="header-line line3">
-                Wellnesscafe <span className="highlight">ai.</span>
-              </h1>
+              <div className="header-glass">
+                <h1 className="header-line line1">
+                  Holding <span className="highlight">Company.</span>
+                </h1>
+                <h1 className="header-line line2">
+                  AI SaaS <span className="highlight">Investor.</span>
+                </h1>
+                <h1 className="header-line line3">
+                  Wellnesscafe <span className="highlight">ai.</span>
+                </h1>
+              </div>
             </div>
 
             <div className="header-image">

@@ -23,8 +23,15 @@
   padding: 96px 20px 40px;
 }
 .page-hero {
-  padding: 24px 0 10px;
+  padding: 24px 12px 12px;
   text-align: center;
+  /* Subtle glass panel for readability over background */
+  background: rgba(0, 0, 0, 0.28);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 .page-hero h1 {
   font-size: 40px;
@@ -130,6 +137,11 @@
   }
   .page-hero h1 {
     font-size: 30px;
+  }
+  .page-hero {
+    padding: 16px 10px 10px;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.32);
   }
 }
 

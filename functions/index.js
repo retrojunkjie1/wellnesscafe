@@ -202,19 +202,30 @@ exports.articleRead = functions.https.onRequest(async (req, res) => {
       import("@mozilla/readability"),
       import("sanitize-html").then((m) => m.default || m),
     ]);
+    // Use a realistic browser-like headers set to improve compatibility
+    const headers = {
+      "user-agent":
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36",
+      accept:
+        "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+      "accept-language": "en-US,en;q=0.9",
+      referer: "https://news.google.com/",
+    };
+
     const resp = await fetch(url, {
       redirect: "follow",
-      headers: { "user-agent": "WellnessCafeReader/1.0" },
+      headers,
     });
     if (!resp.ok) {
       return res.status(502).json({ error: "Fetch failed" });
     }
+    const finalUrl = resp.url || url;
     const html = await resp.text();
-    const dom = new JSDOM(html, { url });
+    const dom = new JSDOM(html, { url: finalUrl });
     const reader = new Readability(dom.window.document);
     const article = reader.parse();
     if (!article) {
-      return res.status(200).json({ title: "", content: "", url });
+      return res.status(200).json({ title: "", content: "", url: finalUrl });
     }
     const cleaned = sanitizeHtml(article.content || "", {
       allowedTags: sanitizeHtml.defaults.allowedTags.concat([
@@ -238,12 +249,20 @@ exports.articleRead = functions.https.onRequest(async (req, res) => {
         }),
       },
     });
+    // Derive a site name fallback from the hostname if missing
+    let siteName = article.siteName || "";
+    try {
+      if (!siteName && finalUrl) {
+        const u = new URL(finalUrl);
+        siteName = u.hostname.replace(/^www\./, "");
+      }
+    } catch {}
     return res.status(200).json({
       title: article.title || "",
       byline: article.byline || "",
-      siteName: article.siteName || "",
+      siteName,
       image: article.image || "",
-      url,
+      url: finalUrl,
       content: cleaned,
     });
   } catch (e) {

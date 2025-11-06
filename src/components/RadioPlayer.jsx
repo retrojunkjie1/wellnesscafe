@@ -225,7 +225,7 @@ const RadioPlayer = ({ variant = "floating" }) => {
       />
       <div className="flex items-center gap-1 pr-1">
         {isNavbar ? (
-          <Waves size={16} aria-hidden className="opacity-80" />
+          <Waves size={14} aria-hidden className="opacity-80" />
         ) : (
           <IconBadge size="sm" ariaLabel="Radio">
             <Waves size={16} aria-hidden className="opacity-90" />
@@ -277,7 +277,7 @@ const RadioPlayer = ({ variant = "floating" }) => {
         aria-label={playing ? "Pause radio" : "Play radio"}
         title={playing ? "Pause radio" : "Play radio"}
       >
-        {playing ? <Pause size={14} /> : <Play size={14} />}
+        {playing ? <Pause size={12} /> : <Play size={12} />}
         {!isNavbar && <span>{playing ? "Pause" : "Play"}</span>}
       </button>
 
