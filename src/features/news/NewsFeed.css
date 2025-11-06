@@ -7,12 +7,7 @@
   position: relative;
   width: 100%;
   min-height: 40vh;
-  background-color: #0b1220; /* fallback */
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-image: var(--news-bg, none);
-  background-attachment: fixed; /* infinite feel while content scrolls */
+  background: transparent; /* rely on global Aspen-6 */
 }
 .news-wrap::after{
   content: "";
@@ -29,11 +24,9 @@
   z-index: 1;
 }
 
-/* Background handled via CSS variable --news-bg from the component */
+/* Background now handled globally; section stays transparent */
 
 /* Mobile/tablet: avoid fixed-attachment jank */
 @media (max-width: 1024px){
-  .news-wrap{
-    background-attachment: scroll;
-  }
+  .news-wrap{ /* nothing needed */ }
 }

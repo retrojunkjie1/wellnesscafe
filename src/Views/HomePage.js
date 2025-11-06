@@ -8,6 +8,11 @@ import wellnessBowlV2 from "../assets/images/wellnesscafe-bowl-v2.png";
 import { Link } from "react-router-dom";
 
 const HomePage = () => {
+  const today = new Date().toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
   return (
     <div className="homepage">
       <TopFold />
@@ -129,7 +134,7 @@ const HomePage = () => {
                 Research shows mindfulness practices can reduce stress by up to
                 40% and improve overall well-being.
               </p>
-              <span className="news-date">October 25, 2025</span>
+              <span className="news-date">{today}</span>
             </div>
           </div>
 
@@ -143,7 +148,7 @@ const HomePage = () => {
                 Real stories from our community members who have transformed
                 their lives through WellnessCafe.
               </p>
-              <span className="news-date">October 20, 2025</span>
+              <span className="news-date">{today}</span>
             </div>
           </div>
 
@@ -157,7 +162,7 @@ const HomePage = () => {
                 Connect with verified wellness professionals in your area.
                 Browse specialties and book sessions.
               </p>
-              <span className="news-date">October 15, 2025</span>
+              <span className="news-date">{today}</span>
             </div>
           </div>
         </div>

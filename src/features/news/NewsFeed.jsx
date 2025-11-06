@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import "./NewsFeed.css";
 import { fnUrl } from "../../utils/functionsBase";
 import Thumbnail from "../../components/Thumbnail";
-import aspenBg from "../../assets/images/Aspen-6.png";
 
 const GOOGLE_NEWS_FEED =
   "https://news.google.com/rss/topics/CAAqIQgKIhtDQkFTRGdvSUwyMHZNR3QwTlRFU0FtVnVLQUFQAQ?ceid=US:en&oc=3";
@@ -197,11 +196,24 @@ const NewsFeed = () => {
             const fallback = jpegFallbacks[idx % jpegFallbacks.length];
             const rawThumb = a?.thumbnail?.trim?.() || extractImgFromHtml(a?.description);
             const thumb = rawThumb ? rawThumb : fallback;
-            const src = a.author || sourceNameOf(a.link);
+            // Derive a clean display source, hiding Google wrapper domains
+            const rawAuthor = (a.author || "").trim();
+            const domain = sourceNameOf(a.link);
+            let displaySource = rawAuthor;
+            if (!displaySource || /google\s*news/i.test(displaySource)) {
+              // Try to parse from title suffix: "Title - Publisher"
+              const parts = String(a.title || "").split(" - ");
+              const guess = parts.length > 1 ? parts[parts.length - 1].trim() : "";
+              if (guess && !/news\.google\./i.test(guess)) displaySource = guess;
+            }
+            if (!displaySource || /news\.google\./i.test(domain)) {
+              // Fallback to domain when it's not a Google wrapper
+              if (domain && !/news\.google\./i.test(domain)) displaySource = domain;
+            }
             return {
               ...a,
               thumbnail: thumb,
-              source: src,
+              source: displaySource || "",
               category: a._forcedCategory || categorize(a),
             };
           });
@@ -233,14 +245,8 @@ const NewsFeed = () => {
     })
   );
 
-  // Choose background: Aspen-6 with an immersive feel
-  const bgUrl = aspenBg;
-
   return (
-    <section
-      className="news-wrap"
-      style={{ "--news-bg": `url(${bgUrl})` }}
-    >
+    <section className="news-wrap">
       <div className="news-content px-6 md:px-12 py-14">
       <h2 className="text-3xl font-semibold text-emerald-800 text-center mb-12">
         Live Wellness & Mindfulness News
@@ -282,9 +288,9 @@ const NewsFeed = () => {
                       </p>
                     ) : null}
                     <div className="mt-3 flex items-center justify-between text-xs text-gray-500">
-                      <span className="truncate">
-                        {a.source || sourceNameOf(a.link)}
-                      </span>
+                      {a.source ? (
+                        <span className="truncate">{a.source}</span>
+                      ) : <span />}
                       <span aria-hidden="true">→</span>
                     </div>
                   </div>
