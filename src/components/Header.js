@@ -10,7 +10,7 @@ const Header = ({ image = defaultImage, title = "Wellnesscafe" }) => {
         <div className="header-content">
           <div className="tagline">
             <span className="tagline-icon">☕</span>
-            <span className="tagline-text">automate everything.</span>
+            <span className="tagline-text">automate thoughtfully.</span>
           </div>
 
           <div className="main-content">
