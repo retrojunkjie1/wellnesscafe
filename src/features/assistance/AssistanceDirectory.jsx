@@ -197,14 +197,6 @@ const AssistanceDirectory = () => {
     }
   };
 
-  const aspenBg = require("../../assets/images/Aspen-6.png");
-  const bgStyle = {
-    backgroundImage: `url(${aspenBg})`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    backgroundAttachment: "fixed",
-  };
 
   const modalRef = useRef(null);
 
@@ -286,7 +278,6 @@ const AssistanceDirectory = () => {
     <section
       className="assistance-section"
       aria-label="WellnessCafe Assistance Whitebook"
-      style={bgStyle}
     >
   {/* Remove additional overlays to keep a single unified background */}
       <div className="assistance-container">

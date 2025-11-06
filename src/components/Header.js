@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import "./Header.css";
 import defaultImage from "../assets/images/wellnesscafe-bowl-v2.png";
 import logo from "../logo.svg";
+import { Link } from "react-router-dom";
 
 const Header = ({ image = defaultImage, title = "Wellnesscafe" }) => {
   return (
@@ -10,7 +11,9 @@ const Header = ({ image = defaultImage, title = "Wellnesscafe" }) => {
       <header className="header-container">
         <div className="header-content">
           <div className="tagline">
-            <img src={logo} alt="" className="tagline-icon-img" />
+            <Link to="/" aria-label="Go to homepage">
+              <img src={logo} alt="WellnessCafe" className="tagline-icon-img" />
+            </Link>
             <span className="tagline-text">automate thoughtfully.</span>
           </div>
 

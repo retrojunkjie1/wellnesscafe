@@ -7,26 +7,32 @@ const Acuwellness = () => {
     {
       title: "Traditional Acupuncture & Meridian Therapy",
       desc: "Precise treatments targeting meridian points to restore energy flow (Qi), release blockages, and promote natural healing for pain, stress, and chronic conditions.",
+      to: "/providers/directory",
     },
     {
       title: "Acupressure & Self-Care",
       desc: "Learn powerful self-care techniques for headaches, anxiety, and insomnia. Master point stimulation for ongoing wellness maintenance at home.",
+      to: "/tools",
     },
     {
       title: "The NADA Protocol",
       desc: "Grounded in the work of the National Acupuncture Detoxification Association, this protocol is a simple, effective 5-point ear acupuncture treatment for trauma, substance misuse, and mental health.",
+      to: "/events",
     },
     {
       title: "Chinese Herbal Medicine & Nutrition",
       desc: "Discover personalized herbal formulas and dietary therapy based on traditional principles to nourish your body and spirit.",
+      to: "/providers/directory",
     },
     {
       title: "Cupping & Gua Sha Therapy",
       desc: "Experience traditional cupping and Gua Sha to improve circulation, release muscle tension, and promote detoxification and facial rejuvenation.",
+      to: "/providers/directory",
     },
     {
       title: "Qi Gong & Movement Medicine",
       desc: "Practice gentle Qi Gong exercises that cultivate internal energy, improve balance, and enhance meditation through flowing movements.",
+      to: "/yoga",
     },
   ];
 

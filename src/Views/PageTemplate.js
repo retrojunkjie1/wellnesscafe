@@ -5,6 +5,7 @@ import "./PageTemplate.css";
 import productImage from "../assets/images/WellnessCafe-Product-v1.png";
 import journalImage from "../assets/images/wellnesscafe-journal-vs1.png";
 import bowlImage from "../assets/images/wellnesscafe-bowl-v1.png";
+import { Link } from "react-router-dom";
 
 const PageTemplate = ({ title, intro, features, ctaText, pageType }) => {
   const getPageImage = () => {
@@ -73,15 +74,28 @@ const PageTemplate = ({ title, intro, features, ctaText, pageType }) => {
           className="video-background"
           src="https://videos.pexels.com/video-files/8388215/8388215-sd_640_360_25fps.mp4"
         />
-        {features.map((feature) => (
-          <div key={feature.title} className="feature-card">
-            <div className="wellness-icon-card wellness-icon-sm">
-              {feature.icon}
+        {features.map((feature) => {
+          const content = (
+            <>
+              {feature.icon ? (
+                <div className="wellness-icon-card wellness-icon-sm">
+                  {feature.icon}
+                </div>
+              ) : null}
+              <h3>{feature.title}</h3>
+              <p>{feature.desc}</p>
+            </>
+          );
+          return feature.to ? (
+            <Link key={feature.title} to={feature.to} className="feature-card" aria-label={feature.title}>
+              {content}
+            </Link>
+          ) : (
+            <div key={feature.title} className="feature-card">
+              {content}
             </div>
-            <h3>{feature.title}</h3>
-            <p>{feature.desc}</p>
-          </div>
-        ))}
+          );
+        })}
       </section>
 
       {/* === CTA SECTION === */}
@@ -98,9 +112,10 @@ PageTemplate.propTypes = {
   intro: PropTypes.string.isRequired,
   features: PropTypes.arrayOf(
     PropTypes.shape({
-      icon: PropTypes.node.isRequired,
+      icon: PropTypes.node,
       title: PropTypes.string.isRequired,
       desc: PropTypes.string.isRequired,
+      to: PropTypes.string,
     })
   ).isRequired,
   ctaText: PropTypes.string.isRequired,

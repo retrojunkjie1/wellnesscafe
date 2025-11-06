@@ -293,14 +293,9 @@ All icons now feature:
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(
-    160deg,
-    rgba(11, 15, 12, 0.82) 0%,
-    rgba(15, 24, 19, 0.82) 70%,
-    rgba(23, 36, 32, 0.82) 100%
-  );
-  -webkit-backdrop-filter: blur(2px);
-  backdrop-filter: blur(2px);
+  background: transparent; /* remove dark overlay to reveal background */
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
   z-index: 1;
 }
 
@@ -348,7 +343,7 @@ All icons now feature:
 .page-cta {
   text-align: center;
   padding: 5rem clamp(1rem, 10vw, 10%);
-  background: linear-gradient(90deg, #cbb4ff 0%, #d4b483 100%);
+  background: transparent; /* unify with infinite background */
   color: var(--on-dark-text);
   border-radius: 24px 24px 0 0;
   width: 100%;
@@ -364,7 +359,7 @@ All icons now feature:
   right: 0;
   bottom: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.18);
+  background: transparent; /* remove overlay */
   pointer-events: none;
   z-index: 0;
 }
@@ -379,44 +374,32 @@ All icons now feature:
   margin-bottom: 1.5rem;
 }
 
+/* Glassy CTA button for dark background */
 .cta-button {
-  background-color: #fff9e9;
-  color: #4a4a4a;
+  background-color: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
   padding: 0.9rem 2.2rem;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: 12px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
 }
 
 .cta-button:hover {
-  background-color: #f7f5f0;
+  background-color: rgba(255, 255, 255, 0.22);
 }
 
 /* Page-specific gradient themes */
-.gradient-recovery {
-  background: linear-gradient(135deg, #bfd2c1 0%, #d4b483 100%);
-}
-
-.gradient-yoga {
-  background: linear-gradient(135deg, #cbb4ff 0%, #bfd2c1 100%);
-}
-
-.gradient-acuwellness {
-  background: linear-gradient(135deg, #d4b483 0%, #fff9e9 100%);
-}
-
-.gradient-spiritual {
-  background: linear-gradient(135deg, #cbb4ff 0%, #f7f5f0 100%);
-}
-
-.gradient-events {
-  background: linear-gradient(135deg, #bfd2c1 0%, #cbb4ff 100%);
-}
-
+.gradient-recovery,
+.gradient-yoga,
+.gradient-acuwellness,
+.gradient-spiritual,
+.gradient-events,
 .gradient-assistance {
-  background: linear-gradient(135deg, #fff9e9 0%, #d4b483 100%);
+  background: transparent; /* remove page-specific gradients */
 }
 
 /* Apply gradient to hero sections */
@@ -426,7 +409,7 @@ All icons now feature:
 .gradient-spiritual .page-hero,
 .gradient-events .page-hero,
 .gradient-assistance .page-hero {
-  background: inherit;
+  background: transparent; /* inherit global site background */
   color: var(--on-dark-text);
   border-radius: 0 0 24px 24px;
   position: relative;
@@ -444,7 +427,7 @@ All icons now feature:
   right: 0;
   bottom: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.25);
+  background: transparent; /* remove dark overlay */
   pointer-events: none;
   z-index: 0;
 }
