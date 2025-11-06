@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./NewsFeed.css";
 import { fnUrl } from "../../utils/functionsBase";
 import Thumbnail from "../../components/Thumbnail";
-import steamboatBg from "../../assets/images/steamboat 07_52_55 AM.png";
+import aspenBg from "../../assets/images/Aspen-6.png";
 
 const GOOGLE_NEWS_FEED =
   "https://news.google.com/rss/topics/CAAqIQgKIhtDQkFTRGdvSUwyMHZNR3QwTlRFU0FtVnVLQUFQAQ?ceid=US:en&oc=3";
@@ -233,8 +233,8 @@ const NewsFeed = () => {
     })
   );
 
-  // Choose background: unified steamboat image with an immersive feel
-  const bgUrl = steamboatBg;
+  // Choose background: Aspen-6 with an immersive feel
+  const bgUrl = aspenBg;
 
   return (
     <section
