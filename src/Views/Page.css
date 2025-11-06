@@ -74,18 +74,18 @@
   font-weight: 800;
 }
 
-.panoramic-background {
+.page .panoramic-background {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 0; /* ensure background stays behind content */
+  z-index: -1; /* push behind page content */
   overflow: hidden;
   pointer-events: none;
 }
 
-.panoramic-background::after {
+.page .panoramic-background::after {
   content: "";
   position: absolute;
   left: 0;
@@ -102,7 +102,7 @@
   pointer-events: none;
 }
 
-.hero-panorama-image {
+.page .hero-panorama-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -112,9 +112,12 @@
   transition: transform 0.3s ease;
 }
 
-.hero-panorama-image:hover {
+.page .hero-panorama-image:hover {
   transform: scale(1.05);
 }
+
+/* Ensure stacking context so background stays behind */
+.page .container { position: relative; z-index: 0; }
 
 @media (max-width: 900px) {
   .two-col {

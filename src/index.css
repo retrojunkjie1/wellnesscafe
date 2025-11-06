@@ -10,7 +10,8 @@
   --text: #e5e7eb;
   --muted: #9ca3af;
   --card: #1f2937;
-  --chip: #374151;
+  /* Single site-wide background image (Aspen-6) with an infinite feel */
+  background: #0b1220 url("./assets/images/Aspen-6.png") no-repeat center/cover fixed;
   --on-dark-text: #ffffff; /* shared token for text on dark overlays */
 }
 
@@ -52,6 +53,11 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+/* Avoid fixed-attachment jank on mobile/tablet */
+@media (max-width: 1024px){
+  body{ background-attachment: scroll; }
 }
 
 /* Avoid fixed-attachment jank on mobile/tablet */
