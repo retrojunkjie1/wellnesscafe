@@ -45,7 +45,7 @@
 /* Media wrapper to maintain consistent aspect ratio */
 .news-img-wrap{
   width: 100%;
-  aspect-ratio: 16/10; /* similar to screenshot column crops */
+  aspect-ratio: 3/2; /* requested framing */
   background: #1d1f27;
   position: relative;
   overflow: hidden;

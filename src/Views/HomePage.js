@@ -6,13 +6,10 @@ import wellnessJournal from "../assets/images/wellnesscafe-journal-vs1.png";
 import wellnessProductV1 from "../assets/images/WellnessCafe-Product-v1.png";
 import wellnessBowlV2 from "../assets/images/wellnesscafe-bowl-v2.png";
 import { Link } from "react-router-dom";
+import TopStories from "../components/TopStories";
 
 const HomePage = () => {
-  const today = new Date().toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
+  // date used in previous static tiles; no longer needed
   return (
     <div className="homepage">
       <TopFold />
@@ -120,53 +117,8 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* === NEWS & UPDATES === */}
-      <section className="news-section">
-        <h2>Latest Wellness Insights</h2>
-        <div className="news-grid">
-          <div className="news-card">
-            <div className="news-image">
-              <img src={wellnessBowlV1} alt="Wellness Bowl" />
-            </div>
-            <div className="news-content">
-              <h4>The Science of Mindfulness</h4>
-              <p>
-                Research shows mindfulness practices can reduce stress by up to
-                40% and improve overall well-being.
-              </p>
-              <span className="news-date">{today}</span>
-            </div>
-          </div>
-
-          <div className="news-card">
-            <div className="news-image">
-              <img src={wellnessJournal} alt="Wellness Journal" />
-            </div>
-            <div className="news-content">
-              <h4>Recovery Success Stories</h4>
-              <p>
-                Real stories from our community members who have transformed
-                their lives through WellnessCafe.
-              </p>
-              <span className="news-date">{today}</span>
-            </div>
-          </div>
-
-          <div className="news-card">
-            <div className="news-image">
-              <img src={wellnessProductV1} alt="Wellness Product" />
-            </div>
-            <div className="news-content">
-              <h4>New Provider Directory</h4>
-              <p>
-                Connect with verified wellness professionals in your area.
-                Browse specialties and book sessions.
-              </p>
-              <span className="news-date">{today}</span>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* === TOP STORIES (from curated news) === */}
+      <TopStories limit={3} />
 
       {/* === IMAGE GALLERY === */}
       <section className="gallery-section">
