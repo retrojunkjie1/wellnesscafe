@@ -197,12 +197,13 @@ const AssistanceDirectory = () => {
     }
   };
 
-  const steamboatBg = require("../../assets/images/steamboat 07_52_55 AM.png");
+  const aspenBg = require("../../assets/images/Aspen-6.png");
   const bgStyle = {
-    backgroundImage: `linear-gradient(160deg, #0b0f0c 0%, #0f1813 70%, #172420 100%), url(${steamboatBg})`,
+    backgroundImage: `url(${aspenBg})`,
     backgroundPosition: "center",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
+    backgroundAttachment: "fixed",
   };
 
   const modalRef = useRef(null);
@@ -287,7 +288,7 @@ const AssistanceDirectory = () => {
       aria-label="WellnessCafe Assistance Whitebook"
       style={bgStyle}
     >
-      <div className="assistance-overlay"></div>
+  {/* Remove additional overlays to keep a single unified background */}
       <div className="assistance-container">
         <header className="assistance-header">
           <h2 className="assistance-title">

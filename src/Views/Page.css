@@ -6,11 +6,11 @@
 
 /* Page-specific gradient backgrounds */
 .page.product-page {
-  background: linear-gradient(135deg, #4c1d95 0%, #6366f1 50%, #8b5cf6 100%);
+  background: transparent; /* let the unified site background show */
 }
 
 .page.events-page {
-  background: linear-gradient(135deg, #92400e 0%, #d97706 50%, #f59e0b 100%);
+  background: transparent; /* let the unified site background show */
 }
 
 .page.blog-page {

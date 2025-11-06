@@ -1,13 +1,14 @@
 import React from "react";
 import "./Page.css";
 import PanoramicHero from "../components/PanoramicHero";
-import steamboatBg from "../assets/images/steamboat 07_52_55 AM.png";
+import aspenBg from "../assets/images/Aspen-6.png";
 
 const ProvidersPage = () => {
   return (
     <div className="page">
       <main className="container">
-  <PanoramicHero src={steamboatBg} alt="Providers section background" />
+        {/* Background unified globally; hero kept for spacing with Aspen image */}
+        <PanoramicHero src={aspenBg} alt="Providers section background" />
         <div className="page-hero">
           <h1>Wellness Provider Network</h1>
           <p>

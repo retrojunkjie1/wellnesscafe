@@ -3,12 +3,12 @@ import "./Page.css";
 import Header from "../components/Header";
 import PageBanner from "../components/PageBanner";
 import LiveBackground from "../components/LiveBackground";
-import steamboat_07_52_55 from "../assets/images/steamboat 07_52_55 AM.png";
+import aspen_6 from "../assets/images/Aspen-6.png";
 
 const BlogPage = () => (
   <div className="page blog-page">
     {/* Alive layered background with subtle parallax */}
-    <LiveBackground images={[steamboat_07_52_55, steamboat_07_52_55, steamboat_07_52_55]} intensity={10} />
+  <LiveBackground images={[aspen_6, aspen_6, aspen_6]} intensity={10} />
     <Header />
     <PageBanner
       imageSrc=""

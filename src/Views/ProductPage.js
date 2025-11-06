@@ -2,7 +2,7 @@ import React from "react";
 import "./Page.css";
 import Header from "../components/Header";
 import PanoramicHero from "../components/PanoramicHero";
-import steamboatBg from "../assets/images/steamboat 07_52_55 AM.png";
+import aspenBg from "../assets/images/Aspen-6.png";
 import GlassSection from "../components/GlassSection";
 
 const ProductPage = () => {
@@ -41,7 +41,8 @@ const ProductPage = () => {
     <div className="page product-page">
       <Header />
       <main className="container">
-  <PanoramicHero src={steamboatBg} alt="Product section background" />
+        {/* Unified Aspen-6 background */}
+        <PanoramicHero src={aspenBg} alt="Product section background" />
         <GlassSection
           title="Our Product"
           subtitle="WellnessCafe blends AI, mindfulness, and design to help you stay balanced every day."
