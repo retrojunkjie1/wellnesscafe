@@ -4,6 +4,7 @@ import { ThemeProvider } from "./utils/ThemeContext";
 import { AuthProvider } from "./AuthContext";
 import Navbar from "./components/Navbar";
 import NavigationButtons from "./components/NavigationButtons";
+import RadioPlayer from "./components/RadioPlayer.jsx";
 import ProtectedRoute from "./components/ProtectedRoute";
 import HomePage from "./Views/HomePage";
 import Signup from "./features/auth/Signup";
@@ -51,6 +52,10 @@ function App() {
       <ThemeProvider>
         <Router>
           <Navbar />
+          {/* Mobile/Tablet floating radio (hidden on desktop) */}
+          <div className="radio-mobile-only">
+            <RadioPlayer />
+          </div>
           <NavigationButtons />
           <Routes>
             <Route path="/" element={<HomePage />} />

@@ -64,3 +64,9 @@ code {
 @media (max-width: 1024px){
   body{ background-attachment: scroll; }
 }
+
+/* Show floating radio on mobile/tablet only */
+.radio-mobile-only{ display: none; }
+@media (max-width: 1024px){
+  .radio-mobile-only{ display: block; }
+}

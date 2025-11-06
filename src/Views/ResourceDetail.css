@@ -1,6 +1,6 @@
 /* Luxury resource detail styling */
 .rd-page {
-  background: linear-gradient(160deg, #0b0f0c 0%, #0f1813 70%, #172420 100%);
+  background: transparent; /* unify with global infinite background */
   color: #f3f7f5;
   padding: 3rem 0;
 }
