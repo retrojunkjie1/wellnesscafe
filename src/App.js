@@ -78,6 +78,10 @@ function App() {
               }
             />
             <Route
+              path="/providers/dashboard/preview"
+              element={<ProviderDashboard preview />}
+            />
+            <Route
               path="/providers/admin/import"
               element={
                 <ProtectedRoute roles={["admin", "provider"]} requireVerified>

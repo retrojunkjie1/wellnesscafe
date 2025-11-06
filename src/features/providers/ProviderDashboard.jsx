@@ -22,7 +22,7 @@ const serviceList = [
 ];
 const modeList = ["Video", "Chat", "In-person"];
 
-const ProviderDashboard = () => {
+const ProviderDashboard = ({preview=false}) => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -34,11 +34,10 @@ const ProviderDashboard = () => {
     calendarUrl: "",
   });
 
-  const isProvider = useMemo(
-    () =>
-      Boolean(user && (user.role === "provider" || user?.providerIds?.length)),
-    [user]
-  );
+  const isProvider = useMemo(()=>{
+    if(preview){ return true; }
+    return Boolean(user && (user.role === "provider" || user?.providerIds?.length));
+  },[preview,user]);
 
   useEffect(() => {
     (async () => {
@@ -166,6 +165,11 @@ const ProviderDashboard = () => {
       style={{ maxWidth: 900, margin: "2rem auto" }}
     >
       <h1>Provider Dashboard</h1>
+      {preview && (
+        <div className="pv-ok" style={{margin:"8px 0 12px"}}>
+          Preview mode — changes are saved locally on this device.
+        </div>
+      )}
       <p>
         Choose the services you offer, update your modes, and set your rate.
       </p>

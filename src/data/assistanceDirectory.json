@@ -586,4 +586,115 @@
     "description": "Information, support, and local referrals for individuals and families navigating mental health conditions.",
     "hours": "Weekdays; see site for hours"
   }
+  ,
+  {
+    "category": "Food Assistance",
+    "name": "SNAP — State Directory",
+    "type": "Nutrition Benefits",
+    "contact": {
+      "phone": "",
+      "website": "https://www.fns.usda.gov/snap/state-directory",
+      "email": ""
+    },
+    "location": "United States",
+    "state": "US",
+    "description": "Find your state’s SNAP office to apply for food assistance (EBT).",
+    "eligibility": "Income-qualified; varies by household size and state rules.",
+    "howToApply": "Use the directory to reach your state agency and apply online or in person.",
+    "documents": ["Photo ID", "Proof of income", "Household composition"],
+    "languages": "Varies by state"
+  },
+  {
+    "category": "Food Assistance",
+    "name": "WIC — Women, Infants, & Children",
+    "type": "Nutrition Program",
+    "contact": {
+      "phone": "",
+      "website": "https://www.fns.usda.gov/wic",
+      "email": ""
+    },
+    "location": "United States",
+    "state": "US",
+    "description": "Nutrition education, breastfeeding support, and healthy foods for pregnant/postpartum individuals and young children.",
+    "eligibility": "Pregnant, postpartum, and caregivers of children under 5; income and nutrition risks apply.",
+    "howToApply": "Contact your local WIC clinic via the website finder.",
+    "languages": "Varies by clinic"
+  },
+  {
+    "category": "Healthcare Navigation",
+    "name": "HRSA Health Center Finder",
+    "type": "Free/Low-Cost Clinics",
+    "contact": {
+      "phone": "",
+      "website": "https://findahealthcenter.hrsa.gov",
+      "email": ""
+    },
+    "location": "United States",
+    "state": "US",
+    "description": "Federally funded community health centers offering sliding-scale primary care, behavioral health, and dental.",
+    "howToApply": "Search by ZIP and call clinics directly for intake and fees.",
+    "languages": "Varies by clinic"
+  },
+  {
+    "category": "Healthcare Navigation",
+    "name": "Medicare Extra Help (LIS)",
+    "type": "Prescription Cost Help",
+    "contact": {
+      "phone": "(800) 772-1213",
+      "website": "https://www.ssa.gov/benefits/medicare/prescriptionhelp/",
+      "email": ""
+    },
+    "location": "United States",
+    "state": "US",
+    "description": "Helps people with limited income/resources pay Medicare prescription drug costs.",
+    "eligibility": "Income/resource limits apply; Medicare enrollment required.",
+    "howToApply": "Apply online at SSA.gov or call for assistance.",
+    "languages": "English, Spanish; other languages available via SSA"
+  },
+  {
+    "category": "Legal Aid",
+    "name": "Public Defender Offices (Directory)",
+    "type": "Criminal Defense (Income-qualified)",
+    "contact": {
+      "phone": "",
+      "website": "https://www.nlada.org/defender-directory",
+      "email": ""
+    },
+    "location": "United States",
+    "state": "US",
+    "description": "Find public defender agencies for criminal cases if you cannot afford an attorney.",
+    "howToApply": "Use the directory to locate your jurisdiction and contact the office.",
+    "languages": "Varies by office"
+  },
+  {
+    "category": "Legal Aid",
+    "name": "Clean Slate & Expungement Resources",
+    "type": "Record Clearing Information",
+    "contact": {
+      "phone": "",
+      "website": "https://www.cleanslateinitiative.org/resources",
+      "email": ""
+    },
+    "location": "United States",
+    "state": "US",
+    "description": "Learn about state-specific expungement or sealing options and where to get help.",
+    "howToApply": "Check your state’s resources and contact listed partners or legal aid.",
+    "languages": "Varies by state"
+  },
+  {
+    "category": "Healthcare Navigation",
+    "name": "Medicaid Non-Emergency Medical Transportation (NEMT)",
+    "type": "Transportation Assistance",
+    "contact": {
+      "phone": "",
+      "website": "https://www.medicaid.gov/medicaid/benefits/non-emergency-medical-transportation/index.html",
+      "email": ""
+    },
+    "location": "United States",
+    "state": "US",
+    "description": "Transportation to medical appointments for eligible Medicaid members.",
+    "eligibility": "Medicaid eligibility; rules vary by state and plan.",
+    "howToApply": "Contact your Medicaid plan or state Medicaid office for ride scheduling.",
+    "languages": "Varies by plan"
+  }
 ]

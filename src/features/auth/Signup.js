@@ -76,8 +76,8 @@ export default function Signup() {
 
         {!authEnabled && (
           <output className="error-message">
-            Signups are temporarily unavailable in this preview. Please try
-            again later.
+            Signups are temporarily unavailable on this build. You can still
+            explore a live preview of the Provider Dashboard below.
           </output>
         )}
         {error && <div className="error-message">{error}</div>}
@@ -145,6 +145,15 @@ export default function Signup() {
         <p className="auth-link">
           Already have an account? <a href="/login">Sign in</a>
         </p>
+
+        <div className="divider"><span>or</span></div>
+        <a
+          href="/providers/dashboard/preview"
+          className="auth-button"
+          style={{display:'inline-block', textAlign:'center'}}
+        >
+          Preview Provider Dashboard
+        </a>
       </div>
     </div>
   );

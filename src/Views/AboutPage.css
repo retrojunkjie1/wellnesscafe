@@ -3,9 +3,8 @@
 .about-page {
   padding: 2rem 1rem;
   color: #f0f0f0;
-  /* Aspen-6 background for the entire About page */
-  background: #0b1220 url("../assets/images/Aspen-6.png") no-repeat center/cover;
-  background-attachment: fixed;
+  /* Inherit global Aspen-6 background */
+  background: transparent;
 }
 
 .about-hero {
