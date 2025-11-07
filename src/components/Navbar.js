@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import "./Navbar.css";
@@ -6,14 +6,25 @@ import RadioPlayer from "./RadioPlayer.jsx";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { user, logout } = useAuth();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+    document.body.style.overflow = isMenuOpen ? 'auto' : 'hidden';
   };
 
   const closeMenu = () => {
     setIsMenuOpen(false);
+    document.body.style.overflow = 'auto';
   };
 
   const handleLogout = async () => {
@@ -26,7 +37,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="nav-brand">
         <Link to="/" className="nav-logo" aria-label="Go to homepage">
           WELLNESSCAFE

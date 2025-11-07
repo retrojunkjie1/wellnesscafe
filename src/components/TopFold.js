@@ -5,19 +5,11 @@ import heroPanorama from "../assets/images/Aspen-6.png";
 
 const TopFold = () => {
   const navigate = useNavigate();
-  const [navActive, setNavActive] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     // Trigger entrance animations
     setTimeout(() => setIsVisible(true), 100);
-
-    const handleScroll = () => {
-      setNavActive(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Animated counter for stats
@@ -58,53 +50,6 @@ const TopFold = () => {
         />
         <div className="hero-overlay"></div>
       </div>
-
-  {/* Navigation - Hide when scrolling to avoid duplicate with Navbar */}
-      <nav className={`topfold-navbar ${navActive ? "hidden" : ""}`}>
-        <div className="nav-logo">
-          <span className="logo-icon">🌿</span>
-          WELLNESSCAFE
-        </div>
-
-        <button
-          className="mobile-menu-toggle"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-
-        <ul className={`nav-links ${mobileMenuOpen ? "mobile-open" : ""}`}>
-          <li>
-            <button onClick={() => navigate("/")}>Home</button>
-          </li>
-          <li>
-            <button onClick={() => navigate("/product")}>Product</button>
-          </li>
-          <li>
-            <button onClick={() => navigate("/tools")}>Tools</button>
-          </li>
-          <li>
-            <button onClick={() => navigate("/events")}>Events</button>
-          </li>
-          <li>
-            <button onClick={() => navigate("/spiritual")}>Spiritual</button>
-          </li>
-          <li>
-            <button onClick={() => navigate("/blog")}>Blog</button>
-          </li>
-        </ul>
-        <div className="nav-buttons">
-          <button className="nav-btn sign-in" onClick={() => navigate("/login")}>
-            Sign In
-          </button>
-          <button className="nav-btn download" onClick={() => navigate("/signup")}>
-            Get Started
-          </button>
-        </div>
-      </nav>
 
       {/* Hero Content with Animations */}
       <div className={`topfold-content ${isVisible ? "visible" : ""}`}>
