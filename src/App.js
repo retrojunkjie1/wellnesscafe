@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import { ThemeProvider } from "./utils/ThemeContext";
 import { AuthProvider } from "./AuthContext";
 import Navbar from "./components/Navbar";
@@ -48,12 +49,13 @@ import CheckInPage from "./Views/CheckInPage";
 
 function App() {
   return (
-    <AuthProvider>
-      <ThemeProvider>
-        <Router>
-          <Navbar />
-          <NavigationButtons />
-          <FloatingAIWidget />
+    <HelmetProvider>
+      <AuthProvider>
+        <ThemeProvider>
+          <Router>
+            <Navbar />
+            <NavigationButtons />
+            <FloatingAIWidget />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/signup" element={<Signup />} />
@@ -166,6 +168,7 @@ function App() {
         </Router>
       </ThemeProvider>
     </AuthProvider>
+    </HelmetProvider>
   );
 }
 

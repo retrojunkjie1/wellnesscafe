@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import "./HomePage.css";
 import TopFold from "../components/TopFold";
 import wellnessBowlV1 from "../assets/images/wellnesscafe-bowl-v1.png";
@@ -11,7 +12,19 @@ import TopStories from "../components/TopStories";
 const HomePage = () => {
   // date used in previous static tiles; no longer needed
   return (
-    <div className="homepage">
+    <>
+      <Helmet>
+        <title>WellnessCafe - AI-Powered Wellness & Recovery Platform</title>
+        <meta name="description" content="Transform your wellness journey with AI-powered recovery support, mindfulness, acuwellness, and verified practitioner network. HIPAA compliant." />
+        <meta name="keywords" content="wellness, recovery, addiction support, mindfulness, yoga, acupuncture, mental health" />
+        <meta property="og:title" content="WellnessCafe - Wellness Platform" />
+        <meta property="og:description" content="Your comprehensive wellness platform for recovery, mindfulness, and personal growth" />
+        <meta property="og:image" content="%PUBLIC_URL%/logo512.png" />
+        <meta property="og:url" content="https://wellnesscafe.net" />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Helmet>
+      
+      <div className="homepage">
       <TopFold />
 
       {/* === LUXURY FEATURES === */}
@@ -163,6 +176,7 @@ const HomePage = () => {
         </Link>
       </section>
     </div>
+    </>
   );
 };
 
