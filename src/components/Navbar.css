@@ -43,6 +43,14 @@
   line-height: 1;
   color: var(--brand);
   margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-separator {
+  opacity: 0.3;
+  font-size: 0.75rem;
 }
 
 /* Desktop Navigation */

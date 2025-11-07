@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import "./Navbar.css";
 import RadioPlayer from "./RadioPlayer.jsx";
+import FloatingAIWidget from "./FloatingAIWidget";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -44,6 +45,8 @@ const Navbar = () => {
         </Link>
         <div className="nav-under">
           <RadioPlayer variant="navbar" />
+          <span className="nav-separator">|</span>
+          <FloatingAIWidget variant="navbar" />
         </div>
       </div>
 

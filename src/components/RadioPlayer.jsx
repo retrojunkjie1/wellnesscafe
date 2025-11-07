@@ -4,6 +4,7 @@ import { Pause, Play, Waves } from "lucide-react";
 import IconBadge from "./IconBadge";
 
 const STATIONS = [
+  // Ambient & Chill
   {
     id: "nts",
     name: "NTS Ambient",
@@ -34,6 +35,83 @@ const STATIONS = [
     name: "SomaFM Deep Space One",
     url: "https://ice3.somafm.com/deepspaceone-128-mp3",
   },
+  // Jazz & Blues
+  {
+    id: "jazz24",
+    name: "Jazz24",
+    url: "https://live.wostreaming.net/direct/ppm-jazz24aac-ibc1",
+  },
+  {
+    id: "smoothjazz",
+    name: "SmoothJazz.com Global",
+    url: "https://smoothjazz.cdnstream1.com/2586_128.mp3",
+  },
+  {
+    id: "jazzgroove",
+    name: "Jazz Groove",
+    url: "https://live.wostreaming.net/playlist/ppm-jazz24aac-ibc1.m3u8",
+  },
+  // Classical
+  {
+    id: "classicalwcrb",
+    name: "WCRB Classical",
+    url: "https://classical-stream.publicradio.org/classical.aac",
+  },
+  {
+    id: "venice",
+    name: "Venice Classic Radio",
+    url: "https://uk1.streamingpulse.com/ssl/vcr",
+  },
+  // Electronic & Dance
+  {
+    id: "defected",
+    name: "Defected Radio",
+    url: "https://edge-bauerall-01-gos2.sharp-stream.com/defected.aac",
+  },
+  {
+    id: "deephouse",
+    name: "Deep House Radio",
+    url: "https://stream.deephouse-radio.com/deephouse128.mp3",
+  },
+  {
+    id: "chillhop",
+    name: "Chillhop Radio",
+    url: "https://streams.fluxfm.de/Chillhop/mp3-320/audio/",
+  },
+  // Hip-Hop & R&B
+  {
+    id: "hiphop",
+    name: "HipHop Radio",
+    url: "https://stream.rcs.revma.com/fqx8fce5x8zuv",
+  },
+  {
+    id: "thebeatnation",
+    name: "The Beat Nation",
+    url: "https://hestia2.cdnstream.com/1469_128",
+  },
+  // Rock & Alternative
+  {
+    id: "classicrock",
+    name: "Classic Rock Florida",
+    url: "https://hydra.cdnstream.com/1524_128",
+  },
+  {
+    id: "alternativerock",
+    name: "Alternative Rock",
+    url: "https://stream.rcs.revma.com/3fqf3bmr4k8uv",
+  },
+  // World Music
+  {
+    id: "worldmusic",
+    name: "World Music Radio",
+    url: "https://stream.radio.co/s2c8f5d77e/listen",
+  },
+  {
+    id: "afrobeats",
+    name: "Afrobeats Radio",
+    url: "https://s6.myradiostream.com/15962/listen.mp3",
+  },
+  // News & Talk
   {
     id: "npr",
     name: "NPR News (Live)",
@@ -43,6 +121,17 @@ const STATIONS = [
     id: "bbcws",
     name: "BBC World Service",
     url: "https://stream.live.vc.bbcmedia.co.uk/bbc_world_service",
+  },
+  // Lo-Fi & Study
+  {
+    id: "lofi",
+    name: "Chillhop Lo-Fi",
+    url: "https://streams.fluxfm.de/Chillhop/mp3-320/audio/",
+  },
+  {
+    id: "cafestudy",
+    name: "Cafe Study Beats",
+    url: "https://streams.fluxfm.de/jazzcafe/mp3-320/audio/",
   },
 ];
 
