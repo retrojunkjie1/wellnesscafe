@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './AssistancePage.css';
+import { assistancePrograms, getCategories, searchPrograms } from '../data/assistanceData';
 
 const AssistPage = () => {
   const [householdSize, setHouseholdSize] = useState('');
@@ -12,93 +13,20 @@ const AssistPage = () => {
   const [eligiblePrograms, setEligiblePrograms] = useState([]);
   const [selectedState, setSelectedState] = useState('');
   const [activeFaq, setActiveFaq] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const programs = [
-    {
-      icon: '🍽️',
-      badge: 'Food Security',
-      title: 'SNAP (Food Stamps)',
-      description: 'The Supplemental Nutrition Assistance Program helps families purchase healthy food. In 2024, over 42 million Americans receive SNAP benefits averaging $193 per person monthly.',
-      details: {
-        eligibility: [
-          'Gross income at or below 130% of poverty line',
-          'Net income at or below 100% of poverty line',
-          'U.S. citizen or qualified non-citizen',
-          'Work requirements for able-bodied adults'
-        ]
-      }
-    },
-    {
-      icon: '🏥',
-      badge: 'Healthcare',
-      title: 'Medicaid',
-      description: 'Medicaid provides free or low-cost health coverage to eligible adults, children, pregnant women, elderly adults, and people with disabilities. Coverage includes doctor visits, hospital stays, preventive care, mental health services, and substance abuse treatment.',
-      details: {
-        eligibility: [
-          'Income at or below 138% of federal poverty level (expansion states)',
-          'Pregnant women and children may qualify at higher income levels',
-          'Elderly and disabled individuals have different thresholds',
-          'Coverage varies by state'
-        ]
-      }
-    },
-    {
-      icon: '🏠',
-      badge: 'Housing',
-      title: 'Housing Assistance',
-      description: 'HUD programs including Section 8 Housing Choice Vouchers, Public Housing, and emergency rental assistance help low-income families afford safe, decent housing. Wait times vary by location but assistance can cover 70% or more of rent costs.',
-      details: {
-        eligibility: [
-          'Income at or below 50% of area median income',
-          'U.S. citizenship or eligible immigration status',
-          'Pass background check (some exceptions)',
-          'Local housing authority application required'
-        ]
-      }
-    },
-    {
-      icon: '💡',
-      badge: 'Utilities',
-      title: 'LIHEAP (Utility Assistance)',
-      description: 'Low Income Home Energy Assistance Program helps with heating and cooling bills, energy crisis situations, and weatherization. Average assistance is $500-800 annually, with priority for households with elderly, disabled, or young children.',
-      details: {
-        eligibility: [
-          'Income at or below 150% of poverty level (varies by state)',
-          'Priority for households with vulnerable members',
-          'Must be responsible for home heating/cooling costs',
-          'Crisis assistance available year-round in many states'
-        ]
-      }
-    },
-    {
-      icon: '👶',
-      badge: 'Childcare',
-      title: 'Childcare Subsidies',
-      description: 'The Child Care and Development Fund (CCDF) helps working families afford childcare through vouchers, reduced copayments, or direct services. Subsidies can cover 70-90% of childcare costs for eligible families.',
-      details: {
-        eligibility: [
-          'Working, attending school, or in job training',
-          'Income varies by state (typically 85% of state median)',
-          'Children under 13 (or special needs up to 19)',
-          'Immunization and health screening requirements'
-        ]
-      }
-    },
-    {
-      icon: '🎖️',
-      badge: 'Veterans',
-      title: 'VA Benefits',
-      description: 'Veterans Affairs provides healthcare, disability compensation, education benefits (GI Bill), home loans, and vocational rehabilitation. Over 9 million veterans receive VA benefits with comprehensive support for service-connected conditions.',
-      details: {
-        eligibility: [
-          'Honorable discharge from military service',
-          'Minimum service requirements vary by benefit',
-          'Service-connected disabilities receive priority',
-          'Income limits for some healthcare benefits'
-        ]
-      }
-    }
-  ];
+  // Filter programs based on category and search
+  const filteredPrograms = assistancePrograms.filter(program => {
+    const matchesCategory = selectedCategory === 'all' || program.category === selectedCategory;
+    const matchesSearch = searchQuery === '' || 
+      program.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      program.description.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
+  // Get all categories for filter
+  const categories = getCategories();
 
   const applicationSteps = [
     {
@@ -261,10 +189,42 @@ const AssistPage = () => {
         </p>
       </section>
 
+      {/* Category Filter & Search */}
+      <section className="programs-filter">
+        <div className="filter-container">
+          <div className="filter-search">
+            <input
+              type="text"
+              placeholder="🔍 Search programs..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="search-input"
+            />
+          </div>
+          <div className="filter-categories">
+            <button 
+              className={`filter-btn ${selectedCategory === 'all' ? 'active' : ''}`}
+              onClick={() => setSelectedCategory('all')}
+            >
+              All Programs ({assistancePrograms.length})
+            </button>
+            {categories.map(cat => (
+              <button
+                key={cat}
+                className={`filter-btn ${selectedCategory === cat ? 'active' : ''}`}
+                onClick={() => setSelectedCategory(cat)}
+              >
+                {cat} ({assistancePrograms.filter(p => p.category === cat).length})
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Programs Grid */}
       <section className="programs-grid">
-        {programs.map((program, index) => (
-          <div key={index} className="program-card">
+        {filteredPrograms.map((program, index) => (
+          <div key={program.id || index} className="program-card">
             <span className="program-icon">{program.icon}</span>
             <span className="program-badge">{program.badge}</span>
             <h3>{program.title}</h3>
@@ -272,19 +232,48 @@ const AssistPage = () => {
             <div className="program-details">
               <h4>Basic Eligibility:</h4>
               <ul>
-                {program.details.eligibility.map((item, idx) => (
+                {program.eligibility.map((item, idx) => (
                   <li key={idx}>{item}</li>
                 ))}
               </ul>
+              {program.links && (
+                <div className="program-links">
+                  <h4>Resources:</h4>
+                  <div className="links-group">
+                    {program.links.national && (
+                      <a href={program.links.national} target="_blank" rel="noopener noreferrer">
+                        📋 National Info
+                      </a>
+                    )}
+                    {program.links.apply && (
+                      <a href={program.links.apply} target="_blank" rel="noopener noreferrer">
+                        ✍️ Apply Now
+                      </a>
+                    )}
+                    {program.links.locator && (
+                      <a href={program.links.locator} target="_blank" rel="noopener noreferrer">
+                        📍 Find Location
+                      </a>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         ))}
       </section>
 
+      {filteredPrograms.length === 0 && (
+        <div className="no-results">
+          <p>No programs found matching your criteria. Try adjusting your search or filters.</p>
+        </div>
+      )}
+
       {/* Eligibility Checker */}
       <section className="eligibility-section">
         <div className="eligibility-content">
           <h2>Check Your Eligibility</h2>
+```
           <p>
             Answer a few simple questions to see which programs you may qualify for. 
             This is an estimate only—official eligibility is determined by your local office.

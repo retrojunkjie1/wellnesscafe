@@ -16,9 +16,28 @@
   box-sizing: border-box;
   color: var(--on-dark-text);
   border-bottom: 1px solid rgba(212, 180, 131, 0.15);
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Homepage - Start transparent */
+.navbar.homepage {
+  background: rgba(10, 14, 39, 0.15);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: none;
+  border-bottom: 1px solid rgba(212, 180, 131, 0.08);
+}
+
+/* Homepage - Become visible on scroll */
+.navbar.homepage.scrolled {
+  background: rgba(10, 14, 39, 0.92);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid rgba(212, 180, 131, 0.35);
+}
+
+/* Non-homepage scrolled state */
 .navbar.scrolled {
   background: rgba(10, 14, 39, 0.95);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
@@ -38,7 +57,14 @@
   font-size: 1.2rem;
   color: #d4b483;
   text-decoration: none;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s ease;
 }
+
+.navbar.homepage .nav-logo {
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8), 0 1px 3px rgba(0, 0, 0, 1);
+}
+
 .nav-under {
   line-height: 1;
   color: var(--brand);
@@ -46,6 +72,11 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.navbar.homepage .nav-under {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 1px 2px rgba(0, 0, 0, 1);
 }
 
 .nav-separator {
@@ -66,13 +97,33 @@
   text-decoration: none;
   color: rgba(255, 255, 255, 0.95);
   font-weight: 500;
-  transition: color 0.3s ease;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+
+.navbar.homepage .desktop-nav a {
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8), 0 1px 3px rgba(0, 0, 0, 1);
+  font-weight: 600;
+}
+
+.desktop-nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #d4b483, #cbb4ff);
+  transition: width 0.3s ease;
 }
 
 .desktop-nav a:hover {
   color: #d4b483;
-  text-decoration: underline;
+}
+
+.desktop-nav a:hover::after {
+  width: 100%;
 }
 
 /* Mobile Navigation */
@@ -82,8 +133,8 @@
 }
 
 .hamburger-btn {
-  background: none;
-  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(212, 180, 131, 0.3);
   cursor: pointer;
   padding: 8px;
   width: 40px;
@@ -93,15 +144,31 @@
   justify-content: center;
   align-items: center;
   gap: 4px;
+  border-radius: 8px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+}
+
+.navbar.homepage .hamburger-btn {
+  background: rgba(10, 14, 39, 0.5);
+  border-color: rgba(212, 180, 131, 0.5);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.hamburger-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(212, 180, 131, 0.5);
 }
 
 .hamburger-line {
   width: 25px;
   height: 3px;
-  background-color: #7a5af8;
+  background-color: #d4b483;
   border-radius: 2px;
   transition: all 0.3s ease;
   transform-origin: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .hamburger-line.active:nth-child(1) {
@@ -120,14 +187,19 @@
   position: absolute;
   top: 100%;
   right: 0;
-  background: #fff;
+  margin-top: 0.5rem;
+  background: rgba(10, 14, 39, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(212, 180, 131, 0.3);
   border-radius: 12px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
   min-width: 200px;
   opacity: 0;
   visibility: hidden;
   transform: translateY(-10px);
   transition: all 0.3s ease;
+  overflow: hidden;
 }
 
 .mobile-dropdown.open {
@@ -143,7 +215,7 @@
 }
 
 .mobile-nav-links li {
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid rgba(212, 180, 131, 0.15);
 }
 
 .mobile-nav-links li:last-child {
@@ -154,14 +226,16 @@
   display: block;
   padding: 0.75rem 1.5rem;
   text-decoration: none;
-  color: #222;
+  color: rgba(255, 255, 255, 0.95);
   font-weight: 500;
   transition: all 0.3s ease;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .mobile-nav-links a:hover {
-  color: #5a3fd8; /* darker purple for contrast */
-  background-color: #efe9ff; /* slightly deeper backdrop for AA */
+  color: #d4b483;
+  background: rgba(212, 180, 131, 0.15);
+  padding-left: 2rem;
 }
 
 /* Auth Buttons */
@@ -178,26 +252,53 @@
   text-decoration: none;
   transition: all 0.3s ease;
   font-size: 0.9rem;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.navbar.homepage .auth-btn {
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .login-btn {
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.navbar.homepage .login-btn {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(10, 14, 39, 0.4);
 }
 
 .login-btn:hover {
-  background-color: rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-1px);
 }
 
 .signup-btn {
-  background: linear-gradient(135deg, #8b5a3c 0%, #a67c52 100%);
-  color: white;
+  background: linear-gradient(135deg, #d4b483 0%, #cbb4ff 100%);
+  color: #0a0e27;
+  font-weight: 600;
+  border: none;
+  box-shadow: 0 2px 8px rgba(212, 180, 131, 0.3);
+}
+
+.navbar.homepage .signup-btn {
+  box-shadow: 0 4px 12px rgba(212, 180, 131, 0.5);
 }
 
 .signup-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(139, 90, 60, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(212, 180, 131, 0.4);
+}
+
+.navbar.homepage .signup-btn:hover {
+  box-shadow: 0 8px 20px rgba(212, 180, 131, 0.6);
 }
 
 .dashboard-btn {
