@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Search, Mic, MicOff, Send } from "lucide-react";
+import { Search, Mic, MicOff, Send, Loader2 } from "lucide-react";
 import "./FloatingAIWidget.css";
 
 const FloatingAIWidget = ({ variant = "floating" }) => {
@@ -8,8 +8,18 @@ const FloatingAIWidget = ({ variant = "floating" }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isListening, setIsListening] = useState(false);
   const [transcript, setTranscript] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const recognitionRef = useRef(null);
+  const messagesEndRef = useRef(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Scroll to bottom when messages change
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
 
   useEffect(() => {
     // Initialize speech recognition if available
@@ -77,14 +87,132 @@ const FloatingAIWidget = ({ variant = "floating" }) => {
     }
   };
 
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      // Navigate to AI chat page with query
-      navigate(`/wellness-ai?q=${encodeURIComponent(searchQuery)}`);
-      setSearchQuery("");
-      setIsOpen(false);
+    if (!searchQuery.trim() || isLoading) return;
+
+    const userMessage = searchQuery.trim();
+    setSearchQuery("");
+    setTranscript("");
+    setIsLoading(true);
+
+    // Add user message to chat
+    const userMsg = { id: Date.now(), role: 'user', text: userMessage };
+    setMessages(prev => [...prev, userMsg]);
+
+    try {
+      // Simulate AI response (replace with actual API call)
+      // For now, provide intelligent routing responses
+      const response = await getAIResponse(userMessage);
+      
+      const aiMsg = { id: Date.now() + 1, role: 'assistant', text: response.text };
+      setMessages(prev => [...prev, aiMsg]);
+
+      // If there's a suggested navigation, add a button
+      if (response.navigate) {
+        setTimeout(() => {
+          if (window.confirm(`Would you like to go to ${response.navigate.label}?`)) {
+            navigate(response.navigate.path);
+            setIsOpen(false);
+          }
+        }, 500);
+      }
+    } catch (error) {
+      console.error('AI response error:', error);
+      const errorMsg = { 
+        id: Date.now() + 1, 
+        role: 'assistant', 
+        text: 'Sorry, I encountered an error. Please try asking in a different way or use the quick actions below.' 
+      };
+      setMessages(prev => [...prev, errorMsg]);
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  // Intelligent response generator
+  const getAIResponse = async (query) => {
+    const lowerQuery = query.toLowerCase();
+    
+    // Recovery-related queries
+    if (lowerQuery.includes('recovery') || lowerQuery.includes('sober') || lowerQuery.includes('addiction') || lowerQuery.includes('12 step')) {
+      return {
+        text: "I can help you with recovery resources! We offer comprehensive recovery support including 12-step programs, peer support, medication-assisted treatment, and relapse prevention. Would you like to explore our recovery programs?",
+        navigate: { path: '/recovery', label: 'Recovery Page' }
+      };
+    }
+    
+    // Yoga/wellness queries
+    if (lowerQuery.includes('yoga') || lowerQuery.includes('meditation') || lowerQuery.includes('stress')) {
+      return {
+        text: "Our yoga and mindfulness programs can help! We offer various classes from beginner-friendly Hatha to dynamic Vinyasa, plus meditation and breathwork. 98% of our practitioners report significant stress reduction. Want to learn more?",
+        navigate: { path: '/yoga', label: 'Yoga Programs' }
+      };
+    }
+    
+    // Government assistance queries
+    if (lowerQuery.includes('assistance') || lowerQuery.includes('benefits') || lowerQuery.includes('snap') || lowerQuery.includes('medicaid') || lowerQuery.includes('housing')) {
+      return {
+        text: "I can help you navigate government assistance programs! We provide guidance for SNAP (food assistance), Medicaid, housing vouchers, utility assistance, and more. We've helped over 85,000 families access $2.4M in benefits. Would you like to check your eligibility?",
+        navigate: { path: '/assistance', label: 'Government Assistance' }
+      };
+    }
+    
+    // Provider/therapist queries
+    if (lowerQuery.includes('provider') || lowerQuery.includes('therapist') || lowerQuery.includes('counselor') || lowerQuery.includes('doctor')) {
+      return {
+        text: "Looking for a healthcare provider? Our directory includes licensed therapists, counselors, addiction specialists, and wellness practitioners. All providers are verified and accept various insurance plans. Let me help you find the right match.",
+        navigate: { path: '/providers/directory', label: 'Provider Directory' }
+      };
+    }
+    
+    // Check-in queries
+    if (lowerQuery.includes('check') || lowerQuery.includes('progress') || lowerQuery.includes('track') || lowerQuery.includes('mood')) {
+      return {
+        text: "Daily check-ins help you track your wellness journey! Log your mood, energy levels, challenges, and victories. Over time, you'll see patterns and celebrate progress. Ready to check in?",
+        navigate: { path: '/check-in', label: 'Daily Check-in' }
+      };
+    }
+    
+    // Acupuncture/TCM queries
+    if (lowerQuery.includes('acupuncture') || lowerQuery.includes('tcm') || lowerQuery.includes('chinese medicine') || lowerQuery.includes('meridian')) {
+      return {
+        text: "Traditional Chinese Medicine and acupuncture can complement your wellness journey! We offer treatments for pain management, stress relief, addiction recovery support, and overall balance. Our practitioners are licensed and experienced.",
+        navigate: { path: '/acuwellness', label: 'Acuwellness Services' }
+      };
+    }
+    
+    // Spiritual counseling queries
+    if (lowerQuery.includes('spiritual') || lowerQuery.includes('faith') || lowerQuery.includes('meaning') || lowerQuery.includes('purpose')) {
+      return {
+        text: "Spiritual counseling can provide deep support on your journey. Our counselors work with various faith traditions and spiritual practices to help you find meaning, process grief, and connect with your higher purpose. All are welcome, regardless of beliefs.",
+        navigate: { path: '/spiritual-counseling', label: 'Spiritual Counseling' }
+      };
+    }
+
+    // Events queries
+    if (lowerQuery.includes('event') || lowerQuery.includes('workshop') || lowerQuery.includes('group') || lowerQuery.includes('meeting')) {
+      return {
+        text: "We host regular events, workshops, and support groups! Check our calendar for upcoming meditation sessions, recovery meetings, wellness workshops, and community gatherings. All events are free or low-cost.",
+        navigate: { path: '/events', label: 'Events Calendar' }
+      };
+    }
+    
+    // Default helpful response
+    return {
+      text: `I'm here to help you with wellness resources! I can assist with:
+      
+• Recovery & addiction support
+• Yoga & meditation classes  
+• Government assistance programs
+• Finding healthcare providers
+• Daily wellness check-ins
+• Acupuncture & holistic health
+• Spiritual counseling
+• Community events
+
+What would you like to know more about?`
+    };
   };
 
   const isNavbar = variant === "navbar";
@@ -106,10 +234,31 @@ const FloatingAIWidget = ({ variant = "floating" }) => {
             <div className="ai-modal-overlay" onClick={() => setIsOpen(false)} />
             <div className="ai-modal-panel">
               <div className="ai-header">
-                <h3>🔍 AI Search</h3>
+                <h3>🔍 Wellness AI Assistant</h3>
                 <button onClick={() => setIsOpen(false)} aria-label="Close">✕</button>
               </div>
               <div className="ai-body">
+                {/* Messages Display */}
+                {messages.length > 0 && (
+                  <div className="ai-messages">
+                    {messages.map(msg => (
+                      <div key={msg.id} className={`ai-message ${msg.role}`}>
+                        <div className="message-content">
+                          {msg.text}
+                        </div>
+                      </div>
+                    ))}
+                    {isLoading && (
+                      <div className="ai-message assistant">
+                        <div className="message-content">
+                          <Loader2 size={16} className="spin" /> Thinking...
+                        </div>
+                      </div>
+                    )}
+                    <div ref={messagesEndRef} />
+                  </div>
+                )}
+
                 <form onSubmit={handleSearch} className="ai-search-form">
                   <div className="ai-input-group">
                     <input
@@ -119,6 +268,7 @@ const FloatingAIWidget = ({ variant = "floating" }) => {
                       placeholder="Ask me anything about wellness..."
                       className="ai-search-input"
                       autoFocus
+                      disabled={isLoading}
                     />
                     <button
                       type="button"
@@ -126,16 +276,17 @@ const FloatingAIWidget = ({ variant = "floating" }) => {
                       className={`ai-voice-btn ${isListening ? 'listening' : ''}`}
                       aria-label={isListening ? "Stop listening" : "Start voice input"}
                       title={isListening ? "Stop listening" : "Voice search"}
+                      disabled={isLoading}
                     >
                       {isListening ? <MicOff size={18} /> : <Mic size={18} />}
                     </button>
                     <button
                       type="submit"
                       className="ai-submit-btn"
-                      disabled={!searchQuery.trim()}
+                      disabled={!searchQuery.trim() || isLoading}
                       aria-label="Submit search"
                     >
-                      <Send size={18} />
+                      {isLoading ? <Loader2 size={18} className="spin" /> : <Send size={18} />}
                     </button>
                   </div>
                   {isListening && (
@@ -145,21 +296,23 @@ const FloatingAIWidget = ({ variant = "floating" }) => {
                   )}
                 </form>
 
-                <div className="ai-quick-actions">
-                  <p className="ai-quick-title">Quick Actions:</p>
-                  <button onClick={() => { navigate("/recovery"); setIsOpen(false); }}>
-                    🧠 Recovery Support
-                  </button>
-                  <button onClick={() => { navigate("/check-in"); setIsOpen(false); }}>
-                    ✅ Daily Check-in
-                  </button>
-                  <button onClick={() => { navigate("/providers/directory"); setIsOpen(false); }}>
-                    👥 Find Provider
-                  </button>
-                  <button onClick={() => { navigate("/assistance"); setIsOpen(false); }}>
-                    🏛️ Get Assistance
-                  </button>
-                </div>
+                {messages.length === 0 && (
+                  <div className="ai-quick-actions">
+                    <p className="ai-quick-title">Quick Actions:</p>
+                    <button onClick={() => { navigate("/recovery"); setIsOpen(false); }}>
+                      🧠 Recovery Support
+                    </button>
+                    <button onClick={() => { navigate("/yoga"); setIsOpen(false); }}>
+                      🧘 Yoga & Meditation
+                    </button>
+                    <button onClick={() => { navigate("/check-in"); setIsOpen(false); }}>
+                      ✅ Daily Check-in
+                    </button>
+                    <button onClick={() => { navigate("/assistance"); setIsOpen(false); }}>
+                      🏛️ Get Assistance
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </>
@@ -186,6 +339,27 @@ const FloatingAIWidget = ({ variant = "floating" }) => {
             <button onClick={() => setIsOpen(false)}>✕</button>
           </div>
           <div className="ai-body">
+            {/* Messages Display */}
+            {messages.length > 0 && (
+              <div className="ai-messages">
+                {messages.map(msg => (
+                  <div key={msg.id} className={`ai-message ${msg.role}`}>
+                    <div className="message-content">
+                      {msg.text}
+                    </div>
+                  </div>
+                ))}
+                {isLoading && (
+                  <div className="ai-message assistant">
+                    <div className="message-content">
+                      <Loader2 size={16} className="spin" /> Thinking...
+                    </div>
+                  </div>
+                )}
+                <div ref={messagesEndRef} />
+              </div>
+            )}
+
             <form onSubmit={handleSearch} className="ai-search-form">
               <div className="ai-input-group">
                 <input
@@ -194,21 +368,23 @@ const FloatingAIWidget = ({ variant = "floating" }) => {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Ask me anything..."
                   className="ai-search-input"
+                  disabled={isLoading}
                 />
                 <button
                   type="button"
                   onClick={toggleVoice}
                   className={`ai-voice-btn ${isListening ? 'listening' : ''}`}
                   aria-label={isListening ? "Stop listening" : "Start voice input"}
+                  disabled={isLoading}
                 >
                   {isListening ? <MicOff size={16} /> : <Mic size={16} />}
                 </button>
                 <button
                   type="submit"
                   className="ai-submit-btn"
-                  disabled={!searchQuery.trim()}
+                  disabled={!searchQuery.trim() || isLoading}
                 >
-                  <Send size={16} />
+                  {isLoading ? <Loader2 size={16} className="spin" /> : <Send size={16} />}
                 </button>
               </div>
               {isListening && (
@@ -218,20 +394,22 @@ const FloatingAIWidget = ({ variant = "floating" }) => {
               )}
             </form>
 
-            <div className="ai-quick-actions">
-              <button onClick={() => { navigate("/recovery"); setIsOpen(false); }}>
-                🧠 Recovery Support
-              </button>
-              <button onClick={() => { navigate("/check-in"); setIsOpen(false); }}>
-                ✅ Daily Check-in
-              </button>
-              <button onClick={() => { navigate("/providers/directory"); setIsOpen(false); }}>
-                👥 Find Provider
-              </button>
-              <button onClick={() => { navigate("/assistance"); setIsOpen(false); }}>
-                🏛️ Get Assistance
-              </button>
-            </div>
+            {messages.length === 0 && (
+              <div className="ai-quick-actions">
+                <button onClick={() => { navigate("/recovery"); setIsOpen(false); }}>
+                  🧠 Recovery Support
+                </button>
+                <button onClick={() => { navigate("/yoga"); setIsOpen(false); }}>
+                  🧘 Yoga & Meditation
+                </button>
+                <button onClick={() => { navigate("/check-in"); setIsOpen(false); }}>
+                  ✅ Daily Check-in
+                </button>
+                <button onClick={() => { navigate("/assistance"); setIsOpen(false); }}>
+                  🏛️ Get Assistance
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}

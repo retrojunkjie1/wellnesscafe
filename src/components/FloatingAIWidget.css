@@ -271,6 +271,92 @@
   font-weight: 500;
 }
 
+/* Messages Display */
+.ai-messages {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(212, 180, 131, 0.5) transparent;
+}
+
+.ai-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ai-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ai-messages::-webkit-scrollbar-thumb {
+  background: rgba(212, 180, 131, 0.5);
+  border-radius: 3px;
+}
+
+.ai-message {
+  margin-bottom: 1rem;
+  display: flex;
+  animation: messageSlideIn 0.3s ease;
+}
+
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ai-message.user {
+  justify-content: flex-end;
+}
+
+.ai-message.assistant {
+  justify-content: flex-start;
+}
+
+.ai-message .message-content {
+  max-width: 80%;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.ai-message.user .message-content {
+  background: linear-gradient(135deg, #d4b483, #cbb4ff);
+  color: #0a0e27;
+  border-bottom-right-radius: 4px;
+}
+
+.ai-message.assistant .message-content {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.95);
+  border-bottom-left-radius: 4px;
+  border: 1px solid rgba(212, 180, 131, 0.2);
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .ai-quick-actions {
   display: flex;
   flex-direction: column;
@@ -297,20 +383,69 @@
 }
 
 @media (max-width: 768px) {
-  .floating-ai-panel,
-  .ai-modal-panel {
-    right: 1rem;
-    bottom: 5.5rem;
-    width: calc(100% - 2rem);
-    max-width: 340px;
+  .floating-ai-panel {
+    right: 0.5rem;
+    bottom: 5rem;
+    width: calc(100vw - 1rem);
+    max-width: 360px;
+    max-height: 60vh;
   }
   
   .floating-ai-button {
-    bottom: 1.5rem;
-    right: 1.5rem;
+    bottom: 1rem;
+    right: 1rem;
+    width: 50px;
+    height: 50px;
+    font-size: 1.3rem;
   }
   
   .ai-modal-panel {
-    top: 70px;
+    top: auto;
+    bottom: 5rem;
+    right: 0.5rem;
+    left: 0.5rem;
+    width: auto;
+    max-width: none;
+    max-height: 60vh;
+  }
+  
+  .ai-messages {
+    max-height: 200px;
+  }
+  
+  .ai-body {
+    padding: 1rem;
+  }
+  
+  .ai-header {
+    padding: 1rem;
+  }
+  
+  .ai-header h3 {
+    font-size: 1rem;
+  }
+
+  /* Ensure panel doesn't overlap with footer/radio player */
+  .floating-ai-panel,
+  .ai-modal-panel {
+    margin-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .ai-modal-panel,
+  .floating-ai-panel {
+    bottom: 4.5rem;
+  }
+  
+  .ai-messages {
+    max-height: 150px;
+  }
+  
+  .ai-message .message-content {
+    max-width: 85%;
+    font-size: 0.85rem;
+    padding: 0.6rem 0.8rem;
   }
 }
