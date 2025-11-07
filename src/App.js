@@ -4,6 +4,7 @@ import { ThemeProvider } from "./utils/ThemeContext";
 import { AuthProvider } from "./AuthContext";
 import Navbar from "./components/Navbar";
 import NavigationButtons from "./components/NavigationButtons";
+import FloatingAIWidget from "./components/FloatingAIWidget";
 import ProtectedRoute from "./components/ProtectedRoute";
 import HomePage from "./Views/HomePage";
 import Signup from "./features/auth/Signup";
@@ -52,6 +53,7 @@ function App() {
         <Router>
           <Navbar />
           <NavigationButtons />
+          <FloatingAIWidget />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/signup" element={<Signup />} />
