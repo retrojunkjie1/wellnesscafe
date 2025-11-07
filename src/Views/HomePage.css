@@ -6,6 +6,8 @@
   padding: 0;
   overflow-x: hidden;
   box-sizing: border-box;
+  position: relative;
+  z-index: 1;
 }
 
 /* Luxury Hero Section */
@@ -118,7 +120,8 @@
   padding: 5rem 8%;
   background: transparent; /* reveal global Aspen-6 background */
   position: relative;
-  z-index: 2; /* bring icons and cards above any hero overlays */
+  z-index: 10; /* bring icons and cards above any hero overlays */
+  min-height: 400px;
 }
 
 /* styles for feature cards are defined later (scoped and global) */
