@@ -3,6 +3,15 @@
 // ============================================
 // Comprehensive database of federal, state, and wellness resources
 // Easily maintainable and ready for Firestore migration
+//
+// FIRESTORE MIGRATION READY:
+// Collection: /assistancePrograms
+// Document structure: {id, title, category, description, eligibility, links, type, priority, stateSpecific, createdAt, updatedAt}
+//
+// Future enhancements:
+// - User favorites: /users/{userId}/favorites (array of program IDs)
+// - Application tracking: /users/{userId}/applications (status, documents, timeline)
+// - State-specific variants: stateSpecific object with state overrides
 
 export const assistancePrograms = [
   // ========== FOOD SECURITY ==========
@@ -48,7 +57,12 @@ export const assistancePrograms = [
       locator: "https://www.fns.usda.gov/wic/wic-state-agency-contacts"
     },
     type: "federal",
-    priority: 2
+    priority: 2,
+    stateSpecific: {
+      CA: { phone: "1-888-942-9675", website: "https://www.cdph.ca.gov/Programs/CFH/DWICSN/Pages/Program-Landing1.aspx" },
+      TX: { phone: "1-800-942-3678", website: "https://www.dshs.texas.gov/wic" },
+      NY: { phone: "1-800-522-5006", website: "https://www.health.ny.gov/prevention/nutrition/wic/" }
+    }
   },
 
   // ========== HEALTHCARE ==========
@@ -72,7 +86,33 @@ export const assistancePrograms = [
       findState: "https://www.medicaid.gov/state-overviews/"
     },
     type: "federal",
-    priority: 1
+    priority: 1,
+    stateSpecific: {
+      CA: {
+        name: "Medi-Cal",
+        website: "https://www.dhcs.ca.gov/services/medi-cal",
+        phone: "1-800-541-5555",
+        notes: "California's Medicaid program with expanded coverage"
+      },
+      TX: {
+        name: "Texas Medicaid",
+        website: "https://www.hhs.texas.gov/services/health/medicaid-chip",
+        phone: "1-800-252-8263",
+        notes: "Did not expand under ACA - stricter eligibility"
+      },
+      NY: {
+        name: "New York Medicaid",
+        website: "https://www.health.ny.gov/health_care/medicaid/",
+        phone: "1-800-541-2831",
+        notes: "Expanded Medicaid with comprehensive benefits"
+      },
+      FL: {
+        name: "Florida Medicaid",
+        website: "https://www.myflfamilies.com/service-programs/access/medicaid",
+        phone: "1-866-762-2237",
+        notes: "Did not expand - limited adult eligibility"
+      }
+    }
   },
   {
     id: "medicare",
