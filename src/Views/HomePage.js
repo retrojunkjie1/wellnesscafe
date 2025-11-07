@@ -158,7 +158,9 @@ const HomePage = () => {
           Experience a smarter, more mindful way to relax, recover, and
           reconnect.
         </p>
-        <button className="cta-button">Explore WellnessCafe</button>
+        <Link to="/signup">
+          <button className="cta-button">Start Your Journey Free</button>
+        </Link>
       </section>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./TopFold.css";
 import heroPanorama from "../assets/images/Aspen-6.png";
@@ -6,14 +6,28 @@ import heroPanorama from "../assets/images/Aspen-6.png";
 const TopFold = () => {
   const navigate = useNavigate();
   const [navActive, setNavActive] = useState(false);
+  const [showNav, setShowNav] = useState(true);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setNavActive(true);
-      } else {
-        setNavActive(false);
+      const currentY = window.scrollY;
+      const scrollingDown = currentY > lastScrollY.current;
+      const nearTop = currentY < 50;
+
+      // active style when scrolled past threshold
+      setNavActive(currentY > 50);
+
+      // hide on scroll down, show on scroll up or when near top
+      if (nearTop) {
+        setShowNav(true);
+      } else if (scrollingDown && currentY > 120) {
+        setShowNav(false);
+      } else if (!scrollingDown) {
+        setShowNav(true);
       }
+
+      lastScrollY.current = currentY;
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -30,7 +44,7 @@ const TopFold = () => {
         />
       </div>
 
-      <nav className={`topfold-navbar ${navActive ? "active" : ""}`}>
+  <nav className={`topfold-navbar ${navActive ? "active" : ""} ${showNav ? "" : "hidden"}`}>
         <div className="nav-logo">WELLNESSCAFE</div>
         <ul className="nav-links">
           <li>
@@ -55,7 +69,7 @@ const TopFold = () => {
         <div className="nav-buttons">
           <button
             className="nav-btn sign-in"
-            onClick={() => navigate("/signin")}
+            onClick={() => navigate("/login")}
           >
             Sign In
           </button>

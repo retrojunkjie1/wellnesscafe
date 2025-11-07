@@ -18,13 +18,20 @@
   padding: 0 clamp(1rem, 5vw, 2rem);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   z-index: 1001;
-  transition: background 0.4s ease, box-shadow 0.4s ease;
+  transition: background 0.4s ease, box-shadow 0.4s ease, transform 0.3s ease, opacity 0.3s ease;
   box-sizing: border-box;
 }
 
 .topfold-navbar.active {
   background: rgba(10, 10, 15, 0.95);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+/* Hide on scroll down */
+.topfold-navbar.hidden{
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
 }
 
 .nav-logo {
