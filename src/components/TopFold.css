@@ -211,6 +211,14 @@
   transform: scale(1.05);
 }
 
+/* Optional overlay over the background image for extra clarity */
+.hero-overlay{
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.5) 100%);
+  pointer-events: none;
+}
+
 .topfold-content {
   position: relative;
   text-align: center;
@@ -220,6 +228,15 @@
   margin: 4rem auto 0;
   width: 100%;
   box-sizing: border-box;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 500ms ease, transform 500ms ease;
+}
+
+/* Visible state for entrance animation */
+.topfold-content.visible{
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Glass title box for improved readability */
@@ -264,6 +281,14 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 900;
+}
+
+/* Reusable gradient text utility */
+.gradient-text{
+  background: linear-gradient(135deg, #ffffff 0%, #7a5af8 40%, #b19cff 70%, #ffffff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .topfold-sub {
@@ -431,6 +456,32 @@
   background: linear-gradient(135deg, #ffffff 0%, #7a5af8 5%, #ffffff 100%);
 }
 
+/* Pulse accent and arrow nudge */
+.pulse-btn{
+  position: relative;
+}
+.pulse-btn::after{
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 999px;
+  background: radial-gradient(closest-side, rgba(255,255,255,0.25), rgba(255,255,255,0));
+  animation: pulseGlow 2.2s ease-in-out infinite;
+  pointer-events: none;
+}
+.btn-arrow{
+  margin-left: 0.5rem;
+  display: inline-block;
+  transition: transform 0.25s ease;
+}
+.pulse-btn:hover .btn-arrow{transform: translateX(4px);}
+
+@keyframes pulseGlow{
+  0%{opacity: 0.3}
+  50%{opacity: 0.7}
+  100%{opacity: 0.3}
+}
+
 /* Add missing keyframes */
 @keyframes starfield {
   0%,
@@ -495,19 +546,58 @@
     justify-content: space-between;
   }
 
-  .nav-links {
-    display: none;
-  }
+  .nav-links {display: none;}
 
   .nav-logo {
     font-size: 1.2rem;
     font-weight: 800;
   }
 
-  .nav-buttons {
-    display: flex;
-    gap: 0.8rem;
+  .nav-buttons {display: none;}
+
+  /* Hamburger button */
+  .mobile-menu-toggle{
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
   }
+  .mobile-menu-toggle span{
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: #fff;
+    margin: 0 auto;
+  }
+
+  /* Slide-down mobile nav */
+  .nav-links.mobile-open{
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem 1.25rem 1.25rem;
+    background: rgba(10,10,15,0.96);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    z-index: 1000;
+  }
+  .nav-links.mobile-open li button{
+    width: 100%;
+    text-align: left;
+  }
+  .nav-links.mobile-open + .nav-buttons{display: none;}
 
   .nav-btn {
     padding: 0.6rem 1.2rem;
@@ -622,6 +712,9 @@
   .topfold-stats .stat-number {
     font-size: 1.5rem;
   }
+
+  /* Trust badges on mobile */
+  .trust-badges{gap: 0.5rem;}
 }
 
 /* Very Small Screens */
@@ -680,3 +773,56 @@
     box-sizing: border-box;
   }
 }
+
+/* Trust badges */
+.trust-badges{
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+.trust-badges .badge{
+  background: rgba(255,255,255,0.08);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 0.5rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: #fff;
+}
+
+/* Scroll indicator */
+.scroll-indicator{
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  opacity: 0.9;
+  z-index: 6;
+}
+.scroll-indicator .mouse{
+  width: 22px;
+  height: 36px;
+  border: 2px solid rgba(255,255,255,0.8);
+  border-radius: 12px;
+  position: relative;
+}
+.scroll-indicator .wheel{
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  width: 3px;
+  height: 6px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 4px;
+  transform: translateX(-50%);
+  animation: wheel 1.6s ease-in-out infinite;
+}
+@keyframes wheel{0%{opacity: 0; transform: translate(-50%,0)} 40%{opacity: 1;} 100%{opacity: 0; transform: translate(-50%,8px)}}

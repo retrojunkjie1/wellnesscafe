@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./TopFold.css";
 import heroPanorama from "../assets/images/Aspen-6.png";
@@ -6,32 +6,46 @@ import heroPanorama from "../assets/images/Aspen-6.png";
 const TopFold = () => {
   const navigate = useNavigate();
   const [navActive, setNavActive] = useState(false);
-  const [showNav, setShowNav] = useState(true);
-  const lastScrollY = useRef(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
+    // Trigger entrance animations
+    setTimeout(() => setIsVisible(true), 100);
+
     const handleScroll = () => {
-      const currentY = window.scrollY;
-      const scrollingDown = currentY > lastScrollY.current;
-      const nearTop = currentY < 50;
-
-      // active style when scrolled past threshold
-      setNavActive(currentY > 50);
-
-      // hide on scroll down, show on scroll up or when near top
-      if (nearTop) {
-        setShowNav(true);
-      } else if (scrollingDown && currentY > 120) {
-        setShowNav(false);
-      } else if (!scrollingDown) {
-        setShowNav(true);
-      }
-
-      lastScrollY.current = currentY;
+      setNavActive(window.scrollY > 50);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Animated counter for stats
+  const AnimatedCounter = ({ end, duration = 2000, suffix = "" }) => {
+    const [count, setCount] = useState(0);
+
+    useEffect(() => {
+      let startTime;
+      const animate = (timestamp) => {
+        if (!startTime) startTime = timestamp;
+        const progress = timestamp - startTime;
+        const percentage = Math.min(progress / duration, 1);
+        const easeOutQuart = 1 - Math.pow(1 - percentage, 4);
+        setCount(Math.floor(end * easeOutQuart));
+        if (percentage < 1) {
+          requestAnimationFrame(animate);
+        }
+      };
+      requestAnimationFrame(animate);
+    }, [end, duration]);
+
+    return (
+      <span>
+        {count}
+        {suffix}
+      </span>
+    );
+  };
 
   return (
     <section className="topfold-container">
@@ -42,11 +56,27 @@ const TopFold = () => {
           alt="WellnessCafe Hero Panorama"
           className="hero-panorama-image"
         />
+        <div className="hero-overlay"></div>
       </div>
 
-  <nav className={`topfold-navbar ${navActive ? "active" : ""} ${showNav ? "" : "hidden"}`}>
-        <div className="nav-logo">WELLNESSCAFE</div>
-        <ul className="nav-links">
+  {/* Navigation - Hide when scrolling to avoid duplicate with Navbar */}
+      <nav className={`topfold-navbar ${navActive ? "hidden" : ""}`}>
+        <div className="nav-logo">
+          <span className="logo-icon">🌿</span>
+          WELLNESSCAFE
+        </div>
+
+        <button
+          className="mobile-menu-toggle"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <ul className={`nav-links ${mobileMenuOpen ? "mobile-open" : ""}`}>
           <li>
             <button onClick={() => navigate("/")}>Home</button>
           </li>
@@ -67,26 +97,21 @@ const TopFold = () => {
           </li>
         </ul>
         <div className="nav-buttons">
-          <button
-            className="nav-btn sign-in"
-            onClick={() => navigate("/login")}
-          >
+          <button className="nav-btn sign-in" onClick={() => navigate("/login")}>
             Sign In
           </button>
-          <button
-            className="nav-btn download"
-            onClick={() => navigate("/product")}
-          >
-            Explore
+          <button className="nav-btn download" onClick={() => navigate("/signup")}>
+            Get Started
           </button>
         </div>
       </nav>
 
-      <div className="topfold-content">
+      {/* Hero Content with Animations */}
+      <div className={`topfold-content ${isVisible ? "visible" : ""}`}>
         <div className="topfold-titlebox">
           <h1 className="topfold-title">
             WellnessCafe —{" "}
-            <span className="highlight">Clarity. Balance. Precision.</span>
+            <span className="highlight gradient-text">Clarity. Balance. Precision.</span>
           </h1>
           <p className="topfold-sub">
             Discover calm intelligence through design, ritual, and mindful
@@ -95,54 +120,61 @@ const TopFold = () => {
           </p>
         </div>
         <div className="topfold-features">
-          <button
-            className="feature-item"
-            onClick={() => navigate("/recovery")}
-          >
-            <span className="feature-icon wellness-icon wellness-icon-sm wellness-icon-card">
-              🧠
-            </span>
-            <span>AI-Powered Recovery Support</span>
-          </button>
-          <button className="feature-item" onClick={() => navigate("/yoga")}>
-            <span className="feature-icon wellness-icon wellness-icon-sm wellness-icon-card">
-              🧘
-            </span>
-            <span>Guided Mindfulness & Yoga</span>
-          </button>
-          <button
-            className="feature-item"
-            onClick={() => navigate("/acuwellness")}
-          >
-            <span className="feature-icon wellness-icon wellness-icon-sm wellness-icon-card">
-              🌿
-            </span>
-            <span>Acuwellness Integration</span>
-          </button>
-          <button className="feature-item" onClick={() => navigate("/events")}>
-            <span className="feature-icon wellness-icon wellness-icon-sm wellness-icon-card">
-              👥
-            </span>
-            <span>Community Events & Support</span>
-          </button>
+          {[
+            { icon: "🧠", label: "AI-Powered Recovery", path: "/recovery" },
+            { icon: "🧘", label: "Guided Mindfulness", path: "/yoga" },
+            { icon: "🌿", label: "Acuwellness", path: "/acuwellness" },
+            { icon: "👥", label: "Community Support", path: "/events" }
+          ].map((feature, idx) => (
+            <button
+              key={idx}
+              className="feature-item"
+              onClick={() => navigate(feature.path)}
+            >
+              <span className="feature-icon wellness-icon">{feature.icon}</span>
+              <span>{feature.label}</span>
+            </button>
+          ))}
         </div>
         <div className="topfold-stats">
           <div className="stat-item">
-            <span className="stat-number">10K+</span>
+            <span className="stat-number">
+              <AnimatedCounter end={10} suffix="K+" />
+            </span>
             <span className="stat-label">Active Members</span>
           </div>
           <div className="stat-item">
-            <span className="stat-number">500+</span>
+            <span className="stat-number">
+              <AnimatedCounter end={500} suffix="+" />
+            </span>
             <span className="stat-label">Weekly Sessions</span>
           </div>
           <div className="stat-item">
-            <span className="stat-number">95%</span>
+            <span className="stat-number">
+              <AnimatedCounter end={95} suffix="%" />
+            </span>
             <span className="stat-label">Success Rate</span>
           </div>
         </div>
-        <button className="topfold-btn" onClick={() => navigate("/product")}>
-          Start Your Journey
+        <button className="topfold-btn pulse-btn" onClick={() => navigate("/signup")}>
+          <span>Start Your Journey</span>
+          <span className="btn-arrow">→</span>
         </button>
+
+        {/* Trust Badges */}
+        <div className="trust-badges">
+          <span className="badge">🔒 HIPAA Compliant</span>
+          <span className="badge">✓ Verified Providers</span>
+          <span className="badge">🌟 5-Star Rated</span>
+        </div>
+      </div>
+
+      {/* Scroll Indicator */}
+      <div className="scroll-indicator">
+        <div className="mouse">
+          <div className="wheel"></div>
+        </div>
+        <span>Scroll to explore</span>
       </div>
     </section>
   );
