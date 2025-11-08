@@ -832,3 +832,33 @@
 a {
   transition: all 0.3s ease;
 }
+
+/* Clickable Tool Cards */
+.tool-card.active-tool {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
+.tool-card.active-tool:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(76, 175, 80, 0.25);
+  border-color: #4caf50;
+}
+
+.tool-cta {
+  margin-top: auto;
+  padding-top: 16px;
+  color: #4caf50;
+  font-weight: 700;
+  font-size: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.tool-card.active-tool:hover .tool-cta {
+  color: #2e7d32;
+  transform: translateX(4px);
+}

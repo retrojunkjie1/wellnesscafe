@@ -28,6 +28,8 @@ import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import ProductPage from "./Views/ProductPage";
 import ToolsPage from "./Views/ToolsPage";
+import BreathingToolPage from "./Views/tools/BreathingToolPage";
+import MeditationTimerPage from "./Views/tools/MeditationTimerPage";
 import BlogPage from "./Views/BlogPage";
 import PrivacyPage from "./Views/PrivacyPage";
 import TraumaEducationPage from "./Views/TraumaEducationPage";
@@ -142,6 +144,8 @@ function App() {
               }
             />
             <Route path="/tools" element={<ToolsPage />} />
+            <Route path="/tools/breathing" element={<BreathingToolPage />} />
+            <Route path="/tools/meditation" element={<MeditationTimerPage />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/trauma-education" element={<TraumaEducationPage />} />
             <Route path="/about" element={<AboutPage />} />

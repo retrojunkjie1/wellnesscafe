@@ -207,7 +207,7 @@ const BreathingTool=({defaultInhale=4,defaultHold=4,defaultExhale=6,defaultCycle
       });
     },1000);
     return ()=>{if(tickRef.current){clearInterval(tickRef.current);tickRef.current=null;}};
-  },[running,phase]);
+  },[running,phase,nextPhase]);
 
   // Auto-save when finished
   useEffect(()=> {
@@ -246,7 +246,7 @@ const BreathingTool=({defaultInhale=4,defaultHold=4,defaultExhale=6,defaultCycle
       }
     };
     doSave();
-  },[running,phase,startedAt,endedAt]);
+  },[running,phase,startedAt,endedAt,auth.currentUser?.uid,currentCycle,db,exhale,hold,inhale,moodAfter,moodBefore,voiceEnabled]);
 
   const canStart=useMemo(()=>!running&&phase===Phase.Idle,[running,phase]);
   const canPause=useMemo(()=>running&&phase!==Phase.Idle,[running,phase]);

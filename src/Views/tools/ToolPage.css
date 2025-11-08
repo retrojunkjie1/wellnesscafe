@@ -1,0 +1,442 @@
+/* ToolPage.css - Shared styles for individual tool pages */
+
+.tool-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+  padding: 20px;
+}
+
+.tool-page-header {
+  max-width: 1200px;
+  margin: 0 auto 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.back-link:hover {
+  color: #764ba2;
+  transform: translateX(-4px);
+}
+
+.tool-badge {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.free-badge {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+.premium-badge {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  color: #78350f;
+}
+
+.tool-page-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tool-intro {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.tool-intro h1 {
+  font-size: 3rem;
+  color: #2c3e50;
+  margin: 0 0 16px 0;
+  font-weight: 700;
+}
+
+.tool-description {
+  font-size: 1.25rem;
+  color: #6c757d;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto 32px;
+}
+
+.tool-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  max-width: 800px;
+  margin: 32px auto;
+  padding: 32px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.stat-item {
+  text-align: center;
+  padding: 16px;
+}
+
+.stat-value {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #667eea;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.9rem;
+  color: #6c757d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  margin: 40px 0;
+}
+
+.benefit-item {
+  text-align: center;
+  padding: 28px 20px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.benefit-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.15);
+}
+
+.benefit-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.benefit-item h3 {
+  font-size: 1.2rem;
+  color: #2c3e50;
+  margin: 0 0 8px 0;
+  font-weight: 600;
+}
+
+.benefit-item p {
+  color: #6c757d;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.tool-container {
+  background: white;
+  border-radius: 24px;
+  padding: 48px 32px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  margin: 48px 0;
+}
+
+.tool-education {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 24px;
+  padding: 48px 32px;
+  margin: 48px 0;
+}
+
+.tool-education h2 {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin: 0 0 24px 0;
+  text-align: center;
+  font-weight: 700;
+}
+
+.education-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.education-content p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #495057;
+  margin-bottom: 24px;
+}
+
+.education-content h3 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin: 32px 0 16px 0;
+  font-weight: 600;
+}
+
+.education-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+}
+
+.education-content ul li {
+  padding: 12px 0;
+  padding-left: 32px;
+  position: relative;
+  color: #495057;
+  line-height: 1.6;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.education-content ul li:last-child {
+  border-bottom: none;
+}
+
+.education-content ul li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #10b981;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.usage-scenarios {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.scenario {
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  border-left: 4px solid #667eea;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.scenario strong {
+  display: block;
+  color: #2c3e50;
+  margin-bottom: 8px;
+  font-size: 1.05rem;
+}
+
+.upgrade-section {
+  background: linear-gradient(135deg, #fff9e6 0%, #ffe8b3 100%);
+  border-radius: 24px;
+  padding: 48px 32px;
+  margin: 48px 0;
+  text-align: center;
+  border: 2px solid #fbbf24;
+}
+
+.upgrade-section h2 {
+  font-size: 2rem;
+  color: #78350f;
+  margin: 0 0 16px 0;
+  font-weight: 700;
+}
+
+.upgrade-section > p {
+  font-size: 1.15rem;
+  color: #92400e;
+  margin-bottom: 24px;
+}
+
+.premium-features {
+  list-style: none;
+  padding: 0;
+  margin: 24px auto;
+  max-width: 600px;
+  text-align: left;
+}
+
+.premium-features li {
+  padding: 12px 0;
+  font-size: 1.05rem;
+  color: #92400e;
+  border-bottom: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.premium-features li:last-child {
+  border-bottom: none;
+}
+
+.upgrade-btn {
+  margin-top: 24px;
+  padding: 16px 40px;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  color: #78350f;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 16px rgba(251, 191, 36, 0.3);
+}
+
+.upgrade-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(251, 191, 36, 0.4);
+}
+
+.related-tools {
+  margin: 64px 0 48px;
+}
+
+.related-tools h2 {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin: 0 0 32px 0;
+  text-align: center;
+  font-weight: 700;
+}
+
+.related-tools .tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.related-tools .tool-card {
+  background: white;
+  border-radius: 20px;
+  padding: 32px 24px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border: 2px solid transparent;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.related-tools .tool-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(102, 126, 234, 0.2);
+  border-color: #667eea;
+}
+
+.related-tools .tool-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.related-tools .tool-card h3 {
+  font-size: 1.4rem;
+  color: #2c3e50;
+  margin: 0 0 12px 0;
+  font-weight: 600;
+}
+
+.related-tools .tool-card p {
+  color: #6c757d;
+  line-height: 1.6;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.related-tools .badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.related-tools .badge {
+  background: #10b981;
+  color: white;
+}
+
+.related-tools .tool-card:has(.badge:contains("Coming Soon")) .badge {
+  background: #6c757d;
+  color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .tool-intro h1 {
+    font-size: 2rem;
+  }
+
+  .tool-description {
+    font-size: 1.1rem;
+  }
+
+  .tool-stats {
+    grid-template-columns: 1fr;
+    padding: 24px;
+  }
+
+  .benefits-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tool-container {
+    padding: 32px 20px;
+  }
+
+  .tool-education {
+    padding: 32px 20px;
+  }
+
+  .usage-scenarios {
+    grid-template-columns: 1fr;
+  }
+
+  .upgrade-section {
+    padding: 32px 20px;
+  }
+
+  .related-tools .tools-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .tool-page {
+    padding: 16px;
+  }
+
+  .tool-intro h1 {
+    font-size: 1.75rem;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+  }
+
+  .benefit-icon,
+  .related-tools .tool-icon {
+    font-size: 2.5rem;
+  }
+}

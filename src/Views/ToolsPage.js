@@ -90,7 +90,17 @@ const ToolsPage = () => {
       icon: '🌬️',
       status: 'active',
       description: 'Voice-guided breathing exercises with mood tracking',
-      features: ['Voice guidance', 'Mood tracking', 'Progress analytics', 'Multiple patterns']
+      features: ['Voice guidance', 'Mood tracking', 'Progress analytics', 'Multiple patterns'],
+      link: '/tools/breathing'
+    },
+    {
+      id: 'meditation',
+      name: 'Meditation Timer',
+      icon: '🧘',
+      status: 'active',
+      description: 'Silent meditation with ambient sounds and interval bells',
+      features: ['6 ambient sounds', 'Customizable durations', 'Interval bells', 'Progress tracking'],
+      link: '/tools/meditation'
     }
   ];
 
@@ -288,7 +298,7 @@ const ToolsPage = () => {
           
           <div className="tools-grid">
             {availableTools.map((tool) => (
-              <div key={tool.id} className="tool-card active-tool">
+              <Link key={tool.id} to={tool.link} className="tool-card active-tool">
                 <div className="tool-icon">{tool.icon}</div>
                 <div className="tool-status-badge">Active</div>
                 <h3>{tool.name}</h3>
@@ -298,7 +308,8 @@ const ToolsPage = () => {
                     <li key={i}>✓ {feature}</li>
                   ))}
                 </ul>
-              </div>
+                <div className="tool-cta">Try Now →</div>
+              </Link>
             ))}
 
             {comingSoonTools.map((tool) => (

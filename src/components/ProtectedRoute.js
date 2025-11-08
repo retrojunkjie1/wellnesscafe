@@ -26,37 +26,98 @@ const ProtectedRoute = ({ children, roles, requireVerified }) => {
   // Optional email verification gate
   if (requireVerified && !user?.emailVerified) {
     const onResend = async () => {
+      setResendMsg("Sending...");
       try {
         if (auth?.currentUser) {
           await sendEmailVerification(auth.currentUser);
-          setResendMsg("Verification email sent. Please check your inbox.");
+          setResendMsg("Verification email sent successfully! Please check your inbox and spam folder.");
+        } else {
+          setResendMsg("No user session found. Please log in again.");
         }
       } catch (e) {
-        // eslint-disable-next-line no-console
-        console.warn("resend verification failed", e);
-        setResendMsg("Could not send verification email. Try again later.");
+        console.error("Email verification failed:", e);
+        let errorMessage = "Could not send verification email.";
+        if (e.code === 'auth/too-many-requests') {
+          errorMessage = "Too many requests. Please wait a few minutes before trying again.";
+        } else if (e.code === 'auth/user-token-expired') {
+          errorMessage = "Your session has expired. Please log in again.";
+        } else if (e.code === 'auth/invalid-user-token') {
+          errorMessage = "Invalid session. Please log in again.";
+        } else if (e.message) {
+          errorMessage = `Error: ${e.message}`;
+        }
+        setResendMsg(errorMessage);
       }
     };
     return (
       <div className="container max-w-[720px] mx-auto my-12 px-4">
-        <h2>Please verify your email</h2>
-        <p>
-          We sent a verification link to <strong>{user?.email}</strong>. Verify
-          your email to continue.
-        </p>
-        <div style={{ display: "flex", gap: "0.75rem", marginTop: "0.75rem" }}>
-          <button type="button" className="btn" onClick={onResend}>
-            Resend verification
-          </button>
-          <button
-            type="button"
-            className="ghost-btn"
-            onClick={() => window.location.reload()}
-          >
-            I verified — Refresh
-          </button>
+        <div className="text-center">
+          <div className="mb-6">
+            <div className="text-6xl mb-4">📧</div>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-2">Check Your Email</h2>
+            <p className="text-gray-600 mb-4">
+              We've sent a verification link to <strong className="text-blue-600">{user?.email}</strong>
+            </p>
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+              <p className="text-sm text-blue-800">
+                <strong>Next steps:</strong>
+              </p>
+              <ol className="text-sm text-blue-700 mt-2 text-left list-decimal list-inside space-y-1">
+                <li>Open your email inbox</li>
+                <li>Look for an email from WellnessCafe</li>
+                <li>Click the "Verify Email" link</li>
+                <li>Return here and click "I've verified - Continue"</li>
+              </ol>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <div className="flex gap-3 justify-center">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={onResend}
+                disabled={resendMsg === "Sending..."}
+              >
+                {resendMsg === "Sending..." ? "Sending..." : "Resend Verification Email"}
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={() => window.location.reload()}
+              >
+                I've Verified - Continue
+              </button>
+            </div>
+
+            {resendMsg && (
+              <div className={`text-sm p-3 rounded-lg ${
+                resendMsg.includes("sent") ? "bg-green-50 text-green-700 border border-green-200" : "bg-red-50 text-red-700 border border-red-200"
+              }`}>
+                {resendMsg}
+              </div>
+            )}
+
+            <div className="text-xs text-gray-500 mt-4">
+              <p>Didn't receive the email? Check your spam folder or try resending.</p>
+              <p className="mt-1">
+                Still having issues?
+                <a href="mailto:support@wellnesscafe.com?subject=Email Verification Issue&body=I'm having trouble receiving my email verification. My email is: [your-email-here]" className="text-blue-600 hover:underline ml-1">
+                  Contact support
+                </a>
+              </p>
+              <details className="mt-2">
+                <summary className="cursor-pointer text-blue-600 hover:underline text-xs">Troubleshooting tips</summary>
+                <ul className="mt-1 ml-4 text-xs text-gray-600 list-disc">
+                  <li>Make sure the email address is correct</li>
+                  <li>Check all email folders (inbox, spam, junk, promotions)</li>
+                  <li>Try refreshing this page after clicking the verification link</li>
+                  <li>The verification link expires after 24 hours</li>
+                </ul>
+              </details>
+            </div>
+          </div>
         </div>
-        {resendMsg && <p className="text-gray-600 mt-2">{resendMsg}</p>}
       </div>
     );
   }
