@@ -1,0 +1,482 @@
+/* BreathingTool.css */
+.breathing-tool {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.breathing-tool-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.breathing-tool-header h2 {
+  color: #2c3e50;
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.breathing-tool-header p {
+  color: #6c757d;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.breathing-config-section {
+  background: #f8f9fa;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  border: 1px solid #e9ecef;
+}
+
+.breathing-config-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.config-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.config-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.config-input {
+  padding: 12px 16px;
+  border: 2px solid #dee2e6;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.config-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.config-input:hover {
+  border-color: #adb5bd;
+}
+
+.mood-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  color: white;
+}
+
+.mood-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.mood-input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.mood-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  opacity: 0.9;
+}
+
+.mood-slider-container {
+  position: relative;
+}
+
+.mood-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  outline: none;
+  cursor: pointer;
+}
+
+.mood-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.mood-slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.mood-value {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 8px;
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  min-width: 40px;
+  display: inline-block;
+}
+
+.breathing-visualization {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 32px 0;
+  min-height: 400px;
+}
+
+.breathing-circle-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.breathing-circle {
+  transition: r 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  fill: #e8f5e9;
+  stroke: #4caf50;
+  stroke-width: 2;
+}
+
+.breathing-circle-bg {
+  fill: #f5f5f5;
+  stroke: #e0e0e0;
+  stroke-width: 1;
+}
+
+.breathing-text {
+  text-anchor: middle;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.phase-text {
+  font-size: 24px;
+  font-weight: 600;
+  fill: #2c3e50;
+}
+
+.timer-text {
+  font-size: 18px;
+  font-weight: 500;
+  fill: #495057;
+  dy: 30;
+}
+
+.cycle-text {
+  font-size: 14px;
+  fill: #6c757d;
+  dy: 55;
+}
+
+.breathing-controls {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin: 24px 0;
+  flex-wrap: wrap;
+}
+
+.breathing-btn {
+  padding: 14px 28px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 120px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.breathing-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.breathing-btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+  color: white;
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+  color: white;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid #dee2e6;
+  color: #495057;
+}
+
+.btn-outline:hover {
+  background: #495057;
+  color: white;
+}
+
+.session-info {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  border-left: 4px solid #007bff;
+}
+
+.session-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 12px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: #6c757d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.voice-notice {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 16px 0;
+  color: #856404;
+  font-size: 0.9rem;
+}
+
+.voice-notice strong {
+  color: #533f00;
+}
+
+.recommendation-card {
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  border: 1px solid #4caf50;
+  border-radius: 16px;
+  padding: 24px;
+  margin: 24px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.recommendation-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #4caf50, #66bb6a, #81c784);
+}
+
+.recommendation-header {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2e7d32;
+  margin-bottom: 12px;
+}
+
+.recommendation-summary {
+  color: #388e3c;
+  font-weight: 500;
+  margin-bottom: 16px;
+  font-size: 1rem;
+}
+
+.recommendation-tips {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.recommendation-tips li {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(76, 175, 80, 0.2);
+  color: #2e7d32;
+}
+
+.recommendation-tips li:last-child {
+  border-bottom: none;
+}
+
+.recommendation-tips li::before {
+  content: '💡';
+  margin-right: 8px;
+}
+
+.saving-indicator {
+  text-align: center;
+  color: #007bff;
+  font-style: italic;
+  padding: 16px;
+  background: #e7f3ff;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 16px 0;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #007bff, #0056b3);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.instruction-text {
+  text-align: center;
+  color: #6c757d;
+  font-size: 1.1rem;
+  margin: 16px 0;
+  font-style: italic;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .breathing-tool {
+    padding: 16px;
+  }
+
+  .breathing-tool-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .breathing-config-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mood-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .breathing-controls {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .breathing-btn {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .session-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .breathing-visualization {
+    min-height: 320px;
+  }
+}
+
+@media (max-width: 480px) {
+  .breathing-tool-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .session-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .breathing-circle-container svg {
+    width: 280px !important;
+    height: 280px !important;
+  }
+}
+
+/* Animation keyframes */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.breathing-circle.pulsing {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.phase-inhale .breathing-circle {
+  fill: #e8f5e9;
+}
+
+.phase-hold .breathing-circle {
+  fill: #fff3e0;
+}
+
+.phase-exhale .breathing-circle {
+  fill: #fce4ec;
+}
+
+.phase-complete .breathing-circle {
+  fill: #e8f5e9;
+  stroke: #4caf50;
+  stroke-width: 3;
+}
