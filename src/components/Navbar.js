@@ -20,13 +20,19 @@ const Navbar = () => {
   }, []);
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-    document.body.style.overflow = isMenuOpen ? 'auto' : 'hidden';
+    setIsMenuOpen((prev)=>{
+      const next = !prev;
+      // Robust body scroll lock for iOS Safari as well
+      document.documentElement.style.overflow = next ? 'hidden' : '';
+      document.body.style.overflow = next ? 'hidden' : '';
+      return next;
+    });
   };
 
   const closeMenu = () => {
     setIsMenuOpen(false);
-    document.body.style.overflow = 'auto';
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
   };
 
   const handleLogout = async () => {
@@ -106,7 +112,13 @@ const Navbar = () => {
 
       {/* Mobile Hamburger Menu */}
       <div className="mobile-nav">
-        <button className="hamburger-btn" onClick={toggleMenu}>
+        <button
+          className="hamburger-btn"
+          onClick={toggleMenu}
+          aria-label="Toggle menu"
+          aria-expanded={isMenuOpen}
+          aria-controls="mobile-menu"
+        >
           <span
             className={`hamburger-line ${isMenuOpen ? "active" : ""}`}
           ></span>
@@ -119,7 +131,13 @@ const Navbar = () => {
         </button>
 
         {/* Mobile Dropdown Menu */}
-        <div className={`mobile-dropdown ${isMenuOpen ? "open" : ""}`}>
+        <div
+          id="mobile-menu"
+          className={`mobile-dropdown ${isMenuOpen ? "open" : ""}`}
+          role="dialog"
+          aria-modal="true"
+        >
+          <button className={`mobile-backdrop ${isMenuOpen ? 'show' : ''}`} onClick={closeMenu} aria-label="Close menu overlay" />
           <ul className="mobile-nav-links">
             <li>
               <Link to="/" onClick={closeMenu}>

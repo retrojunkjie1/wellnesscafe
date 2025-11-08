@@ -189,34 +189,43 @@
 }
 
 .mobile-dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  margin-top: 0.5rem;
-  background: rgba(10, 14, 39, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(212, 180, 131, 0.3);
-  border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-  min-width: 200px;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  grid-template-rows: 1fr auto;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-10px);
-  transition: all 0.3s ease;
-  overflow: hidden;
+  transform: translateY(-8px);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
 }
 
-.mobile-dropdown.open {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
+.mobile-dropdown.open { opacity: 1; visibility: visible; transform: translateY(0); }
+
+/* clickable backdrop */
+.mobile-backdrop{
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  border: none;
 }
+.mobile-backdrop.show{opacity: 1;}
 
 .mobile-nav-links {
   list-style: none;
   margin: 0;
-  padding: 1rem 0;
+  padding: 0.75rem 0 1.25rem;
+  position: relative;
+  margin-top: auto;
+  background: rgba(10, 14, 39, 0.96);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(212, 180, 131, 0.25);
+  box-shadow: 0 -6px 24px rgba(0,0,0,0.45);
 }
 
 .mobile-nav-links li {
@@ -229,12 +238,13 @@
 
 .mobile-nav-links a {
   display: block;
-  padding: 0.75rem 1.5rem;
+  padding: 1rem 1.5rem;
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.95);
-  font-weight: 500;
-  transition: all 0.3s ease;
+  color: rgba(255, 255, 255, 0.98);
+  font-weight: 600;
+  transition: all 0.2s ease;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  -webkit-tap-highlight-color: transparent;
 }
 
 .mobile-nav-links a:hover {
@@ -357,9 +367,7 @@
     display: none;
   }
 
-  .mobile-nav {
-    display: block;
-  }
+  .mobile-nav { display: block; position: relative; z-index: 1100; }
 
   .nav-brand {
     flex-direction: column;
