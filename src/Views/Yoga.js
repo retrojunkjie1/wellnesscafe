@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import './YogaPage.css';
 
 const Yoga = () => {
-  const [selectedLevel, setSelectedLevel] = useState('all');
-
   const benefits = [
     {
       icon: '🧘',

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './AssistancePage.css';
-import { assistancePrograms, getCategories, searchPrograms } from '../data/assistanceData';
+import { assistancePrograms, getCategories } from '../data/assistanceData';
 
 const AssistPage = () => {
   const [householdSize, setHouseholdSize] = useState('');

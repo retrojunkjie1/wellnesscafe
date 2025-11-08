@@ -405,7 +405,8 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   position: relative;
-  z-index: 13; /* Button on top of everything */
+  z-index: 50; /* ensure above section fades/overlays */
+  isolation: isolate; /* create a stacking context so inner z-index works consistently */
 }
 
 .topfold-btn:hover {
@@ -427,12 +428,16 @@
   background: radial-gradient(closest-side, rgba(255,255,255,0.25), rgba(255,255,255,0));
   animation: pulseGlow 2.2s ease-in-out infinite;
   pointer-events: none;
+  z-index: 0; /* keep glow behind button label and arrow */
 }
 .btn-arrow{
   margin-left: 0.5rem;
   display: inline-block;
   transition: transform 0.25s ease;
+  position: relative;
+  z-index: 2; /* lift arrow above any overlapping effects */
 }
+.topfold-btn > span{position: relative; z-index: 1;}
 .pulse-btn:hover .btn-arrow{transform: translateX(4px);}
 
 @keyframes pulseGlow{

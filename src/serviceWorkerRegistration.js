@@ -93,4 +93,5 @@ export const unregister = ()=>{
   }
 };
 
-export default {register, unregister};
+const serviceWorkerRegistration = {register, unregister};
+export default serviceWorkerRegistration;

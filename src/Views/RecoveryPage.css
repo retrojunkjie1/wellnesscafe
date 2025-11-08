@@ -18,11 +18,18 @@
    =================================== */
 .recovery-hero {
   position: relative;
-  min-height: 70vh;
+  padding: 4rem 1rem; /* align with other page headers */
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 50%, #2d1b4e 100%);
+  background: linear-gradient(135deg, rgba(40, 40, 70, 0.5), rgba(20, 20, 40, 0.6));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  margin: 0 auto 3rem;
+  max-width: 1200px;
+  width: 100%;
+  box-sizing: border-box;
   overflow: hidden;
 }
 
@@ -38,11 +45,13 @@
 
 .hero-content {
   position: relative;
-  z-index: 10;
+  z-index: 1;
   text-align: center;
-  max-width: 1000px;
-  padding: 2rem;
-  animation: fadeInUp 1s ease-out;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0; /* let parent control padding */
+  animation: fadeInUp 0.8s ease-out;
 }
 
 .hero-title {
@@ -53,13 +62,14 @@
 }
 
 .title-main {
-  font-size: clamp(2.5rem, 6vw, 5rem);
-  font-weight: 900;
-  background: linear-gradient(135deg, #ffffff, #4db8a8, #d4b483);
+  font-size: clamp(2.2rem, 6vw, 3.5rem); /* match About hero scale */
+  font-weight: 800;
+  background: var(--wc-heading-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  line-height: 1.1;
+  line-height: 1.15;
+  letter-spacing: 0.5px;
 }
 
 .title-sub {
@@ -69,19 +79,17 @@
 }
 
 .hero-description {
-  font-size: 1.25rem;
-  line-height: 1.8;
-  color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 2.5rem;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: #c0c0c0;
+  max-width: 700px;
+  margin: 1rem auto 2.5rem;
 }
 
 .hero-stats {
   display: flex;
   justify-content: center;
-  gap: 3rem;
+  gap: 2.25rem;
   margin-bottom: 2.5rem;
   flex-wrap: wrap;
 }
@@ -94,9 +102,9 @@
 }
 
 .stat-number {
-  font-size: 3rem;
-  font-weight: 900;
-  background: linear-gradient(135deg, #4db8a8, #d4b483);
+  font-size: 2.4rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ffffff, #d4b483);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -110,26 +118,29 @@
 
 .hero-actions {
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
   justify-content: center;
   flex-wrap: wrap;
+  margin-top: 0.5rem;
 }
 
 .btn-primary,
 .btn-secondary {
-  padding: 1.1rem 2.5rem;
+  padding: 1rem 2rem;
   border-radius: 12px;
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #4db8a8, #3a9d8f);
-  color: #ffffff;
-  box-shadow: 0 6px 20px rgba(77, 184, 168, 0.4);
+  background: linear-gradient(135deg, #ffffff 0%, #d4b483 100%);
+  color: #1a1a1a;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
 }
 
 .btn-primary:hover {
