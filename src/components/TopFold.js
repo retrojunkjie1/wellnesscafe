@@ -1,7 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 import "./TopFold.css";
 import heroPanorama from "../assets/images/Aspen-6.png";
+
+// Animated counter for stats - extracted as separate component
+const AnimatedCounter = ({ end, duration = 2000, suffix = "" }) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let startTime;
+    const animate = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = timestamp - startTime;
+      const percentage = Math.min(progress / duration, 1);
+      const easeOutQuart = 1 - Math.pow(1 - percentage, 4);
+      setCount(Math.floor(end * easeOutQuart));
+      if (percentage < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+    requestAnimationFrame(animate);
+  }, [end, duration]);
+
+  return (
+    <span>
+      {count}
+      {suffix}
+    </span>
+  );
+};
+
+AnimatedCounter.propTypes = {
+  end: PropTypes.number.isRequired,
+  duration: PropTypes.number,
+  suffix: PropTypes.string,
+};
 
 const TopFold = () => {
   const navigate = useNavigate();
@@ -11,33 +45,6 @@ const TopFold = () => {
     // Trigger entrance animations
     setTimeout(() => setIsVisible(true), 100);
   }, []);
-
-  // Animated counter for stats
-  const AnimatedCounter = ({ end, duration = 2000, suffix = "" }) => {
-    const [count, setCount] = useState(0);
-
-    useEffect(() => {
-      let startTime;
-      const animate = (timestamp) => {
-        if (!startTime) startTime = timestamp;
-        const progress = timestamp - startTime;
-        const percentage = Math.min(progress / duration, 1);
-        const easeOutQuart = 1 - Math.pow(1 - percentage, 4);
-        setCount(Math.floor(end * easeOutQuart));
-        if (percentage < 1) {
-          requestAnimationFrame(animate);
-        }
-      };
-      requestAnimationFrame(animate);
-    }, [end, duration]);
-
-    return (
-      <span>
-        {count}
-        {suffix}
-      </span>
-    );
-  };
 
   return (
     <section className="topfold-container">
@@ -70,9 +77,9 @@ const TopFold = () => {
             { icon: "🧘", label: "Guided Mindfulness", path: "/yoga" },
             { icon: "🌿", label: "Acuwellness", path: "/acuwellness" },
             { icon: "👥", label: "Community Support", path: "/events" }
-          ].map((feature, idx) => (
+          ].map((feature) => (
             <button
-              key={idx}
+              key={feature.path}
               className="feature-item"
               onClick={() => navigate(feature.path)}
             >

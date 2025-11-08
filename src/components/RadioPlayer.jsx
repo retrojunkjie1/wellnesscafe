@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import PropTypes from "prop-types";
 import { Pause, Play, Waves } from "lucide-react";
 import IconBadge from "./IconBadge";
 
@@ -126,7 +127,7 @@ const STATIONS = [
   {
     id: "lofi",
     name: "Chillhop Lo-Fi",
-    url: "https://streams.fluxfm.de/Chillhop/mp3-320/audio/",
+    url: "https://streams.fluxfm.de/Lofi/mp3-320/audio/",
   },
   {
     id: "cafestudy",
@@ -306,6 +307,14 @@ const RadioPlayer = ({ variant = "floating" }) => {
       </button>
     </div>
   );
+};
+
+RadioPlayer.propTypes = {
+  variant: PropTypes.oneOf(["floating", "navbar"]),
+};
+
+RadioPlayer.defaultProps = {
+  variant: "floating",
 };
 
 export default RadioPlayer;
