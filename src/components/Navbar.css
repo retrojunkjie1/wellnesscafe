@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.2rem clamp(1rem, 8vw, 8%);
+  padding: 0.8rem clamp(1rem, 8vw, 8%);
   background: rgba(10, 14, 39, 0.75);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
@@ -17,6 +17,8 @@
   color: var(--on-dark-text);
   border-bottom: 1px solid rgba(212, 180, 131, 0.15);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 60px;
+  max-height: 70px;
 }
 
 /* Homepage - Start transparent */
@@ -47,18 +49,20 @@
 
 .nav-brand {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: nowrap;
 }
 .nav-logo {
   font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: #d4b483;
   text-decoration: none;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.6);
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 .navbar.homepage .nav-logo {
@@ -68,11 +72,11 @@
 .nav-under {
   line-height: 1;
   color: var(--brand);
-  margin-top: 2px;
   display: flex;
   align-items: center;
   gap: 0.5rem;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
 }
 
 .navbar.homepage .nav-under {
@@ -338,6 +342,12 @@
 }
 
 @media (max-width: 768px) {
+  .navbar {
+    padding: 0.6rem clamp(1rem, 5vw, 5%);
+    min-height: 50px;
+    max-height: 60px;
+  }
+
   .desktop-nav {
     display: none;
   }
@@ -350,7 +360,31 @@
     display: block;
   }
 
-  .nav-under { margin-top: 4px; }
+  .nav-brand {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+
+  .nav-logo {
+    font-size: 1rem;
+  }
+
+  .nav-under {
+    margin-top: 0;
+  }
+}
+
+/* Hide radio/AI widgets on very small screens */
+@media (max-width: 480px) {
+  .nav-under {
+    display: none;
+  }
+
+  .navbar {
+    min-height: 50px;
+    max-height: 55px;
+  }
 }
 
 /* Keep radio under the brand on all breakpoints; fine-tune spacing on tablets */
