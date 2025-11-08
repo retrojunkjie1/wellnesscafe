@@ -119,54 +119,19 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background: radial-gradient(
-      ellipse at top,
-      rgba(10, 46, 26, 0.9) 0%,
-      rgba(10, 46, 26, 0.95) 50%,
-      rgba(10, 46, 26, 1) 100%
-    ),
-    radial-gradient(
-      circle at 20% 30%,
-      rgba(255, 255, 255, 0.1) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 80% 20%,
-      rgba(187, 180, 255, 0.05) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 40% 80%,
-      rgba(255, 255, 255, 0.08) 0%,
-      transparent 50%
-    ),
-    linear-gradient(
-      135deg,
-      rgb(10, 46, 26) 0%,
-      rgb(15, 50, 30) 25%,
-      rgb(10, 46, 26) 50%,
-      rgb(5, 42, 22) 75%,
-      rgb(10, 46, 26) 100%
-    );
+  /* Simple clean background like About page */
+  background: linear-gradient(
+    135deg,
+    rgba(40, 40, 70, 0.5),
+    rgba(20, 20, 40, 0.6)
+  );
   color: #fff;
   z-index: 1;
 }
 
-/* Additional overlay to ensure AA contrast for text over media */
+/* Remove excessive overlay - keep it simple */
 .topfold-container::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.25) 0%,
-    rgba(0, 0, 0, 0.35) 100%
-  );
-  z-index: 1;
-  pointer-events: none;
+  display: none;
 }
 
 /* Panoramic Background */
@@ -189,12 +154,12 @@
   right: 0;
   bottom: 0;
   height: 120px;
-  /* fade from transparent to the dark green used below */
+  /* fade from transparent to the dark background */
   background: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0) 0%,
-    rgba(11, 15, 12, 0.6) 60%,
-    rgba(11, 15, 12, 1) 100%
+    rgba(11, 15, 12, 0.3) 60%,
+    rgba(11, 15, 12, 0.6) 100%
   );
   pointer-events: none;
 }
@@ -204,7 +169,8 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: brightness(0.4) contrast(1.1) saturate(1.2);
+  /* Lighter filter for clarity - match About page approach */
+  filter: brightness(0.5) contrast(1.05) saturate(1.1);
   transform: scale(1.02);
   transition: transform 0.3s ease;
 }
@@ -213,18 +179,23 @@
   transform: scale(1.05);
 }
 
-/* Optional overlay over the background image for extra clarity */
-.hero-overlay{
+/* Simplified overlay - match About page */
+.hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.5) 100%);
+  background: linear-gradient(
+    180deg, 
+    rgba(0,0,0,0.1) 0%, 
+    rgba(0,0,0,0.2) 60%, 
+    rgba(0,0,0,0.3) 100%
+  );
   pointer-events: none;
 }
 
 .topfold-content {
   position: relative;
   text-align: center;
-  z-index: 5; /* lift entire content block above anything below */
+  z-index: 10; /* Higher z-index to ensure content stays on top */
   max-width: min(800px, 90vw);
   padding: clamp(1rem, 5vw, 2rem);
   margin: 4rem auto 0;
@@ -241,40 +212,20 @@
   transform: translateY(0);
 }
 
-/* Glass title box for improved readability */
-.topfold-titlebox{
-  display: inline-block;
-  text-align: center;
-  background: rgba(0,0,0,0.28);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 16px;
-  padding: 12px 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+.topfold-titlebox {
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 11; /* Above everything */
 }
 
 .topfold-title {
-  font-family: "Inter", sans-serif;
-  font-weight: 800;
-  font-size: clamp(2.5rem, 10vw, 4.5rem);
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
-  background: linear-gradient(
-    135deg,
-    #ffffff 0%,
-    #f0f0f0 25%,
-    #7a5af8 50%,
-    #b19cff 75%,
-    #ffffff 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  max-width: 100%;
-  word-wrap: break-word;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-  letter-spacing: -0.02em;
+  font-size: clamp(2rem, 8vw, 3.8rem);
+  font-weight: 900;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 .highlight {
@@ -313,6 +264,8 @@
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
+  position: relative;
+  z-index: 11; /* Above background */
 }
 
 .feature-item {
@@ -329,6 +282,8 @@
   cursor: pointer;
   -webkit-user-select: none;
   user-select: none;
+  position: relative;
+  z-index: 12; /* Individual items on top */
 }
 
 .feature-item:hover {
@@ -379,7 +334,7 @@
   margin-bottom: 3rem;
   flex-wrap: wrap;
   position: relative;
-  z-index: 6; /* bring the 10K / 500+ / 95% row forward */
+  z-index: 11; /* Above background */
 }
 
 .topfold-stats .stat-item {
@@ -392,7 +347,7 @@
   border: 1px solid rgba(255, 255, 255, 0.15);
   min-width: 120px;
   position: relative;
-  z-index: 7; /* ensure each card sits on top */
+  z-index: 12; /* Individual items on top */
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
@@ -449,6 +404,8 @@
     0 0 0 1px rgba(255, 255, 255, 0.1);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  position: relative;
+  z-index: 13; /* Button on top of everything */
 }
 
 .topfold-btn:hover {
@@ -783,6 +740,8 @@
   gap: 0.75rem;
   margin-top: 1rem;
   flex-wrap: wrap;
+  position: relative;
+  z-index: 11; /* Above background */
 }
 .trust-badges .badge{
   background: rgba(255,255,255,0.08);
@@ -793,6 +752,8 @@
   border-radius: 999px;
   font-size: 0.85rem;
   color: #fff;
+  position: relative;
+  z-index: 12; /* Individual badges on top */
 }
 
 /* Scroll indicator */
