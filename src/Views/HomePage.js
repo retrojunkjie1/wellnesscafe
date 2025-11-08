@@ -6,6 +6,7 @@ import wellnessBowlV1 from "../assets/images/wellnesscafe-bowl-v1.png";
 import wellnessJournal from "../assets/images/wellnesscafe-journal-vs1.png";
 import wellnessProductV1 from "../assets/images/WellnessCafe-Product-v1.png";
 import wellnessBowlV2 from "../assets/images/wellnesscafe-bowl-v2.png";
+import wellCafeV3 from "../assets/images/well-cafe-v3.png";
 import { Link } from "react-router-dom";
 import TopStories from "../components/TopStories";
 
@@ -136,30 +137,51 @@ const HomePage = () => {
       {/* === IMAGE GALLERY === */}
       <section className="gallery-section">
         <h2>WellnessCafe Community</h2>
+        <p className="gallery-intro">
+          Experience the warmth and support of our wellness community through moments of connection, growth, and healing.
+        </p>
         <div className="gallery-grid">
           <figure className="gallery-card">
-            <img src="/images/checkin.jpg" alt="Daily Check-in" />
-            <figcaption>Daily Check-in</figcaption>
+            <img src={wellCafeV3} alt="Daily Check-in" />
+            <figcaption>
+              <h4>Daily Check-in</h4>
+              <p>Start your day with mindful reflection and intention setting</p>
+            </figcaption>
           </figure>
           <figure className="gallery-card">
-            <img src="/images/community.jpg" alt="Community Support" />
-            <figcaption>Community Support</figcaption>
+            <img src={wellCafeV3} alt="Community Support" />
+            <figcaption>
+              <h4>Community Support</h4>
+              <p>Connect with others on similar wellness journeys</p>
+            </figcaption>
           </figure>
           <figure className="gallery-card">
-            <img src="/images/naaa.jpg" alt="Support Groups" />
-            <figcaption>Support Groups</figcaption>
+            <img src={wellCafeV3} alt="Support Groups" />
+            <figcaption>
+              <h4>Support Groups</h4>
+              <p>Join guided group sessions for shared healing</p>
+            </figcaption>
           </figure>
           <figure className="gallery-card">
-            <img src="/images/reminder.jpg" alt="Wellness Reminders" />
-            <figcaption>Wellness Reminders</figcaption>
+            <img src={wellCafeV3} alt="Wellness Reminders" />
+            <figcaption>
+              <h4>Wellness Reminders</h4>
+              <p>Gentle nudges to maintain your self-care practice</p>
+            </figcaption>
           </figure>
           <figure className="gallery-card">
-            <img src="/images/rituals.jpg" alt="Daily Rituals" />
-            <figcaption>Daily Rituals</figcaption>
+            <img src={wellCafeV3} alt="Daily Rituals" />
+            <figcaption>
+              <h4>Daily Rituals</h4>
+              <p>Build consistent habits for lasting transformation</p>
+            </figcaption>
           </figure>
           <figure className="gallery-card">
-            <img src={wellnessBowlV2} alt="Wellness Bowl" />
-            <figcaption>Wellness Bowl</figcaption>
+            <img src={wellCafeV3} alt="Wellness Cafe" />
+            <figcaption>
+              <h4>Wellness Cafe</h4>
+              <p>Nourish your body and soul in our healing space</p>
+            </figcaption>
           </figure>
         </div>
       </section>
