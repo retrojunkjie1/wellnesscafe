@@ -11,7 +11,7 @@
   --muted: #c0c0c0;
   --card: #1f2937;
   /* Single site-wide background image (Aspen-7) with an infinite feel */
-  background: #0b1220 url("./assets/images/Aspen-7:png.png") no-repeat center/cover fixed;
+  background: #0b1220 url("./assets/images/Aspen-7.png") no-repeat center/cover fixed;
   --on-dark-text: #ffffff; /* shared token for text on dark overlays */
   /* Rich heading gradient for all headers */
   --wc-heading-gradient: linear-gradient(135deg, #ffffff 0%, #f0e5d8 40%, #e6d7ff 100%);
@@ -51,7 +51,7 @@ body {
   color: var(--text);
   /* Global unified background: Aspen-7 with an infinite feel */
   background-color: #0b1220; /* fallback */
-  background-image: url("./assets/images/Aspen-7:png.png");
+  background-image: url("./assets/images/Aspen-7.png");
   background-position: center;
   background-size: cover;
 
