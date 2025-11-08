@@ -6,7 +6,10 @@ import wellnessBowlV1 from "../assets/images/wellnesscafe-bowl-v1.png";
 import wellnessJournal from "../assets/images/wellnesscafe-journal-vs1.png";
 import wellnessProductV1 from "../assets/images/WellnessCafe-Product-v1.png";
 import wellnessBowlV2 from "../assets/images/wellnesscafe-bowl-v2.png";
+import wellCafeV1 from "../assets/images/well-cafe-v1.png";
+import wellCafeV2 from "../assets/images/well-cafe-v2.png";
 import wellCafeV3 from "../assets/images/well-cafe-v3.png";
+import wellCafeV5 from "../assets/images/well-cafe-v5.png";
 import { Link } from "react-router-dom";
 import TopStories from "../components/TopStories";
 
@@ -142,14 +145,14 @@ const HomePage = () => {
         </p>
         <div className="gallery-grid">
           <figure className="gallery-card">
-            <img src={wellCafeV3} alt="Daily Check-in" />
+            <img src={wellCafeV1} alt="Daily Check-in" />
             <figcaption>
               <h4>Daily Check-in</h4>
               <p>Start your day with mindful reflection and intention setting</p>
             </figcaption>
           </figure>
           <figure className="gallery-card">
-            <img src={wellCafeV3} alt="Community Support" />
+            <img src={wellCafeV2} alt="Community Support" />
             <figcaption>
               <h4>Community Support</h4>
               <p>Connect with others on similar wellness journeys</p>
@@ -163,21 +166,21 @@ const HomePage = () => {
             </figcaption>
           </figure>
           <figure className="gallery-card">
-            <img src={wellCafeV3} alt="Wellness Reminders" />
+            <img src={wellCafeV5} alt="Wellness Reminders" />
             <figcaption>
               <h4>Wellness Reminders</h4>
               <p>Gentle nudges to maintain your self-care practice</p>
             </figcaption>
           </figure>
           <figure className="gallery-card">
-            <img src={wellCafeV3} alt="Daily Rituals" />
+            <img src={wellCafeV1} alt="Daily Rituals" />
             <figcaption>
               <h4>Daily Rituals</h4>
               <p>Build consistent habits for lasting transformation</p>
             </figcaption>
           </figure>
           <figure className="gallery-card">
-            <img src={wellCafeV3} alt="Wellness Cafe" />
+            <img src={wellCafeV2} alt="Wellness Cafe" />
             <figcaption>
               <h4>Wellness Cafe</h4>
               <p>Nourish your body and soul in our healing space</p>
