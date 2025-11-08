@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import "./Navbar.css";
 import RadioPlayer from "./RadioPlayer.jsx";
@@ -9,8 +9,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { user, logout } = useAuth();
-  const location = useLocation();
-  const isHomePage = location.pathname === '/';
+  // location hook removed (unused after navbar style unification)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,7 +39,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`navbar ${scrolled ? 'scrolled' : ''} ${isHomePage ? 'homepage' : ''}`}>
+    <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="nav-brand">
         <Link to="/" className="nav-logo" aria-label="Go to homepage">
           WELLNESSCAFE
@@ -59,6 +58,9 @@ const Navbar = () => {
         </li>
         <li>
           <Link to="/news">News</Link>
+        </li>
+        <li>
+          <Link to="/recovery">Recovery</Link>
         </li>
         <li>
           <Link to="/providers">Providers</Link>
@@ -127,6 +129,11 @@ const Navbar = () => {
             <li>
               <Link to="/news" onClick={closeMenu}>
                 News
+              </Link>
+            </li>
+            <li>
+              <Link to="/recovery" onClick={closeMenu}>
+                Recovery
               </Link>
             </li>
             <li>
