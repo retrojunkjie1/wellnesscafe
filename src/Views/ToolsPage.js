@@ -3,6 +3,7 @@ import "./Page.css";
 // Header is provided by Layout
 import { Link } from "react-router-dom";
 import PanoramicHero from "../components/PanoramicHero";
+import BreathingTool from "../features/recovery/tools/BreathingTool";
 
 const ToolsPage = () => (
   <div className="page">
@@ -15,6 +16,12 @@ const ToolsPage = () => (
           to support your day.
         </p>
       </div>
+
+      {/* Breathing Tool Section */}
+      <section className="section" style={{maxWidth: '800px', margin: '0 auto'}}>
+        <BreathingTool defaultInhale={4} defaultHold={4} defaultExhale={6} defaultCycles={6} />
+      </section>
+
       <section className="two-col section">
         <div>
           <h2>Tracker</h2>

@@ -1,0 +1,46 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Users can read/write their own user document
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      
+      // Breathing sessions - users can only access their own sessions
+      match /breathingSessions/{sessionId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+      
+      // Sober homes data (if needed)
+      match /soberHomes/{homeId} {
+        allow read: if request.auth != null;
+        allow write: if request.auth != null && request.auth.uid == userId;
+      }
+      
+      // Check-ins (if needed)
+      match /checkIns/{checkInId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+    
+    // Public read-only data (events, news, etc.)
+    match /events/{eventId} {
+      allow read: if true;
+      allow write: if false; // Admin only via console
+    }
+    
+    match /news/{newsId} {
+      allow read: if true;
+      allow write: if false; // Admin only via console
+    }
+    
+    // Providers - public read, authenticated write
+    match /providers/{providerId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow update, delete: if request.auth != null && 
+        (request.auth.uid == resource.data.userId || 
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
+    }
+  }
+}
