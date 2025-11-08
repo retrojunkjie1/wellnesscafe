@@ -7,14 +7,14 @@
   --bg2: #1f2937;
   --brand: #d4b483;
   --brand-2: #cbb4ff;
-  --text: #e5e7eb;
-  --muted: #9ca3af;
+  --text: #f5f5f5;
+  --muted: #c0c0c0;
   --card: #1f2937;
-  /* Single site-wide background image (Aspen-5) with an infinite feel */
-  background: #0b1220 url("./assets/images/Aspen-5.png") no-repeat center/cover fixed;
+  /* Single site-wide background image (Aspen-7) with an infinite feel */
+  background: #0b1220 url("./assets/images/Aspen-7:png.png") no-repeat center/cover fixed;
   --on-dark-text: #ffffff; /* shared token for text on dark overlays */
   /* Rich heading gradient for all headers */
-  --wc-heading-gradient: linear-gradient(135deg, #f7f7f7 0%, #d4b483 40%, #cbb4ff 100%);
+  --wc-heading-gradient: linear-gradient(135deg, #ffffff 0%, #f0e5d8 40%, #e6d7ff 100%);
 }
 
 html,
@@ -46,12 +46,12 @@ body {
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
-  --text-strong: #f9fafb; /* higher-contrast body copy */
+  --text-strong: #ffffff; /* higher-contrast body copy */
   -moz-osx-font-smoothing: grayscale;
   color: var(--text);
-  /* Global unified background: Aspen-5 with an infinite feel */
+  /* Global unified background: Aspen-7 with an infinite feel */
   background-color: #0b1220; /* fallback */
-  background-image: url("./assets/images/Aspen-5.png");
+  background-image: url("./assets/images/Aspen-7:png.png");
   background-position: center;
   background-size: cover;
 
