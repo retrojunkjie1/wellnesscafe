@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import defaultHero from "../assets/images/Aspen-6.png";
+import defaultHero from "../assets/images/Aspen-5.png";
 
 const PanoramicHero = ({ src, alt }) => {
   const imgSrc = src || defaultHero;

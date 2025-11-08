@@ -2,7 +2,7 @@ import React from "react";
 import "./Page.css";
 import Header from "../components/Header";
 import PanoramicHero from "../components/PanoramicHero";
-import aspenBg from "../assets/images/Aspen-6.png";
+import aspenBg from "../assets/images/Aspen-5.png";
 import GlassSection from "../components/GlassSection";
 
 const ProductPage = () => {

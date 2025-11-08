@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import "./TopFold.css";
-import heroPanorama from "../assets/images/Aspen-6.png";
+import heroPanorama from "../assets/images/Aspen-5.png";
 
 // Animated counter for stats - extracted as separate component
 const AnimatedCounter = ({ end, duration = 2000, suffix = "" }) => {

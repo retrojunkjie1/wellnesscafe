@@ -3,7 +3,7 @@ import "./Page.css";
 import Header from "../components/Header";
 import PageBanner from "../components/PageBanner";
 import LiveBackground from "../components/LiveBackground";
-import aspen_6 from "../assets/images/Aspen-6.png";
+import aspen_6 from "../assets/images/Aspen-5.png";
 
 const BlogPage = () => (
   <div className="page blog-page">
