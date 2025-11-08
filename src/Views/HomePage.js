@@ -144,48 +144,60 @@ const HomePage = () => {
           Experience the warmth and support of our wellness community through moments of connection, growth, and healing.
         </p>
         <div className="gallery-grid">
-          <figure className="gallery-card">
-            <img src={wellCafeV1} alt="Daily Check-in" />
-            <figcaption>
-              <h4>Daily Check-in</h4>
-              <p>Start your day with mindful reflection and intention setting</p>
-            </figcaption>
-          </figure>
-          <figure className="gallery-card">
-            <img src={wellCafeV2} alt="Community Support" />
-            <figcaption>
-              <h4>Community Support</h4>
-              <p>Connect with others on similar wellness journeys</p>
-            </figcaption>
-          </figure>
-          <figure className="gallery-card">
-            <img src={wellCafeV3} alt="Support Groups" />
-            <figcaption>
-              <h4>Support Groups</h4>
-              <p>Join guided group sessions for shared healing</p>
-            </figcaption>
-          </figure>
-          <figure className="gallery-card">
-            <img src={wellCafeV5} alt="Wellness Reminders" />
-            <figcaption>
-              <h4>Wellness Reminders</h4>
-              <p>Gentle nudges to maintain your self-care practice</p>
-            </figcaption>
-          </figure>
-          <figure className="gallery-card">
-            <img src={wellCafeV1} alt="Daily Rituals" />
-            <figcaption>
-              <h4>Daily Rituals</h4>
-              <p>Build consistent habits for lasting transformation</p>
-            </figcaption>
-          </figure>
-          <figure className="gallery-card">
-            <img src={wellCafeV2} alt="Wellness Cafe" />
-            <figcaption>
-              <h4>Wellness Cafe</h4>
-              <p>Nourish your body and soul in our healing space</p>
-            </figcaption>
-          </figure>
+          <Link to="/check-in" className="gallery-card">
+            <figure>
+              <img src={wellCafeV1} alt="Daily Check-in" />
+              <figcaption>
+                <h4>Daily Check-in</h4>
+                <p>Start your day with mindful reflection and intention setting</p>
+              </figcaption>
+            </figure>
+          </Link>
+          <Link to="/community" className="gallery-card">
+            <figure>
+              <img src={wellCafeV2} alt="Community Support" />
+              <figcaption>
+                <h4>Community Support</h4>
+                <p>Connect with others on similar wellness journeys</p>
+              </figcaption>
+            </figure>
+          </Link>
+          <Link to="/recovery" className="gallery-card">
+            <figure>
+              <img src={wellCafeV3} alt="Support Groups" />
+              <figcaption>
+                <h4>Support Groups</h4>
+                <p>Join guided group sessions for shared healing</p>
+              </figcaption>
+            </figure>
+          </Link>
+          <Link to="/tools" className="gallery-card">
+            <figure>
+              <img src={wellCafeV5} alt="Wellness Reminders" />
+              <figcaption>
+                <h4>Wellness Reminders</h4>
+                <p>Gentle nudges to maintain your self-care practice</p>
+              </figcaption>
+            </figure>
+          </Link>
+          <Link to="/yoga" className="gallery-card">
+            <figure>
+              <img src={wellCafeV1} alt="Daily Rituals" />
+              <figcaption>
+                <h4>Daily Rituals</h4>
+                <p>Build consistent habits for lasting transformation</p>
+              </figcaption>
+            </figure>
+          </Link>
+          <Link to="/about" className="gallery-card">
+            <figure>
+              <img src={wellCafeV2} alt="Wellness Cafe" />
+              <figcaption>
+                <h4>Wellness Cafe</h4>
+                <p>Nourish your body and soul in our healing space</p>
+              </figcaption>
+            </figure>
+          </Link>
         </div>
       </section>
 
