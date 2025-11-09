@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Rich background with an infinite feel */
 :root {
   --bg: #111827;
   --bg2: #1f2937;
@@ -10,28 +11,16 @@
   --text: #f5f5f5;
   --muted: #c0c0c0;
   --card: #1f2937;
-  /* Single site-wide background imag/* Base styles for standard form inputs (not glass morphism components) */
-input:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*="zip-"]):not([class*="newsletter-"]),
-textarea:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*="zip-"]):not([class*="newsletter-"]),
-select:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*="zip-"]):not([class*="newsletter-"]) {
-  color: #1e1e1e; /* Dark text for visibility */
-  background-color: #ffffff; /* White background */
-  border: 2px solid #d3b27f; /* Gold border matching theme */
-  border-radius: 8px;
-  font-family: inherit;
-  font-size: 16px;
-  line-height: 1.5;
-  padding: 12px;
-  transition: all 0.2s ease;
-  box-sizing: border-box;
-}
-
-/* Rich background with an infinite feel */
-:root {
-  background: #0b1220 url("./assets/images/Aspen-7.png") no-repeat center/cover fixed;
+  background: #0b1220 url("./assets/images/Aspen-7.png") no-repeat center/cover
+    fixed;
   --on-dark-text: #ffffff; /* shared token for text on dark overlays */
   /* Rich heading gradient for all headers */
-  --wc-heading-gradient: linear-gradient(135deg, #ffffff 0%, #f0e5d8 40%, #e6d7ff 100%);
+  --wc-heading-gradient: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #f0e5d8 40%,
+    #e6d7ff 100%
+  );
 }
 
 html,
@@ -43,12 +32,21 @@ body,
   overflow-x: hidden;
   box-sizing: border-box;
 
-/* Unified page vertical rhythm */
-.page .wc-glass-title { margin-top: 0; }
-.page main, .page section { scroll-margin-top: 84px; }
+  /* Unified page vertical rhythm */
+  .page .wc-glass-title {
+    margin-top: 0;
+  }
+  .page main,
+  .page section {
+    scroll-margin-top: 84px;
+  }
 
-/* Subtle enhancement: focus ring for interactive glass cards */
-.news-card:focus-visible, .wc-glass-card:focus-visible { outline: 2px solid var(--brand, #b388ff); outline-offset: 2px; }
+  /* Subtle enhancement: focus ring for interactive glass cards */
+  .news-card:focus-visible,
+  .wc-glass-card:focus-visible {
+    outline: 2px solid var(--brand, #b388ff);
+    outline-offset: 2px;
+  }
 }
 
 *,
@@ -72,7 +70,9 @@ body {
   background-position: center;
   background-size: cover;
 
-html { font-size: 17px; }
+  html {
+    font-size: 17px;
+  }
   background-repeat: no-repeat;
   background-attachment: fixed;
   width: 100%;
@@ -84,19 +84,23 @@ code {
     monospace;
 }
 
-  color: var(--text-strong);
-@media (max-width: 1024px){
-  body{ background-attachment: scroll; }
+color: var(--text-strong);
+@media (max-width: 1024px) {
+  body {
+    background-attachment: scroll;
+  }
 }
 
 /* Avoid fixed-attachment jank on mobile/tablet */
-@media (max-width: 1024px){
-  body{ background-attachment: scroll; }
+@media (max-width: 1024px) {
+  body {
+    background-attachment: scroll;
+  }
 }
 
-  line-height: 1.55;
-  font-size: clamp(16px, 0.95rem + 0.25vw, 18px);
-  position: relative;
+line-height: 1.55;
+font-size: clamp(16px, 0.95rem + 0.25vw, 18px);
+position: relative;
 /* removed floating radio; radio now lives under brand in Navbar across breakpoints */
 
 /* Dark softening + subtle radial lift for legibility */
@@ -104,33 +108,53 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background:
-    linear-gradient(rgba(11,18,32,0.55), rgba(11,18,32,0.55)),
-    radial-gradient(circle at 50% 30%, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0.65) 70%);
+  background: linear-gradient(rgba(11, 18, 32, 0.55), rgba(11, 18, 32, 0.55)),
+    radial-gradient(
+      circle at 50% 30%,
+      rgba(255, 255, 255, 0.06) 0%,
+      rgba(0, 0, 0, 0.65) 70%
+    );
   pointer-events: none;
   z-index: 0;
 }
 
 /* Elevation utility for any text needing extra punch */
-.text-elevated, h1, h2, h3, h4, .wc-glass-title, .news-headline, .header-line {
-  text-shadow: 0 2px 6px rgba(0,0,0,0.55);
+.text-elevated,
+h1,
+h2,
+h3,
+h4,
+.wc-glass-title,
+.news-headline,
+.header-line {
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.55);
 }
 
 /* Strengthen paragraph clarity */
-p, li, .wc-glass-desc, .news-desc, .wc-event-desc { text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+p,
+li,
+.wc-glass-desc,
+.news-desc,
+.wc-event-desc {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
 
 /* Rich headings across the site */
-h1, h2, h3, h4, .heading-rich {
+h1,
+h2,
+h3,
+h4,
+.heading-rich {
   background: var(--wc-heading-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 1px 1px rgba(0,0,0,0.35);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
   font-weight: 800;
 }
 
 /* Opt-out utility for places that need plain text color */
-.heading-plain{
+.heading-plain {
   background: none !important;
   -webkit-background-clip: initial !important;
   background-clip: initial !important;
@@ -229,8 +253,12 @@ html {
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 /* ===================================
@@ -256,9 +284,15 @@ html {
    =================================== */
 
 /* Base styles for standard form inputs (not glass morphism components) */
-input:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*="zip-"]):not([class*="newsletter-"]),
-textarea:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*="zip-"]):not([class*="newsletter-"]),
-select:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*="zip-"]):not([class*="newsletter-"]) {
+input:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not(
+    [class*="zip-"]
+  ):not([class*="newsletter-"]),
+textarea:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not(
+    [class*="zip-"]
+  ):not([class*="newsletter-"]),
+select:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not(
+    [class*="zip-"]
+  ):not([class*="newsletter-"]) {
   color: #1e1e1e; /* Dark text for visibility */
   background-color: #ffffff; /* White background */
   border: 2px solid #d3b27f; /* Gold border matching theme */
@@ -272,17 +306,29 @@ select:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*
 }
 
 /* Placeholder text styling */
-input:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*="zip-"]):not([class*="newsletter-"])::placeholder,
-textarea:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*="zip-"]):not([class*="newsletter-"])::placeholder,
-select:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*="zip-"]):not([class*="newsletter-"])::placeholder {
+input:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not(
+    [class*="zip-"]
+  ):not([class*="newsletter-"])::placeholder,
+textarea:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not(
+    [class*="zip-"]
+  ):not([class*="newsletter-"])::placeholder,
+select:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not(
+    [class*="zip-"]
+  ):not([class*="newsletter-"])::placeholder {
   color: #888888; /* Medium gray for placeholders */
   opacity: 1; /* Ensure placeholder visibility */
 }
 
 /* Focus states for better accessibility */
-input:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*="zip-"]):not([class*="newsletter-"]):focus,
-textarea:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*="zip-"]):not([class*="newsletter-"]):focus,
-select:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*="zip-"]):not([class*="newsletter-"]):focus {
+input:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not(
+    [class*="zip-"]
+  ):not([class*="newsletter-"]):focus,
+textarea:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not(
+    [class*="zip-"]
+  ):not([class*="newsletter-"]):focus,
+select:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not(
+    [class*="zip-"]
+  ):not([class*="newsletter-"]):focus {
   outline: none;
   border-color: #c4a484; /* Slightly darker gold on focus */
   box-shadow: 0 0 0 3px rgba(196, 164, 132, 0.1); /* Subtle gold glow */
@@ -290,13 +336,17 @@ select:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*
 }
 
 /* Specific textarea adjustments */
-textarea:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*="zip-"]):not([class*="newsletter-"]) {
+textarea:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not(
+    [class*="zip-"]
+  ):not([class*="newsletter-"]) {
   resize: vertical;
   min-height: 100px;
 }
 
 /* Select dropdown styling */
-select:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*="zip-"]):not([class*="newsletter-"]) {
+select:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not(
+    [class*="zip-"]
+  ):not([class*="newsletter-"]) {
   cursor: pointer;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
   background-position: right 12px center;
@@ -307,9 +357,15 @@ select:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*
 }
 
 /* Disabled state */
-input:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*="zip-"]):not([class*="newsletter-"]):disabled,
-textarea:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*="zip-"]):not([class*="newsletter-"]):disabled,
-select:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*="zip-"]):not([class*="newsletter-"]):disabled {
+input:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not(
+    [class*="zip-"]
+  ):not([class*="newsletter-"]):disabled,
+textarea:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not(
+    [class*="zip-"]
+  ):not([class*="newsletter-"]):disabled,
+select:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not(
+    [class*="zip-"]
+  ):not([class*="newsletter-"]):disabled {
   background-color: #f5f5f5;
   border-color: #e5e5e5;
   color: #9ca3af;
@@ -317,14 +373,26 @@ select:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*
 }
 
 /* Invalid state */
-input:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*="zip-"]):not([class*="newsletter-"]):invalid,
-textarea:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*="zip-"]):not([class*="newsletter-"]):invalid,
-select:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*="zip-"]):not([class*="newsletter-"]):invalid {
+input:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not(
+    [class*="zip-"]
+  ):not([class*="newsletter-"]):invalid,
+textarea:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not(
+    [class*="zip-"]
+  ):not([class*="newsletter-"]):invalid,
+select:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not(
+    [class*="zip-"]
+  ):not([class*="newsletter-"]):invalid {
   border-color: #ef4444; /* Red border for invalid inputs */
 }
 
-input:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*="zip-"]):not([class*="newsletter-"]):invalid:focus,
-textarea:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*="zip-"]):not([class*="newsletter-"]):invalid:focus,
-select:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not([class*="zip-"]):not([class*="newsletter-"]):invalid:focus {
+input:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not(
+    [class*="zip-"]
+  ):not([class*="newsletter-"]):invalid:focus,
+textarea:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not(
+    [class*="zip-"]
+  ):not([class*="newsletter-"]):invalid:focus,
+select:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not(
+    [class*="zip-"]
+  ):not([class*="newsletter-"]):invalid:focus {
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1); /* Red glow for invalid focus */
 }
