@@ -5,6 +5,7 @@ This project includes local AI development tools powered by **Ollama** and **Dee
 ## What's Included
 
 ### 1. Ollama Client (`src/utils/ollamaClient.js`)
+
 A comprehensive utility module for interacting with local Ollama AI models:
 
 - **`generateCompletion(model, prompt, options)`** - Basic completion API
@@ -17,7 +18,9 @@ A comprehensive utility module for interacting with local Ollama AI models:
 - **`generateReactComponent(description)`** - Generate React components
 
 ### 2. Examples (`src/utils/ollamaExamples.js`)
+
 9 working examples showing different use cases:
+
 - Simple completion
 - Schema generation
 - Streaming responses
@@ -29,7 +32,9 @@ A comprehensive utility module for interacting with local Ollama AI models:
 - Test generation
 
 ### 3. DevTools Panel (`src/components/DevTools.jsx`)
+
 A full-featured developer tools UI with 4 tabs:
+
 - 📊 **Firestore Schema** - Generate database schemas from descriptions
 - ⚛️ **React Component** - Generate components from descriptions
 - 💡 **Code Help** - Analyze code and get answers
@@ -38,6 +43,7 @@ A full-featured developer tools UI with 4 tabs:
 ## Setup
 
 ### Prerequisites
+
 You must have Ollama installed and running. If not:
 
 ```bash
@@ -52,6 +58,7 @@ ollama pull deepseek-coder:6.7b
 ```
 
 ### Verify Installation
+
 ```bash
 # Check if Ollama is running
 curl http://127.0.0.1:11434/api/version
@@ -62,35 +69,38 @@ curl http://127.0.0.1:11434/api/version
 ## Usage
 
 ### Basic Example
+
 ```javascript
-import { generateCompletion } from './utils/ollamaClient';
+import { generateCompletion } from "./utils/ollamaClient";
 
 const response = await generateCompletion(
-  'deepseek-coder:6.7b',
-  'Write a function to validate email addresses'
+  "deepseek-coder:6.7b",
+  "Write a function to validate email addresses"
 );
 
 console.log(response);
 ```
 
 ### Generate Firestore Schema
+
 ```javascript
-import { generateFirestoreSchema } from './utils/ollamaClient';
+import { generateFirestoreSchema } from "./utils/ollamaClient";
 
 const schema = await generateFirestoreSchema(
-  'User meditation progress with sessions, duration, and timestamps'
+  "User meditation progress with sessions, duration, and timestamps"
 );
 
 console.log(schema);
 ```
 
 ### Streaming Response
+
 ```javascript
-import { generateStreamingCompletion } from './utils/ollamaClient';
+import { generateStreamingCompletion } from "./utils/ollamaClient";
 
 await generateStreamingCompletion(
-  'deepseek-coder:6.7b',
-  'Explain React hooks',
+  "deepseek-coder:6.7b",
+  "Explain React hooks",
   (chunk) => {
     console.log(chunk); // Prints each chunk as it arrives
   }
@@ -98,10 +108,11 @@ await generateStreamingCompletion(
 ```
 
 ### Use DevTools Panel
+
 Add the DevTools component to your app:
 
 ```javascript
-import DevTools from './components/DevTools';
+import DevTools from "./components/DevTools";
 
 function App() {
   return (
@@ -114,9 +125,10 @@ function App() {
 ```
 
 Or add it to a route:
+
 ```javascript
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import DevTools from './components/DevTools';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import DevTools from "./components/DevTools";
 
 function App() {
   return (
@@ -133,6 +145,7 @@ function App() {
 ## Features
 
 ### ✅ Advantages
+
 - **100% Local** - No API costs, no data leaves your machine
 - **Fast** - Runs on your local hardware
 - **Private** - Your code and prompts stay private
@@ -140,6 +153,7 @@ function App() {
 - **Free** - No usage limits or API keys needed
 
 ### 🎯 Use Cases
+
 - Generate Firestore schemas and data models
 - Create React components from descriptions
 - Debug and optimize existing code
@@ -149,12 +163,15 @@ function App() {
 - Generate documentation
 
 ### 💻 Models
+
 Currently configured for **DeepSeek Coder 6.7B**:
+
 - Size: 3.8GB
 - Speed: Fast on M1/M2 Macs
 - Quality: Good for most coding tasks
 
 You can also use other models:
+
 ```bash
 # List available models
 ollama list
@@ -169,85 +186,94 @@ ollama pull deepseek-coder:33b  # Larger, better quality (16GB+ RAM needed)
 ### ollamaClient.js
 
 #### generateCompletion(model, prompt, options)
+
 Generate a non-streaming completion.
 
 ```javascript
 const response = await generateCompletion(
-  'deepseek-coder:6.7b',
-  'Write a sorting algorithm',
+  "deepseek-coder:6.7b",
+  "Write a sorting algorithm",
   { temperature: 0.7 }
 );
 ```
 
 #### generateStreamingCompletion(model, prompt, onChunk, options)
+
 Generate a streaming completion with real-time callbacks.
 
 ```javascript
 await generateStreamingCompletion(
-  'deepseek-coder:6.7b',
-  'Explain async/await',
+  "deepseek-coder:6.7b",
+  "Explain async/await",
   (chunk) => console.log(chunk),
   { temperature: 0.5 }
 );
 ```
 
 #### chat(model, messages, options)
+
 Chat with message history.
 
 ```javascript
-const response = await chat('deepseek-coder:6.7b', [
-  { role: 'system', content: 'You are a helpful coding assistant' },
-  { role: 'user', content: 'How do I use useEffect?' }
+const response = await chat("deepseek-coder:6.7b", [
+  { role: "system", content: "You are a helpful coding assistant" },
+  { role: "user", content: "How do I use useEffect?" },
 ]);
 ```
 
 #### isOllamaRunning()
+
 Check if Ollama server is available.
 
 ```javascript
 const running = await isOllamaRunning();
-console.log(running ? 'Online' : 'Offline');
+console.log(running ? "Online" : "Offline");
 ```
 
 #### listModels()
+
 Get all installed models.
 
 ```javascript
 const models = await listModels();
-console.log(models.map(m => m.name));
+console.log(models.map((m) => m.name));
 ```
 
 #### generateFirestoreSchema(description)
+
 Generate a Firestore schema from a description.
 
 ```javascript
 const schema = await generateFirestoreSchema(
-  'Blog posts with title, content, author, tags, and timestamps'
+  "Blog posts with title, content, author, tags, and timestamps"
 );
 ```
 
 #### getCodingHelp(code, question)
+
 Get help with your code.
 
 ```javascript
 const answer = await getCodingHelp(
-  'const [data, setData] = useState([])',
-  'How can I fetch data on mount?'
+  "const [data, setData] = useState([])",
+  "How can I fetch data on mount?"
 );
 ```
 
 #### generateReactComponent(description)
+
 Generate a React component.
 
 ```javascript
 const component = await generateReactComponent(
-  'A button with loading state and icon support'
+  "A button with loading state and icon support"
 );
 ```
 
 ## Troubleshooting
 
 ### Ollama Not Running
+
 ```bash
 # Check status
 brew services list | grep ollama
@@ -260,6 +286,7 @@ brew services info ollama
 ```
 
 ### Model Not Found
+
 ```bash
 # List installed models
 ollama list
@@ -269,13 +296,16 @@ ollama pull deepseek-coder:6.7b
 ```
 
 ### Slow Performance
+
 - DeepSeek Coder 6.7B is optimized for speed
 - For better quality (but slower), use the 33B model
 - Close other heavy applications
 - Check RAM usage (model needs ~4GB loaded)
 
 ### Connection Refused
+
 Verify Ollama is running:
+
 ```bash
 curl http://127.0.0.1:11434/api/tags
 ```
@@ -283,6 +313,7 @@ curl http://127.0.0.1:11434/api/tags
 ## Examples in Action
 
 Run all examples:
+
 ```bash
 # In your terminal
 cd src/utils
@@ -290,6 +321,7 @@ node -e "require('./ollamaExamples').runAllExamples()"
 ```
 
 Or uncomment the last line in `ollamaExamples.js`:
+
 ```javascript
 // Uncomment this line:
 runAllExamples();

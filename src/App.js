@@ -47,6 +47,7 @@ import AdminUsers from "./features/admin/AdminUsers.jsx";
 import AdminAssistants from "./features/admin/AdminAssistants.jsx";
 import AssistantsPage from "./Views/AssistantsPage";
 import CheckInPage from "./Views/CheckInPage";
+import DevTools from "./components/DevTools";
 
 function App() {
   return (
@@ -165,6 +166,14 @@ function App() {
             <Route
               path="/resources/soberLivingHomes/:state"
               element={<SoberHomesState />}
+            />
+            <Route
+              path="/dev-tools"
+              element={
+                <ProtectedRoute roles={["admin"]} requireVerified>
+                  <DevTools />
+                </ProtectedRoute>
+              }
             />
           </Routes>
         </Router>
