@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {getAuth} from 'firebase/auth';
 import {getFirestore, collection, addDoc, serverTimestamp} from 'firebase/firestore';
 import './BreathingTool.css';
@@ -93,7 +93,7 @@ const BreathingTool=({defaultInhale=4,defaultHold=4,defaultExhale=6,defaultCycle
     const totalDuration=cycles*(inhale+hold+exhale);
     const elapsed=running?(new Date()-startedAt)/1000:0;
     return Math.min((elapsed/totalDuration)*100,100);
-  },[running,startedAt,cycles,inhale,hold,exhale]);
+  },[running,startedAt,cycles,inhale,hold,exhale,phase]);
 
   const maxRadius=useMemo(()=>120,[]);
   const radius=useMemo(()=>{
@@ -109,7 +109,7 @@ const BreathingTool=({defaultInhale=4,defaultHold=4,defaultExhale=6,defaultCycle
     return 40;
   },[running,phase,secondsLeft,inhale,hold,exhale,maxRadius]);
 
-  const nextPhase=()=> {
+  const nextPhase=useCallback(()=> {
     if(phase===Phase.Idle){
       setPhase(Phase.Inhale);
       setSecondsLeft(inhale);
@@ -144,7 +144,7 @@ const BreathingTool=({defaultInhale=4,defaultHold=4,defaultExhale=6,defaultCycle
       if(voiceEnabled)speak('Inhale slowly', true);
       return;
     }
-  };
+  },[phase,inhale,hold,exhale,voiceEnabled,currentCycle,cycles]);
 
   const startSession=()=> {
     if(!auth.currentUser){

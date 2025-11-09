@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import "./MeditationTimer.css";
 
 const MeditationTimer = () => {
@@ -164,6 +164,53 @@ const MeditationTimer = () => {
 
   const durations = [5, 10, 15, 20, 25, 30];
 
+  const playBell = useCallback(() => {
+    // In production, this would play an actual bell sound
+    // For now, we'll use the browser's beep or TTS
+    try {
+      const bell = new Audio(
+        "data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGnODuuWYdBjeP1vLNeiwGJHXE8N+SQwoUXLPp6qhVFApFnODuuWYdBjeP1vLMeiwGJHXE8N+SQwoQW7Hnsq1rBwgST5jatW4fBjeP1u3LeSsGI373KJBPRU"
+      );
+      bell.play().catch(() => {});
+    } catch (e) {
+      // Fallback: use system beep via TTS
+      if (window.speechSynthesis) {
+        const utterance = new SpeechSynthesisUtterance("");
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+  }, []);
+
+  const playCompletionBell = useCallback(() => {
+    // Play 3 bells to signal completion
+    playBell();
+    setTimeout(playBell, 500);
+    setTimeout(playBell, 1000);
+  }, [playBell]);
+
+  const handleComplete = useCallback(() => {
+    setIsRunning(false);
+    setSessionComplete(true);
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+    playCompletionBell();
+
+    // Save stats to localStorage
+    const newSessions = totalSessions + 1;
+    const newMinutes = totalMinutes + duration;
+    setTotalSessions(newSessions);
+    setTotalMinutes(newMinutes);
+    localStorage.setItem(
+      "meditationStats",
+      JSON.stringify({
+        sessions: newSessions,
+        minutes: newMinutes,
+        lastSession: new Date().toISOString(),
+      })
+    );
+  }, [totalSessions, totalMinutes, duration, playCompletionBell]);
+
   useEffect(() => {
     if (isRunning && !isPaused) {
       timerRef.current = setInterval(() => {
@@ -196,30 +243,7 @@ const MeditationTimer = () => {
         clearInterval(timerRef.current);
       }
     };
-  }, [isRunning, isPaused, duration, intervalBells, bellInterval]);
-
-  const handleComplete = () => {
-    setIsRunning(false);
-    setSessionComplete(true);
-    if (audioRef.current) {
-      audioRef.current.pause();
-    }
-    playCompletionBell();
-
-    // Save stats to localStorage
-    const newSessions = totalSessions + 1;
-    const newMinutes = totalMinutes + duration;
-    setTotalSessions(newSessions);
-    setTotalMinutes(newMinutes);
-    localStorage.setItem(
-      "meditationStats",
-      JSON.stringify({
-        sessions: newSessions,
-        minutes: newMinutes,
-        lastSession: new Date().toISOString(),
-      })
-    );
-  };
+  }, [isRunning, isPaused, duration, intervalBells, bellInterval, handleComplete, playBell]);
 
   const startSession = () => {
     setIsRunning(true);
@@ -259,30 +283,6 @@ const MeditationTimer = () => {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
-  };
-
-  const playBell = () => {
-    // In production, this would play an actual bell sound
-    // For now, we'll use the browser's beep or TTS
-    try {
-      const bell = new Audio(
-        "data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGnODuuWYdBjeP1vLNeiwGJHXE8N+SQwoUXLPp6qhVFApFnODuuWYdBjeP1vLMeiwGJHXE8N+SQwoQW7Hnsq1rBwgST5jatW4fBjeP1u3LeSsGI373KJBPRU"
-      );
-      bell.play().catch(() => {});
-    } catch (e) {
-      // Fallback: use system beep via TTS
-      if (window.speechSynthesis) {
-        const utterance = new SpeechSynthesisUtterance("");
-        window.speechSynthesis.speak(utterance);
-      }
-    }
-  };
-
-  const playCompletionBell = () => {
-    // Play 3 bells to signal completion
-    playBell();
-    setTimeout(playBell, 500);
-    setTimeout(playBell, 1000);
   };
 
   const formatTime = (seconds) => {
