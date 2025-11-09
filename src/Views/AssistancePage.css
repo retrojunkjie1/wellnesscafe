@@ -984,3 +984,27 @@
     padding: 2rem 1.5rem;
   }
 }
+
+/* ===================================
+   PRINT STYLES
+   =================================== */
+@media print {
+  .assistance-page {
+    padding-top: 0;
+  }
+
+  .cta-buttons,
+  .cta-btn-primary,
+  .cta-btn-secondary,
+  .try-tool-btn,
+  .learn-more-btn,
+  .search-btn,
+  .apply-btn {
+    display: none;
+  }
+
+  * {
+    background: transparent !important;
+    color: #000 !important;
+  }
+}
