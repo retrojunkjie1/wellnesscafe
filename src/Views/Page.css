@@ -21,6 +21,8 @@
   max-width: 1150px;
   margin: 0 auto;
   padding: 96px 20px 40px;
+  position: relative;
+  z-index: 0; /* Ensure stacking context so background stays behind */
 }
 .page-hero {
   padding: 24px 12px 12px;
@@ -122,9 +124,6 @@
 .page .hero-panorama-image:hover {
   transform: scale(1.05);
 }
-
-/* Ensure stacking context so background stays behind */
-.page .container { position: relative; z-index: 0; }
 
 @media (max-width: 900px) {
   .two-col {

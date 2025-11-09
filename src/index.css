@@ -31,22 +31,23 @@ body,
   padding: 0;
   overflow-x: hidden;
   box-sizing: border-box;
+}
 
-  /* Unified page vertical rhythm */
-  .page .wc-glass-title {
-    margin-top: 0;
-  }
-  .page main,
-  .page section {
-    scroll-margin-top: 84px;
-  }
+/* Unified page vertical rhythm */
+.page .wc-glass-title {
+  margin-top: 0;
+}
 
-  /* Subtle enhancement: focus ring for interactive glass cards */
-  .news-card:focus-visible,
-  .wc-glass-card:focus-visible {
-    outline: 2px solid var(--brand, #b388ff);
-    outline-offset: 2px;
-  }
+.page main,
+.page section {
+  scroll-margin-top: 84px;
+}
+
+/* Subtle enhancement: focus ring for interactive glass cards */
+.news-card:focus-visible,
+.wc-glass-card:focus-visible {
+  outline: 2px solid var(--brand, #b388ff);
+  outline-offset: 2px;
 }
 
 *,
