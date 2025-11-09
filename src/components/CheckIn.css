@@ -146,21 +146,11 @@
 .gratitude-input,
 .journal-input {
   width: 100%;
-  padding: 12px;
-  border: 2px solid #e2e8f0;
-  border-radius: 8px;
+  /* Global styles handle color, background, border, padding, and focus */
   font-family: inherit;
-  font-size: 14px;
   line-height: 1.5;
   resize: vertical;
   transition: border-color 0.2s ease;
-}
-
-.gratitude-input:focus,
-.journal-input:focus {
-  outline: none;
-  border-color: #c4a484;
-  box-shadow: 0 0 0 3px rgba(196, 164, 132, 0.1);
 }
 
 /* Submit Button */

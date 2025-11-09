@@ -23,8 +23,10 @@ const ProtectedRoute = ({ children, roles, requireVerified }) => {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  // Optional email verification gate
-  if (requireVerified && !user?.emailVerified) {
+  // Optional email verification gate (skip in development)
+  const isDevelopment = process.env.NODE_ENV === 'development' || window.location.hostname === 'localhost';
+  
+  if (requireVerified && !user?.emailVerified && !isDevelopment) {
     const onResend = async () => {
       setResendMsg("Sending...");
       try {
