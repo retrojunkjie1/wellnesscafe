@@ -204,3 +204,15 @@
     width: 100%;
   }
 }
+
+/* ===================================
+   PRINT STYLES
+   =================================== */
+@media print {
+  .footer,
+  .newsletter-signup,
+  .footer-links,
+  .social-links {
+    display: none !important;
+  }
+}

@@ -449,3 +449,16 @@
     padding: 0.6rem 0.8rem;
   }
 }
+
+/* ===================================
+   PRINT STYLES
+   =================================== */
+@media print {
+  .floating-ai-widget,
+  .floating-ai-button,
+  .floating-ai-panel,
+  .ai-modal,
+  .ai-modal-panel {
+    display: none !important;
+  }
+}

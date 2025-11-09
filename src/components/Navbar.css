@@ -400,3 +400,16 @@
 @media (max-width: 1024px){
   .nav-brand{ gap: 2px; }
 }
+
+/* ===================================
+   PRINT STYLES
+   =================================== */
+@media print {
+  .navbar,
+  .mobile-dropdown,
+  .mobile-backdrop,
+  .nav-links,
+  .hamburger {
+    display: none !important;
+  }
+}
