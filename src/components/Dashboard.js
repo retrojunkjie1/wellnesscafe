@@ -1,13 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "../AuthContext";
+import { useNavigate } from "react-router-dom";
 import CheckIn from "./CheckIn";
 import Progress from "./Progress";
 import "./Dashboard.css";
 
 const Dashboard = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [currentView, setCurrentView] = useState("dashboard"); // dashboard, checkin, progress
   const [lastCheckIn, setLastCheckIn] = useState(null);
+  const [toolsStats, setToolsStats] = useState({
+    breathingSessions: 0,
+    meditationSessions: 0,
+    lastBreathing: null,
+    lastMeditation: null,
+  });
+
+  // Load tool usage stats from localStorage
+  useEffect(() => {
+    const breathingStats = JSON.parse(
+      localStorage.getItem("breathingStats") || '{"totalSessions": 0}'
+    );
+    const meditationStats = JSON.parse(
+      localStorage.getItem("meditationStats") || '{"sessions": 0}'
+    );
+
+    setToolsStats({
+      breathingSessions: breathingStats.totalSessions || 0,
+      meditationSessions: meditationStats.sessions || 0,
+      lastBreathing: breathingStats.lastSession || null,
+      lastMeditation: meditationStats.lastSession || null,
+    });
+  }, [currentView]); // Reload when returning to dashboard
 
   const handleCheckInComplete = (checkInData) => {
     setLastCheckIn(checkInData);
@@ -49,6 +74,7 @@ const Dashboard = () => {
             </div>
 
             <div className="dashboard-grid">
+              {/* Daily Check-in Card */}
               <div className="dashboard-card">
                 <h3>Daily Check-in</h3>
                 <p>How are you feeling today?</p>
@@ -57,7 +83,9 @@ const Dashboard = () => {
                     <p>✅ Completed today!</p>
                     <small>
                       Last check-in:{" "}
-                      {new Date(lastCheckIn.timestamp.toDate()).toLocaleDateString()}
+                      {new Date(
+                        lastCheckIn.timestamp.toDate()
+                      ).toLocaleDateString()}
                     </small>
                   </div>
                 ) : (
@@ -70,6 +98,51 @@ const Dashboard = () => {
                 )}
               </div>
 
+              {/* Recovery Tools - Breathing */}
+              <div className="dashboard-card recovery-tool-card">
+                <div className="tool-header">
+                  <span className="tool-icon">🫁</span>
+                  <div>
+                    <h3>Breathing Exercise</h3>
+                    <p>3-minute calm down</p>
+                  </div>
+                </div>
+                {toolsStats.breathingSessions > 0 && (
+                  <div className="tool-stats-mini">
+                    <span>✓ {toolsStats.breathingSessions} sessions</span>
+                  </div>
+                )}
+                <button
+                  className="dashboard-btn tool-btn"
+                  onClick={() => navigate("/tools/breathing")}
+                >
+                  Start Breathing →
+                </button>
+              </div>
+
+              {/* Recovery Tools - Meditation */}
+              <div className="dashboard-card recovery-tool-card">
+                <div className="tool-header">
+                  <span className="tool-icon">🧘</span>
+                  <div>
+                    <h3>Meditation Timer</h3>
+                    <p>Find your peace</p>
+                  </div>
+                </div>
+                {toolsStats.meditationSessions > 0 && (
+                  <div className="tool-stats-mini">
+                    <span>✓ {toolsStats.meditationSessions} sessions</span>
+                  </div>
+                )}
+                <button
+                  className="dashboard-btn tool-btn"
+                  onClick={() => navigate("/tools/meditation")}
+                >
+                  Start Meditation →
+                </button>
+              </div>
+
+              {/* My Progress Card */}
               <div className="dashboard-card">
                 <h3>My Progress</h3>
                 <p>Track your wellness journey</p>
@@ -81,12 +154,19 @@ const Dashboard = () => {
                 </button>
               </div>
 
-              <div className="dashboard-card">
-                <h3>Upcoming Sessions</h3>
-                <p>Your scheduled appointments</p>
-                <button className="dashboard-btn">View Schedule</button>
+              {/* All Recovery Tools Link */}
+              <div className="dashboard-card tools-overview-card">
+                <h3>All Recovery Tools</h3>
+                <p>Explore breathing, meditation, and more</p>
+                <button
+                  className="dashboard-btn secondary-btn"
+                  onClick={() => navigate("/tools")}
+                >
+                  View All Tools →
+                </button>
               </div>
 
+              {/* Community Card */}
               <div className="dashboard-card">
                 <h3>Community</h3>
                 <p>Connect with others on similar paths</p>
