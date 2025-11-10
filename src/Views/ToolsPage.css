@@ -224,13 +224,17 @@
 }
 
 .preset-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, rgba(212, 180, 131, 0.8), rgba(203, 180, 255, 0.8));
+  background: linear-gradient(
+    90deg,
+    rgba(212, 180, 131, 0.8),
+    rgba(203, 180, 255, 0.8)
+  );
   transform: scaleX(0);
   transition: transform 0.3s ease;
   border-radius: 20px 20px 0 0;
@@ -262,8 +266,13 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 .preset-card h3 {
@@ -277,7 +286,11 @@
 
 .preset-pattern {
   display: inline-block;
-  background: linear-gradient(135deg, rgba(212, 180, 131, 0.3), rgba(203, 180, 255, 0.3));
+  background: linear-gradient(
+    135deg,
+    rgba(212, 180, 131, 0.3),
+    rgba(203, 180, 255, 0.3)
+  );
   color: rgba(255, 255, 255, 0.95);
   padding: 8px 16px;
   border-radius: 20px;
@@ -314,7 +327,7 @@
 }
 
 .preset-benefits li::before {
-  content: '✓';
+  content: "✓";
   color: rgba(212, 180, 131, 0.9);
   font-weight: bold;
   margin-right: 8px;
@@ -396,7 +409,11 @@
 }
 
 .technique-pattern {
-  background: linear-gradient(135deg, rgba(212, 180, 131, 0.3), rgba(203, 180, 255, 0.3));
+  background: linear-gradient(
+    135deg,
+    rgba(212, 180, 131, 0.3),
+    rgba(203, 180, 255, 0.3)
+  );
   color: rgba(255, 255, 255, 0.95);
   padding: 6px 14px;
   border-radius: 16px;
@@ -496,13 +513,17 @@
 }
 
 .tool-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, rgba(212, 180, 131, 0.8), rgba(203, 180, 255, 0.8));
+  background: linear-gradient(
+    90deg,
+    rgba(212, 180, 131, 0.8),
+    rgba(203, 180, 255, 0.8)
+  );
   border-radius: 20px 20px 0 0;
 }
 
@@ -518,7 +539,11 @@
 }
 
 .coming-soon-tool::before {
-  background: linear-gradient(90deg, rgba(255, 167, 38, 0.6), rgba(251, 140, 0, 0.6));
+  background: linear-gradient(
+    90deg,
+    rgba(255, 167, 38, 0.6),
+    rgba(251, 140, 0, 0.6)
+  );
 }
 
 .coming-soon-tool:hover {
@@ -553,7 +578,11 @@
   position: absolute;
   top: 16px;
   right: 16px;
-  background: linear-gradient(135deg, rgba(76, 175, 80, 0.8), rgba(102, 187, 106, 0.8));
+  background: linear-gradient(
+    135deg,
+    rgba(76, 175, 80, 0.8),
+    rgba(102, 187, 106, 0.8)
+  );
   color: white;
   padding: 6px 12px;
   border-radius: 12px;
@@ -572,7 +601,11 @@
   position: absolute;
   top: 16px;
   right: 16px;
-  background: linear-gradient(135deg, rgba(255, 167, 38, 0.8), rgba(251, 140, 0, 0.8));
+  background: linear-gradient(
+    135deg,
+    rgba(255, 167, 38, 0.8),
+    rgba(251, 140, 0, 0.8)
+  );
   color: white;
   padding: 6px 12px;
   border-radius: 12px;
