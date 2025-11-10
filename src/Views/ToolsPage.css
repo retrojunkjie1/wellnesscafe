@@ -1,25 +1,34 @@
-/* ToolsPage.css - Enhanced Recovery Tools Page Styling */
+/* ToolsPage.css - Luxury Glass Morphism Design */
 
 .tools-page {
   background: transparent; /* Use global Aspen background */
+  min-height: 100vh;
 }
 
-/* Enhanced Hero Section */
+/* Enhanced Hero Section - Luxury Glass Style */
 .tools-hero {
   text-align: center;
   padding: 60px 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: rgba(31, 41, 55, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: 24px;
   margin: 32px 0;
   color: white;
-  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .tools-hero-content h1 {
   font-size: 3rem;
   font-weight: 700;
   margin: 0 0 16px 0;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #ffffff 0%, #f0e5d8 40%, #e6d7ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .hero-subtitle {
@@ -28,6 +37,9 @@
   max-width: 800px;
   margin: 0 auto 32px;
   opacity: 0.95;
+  color: rgba(255, 255, 255, 0.9);
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .tools-stats {
@@ -40,24 +52,26 @@
 }
 
 .stat-box {
-  background: rgba(255, 255, 255, 0.15);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 16px;
   padding: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: transform 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: transform 0.3s ease, background 0.3s ease;
 }
 
 .stat-box:hover {
   transform: translateY(-4px);
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .stat-value {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 8px;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .stat-label {
@@ -65,6 +79,8 @@
   opacity: 0.9;
   text-transform: uppercase;
   letter-spacing: 1px;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 /* Section Styling */
@@ -80,27 +96,34 @@
 
 .section-header-center h2 {
   font-size: 2.5rem;
-  color: #2c3e50;
   margin: 0 0 12px 0;
   font-weight: 700;
+  background: linear-gradient(135deg, #ffffff 0%, #f0e5d8 40%, #e6d7ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .section-header-center p {
   font-size: 1.15rem;
-  color: #6c757d;
+  color: rgba(255, 255, 255, 0.8);
   max-width: 700px;
   margin: 0 auto;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
-/* Why These Tools Section */
+/* Why These Tools Section - Luxury Glass */
 .why-tools {
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(31, 41, 55, 0.7);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: 24px;
   padding: 48px 32px;
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .benefits-grid {
@@ -113,61 +136,71 @@
 .benefit-card {
   text-align: center;
   padding: 32px 24px;
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
+  background: rgba(31, 41, 55, 0.6);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   border-radius: 16px;
   transition: all 0.3s ease;
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
 .benefit-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
-  border-color: #667eea;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+  border-color: rgba(212, 180, 131, 0.5);
+  background: rgba(31, 41, 55, 0.75);
 }
 
 .benefit-icon {
-  font-size: 3rem;
+  font-size: 2rem;
   margin-bottom: 16px;
   display: inline-block;
   transition: transform 0.3s ease;
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 50%;
-  padding: 20px;
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
 .benefit-card:hover .benefit-icon {
-  transform: scale(1.2) rotate(5deg);
+  transform: scale(1.1) rotate(5deg);
 }
 
 .benefit-card h3 {
   font-size: 1.4rem;
-  color: #2c3e50;
   margin: 0 0 12px 0;
   font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .benefit-card p {
-  color: #6c757d;
+  color: rgba(255, 255, 255, 0.75);
   line-height: 1.6;
   margin: 0;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
-/* Breathing Presets */
+/* Breathing Presets - Luxury Glass Style */
 .techniques-guide {
   padding: 64px 32px;
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(31, 41, 55, 0.7);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: 24px;
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .presets-grid {
@@ -178,15 +211,16 @@
 }
 
 .preset-card {
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: blur(15px);
+  background: rgba(31, 41, 55, 0.6);
   backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   border-radius: 20px;
   padding: 32px 24px;
   text-align: center;
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
+  position: relative;
 }
 
 .preset-card::before {
@@ -195,10 +229,11 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #667eea, #764ba2);
+  height: 3px;
+  background: linear-gradient(90deg, rgba(212, 180, 131, 0.8), rgba(203, 180, 255, 0.8));
   transform: scaleX(0);
   transition: transform 0.3s ease;
+  border-radius: 20px 20px 0 0;
 }
 
 .preset-card:hover::before,
@@ -208,17 +243,19 @@
 
 .preset-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 32px rgba(102, 126, 234, 0.2);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+  border-color: rgba(212, 180, 131, 0.5);
+  background: rgba(31, 41, 55, 0.75);
 }
 
 .preset-card.selected {
-  border-color: #667eea;
-  background: linear-gradient(135deg, #f0f4ff 0%, #ffffff 100%);
+  border-color: rgba(212, 180, 131, 0.6);
+  background: rgba(31, 41, 55, 0.8);
   transform: translateY(-4px);
 }
 
 .preset-icon {
-  font-size: 3rem;
+  font-size: 1.75rem;
   margin-bottom: 16px;
   display: inline-block;
   animation: float 3s ease-in-out infinite;
@@ -231,27 +268,34 @@
 
 .preset-card h3 {
   font-size: 1.3rem;
-  color: #2c3e50;
+  color: rgba(255, 255, 255, 0.95);
   margin: 0 0 8px 0;
   font-weight: 600;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .preset-pattern {
   display: inline-block;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
+  background: linear-gradient(135deg, rgba(212, 180, 131, 0.3), rgba(203, 180, 255, 0.3));
+  color: rgba(255, 255, 255, 0.95);
   padding: 8px 16px;
   border-radius: 20px;
   font-weight: 600;
   font-size: 1rem;
   margin: 8px 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .preset-description {
   font-size: 0.9rem;
-  color: #6c757d;
+  color: rgba(255, 255, 255, 0.75);
   line-height: 1.5;
   margin: 12px 0;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .preset-benefits {
@@ -263,60 +307,70 @@
 
 .preset-benefits li {
   padding: 6px 0;
-  color: #495057;
+  color: rgba(255, 255, 255, 0.8);
   font-size: 0.9rem;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .preset-benefits li::before {
   content: '✓';
-  color: #4caf50;
+  color: rgba(212, 180, 131, 0.9);
   font-weight: bold;
   margin-right: 8px;
 }
 
-/* Expandable Techniques Section */
+/* Expandable Techniques Section - Luxury Glass */
 .techniques-expandable {
   margin-top: 32px;
-  background: white;
+  background: rgba(31, 41, 55, 0.6);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .expand-btn {
   width: 100%;
   padding: 20px 24px;
-  background: white;
+  background: rgba(255, 255, 255, 0.05);
   border: none;
-  border-bottom: 2px solid #e9ecef;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   cursor: pointer;
   font-size: 1.1rem;
   font-weight: 600;
-  color: #2c3e50;
+  color: rgba(255, 255, 255, 0.95);
   text-align: left;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   gap: 12px;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .expand-btn:hover {
-  background: #f8f9fa;
-  color: #667eea;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(212, 180, 131, 0.95);
 }
 
 .techniques-list {
   padding: 24px;
-  background: #fafbfc;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .technique-item {
   padding: 20px;
-  background: white;
+  background: rgba(31, 41, 55, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 12px;
   margin-bottom: 16px;
-  border-left: 4px solid #667eea;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-left: 3px solid rgba(212, 180, 131, 0.8);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .technique-item:last-child {
@@ -334,47 +388,56 @@
 
 .technique-header h4 {
   font-size: 1.2rem;
-  color: #2c3e50;
+  color: rgba(255, 255, 255, 0.95);
   margin: 0;
   font-weight: 600;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .technique-pattern {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
+  background: linear-gradient(135deg, rgba(212, 180, 131, 0.3), rgba(203, 180, 255, 0.3));
+  color: rgba(255, 255, 255, 0.95);
   padding: 6px 14px;
   border-radius: 16px;
   font-weight: 600;
   font-size: 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .technique-item p {
-  color: #495057;
+  color: rgba(255, 255, 255, 0.8);
   line-height: 1.6;
   margin: 12px 0;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .technique-best-for {
   margin-top: 12px;
   padding-top: 12px;
-  border-top: 1px solid #e9ecef;
-  color: #6c757d;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
   font-size: 0.95rem;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .technique-best-for strong {
-  color: #495057;
+  color: rgba(255, 255, 255, 0.9);
 }
 
-/* Breathing Tool Section */
+/* Breathing Tool Section - Luxury Glass */
 .breathing-tool-section {
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(31, 41, 55, 0.7);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: 24px;
   padding: 48px 32px;
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .tool-introduction {
@@ -384,16 +447,23 @@
 
 .tool-introduction h2 {
   font-size: 2.2rem;
-  color: #2c3e50;
   margin: 0 0 12px 0;
   font-weight: 700;
+  background: linear-gradient(135deg, #ffffff 0%, #f0e5d8 40%, #e6d7ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .tool-introduction p {
   font-size: 1.1rem;
-  color: #6c757d;
+  color: rgba(255, 255, 255, 0.8);
   max-width: 700px;
   margin: 0 auto;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .tool-container {
@@ -401,7 +471,7 @@
   margin: 0 auto;
 }
 
-/* Tools Catalog */
+/* Tools Catalog - Luxury Glass */
 .tools-catalog {
   padding: 48px 0;
 }
@@ -413,14 +483,14 @@
 }
 
 .tool-card {
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(31, 41, 55, 0.7);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: 20px;
   padding: 32px 24px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
-  border: 1px solid var(--glass-border);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
   overflow: hidden;
 }
@@ -431,14 +501,16 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #4caf50, #66bb6a);
+  height: 3px;
+  background: linear-gradient(90deg, rgba(212, 180, 131, 0.8), rgba(203, 180, 255, 0.8));
+  border-radius: 20px 20px 0 0;
 }
 
 .tool-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
-  border-color: #4caf50;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  border-color: rgba(212, 180, 131, 0.5);
+  background: rgba(31, 41, 55, 0.8);
 }
 
 .coming-soon-tool {
@@ -446,32 +518,42 @@
 }
 
 .coming-soon-tool::before {
-  background: linear-gradient(90deg, #ffa726, #fb8c00);
+  background: linear-gradient(90deg, rgba(255, 167, 38, 0.6), rgba(251, 140, 0, 0.6));
 }
 
 .coming-soon-tool:hover {
   opacity: 1;
-  border-color: #ffa726;
+  border-color: rgba(255, 167, 38, 0.5);
 }
 
 .tool-icon {
-  font-size: 3rem;
+  font-size: 1.75rem;
   margin-bottom: 16px;
   display: inline-block;
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 50%;
-  padding: 20px;
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.tool-card:hover .tool-icon {
+  transform: scale(1.1);
 }
 
 .tool-status-badge {
   position: absolute;
   top: 16px;
   right: 16px;
-  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.8), rgba(102, 187, 106, 0.8));
   color: white;
   padding: 6px 12px;
   border-radius: 12px;
@@ -479,31 +561,45 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .tool-eta-badge {
   position: absolute;
   top: 16px;
   right: 16px;
-  background: linear-gradient(135deg, #ffa726, #fb8c00);
+  background: linear-gradient(135deg, rgba(255, 167, 38, 0.8), rgba(251, 140, 0, 0.8));
   color: white;
   padding: 6px 12px;
   border-radius: 12px;
   font-size: 0.75rem;
   font-weight: 600;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .tool-card h3 {
   font-size: 1.5rem;
-  color: #2c3e50;
+  color: rgba(255, 255, 255, 0.95);
   margin: 8px 0 12px 0;
   font-weight: 600;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .tool-card p {
-  color: #6c757d;
+  color: rgba(255, 255, 255, 0.75);
   line-height: 1.6;
   margin: 12px 0 16px;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .tool-features {
@@ -514,24 +610,26 @@
 
 .tool-features li {
   padding: 8px 0;
-  color: #495057;
+  color: rgba(255, 255, 255, 0.8);
   font-size: 0.95rem;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .tool-features li:last-child {
   border-bottom: none;
 }
 
-/* Success Stories */
+/* Success Stories - Luxury Glass */
 .success-stories {
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(31, 41, 55, 0.7);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: 24px;
   padding: 64px 32px;
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .testimonials-grid {
@@ -542,60 +640,68 @@
 }
 
 .testimonial-card {
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: blur(15px);
+  background: rgba(31, 41, 55, 0.6);
   backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   border-radius: 20px;
   padding: 32px;
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
 }
 
 .testimonial-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+  border-color: rgba(212, 180, 131, 0.5);
+  background: rgba(31, 41, 55, 0.75);
 }
 
 .testimonial-rating {
-  color: #ffa726;
+  color: rgba(255, 167, 38, 0.9);
   font-size: 1.5rem;
   margin-bottom: 16px;
 }
 
 .testimonial-text {
-  color: #495057;
+  color: rgba(255, 255, 255, 0.85);
   line-height: 1.7;
   font-size: 1.05rem;
   font-style: italic;
   margin: 16px 0;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .testimonial-author {
-  color: #6c757d;
+  color: rgba(255, 255, 255, 0.65);
   font-size: 0.9rem;
   margin-top: 16px;
   padding-top: 16px;
-  border-top: 1px solid #e9ecef;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
-/* Professional Resources */
+/* Professional Resources - Luxury Glass */
 .professional-resources {
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(31, 41, 55, 0.7);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: 24px;
   padding: 48px 32px;
   text-align: center;
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .resources-content h2 {
   font-size: 2rem;
-  color: #c62828;
+  color: rgba(255, 107, 107, 0.95);
   margin: 0 0 16px 0;
   font-weight: 700;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .resources-content p {

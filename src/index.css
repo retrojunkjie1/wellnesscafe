@@ -31,9 +31,12 @@ body,
   padding: 0;
   overflow-x: hidden;
   box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  /* Better font rendering on all backgrounds */
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: geometricPrecision;
+  font-feature-settings: "kern" 1;
+  font-kerning: normal;
 }
 
 /* Unified page vertical rhythm */
@@ -64,9 +67,11 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
-  -webkit-font-smoothing: antialiased;
+  /* Better font rendering on all backgrounds */
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  text-rendering: geometricPrecision;
   --text-strong: #ffffff; /* higher-contrast body copy */
-  -moz-osx-font-smoothing: grayscale;
   color: var(--text);
   /* Global unified background: Aspen-7 with an infinite feel */
   background-color: #0b1220; /* fallback */
