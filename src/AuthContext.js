@@ -98,17 +98,42 @@ export const AuthProvider = ({ children }) => {
       password
     );
     try {
-      // Fire-and-forget email verification; errors are non-fatal
-      await sendEmailVerification(userCredential.user);
+      // Enhanced email verification with action code settings
+      const actionCodeSettings = {
+        url: `${window.location.origin}/dashboard`,
+        handleCodeInApp: true,
+      };
+
+      await sendEmailVerification(userCredential.user, actionCodeSettings);
+      // eslint-disable-next-line no-console
+      console.log("✅ Verification email sent successfully to:", email);
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.warn("email verification send failed", e);
+      console.error("❌ Email verification send failed:", e);
+
+      // Specific error handling for better user feedback
+      if (e.code === "auth/too-many-requests") {
+        throw new Error(
+          "Too many requests. Please wait a few minutes and check your email."
+        );
+      } else if (e.code === "auth/invalid-email") {
+        throw new Error("Invalid email address. Please check and try again.");
+      } else if (e.code === "auth/unauthorized-domain") {
+        throw new Error(
+          "Email verification is not configured for this domain. Please contact support."
+        );
+      }
+      // Don't fail the signup for other errors, just warn
+      // eslint-disable-next-line no-console
+      console.warn("Non-fatal: Email verification may not have been sent");
     }
     // Create user document in Firestore if available
     if (db) {
       await setDoc(doc(db, "users", userCredential.user.uid), {
         email: userCredential.user.email,
         createdAt: new Date(),
+        emailVerificationSent: true,
+        emailVerificationSentAt: new Date().toISOString(),
         ...additionalData,
       });
     }
