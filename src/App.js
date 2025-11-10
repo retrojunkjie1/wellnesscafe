@@ -30,6 +30,8 @@ import ProductPage from "./Views/ProductPage";
 import ToolsPage from "./Views/ToolsPage";
 import BreathingToolPage from "./Views/tools/BreathingToolPage";
 import MeditationTimerPage from "./Views/tools/MeditationTimerPage";
+import TriggerTrackerPage from "./Views/tools/TriggerTrackerPage";
+import MoodCheckInPage from "./Views/tools/MoodCheckInPage";
 import BlogPage from "./Views/BlogPage";
 import PrivacyPage from "./Views/PrivacyPage";
 import TraumaEducationPage from "./Views/TraumaEducationPage";
@@ -48,6 +50,7 @@ import AdminAssistants from "./features/admin/AdminAssistants.jsx";
 import AssistantsPage from "./Views/AssistantsPage";
 import CheckInPage from "./Views/CheckInPage";
 import DevTools from "./components/DevTools";
+import AuthDebug from "./components/AuthDebug";
 
 function App() {
   return (
@@ -147,6 +150,22 @@ function App() {
             <Route path="/tools" element={<ToolsPage />} />
             <Route path="/tools/breathing" element={<BreathingToolPage />} />
             <Route path="/tools/meditation" element={<MeditationTimerPage />} />
+            <Route
+              path="/tools/trigger-tracker"
+              element={
+                <ProtectedRoute requireVerified>
+                  <TriggerTrackerPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/tools/mood-checkin"
+              element={
+                <ProtectedRoute requireVerified>
+                  <MoodCheckInPage />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/trauma-education" element={<TraumaEducationPage />} />
             <Route path="/about" element={<AboutPage />} />
@@ -175,6 +194,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route path="/auth-debug" element={<AuthDebug />} />
           </Routes>
         </Router>
       </ThemeProvider>

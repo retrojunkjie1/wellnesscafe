@@ -11,6 +11,29 @@ service cloud.firestore {
         allow read, write: if request.auth != null && request.auth.uid == userId;
       }
       
+      // Trigger tracker - users can only access their own triggers
+      match /triggers/{triggerId} {
+        allow read, create, update: if request.auth != null && request.auth.uid == userId;
+        allow delete: if false; // Prevent accidental deletion
+      }
+      
+      // Mood check-ins - users can only access their own moods
+      match /moods/{moodId} {
+        allow read, create, update, list: if request.auth != null && request.auth.uid == userId;
+        allow delete: if request.auth != null && request.auth.uid == userId;
+      }
+      
+      // Affirmation preferences - users can read/write their own preferences
+      match /aff_prefs/{prefId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+      
+      // User affirmations - users can only access their own affirmations
+      match /affirmations/{affirmationId} {
+        allow read, create, update, list: if request.auth != null && request.auth.uid == userId;
+        allow delete: if request.auth != null && request.auth.uid == userId;
+      }
+      
       // Sober homes data (if needed)
       match /soberHomes/{homeId} {
         allow read: if request.auth != null;

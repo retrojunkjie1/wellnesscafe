@@ -1,0 +1,150 @@
+/* Mood Heatmap Styles */
+.mood-heatmap-container {
+  background: rgba(31, 41, 55, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 180, 131, 0.2);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  margin: 2rem 0;
+}
+
+.heatmap-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: #d4b483;
+}
+
+.heatmap-subtitle {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin: 0 0 2rem 0;
+}
+
+.heatmap-wrapper {
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
+/* Override react-calendar-heatmap default styles */
+.react-calendar-heatmap {
+  width: 100%;
+  height: auto;
+  font-size: 12px;
+}
+
+.react-calendar-heatmap text {
+  fill: rgba(255, 255, 255, 0.6);
+  font-size: 10px;
+}
+
+.react-calendar-heatmap .react-calendar-heatmap-weekday-labels text {
+  fill: rgba(255, 255, 255, 0.8);
+}
+
+.react-calendar-heatmap rect {
+  rx: 2;
+  ry: 2;
+}
+
+/* Color scale for mood values */
+.react-calendar-heatmap .color-empty {
+  fill: rgba(31, 41, 55, 0.5);
+  stroke: rgba(212, 180, 131, 0.1);
+  stroke-width: 1;
+}
+
+.react-calendar-heatmap .color-scale-1 {
+  fill: #dc2626; /* Red - low mood (1-3) */
+}
+
+.react-calendar-heatmap .color-scale-2 {
+  fill: #f97316; /* Orange - below average (4-5) */
+}
+
+.react-calendar-heatmap .color-scale-3 {
+  fill: #facc15; /* Yellow - neutral (6-7) */
+}
+
+.react-calendar-heatmap .color-scale-4 {
+  fill: #84cc16; /* Light green - good (8) */
+}
+
+.react-calendar-heatmap .color-scale-5 {
+  fill: #22c55e; /* Green - great (9-10) */
+}
+
+.react-calendar-heatmap rect:hover {
+  stroke: #d4b483;
+  stroke-width: 2;
+  opacity: 0.9;
+}
+
+/* Legend */
+.heatmap-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(212, 180, 131, 0.2);
+}
+
+.legend-label {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.legend-colors {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.legend-color {
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: help;
+}
+
+.heatmap-empty {
+  text-align: center;
+  padding: 2rem;
+  opacity: 0.7;
+  font-size: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .mood-heatmap-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .heatmap-wrapper {
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .react-calendar-heatmap {
+    min-width: 600px;
+  }
+
+  .heatmap-title {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .heatmap-legend {
+    flex-wrap: wrap;
+    font-size: 0.75rem;
+  }
+
+  .legend-color {
+    width: 16px;
+    height: 16px;
+  }
+}

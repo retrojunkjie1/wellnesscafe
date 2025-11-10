@@ -10,7 +10,7 @@
   position: -webkit-sticky;
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 100;
   width: 100%;
   max-width: 100vw;
   box-sizing: border-box;
@@ -20,6 +20,8 @@
   min-height: 60px;
   max-height: 70px;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Homepage - Start transparent */
@@ -64,6 +66,8 @@
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.6);
   transition: all 0.3s ease;
   white-space: nowrap;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .navbar.homepage .nav-logo {
@@ -113,7 +117,7 @@
 }
 
 .desktop-nav a::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -2px;
   left: 0;
@@ -191,29 +195,36 @@
 .mobile-dropdown {
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  z-index: 9999;
   display: grid;
   grid-template-rows: 1fr auto;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-8px);
+  transform: translate3d(0, -8px, 0);
   transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+  will-change: opacity, transform;
 }
 
-.mobile-dropdown.open { opacity: 1; visibility: visible; transform: translateY(0); }
+.mobile-dropdown.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translate3d(0, 0, 0);
+}
 
 /* clickable backdrop */
-.mobile-backdrop{
+.mobile-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.45);
+  background: rgba(0, 0, 0, 0.45);
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
   opacity: 0;
   transition: opacity 0.25s ease;
   border: none;
 }
-.mobile-backdrop.show{opacity: 1;}
+.mobile-backdrop.show {
+  opacity: 1;
+}
 
 .mobile-nav-links {
   list-style: none;
@@ -225,7 +236,7 @@
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   border-top: 1px solid rgba(212, 180, 131, 0.25);
-  box-shadow: 0 -6px 24px rgba(0,0,0,0.45);
+  box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.45);
 }
 
 .mobile-nav-links li {
@@ -245,6 +256,8 @@
   transition: all 0.2s ease;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
   -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .mobile-nav-links a:hover {
@@ -367,7 +380,11 @@
     display: none;
   }
 
-  .mobile-nav { display: block; position: relative; z-index: 1100; }
+  .mobile-nav {
+    display: block;
+    position: relative;
+    z-index: 1100;
+  }
 
   .nav-brand {
     flex-direction: column;
@@ -397,6 +414,8 @@
 }
 
 /* Keep radio under the brand on all breakpoints; fine-tune spacing on tablets */
-@media (max-width: 1024px){
-  .nav-brand{ gap: 2px; }
+@media (max-width: 1024px) {
+  .nav-brand {
+    gap: 2px;
+  }
 }

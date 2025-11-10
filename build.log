@@ -1,0 +1,88 @@
+
+> wellcafeland@0.1.0 build
+> react-scripts build
+
+Creating an optimized production build...
+Compiled with warnings.
+
+[eslint] 
+src/features/recovery/tools/BreathingTool.jsx
+  Line 96:5:   React Hook useMemo has a missing dependency: 'phase'. Either include it or remove the dependency array                                                                                 react-hooks/exhaustive-deps
+  Line 112:9:  The 'nextPhase' function makes the dependencies of useEffect Hook (at line 210) change on every render. To fix this, wrap the definition of 'nextPhase' in its own useCallback() Hook  react-hooks/exhaustive-deps
+
+src/features/recovery/tools/MeditationTimer.jsx
+  Line 199:6:  React Hook useEffect has a missing dependency: 'handleComplete'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+Search for the keywords to learn more about each warning.
+To ignore, add // eslint-disable-next-line to the line before.
+
+File sizes after gzip:
+
+  397.03 kB  build/static/js/main.3b2f156a.js
+  35.67 kB   build/static/css/main.19275baa.css
+  6.39 kB    build/static/js/6068.c0c201f7.chunk.js
+  3.75 kB    build/static/js/2662.9214dfd1.chunk.js
+  1.76 kB    build/static/js/6453.065ba9ff.chunk.js
+  1.68 kB    build/static/js/9677.b76cb8ad.chunk.js
+  1.5 kB     build/static/js/9582.ad3f907e.chunk.js
+  1.43 kB    build/static/js/3822.4acb43fd.chunk.js
+  1.39 kB    build/static/js/8661.4f7b8f21.chunk.js
+  1.3 kB     build/static/js/575.7f90492d.chunk.js
+  1.14 kB    build/static/js/6180.51c01341.chunk.js
+  1.04 kB    build/static/js/3089.e2999692.chunk.js
+  881 B      build/static/js/7489.a2d84cc8.chunk.js
+  231 B      build/static/js/9879.72611b0f.chunk.js
+  231 B      build/static/js/1519.07b997d4.chunk.js
+  231 B      build/static/js/2468.01cd6596.chunk.js
+  231 B      build/static/js/8152.9f2509d3.chunk.js
+  230 B      build/static/js/8849.7f3de654.chunk.js
+  229 B      build/static/js/2484.eba3665a.chunk.js
+  229 B      build/static/js/9614.6e22b8db.chunk.js
+  229 B      build/static/js/7010.769c973a.chunk.js
+  229 B      build/static/js/5390.b580b350.chunk.js
+  229 B      build/static/js/9205.35625277.chunk.js
+  229 B      build/static/js/2158.901325dd.chunk.js
+  228 B      build/static/js/1066.bb78de0c.chunk.js
+  228 B      build/static/js/2165.64dc5820.chunk.js
+  228 B      build/static/js/3538.4a8eaf31.chunk.js
+  228 B      build/static/js/9817.76012316.chunk.js
+  228 B      build/static/js/7945.2f65d371.chunk.js
+  228 B      build/static/js/4718.25728e73.chunk.js
+  227 B      build/static/js/7905.342fed44.chunk.js
+  227 B      build/static/js/9626.7aa84455.chunk.js
+  227 B      build/static/js/1143.5516d951.chunk.js
+  227 B      build/static/js/6858.c18ed173.chunk.js
+  227 B      build/static/js/6664.fd502298.chunk.js
+  227 B      build/static/js/580.30cd26b6.chunk.js
+  227 B      build/static/js/139.6940ee2f.chunk.js
+  226 B      build/static/js/2029.87a64e4f.chunk.js
+  226 B      build/static/js/2426.8de75ee3.chunk.js
+  226 B      build/static/js/6362.b605eaf1.chunk.js
+  226 B      build/static/js/8778.dfcb1e3b.chunk.js
+  226 B      build/static/js/9081.8f6cc5ee.chunk.js
+  226 B      build/static/js/7557.99862648.chunk.js
+  226 B      build/static/js/2487.c96278af.chunk.js
+  226 B      build/static/js/4511.92d7346f.chunk.js
+  226 B      build/static/js/5769.195b9b43.chunk.js
+  226 B      build/static/js/8219.f6b9320b.chunk.js
+  226 B      build/static/js/5240.b89d4576.chunk.js
+  225 B      build/static/js/8586.f4a203ed.chunk.js
+  225 B      build/static/js/9808.7a92733c.chunk.js
+  224 B      build/static/js/9950.fe0a65ea.chunk.js
+  224 B      build/static/js/5555.f76b7157.chunk.js
+  224 B      build/static/js/7610.173dc373.chunk.js
+  224 B      build/static/js/1228.b579a951.chunk.js
+  224 B      build/static/js/1371.51ee6878.chunk.js
+
+The project was built assuming it is hosted at /.
+You can control this with the homepage field in your package.json.
+
+The build folder is ready to be deployed.
+You may serve it with a static server:
+
+  serve -s build
+
+Find out more about deployment here:
+
+  https://cra.link/deployment
+

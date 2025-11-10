@@ -1,8 +1,9 @@
 // src/firebase.js
 // Initializes Firebase when env config is available; otherwise falls back to offline mode.
 import { initializeApp, getApps } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { getFunctions } from "firebase/functions";
 import { firebaseConfig } from "./firebase/firebaseConfig";
 
 let app = null;
@@ -20,6 +21,13 @@ try {
 
 export const auth = app ? getAuth(app) : null;
 export const db = app ? getFirestore(app) : null;
+export const functions = app ? getFunctions(app) : null;
+
+// Utility: Subscribe to auth state changes
+export const onUid = (callback) => {
+  if (!auth) return () => {};
+  return onAuthStateChanged(auth, (user) => callback(user?.uid || null));
+};
 
 /*
 Firestore data model (example):

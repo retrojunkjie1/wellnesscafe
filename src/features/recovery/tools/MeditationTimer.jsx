@@ -262,17 +262,38 @@ const MeditationTimer = () => {
   };
 
   const playBell = () => {
-    // In production, this would play an actual bell sound
-    // For now, we'll use the browser's beep or TTS
+    // Play a bell sound using Web Audio API
     try {
-      const bell = new Audio(
-        "data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGnODuuWYdBjeP1vLNeiwGJHXE8N+SQwoUXLPp6qhVFApFnODuuWYdBjeP1vLMeiwGJHXE8N+SQwoQW7Hnsq1rBwgST5jatW4fBjeP1u3LeSsGI373KJBPRU"
+      const audioContext = new (window.AudioContext ||
+        window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+
+      // Bell-like sound: high frequency with decay
+      oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+      oscillator.frequency.exponentialRampToValueAtTime(
+        400,
+        audioContext.currentTime + 0.1
       );
-      bell.play().catch(() => {});
+
+      // Decay envelope
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(
+        0.01,
+        audioContext.currentTime + 1
+      );
+
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 1);
     } catch (e) {
       // Fallback: use system beep via TTS
+      console.warn("Audio playback failed:", e);
       if (window.speechSynthesis) {
-        const utterance = new SpeechSynthesisUtterance("");
+        const utterance = new SpeechSynthesisUtterance("🔔");
+        utterance.volume = 0.1;
         window.speechSynthesis.speak(utterance);
       }
     }

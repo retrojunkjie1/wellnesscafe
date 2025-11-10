@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import "./Navbar.css";
 import RadioPlayer from "./RadioPlayer.jsx";
-import FloatingAIWidget from "./FloatingAIWidget";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,19 +19,19 @@ const Navbar = () => {
   }, []);
 
   const toggleMenu = () => {
-    setIsMenuOpen((prev)=>{
+    setIsMenuOpen((prev) => {
       const next = !prev;
       // Robust body scroll lock for iOS Safari as well
-      document.documentElement.style.overflow = next ? 'hidden' : '';
-      document.body.style.overflow = next ? 'hidden' : '';
+      document.documentElement.style.overflow = next ? "hidden" : "";
+      document.body.style.overflow = next ? "hidden" : "";
       return next;
     });
   };
 
   const closeMenu = () => {
     setIsMenuOpen(false);
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
   };
 
   const handleLogout = async () => {
@@ -45,15 +44,13 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+    <nav className={`navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="nav-brand">
         <Link to="/" className="nav-logo" aria-label="Go to homepage">
           WELLNESSCAFE
         </Link>
         <div className="nav-under">
           <RadioPlayer variant="navbar" />
-          <span className="nav-separator">|</span>
-          <FloatingAIWidget variant="navbar" />
         </div>
       </div>
 
@@ -140,7 +137,11 @@ const Navbar = () => {
           role="dialog"
           aria-modal="true"
         >
-          <button className={`mobile-backdrop ${isMenuOpen ? 'show' : ''}`} onClick={closeMenu} aria-label="Close menu overlay" />
+          <button
+            className={`mobile-backdrop ${isMenuOpen ? "show" : ""}`}
+            onClick={closeMenu}
+            aria-label="Close menu overlay"
+          />
           <ul className="mobile-nav-links">
             <li>
               <Link to="/" onClick={closeMenu}>

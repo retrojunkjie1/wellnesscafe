@@ -222,6 +222,17 @@
   font-weight: 500;
 }
 
+/* Full-width card for heatmap */
+.dashboard-card.full-width {
+  grid-column: 1 / -1;
+  padding: 0;
+  overflow: hidden;
+}
+
+.dashboard-card.full-width > * {
+  margin: 0;
+}
+
 @media (max-width: 768px) {
   .dashboard-container {
     padding: 1rem;

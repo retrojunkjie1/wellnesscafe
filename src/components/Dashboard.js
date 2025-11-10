@@ -3,6 +3,8 @@ import { useAuth } from "../AuthContext";
 import { useNavigate } from "react-router-dom";
 import CheckIn from "./CheckIn";
 import Progress from "./Progress";
+import DashboardPin from "./DashboardPin";
+import MoodHeatmap from "./MoodHeatmap";
 import "./Dashboard.css";
 
 const Dashboard = () => {
@@ -73,7 +75,15 @@ const Dashboard = () => {
               <p>Your personalized wellness dashboard</p>
             </div>
 
+            {/* Daily Affirmation Pin */}
+            <DashboardPin />
+
             <div className="dashboard-grid">
+              {/* Mood Heatmap - Full Width */}
+              <div className="dashboard-card full-width">
+                <MoodHeatmap />
+              </div>
+
               {/* Daily Check-in Card */}
               <div className="dashboard-card">
                 <h3>Daily Check-in</h3>
@@ -139,6 +149,40 @@ const Dashboard = () => {
                   onClick={() => navigate("/tools/meditation")}
                 >
                   Start Meditation →
+                </button>
+              </div>
+
+              {/* Mood Check-In Card */}
+              <div className="dashboard-card recovery-tool-card">
+                <div className="tool-header">
+                  <span className="tool-icon">😊</span>
+                  <div>
+                    <h3>Mood Check-In</h3>
+                    <p>Track your emotional wellness</p>
+                  </div>
+                </div>
+                <button
+                  className="dashboard-btn tool-btn"
+                  onClick={() => navigate("/tools/mood-checkin")}
+                >
+                  Check My Mood →
+                </button>
+              </div>
+
+              {/* Trigger Tracker Card */}
+              <div className="dashboard-card recovery-tool-card">
+                <div className="tool-header">
+                  <span className="tool-icon">📊</span>
+                  <div>
+                    <h3>Trigger Tracker</h3>
+                    <p>Identify patterns & get insights</p>
+                  </div>
+                </div>
+                <button
+                  className="dashboard-btn tool-btn"
+                  onClick={() => navigate("/tools/trigger-tracker")}
+                >
+                  Track Triggers →
                 </button>
               </div>
 
