@@ -135,29 +135,39 @@ const BreathingTool = ({
   useEffect(() => {
     const loadVoices = () => {
       const allVoices = window.speechSynthesis.getVoices();
-      
+
       // Filter for high-quality English voices only
       const premiumVoiceNames = [
-        'Samantha', 'Alex', 'Victoria', 'Karen', 'Daniel', 'Moira',  // macOS premium
-        'Google US English', 'Google UK English Female', 'Google UK English Male',  // Chrome
-        'Microsoft Zira', 'Microsoft David',  // Windows
-        'Fiona', 'Tessa'  // iOS premium
+        "Samantha",
+        "Alex",
+        "Victoria",
+        "Karen",
+        "Daniel",
+        "Moira", // macOS premium
+        "Google US English",
+        "Google UK English Female",
+        "Google UK English Male", // Chrome
+        "Microsoft Zira",
+        "Microsoft David", // Windows
+        "Fiona",
+        "Tessa", // iOS premium
       ];
-      
-      const qualityVoices = allVoices.filter(v => 
-        v.lang.startsWith('en') && (
-          premiumVoiceNames.some(name => v.name.includes(name)) ||
-          v.name.includes('Premium') ||
-          v.name.includes('Enhanced') ||
-          v.localService === true
-        )
+
+      const qualityVoices = allVoices.filter(
+        (v) =>
+          v.lang.startsWith("en") &&
+          (premiumVoiceNames.some((name) => v.name.includes(name)) ||
+            v.name.includes("Premium") ||
+            v.name.includes("Enhanced") ||
+            v.localService === true)
       );
-      
+
       // If no premium voices found, fall back to first 5 English voices
-      const filteredVoices = qualityVoices.length > 0 
-        ? qualityVoices.slice(0, 8)  // Max 8 premium voices
-        : allVoices.filter(v => v.lang.startsWith('en')).slice(0, 5);
-      
+      const filteredVoices =
+        qualityVoices.length > 0
+          ? qualityVoices.slice(0, 8) // Max 8 premium voices
+          : allVoices.filter((v) => v.lang.startsWith("en")).slice(0, 5);
+
       setAvailableVoices(filteredVoices);
       // Set default to first English voice if available
       if (!selectedVoice && filteredVoices.length > 0) {

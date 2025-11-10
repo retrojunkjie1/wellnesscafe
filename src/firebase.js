@@ -4,6 +4,7 @@ import { initializeApp, getApps } from "firebase/app";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getFunctions } from "firebase/functions";
+import { getStorage } from "firebase/storage";
 import { firebaseConfig } from "./firebase/firebaseConfig";
 
 let app = null;
@@ -22,6 +23,7 @@ try {
 export const auth = app ? getAuth(app) : null;
 export const db = app ? getFirestore(app) : null;
 export const functions = app ? getFunctions(app) : null;
+export const storage = app ? getStorage(app) : null;
 
 // Utility: Subscribe to auth state changes
 export const onUid = (callback) => {
