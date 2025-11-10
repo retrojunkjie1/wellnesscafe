@@ -11,29 +11,34 @@
 ## 🎯 Features Implemented
 
 ### ✅ **Full Firebase Integration**
+
 - **Firestore**: Auto-saves every session to `urgeSurfingSessions` collection
 - **Storage**: Loads guided meditation audio from `urge-surfing/guide.mp3`
 - **Real-time**: Fetches last 10 sessions on load, updates live
 
 ### 📊 **Session Tracking**
+
 - Duration timer with animated breathing circle
 - Intensity slider (1-5 scale) sampled every 5 seconds
 - Live heatmap visualization (60 data points)
 - Automatic Firestore save on stop with timestamp
 
 ### 📈 **Analytics & Charts**
+
 - **Duration Trends**: Line chart showing session lengths over time
 - **Intensity Patterns**: Bar chart displaying average urge intensity
 - **Stats Panel**: Total sessions, streak counter, avg duration
 - **Recent Sessions**: Scrollable history with affirmations
 
 ### 🎨 **Luxury UI Components**
+
 - Animated wave background (SVG with continuous motion)
 - Breathing circle with 4-phase cycle (inhale/hold/exhale/hold)
 - Glass morphism cards with brand orange accents
 - Responsive grid layout (mobile-friendly)
 
 ### 🧘 **Mindfulness Tools**
+
 - Random affirmation library (9 powerful mantras)
 - Quick techniques panel (5-4-3-2-1, box-breathing, cold-water)
 - Guided meditation audio player
@@ -44,6 +49,7 @@
 ## 🔧 Setup Instructions
 
 ### 1️⃣ **Firebase Storage Audio (Optional)**
+
 Upload a guided meditation audio file to Firebase Storage:
 
 ```bash
@@ -52,6 +58,7 @@ urge-surfing/guide.mp3
 ```
 
 Or use Firebase CLI:
+
 ```bash
 firebase deploy --only storage
 ```
@@ -59,6 +66,7 @@ firebase deploy --only storage
 The dashboard will gracefully handle missing audio with an info message.
 
 ### 2️⃣ **Firestore Security Rules**
+
 Add these rules to allow authenticated users to save sessions:
 
 ```javascript
@@ -74,18 +82,20 @@ service cloud.firestore {
 ```
 
 Deploy:
+
 ```bash
 firebase deploy --only firestore:rules
 ```
 
 ### 3️⃣ **Add to Your Routes**
+
 Import and use the dashboard in your app:
 
 ```jsx
 // In your App.js or router file
-import UrgeSurfingDashboard from './pages/tools/UrgeSurfingDashboard';
+import UrgeSurfingDashboard from "./pages/tools/UrgeSurfingDashboard";
 
-<Route path="/tools/urge-surfing" element={<UrgeSurfingDashboard />} />
+<Route path="/tools/urge-surfing" element={<UrgeSurfingDashboard />} />;
 ```
 
 ---
@@ -93,6 +103,7 @@ import UrgeSurfingDashboard from './pages/tools/UrgeSurfingDashboard';
 ## 📊 Data Structure
 
 ### Firestore Collection: `urgeSurfingSessions`
+
 ```javascript
 {
   duration: 180,              // seconds
@@ -148,16 +159,19 @@ Just let me know which tool you'd like next! 🎯
 ## 🐛 Troubleshooting
 
 **Audio not loading?**
+
 - Check Firebase Storage has `urge-surfing/guide.mp3`
 - Verify CORS settings allow your domain
 - Check browser console for specific errors
 
 **Sessions not saving?**
+
 - Ensure user is authenticated (check `auth.currentUser`)
 - Verify Firestore rules allow write access
 - Check browser console for Firestore errors
 
 **Charts not showing?**
+
 - Need at least 1 completed session
 - Charts appear automatically after first session
 - Refresh page to reload session data
