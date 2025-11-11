@@ -1,7 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import AffirmationsGenerator from '../../features/recovery/tools/AffirmationsGenerator';
-import './ToolPage.css';
+import React from "react";
+import { Link } from "react-router-dom";
+import AffirmationsGenerator from "../../features/recovery/tools/AffirmationsGenerator";
+import "./ToolPage.css";
 
 const AffirmationsGeneratorPage = () => {
   return (
@@ -17,10 +17,11 @@ const AffirmationsGeneratorPage = () => {
         <div className="tool-intro">
           <h1>Daily Affirmations</h1>
           <p className="tool-description">
-            Generate powerful affirmations across five categories designed to support your recovery, 
-            build confidence, and cultivate inner peace. Save favorites and share inspiration with others.
+            Generate powerful affirmations across five categories designed to
+            support your recovery, build confidence, and cultivate inner peace.
+            Save favorites and share inspiration with others.
           </p>
-          
+
           <div className="tool-stats">
             <div className="stat-item">
               <span className="stat-value">100+</span>
@@ -67,9 +68,10 @@ const AffirmationsGeneratorPage = () => {
         <div className="tool-footer-cta">
           <h2>Transform Your Mindset with Affirmations</h2>
           <p>
-            Affirmations are more than just positive thinking—they're a scientifically-supported 
-            tool for rewiring neural pathways and building resilience. Regular practice can reduce 
-            stress, increase self-esteem, and support lasting behavioral change.
+            Affirmations are more than just positive thinking—they're a
+            scientifically-supported tool for rewiring neural pathways and
+            building resilience. Regular practice can reduce stress, increase
+            self-esteem, and support lasting behavioral change.
           </p>
           <div className="cta-buttons">
             <Link to="/signup" className="cta-btn primary">

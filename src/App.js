@@ -157,8 +157,14 @@ function App() {
             <Route path="/tools" element={<ToolsPage />} />
             <Route path="/tools/breathing" element={<BreathingToolPage />} />
             <Route path="/tools/meditation" element={<MeditationTimerPage />} />
-            <Route path="/tools/affirmations" element={<AffirmationsGeneratorPage />} />
-            <Route path="/tools/stress-assessment" element={<StressAssessmentPage />} />
+            <Route
+              path="/tools/affirmations"
+              element={<AffirmationsGeneratorPage />}
+            />
+            <Route
+              path="/tools/stress-assessment"
+              element={<StressAssessmentPage />}
+            />
             <Route
               path="/tools/gratitude-journal"
               element={

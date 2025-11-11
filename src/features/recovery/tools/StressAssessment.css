@@ -370,7 +370,7 @@
 }
 
 .recommendations-list li::before {
-  content: '✓';
+  content: "✓";
   position: absolute;
   left: 1rem;
   color: var(--wc-teal);

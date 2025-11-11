@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
-import { Sparkles, RefreshCw, Share2, Heart, Lock } from 'lucide-react';
-import './AffirmationsGenerator.css';
+import React, { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
+import { Sparkles, RefreshCw, Share2, Heart, Lock } from "lucide-react";
+import "./AffirmationsGenerator.css";
 
 const CATEGORIES = {
   recovery: {
-    name: 'Recovery',
-    icon: '💪',
-    color: '#4db8a8',
+    name: "Recovery",
+    icon: "💪",
+    color: "#4db8a8",
     affirmations: [
       "I am stronger than my cravings.",
       "Each day in recovery is a victory I celebrate.",
@@ -28,13 +28,13 @@ const CATEGORIES = {
       "My commitment to recovery grows stronger daily.",
       "I choose connection over isolation.",
       "I am worthy of support and compassion.",
-      "Recovery is teaching me who I truly am."
-    ]
+      "Recovery is teaching me who I truly am.",
+    ],
   },
   confidence: {
-    name: 'Confidence',
-    icon: '🌟',
-    color: '#d4b483',
+    name: "Confidence",
+    icon: "🌟",
+    color: "#d4b483",
     affirmations: [
       "I am capable and competent.",
       "I trust my decisions and my path.",
@@ -55,13 +55,13 @@ const CATEGORIES = {
       "I face each day with courage and conviction.",
       "I am deserving of all good things.",
       "I own my story with pride.",
-      "I am powerful beyond measure."
-    ]
+      "I am powerful beyond measure.",
+    ],
   },
   peace: {
-    name: 'Peace',
-    icon: '🕊️',
-    color: '#8a63d2',
+    name: "Peace",
+    icon: "🕊️",
+    color: "#8a63d2",
     affirmations: [
       "I am at peace with my past.",
       "I release what I cannot control.",
@@ -82,13 +82,13 @@ const CATEGORIES = {
       "I am free from the chaos around me.",
       "Peace begins within me.",
       "I breathe in calm, I breathe out stress.",
-      "I am a peaceful presence in the world."
-    ]
+      "I am a peaceful presence in the world.",
+    ],
   },
   gratitude: {
-    name: 'Gratitude',
-    icon: '🙏',
-    color: '#f4a261',
+    name: "Gratitude",
+    icon: "🙏",
+    color: "#f4a261",
     affirmations: [
       "I am grateful for this new day.",
       "Abundance surrounds me in countless forms.",
@@ -109,13 +109,13 @@ const CATEGORIES = {
       "I appreciate the present moment.",
       "Gratitude is my daily practice.",
       "I am grateful for second chances.",
-      "My heart overflows with appreciation."
-    ]
+      "My heart overflows with appreciation.",
+    ],
   },
   strength: {
-    name: 'Strength',
-    icon: '⚡',
-    color: '#e63946',
+    name: "Strength",
+    icon: "⚡",
+    color: "#e63946",
     affirmations: [
       "I am resilient and capable of overcoming any obstacle.",
       "My strength grows with every challenge I face.",
@@ -136,14 +136,14 @@ const CATEGORIES = {
       "My determination is stronger than any setback.",
       "I embrace my power to persevere.",
       "I am fortified by my experiences.",
-      "Strength is my birthright."
-    ]
-  }
+      "Strength is my birthright.",
+    ],
+  },
 };
 
 const AffirmationsGenerator = () => {
-  const [selectedCategory, setSelectedCategory] = useState('recovery');
-  const [currentAffirmation, setCurrentAffirmation] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState("recovery");
+  const [currentAffirmation, setCurrentAffirmation] = useState("");
   const [isAnimating, setIsAnimating] = useState(false);
   const [favorites, setFavorites] = useState([]);
   const [showUpgradePrompt, setShowUpgradePrompt] = useState(false);
@@ -151,7 +151,7 @@ const AffirmationsGenerator = () => {
   useEffect(() => {
     generateRandomAffirmation(selectedCategory);
     // Load favorites from localStorage
-    const saved = localStorage.getItem('affirmationFavorites');
+    const saved = localStorage.getItem("affirmationFavorites");
     if (saved) {
       setFavorites(JSON.parse(saved));
     }
@@ -161,7 +161,7 @@ const AffirmationsGenerator = () => {
     setIsAnimating(true);
     const affirmations = CATEGORIES[category].affirmations;
     const randomIndex = Math.floor(Math.random() * affirmations.length);
-    
+
     setTimeout(() => {
       setCurrentAffirmation(affirmations[randomIndex]);
       setIsAnimating(false);
@@ -182,31 +182,34 @@ const AffirmationsGenerator = () => {
       setShowUpgradePrompt(true);
       return;
     }
-    
+
     if (!favorites.includes(currentAffirmation)) {
       const newFavorites = [...favorites, currentAffirmation];
       setFavorites(newFavorites);
-      localStorage.setItem('affirmationFavorites', JSON.stringify(newFavorites));
+      localStorage.setItem(
+        "affirmationFavorites",
+        JSON.stringify(newFavorites)
+      );
     }
   };
 
   const handleShare = async () => {
     const shareData = {
-      title: 'Daily Affirmation',
+      title: "Daily Affirmation",
       text: `"${currentAffirmation}" - from WellnessCafe`,
-      url: window.location.href
+      url: window.location.href,
     };
 
     if (navigator.share) {
       try {
         await navigator.share(shareData);
       } catch (err) {
-        console.log('Share cancelled or failed:', err);
+        console.log("Share cancelled or failed:", err);
       }
     } else {
       // Fallback: copy to clipboard
       navigator.clipboard.writeText(`"${currentAffirmation}" - WellnessCafe`);
-      alert('Affirmation copied to clipboard!');
+      alert("Affirmation copied to clipboard!");
     }
   };
 
@@ -216,26 +219,34 @@ const AffirmationsGenerator = () => {
     <div className="affirmations-generator">
       <Helmet>
         <title>Affirmations Generator - WellnessCafe</title>
-        <meta name="description" content="Generate inspiring affirmations for recovery, confidence, peace, gratitude, and strength." />
+        <meta
+          name="description"
+          content="Generate inspiring affirmations for recovery, confidence, peace, gratitude, and strength."
+        />
       </Helmet>
 
       <div className="affirmations-header">
         <Sparkles className="header-icon" />
         <h1>Daily Affirmations</h1>
-        <p>Choose a category and discover powerful affirmations to guide your day</p>
+        <p>
+          Choose a category and discover powerful affirmations to guide your day
+        </p>
       </div>
 
       <div className="categories-selector">
         {Object.entries(CATEGORIES).map(([key, category]) => (
           <button
             key={key}
-            className={`category-btn ${selectedCategory === key ? 'active' : ''}`}
+            className={`category-btn ${
+              selectedCategory === key ? "active" : ""
+            }`}
             onClick={() => handleCategoryChange(key)}
             style={{
-              '--category-color': category.color,
-              background: selectedCategory === key 
-                ? `linear-gradient(135deg, ${category.color}, ${category.color}dd)` 
-                : 'rgba(255,255,255,0.05)'
+              "--category-color": category.color,
+              background:
+                selectedCategory === key
+                  ? `linear-gradient(135deg, ${category.color}, ${category.color}dd)`
+                  : "rgba(255,255,255,0.05)",
             }}
           >
             <span className="category-icon">{category.icon}</span>
@@ -244,11 +255,11 @@ const AffirmationsGenerator = () => {
         ))}
       </div>
 
-      <div 
-        className={`affirmation-card ${isAnimating ? 'animating' : ''}`}
+      <div
+        className={`affirmation-card ${isAnimating ? "animating" : ""}`}
         style={{
           borderColor: categoryColor,
-          background: `linear-gradient(135deg, rgba(255,255,255,0.05), ${categoryColor}15)`
+          background: `linear-gradient(135deg, rgba(255,255,255,0.05), ${categoryColor}15)`,
         }}
       >
         <div className="affirmation-content">
@@ -258,24 +269,28 @@ const AffirmationsGenerator = () => {
         </div>
 
         <div className="affirmation-actions">
-          <button 
-            className="action-btn refresh-btn" 
+          <button
+            className="action-btn refresh-btn"
             onClick={handleRefresh}
             aria-label="Generate new affirmation"
           >
             <RefreshCw />
             <span>New</span>
           </button>
-          <button 
-            className="action-btn favorite-btn" 
+          <button
+            className="action-btn favorite-btn"
             onClick={handleFavorite}
             aria-label="Add to favorites"
           >
-            <Heart fill={favorites.includes(currentAffirmation) ? categoryColor : 'none'} />
+            <Heart
+              fill={
+                favorites.includes(currentAffirmation) ? categoryColor : "none"
+              }
+            />
             <span>Save</span>
           </button>
-          <button 
-            className="action-btn share-btn" 
+          <button
+            className="action-btn share-btn"
             onClick={handleShare}
             aria-label="Share affirmation"
           >
@@ -302,10 +317,18 @@ const AffirmationsGenerator = () => {
         <div className="info-card">
           <h3>💎 Upgrade for Premium Features</h3>
           <ul>
-            <li><Lock size={16} /> Unlimited favorites</li>
-            <li><Lock size={16} /> Custom affirmations library</li>
-            <li><Lock size={16} /> Daily affirmation reminders</li>
-            <li><Lock size={16} /> Track your affirmation journey</li>
+            <li>
+              <Lock size={16} /> Unlimited favorites
+            </li>
+            <li>
+              <Lock size={16} /> Custom affirmations library
+            </li>
+            <li>
+              <Lock size={16} /> Daily affirmation reminders
+            </li>
+            <li>
+              <Lock size={16} /> Track your affirmation journey
+            </li>
           </ul>
           <button className="upgrade-btn">Upgrade to Premium</button>
         </div>
@@ -323,13 +346,24 @@ const AffirmationsGenerator = () => {
       </div>
 
       {showUpgradePrompt && (
-        <div className="modal-overlay" onClick={() => setShowUpgradePrompt(false)}>
+        <div
+          className="modal-overlay"
+          onClick={() => setShowUpgradePrompt(false)}
+        >
           <div className="upgrade-modal" onClick={(e) => e.stopPropagation()}>
             <h2>Unlock Unlimited Favorites</h2>
-            <p>Free users can save up to 5 affirmations. Upgrade to Premium for unlimited favorites and more features!</p>
+            <p>
+              Free users can save up to 5 affirmations. Upgrade to Premium for
+              unlimited favorites and more features!
+            </p>
             <div className="modal-actions">
               <button className="btn-primary">Upgrade Now - $9.99/mo</button>
-              <button className="btn-secondary" onClick={() => setShowUpgradePrompt(false)}>Maybe Later</button>
+              <button
+                className="btn-secondary"
+                onClick={() => setShowUpgradePrompt(false)}
+              >
+                Maybe Later
+              </button>
             </div>
           </div>
         </div>

@@ -1,0 +1,503 @@
+.mood-checkin {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.checkin-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.header-icon {
+  width: 48px;
+  height: 48px;
+  color: var(--wc-gold);
+  margin-bottom: 1rem;
+}
+
+.checkin-header h1 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  color: var(--wc-cream);
+  margin-bottom: 0.5rem;
+}
+
+.checkin-header p {
+  color: var(--wc-cream-muted);
+  font-size: 1.1rem;
+}
+
+/* Mood Scale */
+.mood-scale-section {
+  margin-bottom: 2rem;
+}
+
+.mood-scale-section h3 {
+  color: var(--wc-cream);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.mood-scale {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.mood-option {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  padding: 1rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mood-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.mood-option.selected {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--mood-color);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.mood-emoji {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.mood-value {
+  font-size: 0.875rem;
+  color: var(--wc-cream-muted);
+  font-weight: 600;
+}
+
+.mood-label {
+  font-size: 0.75rem;
+  color: var(--wc-cream-muted);
+  text-align: center;
+}
+
+.mood-option.selected .mood-label {
+  color: var(--mood-color);
+  font-weight: 600;
+}
+
+/* Affirmation Preview */
+.affirmation-preview {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(255, 255, 255, 0.05));
+  border-left: 3px solid var(--wc-gold);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.affirmation-preview svg {
+  flex-shrink: 0;
+  color: var(--wc-gold);
+  margin-top: 0.25rem;
+}
+
+.affirmation-preview p {
+  color: var(--wc-cream);
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Gratitude Section */
+.gratitude-section {
+  margin-bottom: 2rem;
+}
+
+.gratitude-section h3 {
+  color: var(--wc-cream);
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.gratitude-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+  color: var(--wc-cream);
+  font-size: 1rem;
+  font-family: inherit;
+  resize: vertical;
+  transition: all 0.3s ease;
+}
+
+.gratitude-input:focus {
+  outline: none;
+  border-color: var(--wc-gold);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.gratitude-input::placeholder {
+  color: var(--wc-cream-muted);
+}
+
+/* Submit Button */
+.submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--wc-brown), var(--wc-gold));
+  color: var(--wc-cream);
+  border: none;
+  border-radius: 8px;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 2rem;
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+.submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Results View */
+.checkin-results {
+  text-align: center;
+}
+
+.results-header {
+  margin-bottom: 2rem;
+}
+
+.mood-emoji-large {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+  animation: bounce 1s ease;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.results-header h2 {
+  color: var(--wc-cream);
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.results-header .mood-label {
+  font-size: 1.25rem;
+  margin-top: 0.5rem;
+}
+
+/* Affirmation Card */
+.affirmation-card {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(255, 255, 255, 0.05));
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.affirmation-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--wc-gold), var(--wc-brown), var(--wc-gold));
+}
+
+.affirmation-icon {
+  color: var(--wc-gold);
+  margin-bottom: 1rem;
+}
+
+.affirmation-text {
+  color: var(--wc-cream);
+  font-size: 1.25rem;
+  font-style: italic;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Gratitude Display */
+.gratitude-display {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.gratitude-display h3 {
+  color: var(--wc-gold);
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+}
+
+.gratitude-display p {
+  color: var(--wc-cream);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Upgrade Prompt */
+.upgrade-prompt {
+  background: linear-gradient(135deg, rgba(139, 69, 19, 0.3), rgba(212, 175, 55, 0.1));
+  border: 2px solid var(--wc-gold);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.upgrade-prompt svg {
+  color: var(--wc-gold);
+  margin-bottom: 1rem;
+}
+
+.upgrade-prompt h3 {
+  color: var(--wc-cream);
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.upgrade-prompt p {
+  color: var(--wc-cream-muted);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.upgrade-btn {
+  background: linear-gradient(135deg, var(--wc-gold), var(--wc-brown));
+  color: var(--wc-black);
+  border: none;
+  border-radius: 8px;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.upgrade-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+}
+
+/* Quick Tips */
+.quick-tips {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.quick-tips h3 {
+  color: var(--wc-cream);
+  margin-bottom: 1rem;
+}
+
+.quick-tips ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.quick-tips li {
+  color: var(--wc-cream-muted);
+  padding: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.quick-tips li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--wc-gold);
+  font-weight: bold;
+}
+
+/* Checkin Actions */
+.checkin-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--wc-cream);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--wc-gold);
+}
+
+/* Info Cards */
+.checkin-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+.info-card,
+.upgrade-teaser {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.info-icon {
+  color: var(--wc-gold);
+  margin-bottom: 1rem;
+}
+
+.info-card h3,
+.upgrade-teaser h3 {
+  color: var(--wc-cream);
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.info-card ul,
+.upgrade-teaser ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.info-card li,
+.upgrade-teaser li {
+  color: var(--wc-cream-muted);
+  padding: 0.5rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+  font-size: 0.95rem;
+}
+
+.info-card li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--wc-gold);
+}
+
+.upgrade-teaser {
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.upgrade-btn-small {
+  width: 100%;
+  background: linear-gradient(135deg, var(--wc-gold), var(--wc-brown));
+  color: var(--wc-black);
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.upgrade-btn-small:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+/* Animations */
+.fade-in {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .mood-scale {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+  }
+
+  .mood-option {
+    padding: 0.75rem 0.25rem;
+  }
+
+  .mood-emoji {
+    font-size: 1.5rem;
+  }
+
+  .mood-label {
+    font-size: 0.7rem;
+  }
+
+  .mood-emoji-large {
+    font-size: 4rem;
+  }
+
+  .affirmation-text {
+    font-size: 1.1rem;
+  }
+
+  .checkin-info {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .mood-scale {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .mood-option {
+    padding: 0.5rem 0.25rem;
+  }
+
+  .mood-value {
+    font-size: 0.75rem;
+  }
+
+  .upgrade-prompt {
+    padding: 1.5rem;
+  }
+}

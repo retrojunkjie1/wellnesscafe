@@ -158,6 +158,20 @@ const ToolsPage = () => {
       link: "/tools/stress-assessment",
     },
     {
+      id: "mood-checkin",
+      name: "Mood Check-In",
+      icon: "😊",
+      status: "active",
+      description: "Daily mood tracking with affirmations and gratitude prompts",
+      features: [
+        "1-10 mood scale",
+        "Personalized affirmations",
+        "Gratitude journaling",
+        "Pattern insights",
+      ],
+      link: "/tools/mood-checkin",
+    },
+    {
       id: "trigger",
       name: "Trigger Tracker",
       icon: "📊",
