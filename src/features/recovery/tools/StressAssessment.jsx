@@ -328,7 +328,11 @@ const StressAssessment = () => {
 
       <form onSubmit={handleSubmit} className="assessment-form">
         {PSS10_QUESTIONS.map((question, index) => (
-          <div key={question.id} className="question-card">
+          <div
+            key={question.id}
+            className="question-card"
+            style={{ "--question-index": index }}
+          >
             <div className="question-number">Question {index + 1}</div>
             <h3 className="question-text">{question.text}</h3>
 

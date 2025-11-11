@@ -2,11 +2,13 @@
   max-width: 900px;
   margin: 0 auto;
   padding: 2rem 1rem;
+  animation: fadeInUp 0.6s ease-out;
 }
 
 .checkin-header {
   text-align: center;
   margin-bottom: 2rem;
+  animation: fadeInUp 0.6s ease-out 0.1s backwards;
 }
 
 .header-icon {
@@ -14,6 +16,7 @@
   height: 48px;
   color: var(--wc-gold);
   margin-bottom: 1rem;
+  animation: float 3s ease-in-out infinite;
 }
 
 .checkin-header h1 {
@@ -55,23 +58,54 @@
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.mood-option::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translate(-50%, -50%);
+  transition: width 0.5s, height 0.5s;
+}
+
+.mood-option:active::before {
+  width: 300px;
+  height: 300px;
 }
 
 .mood-option:hover {
   background: rgba(255, 255, 255, 0.1);
-  transform: translateY(-2px);
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .mood-option.selected {
   background: rgba(255, 255, 255, 0.15);
   border-color: var(--mood-color);
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.3), 0 0 60px var(--mood-color);
+  animation: pulse 2s ease-in-out infinite;
 }
 
 .mood-emoji {
   font-size: 2rem;
   line-height: 1;
+  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.mood-option:hover .mood-emoji {
+  transform: scale(1.2) rotate(10deg);
+}
+
+.mood-option.selected .mood-emoji {
+  animation: bounceEmoji 0.6s ease-out;
 }
 
 .mood-value {
@@ -166,18 +200,39 @@
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-btn::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.submit-btn:active::after {
+  width: 400px;
+  height: 400px;
 }
 
 .submit-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.4);
 }
 
 .submit-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  transform: none;
 }
 
 /* Results View */
@@ -474,8 +529,68 @@
   }
 }
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+@keyframes bounceEmoji {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.3) rotate(-10deg);
+  }
+  50% {
+    transform: scale(0.9) rotate(10deg);
+  }
+  75% {
+    transform: scale(1.1) rotate(-5deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
+  .mood-checkin {
+    padding: 1.5rem 1rem;
+  }
+
   .mood-scale {
     grid-template-columns: repeat(5, 1fr);
     gap: 0.5rem;
@@ -483,6 +598,8 @@
 
   .mood-option {
     padding: 0.75rem 0.25rem;
+    min-height: 80px; /* Better touch targets */
+    touch-action: manipulation; /* Prevent zoom on double-tap */
   }
 
   .mood-emoji {
@@ -504,15 +621,29 @@
   .checkin-info {
     grid-template-columns: 1fr;
   }
+
+  /* Larger touch targets for mobile */
+  .submit-btn,
+  .upgrade-btn,
+  .btn-secondary {
+    min-height: 48px;
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 480px) {
+  .mood-checkin {
+    padding: 1rem 0.75rem;
+  }
+
   .mood-scale {
     grid-template-columns: repeat(5, 1fr);
+    gap: 0.4rem;
   }
 
   .mood-option {
-    padding: 0.5rem 0.25rem;
+    padding: 0.6rem 0.2rem;
+    min-height: 70px;
   }
 
   .mood-value {
@@ -521,5 +652,19 @@
 
   .upgrade-prompt {
     padding: 1.5rem;
+  }
+
+  .gratitude-input {
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+
+  /* Stack buttons vertically on very small screens */
+  .checkin-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-secondary {
+    width: 100%;
   }
 }
