@@ -1,47 +1,57 @@
 # Get Help Now - Smart Crisis Support Feature
 
 ## 🚀 Feature Overview
+
 A comprehensive crisis support system that intelligently connects users to AI-powered help or emergency resources, accessible throughout the site with special emphasis on mobile users and crisis situations.
 
 ## ✨ Key Features
 
 ### 1. Smart AI Integration
+
 - **Context-Aware Prompts**: Automatically sends appropriate help requests based on user context (crisis, recovery, or general)
 - **Seamless Widget Control**: Opens FloatingAIWidget with pre-filled prompts via forwardRef architecture
 - **Crisis Priority Responses**: AI recognizes crisis keywords and immediately provides 988 hotline information
 
 ### 2. Emergency Resources Fallback
+
 When AI is unavailable or as a backup option, displays comprehensive crisis resources:
+
 - **988 Suicide & Crisis Lifeline**: 24/7 call or text support
 - **SAMHSA National Helpline**: 1-800-662-HELP for substance use support
 - **Crisis Text Line**: Text HOME to 741741 for immediate text counseling
 
 ### 3. Multi-Variant Button System
+
 Four distinct button styles for flexible placement:
 
 #### Mobile Variant (`variant="mobile"`)
+
 - Full-width design optimized for mobile menus
 - Prominent crisis-red styling with pulse animation
 - Large tap targets (1.25rem padding)
 - Priority placement at top of mobile navigation
 
 #### Hero Variant (`variant="hero"`)
+
 - Large, eye-catching CTA for landing pages
 - Enhanced shadow and sizing (1.2rem padding, 2.5rem horizontal)
 - Perfect for Recovery page hero and homepage
 
 #### Sticky Variant (`variant="sticky"`)
+
 - Fixed position floating button (bottom-right)
 - Always accessible without scrolling
 - Z-index 900 ensures visibility above content
 - Rounded pill shape for modern look
 
 #### Inline Variant (`variant="inline"`)
+
 - Standard button sizing for in-content placement
 - Flexible for articles, forms, and page sections
 - Maintains crisis styling while being less intrusive
 
 ### 4. Accessibility Features
+
 - ARIA labels and roles for screen readers
 - Keyboard navigation support
 - High contrast crisis-red color (#ef4444)
@@ -51,6 +61,7 @@ Four distinct button styles for flexible placement:
 ## 🏗️ Architecture
 
 ### Component Structure
+
 ```
 GetHelpNow.js
 ├── Props
@@ -66,6 +77,7 @@ GetHelpNow.js
 ```
 
 ### FloatingAIWidget Enhancements
+
 ```javascript
 // New Props
 - initialPrompt: string | null
@@ -79,6 +91,7 @@ aiWidgetRef.current.isOpen() // Check state
 ```
 
 ### Global Context System
+
 ```javascript
 // App.js
 AIWidgetContext
@@ -94,6 +107,7 @@ aiWidgetRef?.current?.openWithPrompt("I need help...");
 ## 📍 Implementation Locations
 
 ### 1. Mobile Menu (Priority Access)
+
 **File**: `src/components/Navbar.js`
 **Location**: Top of `.mobile-nav-links` list
 **Variant**: `mobile`
@@ -102,15 +116,12 @@ aiWidgetRef?.current?.openWithPrompt("I need help...");
 
 ```javascript
 <li className="mobile-help-item">
-  <GetHelpNow 
-    variant="mobile" 
-    context="crisis"
-    onOpenAI={handleGetHelp}
-  />
+  <GetHelpNow variant="mobile" context="crisis" onOpenAI={handleGetHelp} />
 </li>
 ```
 
 ### 2. Recovery Page Hero
+
 **File**: `src/Views/Recovery.js`
 **Location**: Replaces original "Get Help Now" scroll button
 **Variant**: `hero`
@@ -119,16 +130,13 @@ aiWidgetRef?.current?.openWithPrompt("I need help...");
 
 ```javascript
 <div className="hero-actions">
-  <GetHelpNow 
-    variant="hero" 
-    context="crisis"
-    onOpenAI={handleGetHelp}
-  />
+  <GetHelpNow variant="hero" context="crisis" onOpenAI={handleGetHelp} />
   <button className="btn-secondary">Explore Guide</button>
 </div>
 ```
 
 ### 3. Future Placement Options
+
 - **Sticky Footer**: Site-wide floating button (variant="sticky")
 - **Tool Pages**: Crisis support during stress assessment or trigger tracking
 - **Check-in Pages**: Support option when logging difficult emotions
@@ -138,6 +146,7 @@ aiWidgetRef?.current?.openWithPrompt("I need help...");
 ## 🎨 Styling Highlights
 
 ### Button Base Styles
+
 - **Gradient**: Linear gradient from #ef4444 to #dc2626
 - **Shadow**: 0 4px 20px rgba(239,68,68,0.4)
 - **Border Radius**: 12px for modern, approachable feel
@@ -145,20 +154,23 @@ aiWidgetRef?.current?.openWithPrompt("I need help...");
 - **Transitions**: 0.3s ease on all interactive properties
 
 ### Pulse Animation
+
 ```css
 @keyframes pulse-glow {
-  0%, 100% { 
-    opacity: 1; 
-    filter: drop-shadow(0 0 4px rgba(255,255,255,0.8)); 
+  0%,
+  100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
   }
-  50% { 
-    opacity: 0.7; 
-    filter: drop-shadow(0 0 8px rgba(255,255,255,1)); 
+  50% {
+    opacity: 0.7;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 1));
   }
 }
 ```
 
 ### Emergency Modal
+
 - **Backdrop**: rgba(0,0,0,0.75) with 4px blur
 - **Modal**: Dark gradient background with gold border
 - **Cards**: Individual resource cards with hover effects
@@ -168,13 +180,16 @@ aiWidgetRef?.current?.openWithPrompt("I need help...");
 ## 🔍 AI Response Enhancement
 
 ### Crisis Detection Keywords
+
 The AI now recognizes and prioritizes these terms:
+
 - "crisis", "suicide", "hurt myself"
 - "end" + "life" (combination)
 - "help" + ("need" or "urgent")
 - "emergency"
 
 ### Crisis Response Format
+
 ```markdown
 🆘 **IMMEDIATE CRISIS SUPPORT**
 
@@ -193,16 +208,19 @@ Text HOME to 741741
 ## 📱 Mobile Optimization
 
 ### Touch Targets
+
 - Minimum 44x44px tap areas (Apple HIG standard)
 - 1rem padding on mobile variant links
 - Generous spacing between interactive elements
 
 ### Viewport Considerations
+
 - Modal uses `max-height: 90vh` for safe scrolling
 - Sticky button positioned 60px from bottom (above mobile nav)
 - Full-width mobile variant prevents accidental misses
 
 ### Performance
+
 - CSS animations use GPU-accelerated properties (transform, opacity)
 - Backdrop blur controlled with fallbacks
 - Emergency modal lazy-loads on demand (not rendered until triggered)
@@ -210,6 +228,7 @@ Text HOME to 741741
 ## 🔐 Safety & Ethics
 
 ### Crisis Best Practices
+
 1. **Immediate Access**: No navigation required, opens in-place
 2. **Multiple Channels**: Phone, text, and online chat options
 3. **Clear Labeling**: No ambiguity about what help is available
@@ -217,6 +236,7 @@ Text HOME to 741741
 5. **Professional Resources**: All hotlines are professionally staffed
 
 ### Privacy Considerations
+
 - No data collection on Get Help Now clicks
 - Emergency modal doesn't track which resource is selected
 - AI prompts are processed locally before being sent
@@ -225,6 +245,7 @@ Text HOME to 741741
 ## 🧪 Testing Checklist
 
 ### Functional Testing
+
 - [x] Mobile menu integration working
 - [x] Recovery page hero button functional
 - [x] AI widget opens with correct context
@@ -234,6 +255,7 @@ Text HOME to 741741
 - [x] Pulse animation plays smoothly
 
 ### Accessibility Testing
+
 - [ ] Screen reader announces button purpose
 - [ ] Keyboard navigation works (Tab, Enter, Esc)
 - [ ] Focus trap in emergency modal
@@ -241,12 +263,14 @@ Text HOME to 741741
 - [ ] Touch targets meet mobile guidelines
 
 ### Cross-Browser Testing
+
 - [ ] Chrome/Edge (Chromium)
 - [ ] Safari (iOS + macOS)
 - [ ] Firefox
 - [ ] Mobile browsers (iOS Safari, Chrome Android)
 
 ### Responsive Testing
+
 - [ ] Mobile (320px - 480px)
 - [ ] Tablet (768px - 1024px)
 - [ ] Desktop (1200px+)
@@ -255,19 +279,23 @@ Text HOME to 741741
 ## 📊 Deployment Status
 
 ### Git Commit
+
 ```
 feat(help): add smart Get Help Now with AI integration
 Commit: 715e966
 ```
 
 ### Firebase Hosting
+
 **Live URL**: https://wellnesscafelanding.web.app
 **Deployment Date**: December 2024
-**Build Size**: 
+**Build Size**:
+
 - JS: 477.94 kB (gzipped)
 - CSS: 45.51 kB (gzipped)
 
 ### GitHub
+
 **Repository**: retrojunkjie1/wellnesscafe
 **Branch**: main
 **Status**: Pushed and synced
@@ -275,6 +303,7 @@ Commit: 715e966
 ## 🚀 Future Enhancements
 
 ### Phase 2 Ideas
+
 1. **Geolocation Integration**: Show local crisis centers based on user location
 2. **Multilingual Support**: Crisis resources in Spanish, Chinese, etc.
 3. **Session History**: Remember if user previously accessed crisis help
@@ -282,12 +311,14 @@ Commit: 715e966
 5. **Resource Sharing**: Easy way to share crisis info with friends/family
 
 ### Advanced AI Features
+
 1. **Sentiment Analysis**: Detect crisis tone in user messages
 2. **Escalation Protocols**: Auto-suggest 911 for life-threatening situations
 3. **Resource Recommendations**: Tailor suggestions based on conversation
 4. **Conversation Continuity**: Remember context across multiple help requests
 
 ### Analytics (Privacy-Safe)
+
 1. **Anonymous Usage Metrics**: How often is Get Help Now clicked?
 2. **Conversion Tracking**: AI engagement vs. emergency modal fallback
 3. **A/B Testing**: Test different button copy and placement
@@ -296,21 +327,22 @@ Commit: 715e966
 ## 📝 Developer Notes
 
 ### Adding New Placement
+
 ```javascript
-import { useAIWidget } from '../App';
-import GetHelpNow from '../components/GetHelpNow';
+import { useAIWidget } from "../App";
+import GetHelpNow from "../components/GetHelpNow";
 
 const MyComponent = () => {
   const aiWidgetRef = useAIWidget();
-  
+
   const handleGetHelp = (prompt) => {
     if (aiWidgetRef?.current) {
       aiWidgetRef.current.openWithPrompt(prompt);
     }
   };
-  
+
   return (
-    <GetHelpNow 
+    <GetHelpNow
       variant="inline" // or 'mobile', 'hero', 'sticky'
       context="recovery" // or 'crisis', 'general'
       onOpenAI={handleGetHelp}
@@ -320,17 +352,22 @@ const MyComponent = () => {
 ```
 
 ### Customizing AI Prompts
+
 Edit `GetHelpNow.js` lines 18-26 to modify context-aware prompts:
+
 ```javascript
 const prompts = {
   crisis: "I'm in crisis and need immediate support. Can you help me?",
-  recovery: "I need help with my recovery journey. What resources are available?",
-  general: "I need help. What support options do you have?"
+  recovery:
+    "I need help with my recovery journey. What resources are available?",
+  general: "I need help. What support options do you have?",
 };
 ```
 
 ### Modifying Emergency Resources
+
 Edit `GetHelpNow.js` lines 50-100 to add/update crisis hotlines:
+
 ```javascript
 <div className="emergency-card crisis">
   <Phone className="card-icon" />
@@ -345,16 +382,19 @@ Edit `GetHelpNow.js` lines 50-100 to add/update crisis hotlines:
 ## 🏆 Success Metrics
 
 ### User Experience Goals
+
 - 95%+ mobile accessibility (all crisis info reachable in <3 taps)
 - <2 second load time for emergency modal
 - 0 navigation steps from crisis awareness to help
 
 ### Engagement Targets (Month 1)
+
 - 100+ Get Help Now button interactions
 - 50+ AI widget opens from crisis context
 - 25+ emergency resource modal views
 
 ### Impact Indicators
+
 - Positive user feedback on crisis support
 - Reduced bounce rate on Recovery page
 - Increased time-on-site for users accessing help features
@@ -364,6 +404,7 @@ Edit `GetHelpNow.js` lines 50-100 to add/update crisis hotlines:
 This feature prioritizes user safety and adheres to crisis intervention best practices. All hotline resources are verified, professionally staffed, and available 24/7.
 
 **Crisis Resources Referenced**:
+
 - [988 Suicide & Crisis Lifeline](https://988lifeline.org/)
 - [SAMHSA National Helpline](https://www.samhsa.gov/find-help/national-helpline)
 - [Crisis Text Line](https://www.crisistextline.org/)

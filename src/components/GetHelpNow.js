@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Phone, MessageCircle, AlertTriangle } from "lucide-react";
 import "./GetHelpNow.css";
 
@@ -105,6 +106,18 @@ const GetHelpNow = ({ variant = "inline", onOpenAI, context = "general" }) => {
       )}
     </>
   );
+};
+
+GetHelpNow.propTypes = {
+  variant: PropTypes.oneOf(["mobile", "hero", "sticky", "inline"]),
+  onOpenAI: PropTypes.func,
+  context: PropTypes.oneOf(["crisis", "recovery", "general"]),
+};
+
+GetHelpNow.defaultProps = {
+  variant: "inline",
+  context: "general",
+  onOpenAI: null,
 };
 
 export default GetHelpNow;

@@ -65,14 +65,14 @@ const AIWidgetContext = createContext(null);
 export const useAIWidget = () => {
   const context = useContext(AIWidgetContext);
   if (!context) {
-    console.warn('useAIWidget must be used within AIWidgetContext provider');
+    console.warn("useAIWidget must be used within AIWidgetContext provider");
   }
   return context;
 };
 
 function App() {
   const aiWidgetRef = useRef(null);
-  
+
   return (
     <AuthProvider>
       <ThemeProvider>
@@ -81,194 +81,200 @@ function App() {
             <Navbar />
             <NavigationButtons />
             <FloatingAIWidget ref={aiWidgetRef} />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute requireVerified>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/providers/dashboard"
-              element={
-                <ProtectedRoute roles={["provider", "admin"]} requireVerified>
-                  <ProviderDashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/providers/dashboard/preview"
-              element={<ProviderDashboard preview />}
-            />
-            <Route
-              path="/providers/admin/import"
-              element={
-                <ProtectedRoute roles={["admin", "provider"]} requireVerified>
-                  <AdminImport />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/providers" element={<ProvidersPage />} />
-            <Route
-              path="/admin/users"
-              element={
-                <ProtectedRoute roles={["admin"]} requireVerified>
-                  <AdminUsers />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/providers/admin/verify"
-              element={
-                <ProtectedRoute roles={["admin"]} requireVerified>
-                  <AdminVerify />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/assistants"
-              element={
-                <ProtectedRoute roles={["admin"]} requireVerified>
-                  <AdminAssistants />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/providers/directory"
-              element={<ProviderDirectory />}
-            />
-            <Route path="/providers/apply" element={<ProviderSignup />} />
-            <Route path="/providers/benefits" element={<BenefitsDetail />} />
-            <Route
-              path="/providers/expectations"
-              element={<ExpectationsDetail />}
-            />
-            <Route
-              path="/providers/testimonials"
-              element={<TestimonialsDetail />}
-            />
-            <Route path="/recovery" element={<Recovery />} />
-            <Route path="/yoga" element={<Yoga />} />
-            <Route path="/acuwellness" element={<Acuwellness />} />
-            <Route path="/spiritual" element={<Spiritual />} />
-            <Route path="/events" element={<EventsPage />} />
-            <Route path="/assistance" element={<AssistPage />} />
-            <Route path="/assistance/:slug" element={<ResourceDetail />} />
-            <Route path="/product" element={<ProductPage />} />
-            <Route
-              path="/check-in"
-              element={
-                <ProtectedRoute requireVerified>
-                  <CheckInPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/tools" element={<ToolsPage />} />
-            <Route path="/tools/breathing" element={<BreathingToolPage />} />
-            <Route path="/tools/meditation" element={<MeditationTimerPage />} />
-            <Route
-              path="/tools/affirmations"
-              element={<AffirmationsGeneratorPage />}
-            />
-            <Route
-              path="/tools/stress-assessment"
-              element={<StressAssessmentPage />}
-            />
-            <Route
-              path="/tools/gratitude-journal"
-              element={
-                <ProtectedRoute requireVerified>
-                  <GratitudeJournalPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/tools/meditation-premium"
-              element={
-                <ProtectedRoute requireVerified>
-                  <MeditationTimerPremiumPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/tools/emotion-tracker"
-              element={
-                <ProtectedRoute requireVerified>
-                  <EmotionTrackerPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/tools/trigger-journal"
-              element={
-                <ProtectedRoute requireVerified>
-                  <TriggerJournalPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/tools/weekly-review"
-              element={
-                <ProtectedRoute requireVerified>
-                  <WeeklyReviewPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/tools/trigger-tracker"
-              element={
-                <ProtectedRoute requireVerified>
-                  <TriggerTrackerPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/tools/mood-checkin"
-              element={
-                <ProtectedRoute requireVerified>
-                  <MoodCheckInPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/trauma-education" element={<TraumaEducationPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route
-              path="/about/strategic-initiatives"
-              element={<StrategicInitiatives />}
-            />
-            <Route path="/about/leadership" element={<LeadershipPage />} />
-            <Route path="/about/contact" element={<ContactPage />} />
-            <Route path="/about/privacy" element={<PrivacyPage />} />
-            <Route path="/about/careers" element={<CareersPage />} />
-            <Route path="/about/faq" element={<FAQPage />} />
-            <Route path="/about/news" element={<NewsPage />} />
-            <Route path="/news" element={<NewsFeed />} />
-            <Route path="/news/read" element={<ArticleReader />} />
-            <Route path="/assistants/:type" element={<AssistantsPage />} />
-            <Route
-              path="/resources/soberLivingHomes/:state"
-              element={<SoberHomesState />}
-            />
-            <Route
-              path="/dev-tools"
-              element={
-                <ProtectedRoute roles={["admin"]} requireVerified>
-                  <DevTools />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="/auth-debug" element={<AuthDebug />} />
-          </Routes>
-        </Router>
-      </AIWidgetContext.Provider>
-    </ThemeProvider>
-  </AuthProvider>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/login" element={<Login />} />
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute requireVerified>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/providers/dashboard"
+                element={
+                  <ProtectedRoute roles={["provider", "admin"]} requireVerified>
+                    <ProviderDashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/providers/dashboard/preview"
+                element={<ProviderDashboard preview />}
+              />
+              <Route
+                path="/providers/admin/import"
+                element={
+                  <ProtectedRoute roles={["admin", "provider"]} requireVerified>
+                    <AdminImport />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/providers" element={<ProvidersPage />} />
+              <Route
+                path="/admin/users"
+                element={
+                  <ProtectedRoute roles={["admin"]} requireVerified>
+                    <AdminUsers />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/providers/admin/verify"
+                element={
+                  <ProtectedRoute roles={["admin"]} requireVerified>
+                    <AdminVerify />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/assistants"
+                element={
+                  <ProtectedRoute roles={["admin"]} requireVerified>
+                    <AdminAssistants />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/providers/directory"
+                element={<ProviderDirectory />}
+              />
+              <Route path="/providers/apply" element={<ProviderSignup />} />
+              <Route path="/providers/benefits" element={<BenefitsDetail />} />
+              <Route
+                path="/providers/expectations"
+                element={<ExpectationsDetail />}
+              />
+              <Route
+                path="/providers/testimonials"
+                element={<TestimonialsDetail />}
+              />
+              <Route path="/recovery" element={<Recovery />} />
+              <Route path="/yoga" element={<Yoga />} />
+              <Route path="/acuwellness" element={<Acuwellness />} />
+              <Route path="/spiritual" element={<Spiritual />} />
+              <Route path="/events" element={<EventsPage />} />
+              <Route path="/assistance" element={<AssistPage />} />
+              <Route path="/assistance/:slug" element={<ResourceDetail />} />
+              <Route path="/product" element={<ProductPage />} />
+              <Route
+                path="/check-in"
+                element={
+                  <ProtectedRoute requireVerified>
+                    <CheckInPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/tools" element={<ToolsPage />} />
+              <Route path="/tools/breathing" element={<BreathingToolPage />} />
+              <Route
+                path="/tools/meditation"
+                element={<MeditationTimerPage />}
+              />
+              <Route
+                path="/tools/affirmations"
+                element={<AffirmationsGeneratorPage />}
+              />
+              <Route
+                path="/tools/stress-assessment"
+                element={<StressAssessmentPage />}
+              />
+              <Route
+                path="/tools/gratitude-journal"
+                element={
+                  <ProtectedRoute requireVerified>
+                    <GratitudeJournalPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/tools/meditation-premium"
+                element={
+                  <ProtectedRoute requireVerified>
+                    <MeditationTimerPremiumPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/tools/emotion-tracker"
+                element={
+                  <ProtectedRoute requireVerified>
+                    <EmotionTrackerPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/tools/trigger-journal"
+                element={
+                  <ProtectedRoute requireVerified>
+                    <TriggerJournalPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/tools/weekly-review"
+                element={
+                  <ProtectedRoute requireVerified>
+                    <WeeklyReviewPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/tools/trigger-tracker"
+                element={
+                  <ProtectedRoute requireVerified>
+                    <TriggerTrackerPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/tools/mood-checkin"
+                element={
+                  <ProtectedRoute requireVerified>
+                    <MoodCheckInPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/blog" element={<BlogPage />} />
+              <Route
+                path="/trauma-education"
+                element={<TraumaEducationPage />}
+              />
+              <Route path="/about" element={<AboutPage />} />
+              <Route
+                path="/about/strategic-initiatives"
+                element={<StrategicInitiatives />}
+              />
+              <Route path="/about/leadership" element={<LeadershipPage />} />
+              <Route path="/about/contact" element={<ContactPage />} />
+              <Route path="/about/privacy" element={<PrivacyPage />} />
+              <Route path="/about/careers" element={<CareersPage />} />
+              <Route path="/about/faq" element={<FAQPage />} />
+              <Route path="/about/news" element={<NewsPage />} />
+              <Route path="/news" element={<NewsFeed />} />
+              <Route path="/news/read" element={<ArticleReader />} />
+              <Route path="/assistants/:type" element={<AssistantsPage />} />
+              <Route
+                path="/resources/soberLivingHomes/:state"
+                element={<SoberHomesState />}
+              />
+              <Route
+                path="/dev-tools"
+                element={
+                  <ProtectedRoute roles={["admin"]} requireVerified>
+                    <DevTools />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/auth-debug" element={<AuthDebug />} />
+            </Routes>
+          </Router>
+        </AIWidgetContext.Provider>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
 

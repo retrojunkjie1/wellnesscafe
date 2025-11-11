@@ -154,8 +154,8 @@ const Navbar = () => {
           />
           <ul className="mobile-nav-links">
             <li className="mobile-help-item">
-              <GetHelpNow 
-                variant="mobile" 
+              <GetHelpNow
+                variant="mobile"
                 context="crisis"
                 onOpenAI={handleGetHelp}
               />
