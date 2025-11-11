@@ -9,11 +9,13 @@ Automated web scraping system for Oxford House vacancy data from oxfordvacancies
 ### Components
 
 1. **Data Schema** (`src/schemas/oxfordHouseSchema.js`)
+
    - Normalized data structure for Oxford House records
    - Validation and transformation functions
    - Helper utilities for filtering, sorting, searching
 
 2. **Cloud Functions** (`functions/scrapeOxfordHouses.js`)
+
    - Web scraper using axios + cheerio
    - Scheduled daily runs at 2 AM EST
    - Manual trigger endpoint for on-demand scraping
@@ -47,20 +49,20 @@ Automated web scraping system for Oxford House vacancy data from oxfordvacancies
   scrapedAt: Timestamp,                   // When we scraped this data
   sourceUrl: "https://oxfordvacancies.com",
   hasVacancy: true,                       // Quick filter flag
-  
+
   // Structured nested data
   address: {
     city: "Corpus Christi",
     state: "TX",
     county: "Nueces"
   },
-  
+
   contact: {
     housePhone: "(361) 334-1097",
     managerName: "Robert M.",
     managerPhone: "(361) 885-1289"
   },
-  
+
   availability: {
     totalBeds: 8,
     vacantBeds: 2,
@@ -81,6 +83,7 @@ Automated web scraping system for Oxford House vacancy data from oxfordvacancies
 **Schedule:** `0 2 * * *` (cron format)
 
 **What it does:**
+
 - Fetches oxfordvacancies.com homepage
 - Parses HTML table with house listings
 - Extracts all house data (name, gender, city, phone, county, manager, capacity, vacancies, etc.)
@@ -91,6 +94,7 @@ Automated web scraping system for Oxford House vacancy data from oxfordvacancies
 - Updates scraping metadata with stats
 
 **Deploy:**
+
 ```bash
 cd functions
 npm install
@@ -106,11 +110,13 @@ firebase deploy --only functions:scrapeOxfordHousesScheduled
 **Endpoint:** `https://us-central1-[project-id].cloudfunctions.net/scrapeOxfordHousesManual`
 
 **Usage:**
+
 ```bash
 curl -X POST https://us-central1-[project-id].cloudfunctions.net/scrapeOxfordHousesManual
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -134,11 +140,13 @@ curl -X POST https://us-central1-[project-id].cloudfunctions.net/scrapeOxfordHou
 **Endpoint:** `https://us-central1-[project-id].cloudfunctions.net/getOxfordScrapingStatus`
 
 **Usage:**
+
 ```bash
 curl https://us-central1-[project-id].cloudfunctions.net/getOxfordScrapingStatus
 ```
 
 **Response:**
+
 ```json
 {
   "success": true,
@@ -163,6 +171,7 @@ curl https://us-central1-[project-id].cloudfunctions.net/getOxfordScrapingStatus
 ### SoberHomesState Component Updates
 
 **New State Variables:**
+
 ```javascript
 const [oxfordHouses, setOxfordHouses] = useState([]);
 const [scrapingMetadata, setScrapingMetadata] = useState(null);
@@ -171,18 +180,21 @@ const [genderFilter, setGenderFilter] = useState("");
 ```
 
 **Data Freshness Indicator:**
+
 - Green banner: Data scraped within last 7 days
 - Yellow banner: Data older than 7 days (stale warning)
 - Shows last scraped timestamp
 - Displays total houses and vacancy counts
 
 **Enhanced Filtering:**
+
 - **Gender Filter:** Men, Women, Men + Children
 - **Vacancy Filter:** Show only houses with available beds
 - **City Filter:** Filter by specific cities
 - **Search:** Search across name, city, county
 
 **Oxford House Card Display:**
+
 - Blue left border to distinguish from regular homes
 - "Oxford House" badge
 - Vacancy status with color coding (green = available, red = full)
@@ -278,13 +290,13 @@ service cloud.firestore {
       allow read: if true;
       allow write: if false; // Only Cloud Functions can write
     }
-    
+
     // Sober homes by state - public read
     match /soberHomes/{state}/homes/{houseId} {
       allow read: if true;
       allow write: if false;
     }
-    
+
     // Scraping metadata - public read
     match /scrapingMetadata/{docId} {
       allow read: if true;
@@ -295,6 +307,7 @@ service cloud.firestore {
 ```
 
 Deploy rules:
+
 ```bash
 firebase deploy --only firestore:rules
 ```
@@ -360,6 +373,7 @@ The scraper includes a basic county-to-state mapping. To improve accuracy:
 ### Handle Scraping Errors
 
 If scraping fails:
+
 1. Check function logs for errors
 2. Verify oxfordvacancies.com is accessible
 3. Check if website HTML structure changed
@@ -450,6 +464,7 @@ If scraping fails:
 ## Support & Contact
 
 For issues or questions:
+
 - Check function logs: `firebase functions:log`
 - Review Firestore security rules
 - Verify API endpoints are accessible

@@ -79,29 +79,37 @@ const SoberHomesState = () => {
           .map((d) => {
             const data = d.data();
             // Check if this is an Oxford House (has sourceUrl or specific fields)
-            if (data.sourceUrl?.includes('oxfordvacancies')) {
-              return { 
-                id: d.id, 
+            if (data.sourceUrl?.includes("oxfordvacancies")) {
+              return {
+                id: d.id,
                 ...data,
                 // Convert Firestore Timestamps to Dates for display
-                lastUpdated: data.lastUpdated?.toDate ? data.lastUpdated.toDate() : data.lastUpdated,
-                scrapedAt: data.scrapedAt?.toDate ? data.scrapedAt.toDate() : data.scrapedAt,
+                lastUpdated: data.lastUpdated?.toDate
+                  ? data.lastUpdated.toDate()
+                  : data.lastUpdated,
+                scrapedAt: data.scrapedAt?.toDate
+                  ? data.scrapedAt.toDate()
+                  : data.scrapedAt,
               };
             }
             return null;
           })
           .filter(Boolean);
-        
+
         if (!alive) return;
         setOxfordHouses(oxfordRows);
 
         // Fetch scraping metadata
-        const metaDoc = await getDoc(doc(db, "scrapingMetadata", "oxfordHouses"));
+        const metaDoc = await getDoc(
+          doc(db, "scrapingMetadata", "oxfordHouses")
+        );
         if (metaDoc.exists() && alive) {
           const metaData = metaDoc.data();
           setScrapingMetadata({
             ...metaData,
-            lastScraped: metaData.lastScraped?.toDate ? metaData.lastScraped.toDate() : metaData.lastScraped,
+            lastScraped: metaData.lastScraped?.toDate
+              ? metaData.lastScraped.toDate()
+              : metaData.lastScraped,
           });
         }
       } catch (e) {
@@ -193,10 +201,10 @@ const SoberHomesState = () => {
   // Merge Oxford Houses with regular homes
   const allHomes = [
     ...fsHomes,
-    ...oxfordHouses.map(house => ({
+    ...oxfordHouses.map((house) => ({
       ...house,
       name: house.houseName,
-      type: 'Oxford House - Peer-Run Sober Living',
+      type: "Oxford House - Peer-Run Sober Living",
       isOxfordHouse: true,
     })),
   ];
@@ -258,13 +266,12 @@ const SoberHomesState = () => {
     else if (typeof h?.category === "string") catsArr = [h.category];
     const cats = catsArr.join(" ").toLowerCase();
     const insArr = normalizeInsurance(h).map((x) => x.toLowerCase());
-    
+
     // Oxford House specific filters
     const hasVacancy = h.isOxfordHouse ? h.hasVacancy : true;
-    const matchesGender = h.isOxfordHouse && genderFilter 
-      ? h.gender === genderFilter 
-      : true;
-    
+    const matchesGender =
+      h.isOxfordHouse && genderFilter ? h.gender === genderFilter : true;
+
     return (
       // text query across key fields
       (!q ||
@@ -431,7 +438,11 @@ const SoberHomesState = () => {
               />
               <span className="whitespace-nowrap">Only vacancies</span>
             </label>
-            {(city || insurance || query || genderFilter || showOnlyVacancies) && (
+            {(city ||
+              insurance ||
+              query ||
+              genderFilter ||
+              showOnlyVacancies) && (
               <button
                 type="button"
                 className="ghost-btn"
@@ -459,9 +470,14 @@ const SoberHomesState = () => {
             const contactUrl =
               typeof h.contact === "string" ? h.contact : h.contact?.website;
             const isOxford = h.isOxfordHouse;
-            
+
             return (
-              <div key={key} className={`p-card ${isOxford ? 'border-l-4 border-blue-500' : ''}`}>
+              <div
+                key={key}
+                className={`p-card ${
+                  isOxford ? "border-l-4 border-blue-500" : ""
+                }`}
+              >
                 <div className="flex items-start justify-between mb-2">
                   <h3>{h.name}</h3>
                   {isOxford && (
@@ -470,12 +486,12 @@ const SoberHomesState = () => {
                     </span>
                   )}
                 </div>
-                
+
                 <p className="text-gray-700 my-1.5">
                   📍 {h.city}
                   {h.county ? `, ${h.county}` : ""}
                 </p>
-                
+
                 {isOxford && (
                   <>
                     <div className="my-2 p-3 bg-gray-50 rounded-lg">
@@ -498,23 +514,29 @@ const SoberHomesState = () => {
                           <span className="font-semibold">Vacancies:</span>{" "}
                           <span
                             className={`font-bold ${
-                              h.vacancies > 0 ? "text-green-600" : "text-red-600"
+                              h.vacancies > 0
+                                ? "text-green-600"
+                                : "text-red-600"
                             }`}
                           >
                             {h.vacancies > 0
-                              ? `${h.vacancies} bed${h.vacancies === 1 ? "" : "s"} available`
+                              ? `${h.vacancies} bed${
+                                  h.vacancies === 1 ? "" : "s"
+                                } available`
                               : "Full"}
                           </span>
                         </div>
                         {h.meetingTime && (
                           <div className="col-span-2">
-                            <span className="font-semibold">House Meeting:</span>{" "}
+                            <span className="font-semibold">
+                              House Meeting:
+                            </span>{" "}
                             {h.meetingTime}
                           </div>
                         )}
                       </div>
                     </div>
-                    
+
                     {h.contact && (
                       <div className="my-2">
                         <p className="text-sm text-gray-700">
@@ -525,12 +547,13 @@ const SoberHomesState = () => {
                           <p className="text-sm text-gray-700">
                             <span className="font-semibold">Manager:</span>{" "}
                             {h.contact.managerName}
-                            {h.contact.managerPhone && ` • ${h.contact.managerPhone}`}
+                            {h.contact.managerPhone &&
+                              ` • ${h.contact.managerPhone}`}
                           </p>
                         )}
                       </div>
                     )}
-                    
+
                     {h.lastUpdated && (
                       <p className="text-xs text-gray-500 mt-2">
                         Updated: {formatDate(h.lastUpdated)}
@@ -538,7 +561,7 @@ const SoberHomesState = () => {
                     )}
                   </>
                 )}
-                
+
                 {!isOxford && (
                   <>
                     <p className="text-gray-800 my-1.5">{h.type}</p>
@@ -594,7 +617,7 @@ const SoberHomesState = () => {
                     )}
                   </>
                 )}
-                
+
                 {/* Contact Actions */}
                 <div className="flex flex-wrap gap-2 mt-3">
                   {isOxford && h.contact?.housePhone && (
@@ -626,7 +649,10 @@ const SoberHomesState = () => {
                   {!isOxford && typeof h.contact === "object" && (
                     <>
                       {h.contact?.phone && (
-                        <a href={`tel:${h.contact.phone}`} className="ghost-btn text-sm">
+                        <a
+                          href={`tel:${h.contact.phone}`}
+                          className="ghost-btn text-sm"
+                        >
                           📞 Call
                         </a>
                       )}
