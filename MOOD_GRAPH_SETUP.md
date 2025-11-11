@@ -13,6 +13,7 @@
 ## ✨ Features Implemented
 
 ### 1. **8-Mood Selector with Visual Feedback**
+
 - Joy 😄 (score: 9)
 - Calm 😌 (score: 7)
 - Neutral 😐 (score: 5)
@@ -23,19 +24,23 @@
 - Inspired ✨ (score: 8)
 
 Each mood has:
+
 - Unique emoji representation
 - Gradient color scheme
 - Numerical score (1-9)
 - Interactive selection with hover effects
 
 ### 2. **Intensity Slider (1-10 scale)**
+
 - Real-time visual feedback
 - Large number display
 - Mild → Intense labels
 - Amber accent styling
 
 ### 3. **Trigger Tags System**
+
 10 predefined trigger categories:
+
 - Work
 - Relationships
 - Health
@@ -50,11 +55,13 @@ Each mood has:
 Multi-select with visual state (selected triggers highlighted with amber gradient)
 
 ### 4. **Contextual Notes**
+
 - Free-form textarea for mood context
 - Placeholder prompts for specificity
 - Stored with each mood entry
 
 ### 5. **Firestore Real-time Persistence**
+
 - Automatic syncing with `moods` collection
 - Loads last 60 entries
 - Real-time updates via `onSnapshot`
@@ -62,48 +69,57 @@ Multi-select with visual state (selected triggers highlighted with amber gradien
 - Optimistic UI updates after saves
 
 ### 6. **Analytics Dashboard**
+
 **Stats Tiles:**
+
 - Peak Intensity (max intensity from all entries)
 - Total Entries (lifetime count)
 - Trend indicator (↑ hardcoded, could be dynamic)
 - This Month count (filtered by current YYYY-MM)
 
 **Header Metrics:**
+
 - Average Mood Score (mean of all mood scores)
 - Top Mood (most frequently logged)
 - Streak (consecutive days with entries, up to 90 days)
 
 ### 7. **Data Visualizations**
+
 **14-Day Mood Trend (Area Chart):**
+
 - Shows mood scores over last 14 entries
 - Amber gradient fill
 - Responsive with Recharts
 - Domain: 0-10 scale
 
 **Mood Frequency (Bar Chart):**
+
 - Counts occurrences of each mood emoji
 - Shows distribution patterns
 - Rounded bar corners
 - Dark theme styling
 
 ### 8. **AI-Style Weekly Insights**
+
 Analyzes last 7 entries to generate:
+
 - **Narrative summary:**
   - Top mood identified
   - Average mood score
   - Peak intensity reached
   - Most common trigger
   - Best logging day (Sun-Sat)
-  
 - **Actionable tips (3):**
   - Breathing technique for top trigger
   - Recovery/maintenance suggestion based on score
   - Scheduling tip for consistency
 
 **Example insight:**
+
 > "This week leans toward calm with an average mood score of 7.3. Peak intensity reached 8/10. Your most common trigger appears to be 'Routine'. You logged the most entries on Monday. Keep tracking to sharpen these patterns."
 
 ### 9. **Recent Entries Feed**
+
 - Scrollable list (max 12 visible)
 - Shows for each entry:
   - Mood emoji + name
@@ -115,6 +131,7 @@ Analyzes last 7 entries to generate:
 - Hover effects with border highlighting
 
 ### 10. **Luxury UI Design**
+
 - Slate gradient background (from-slate-950 via-slate-900 to-slate-950)
 - Animated ambient glows (amber/yellow pulsing orbs)
 - Animated SVG wave header
@@ -153,7 +170,7 @@ match /moods/{moodId} {
   // Allow authenticated users to read/write their own mood entries
   // For global access (demo), use:
   allow read, write: if true;
-  
+
   // For user-specific (recommended for production):
   // allow read, write: if request.auth != null && request.auth.uid == resource.data.userId;
 }
@@ -181,12 +198,14 @@ const unsub = onSnapshot(q, (snapshot) => {
 ### 1. Install Dependencies
 
 Already installed in your project:
+
 ```bash
 # Verify these are in package.json
 npm list firebase recharts lucide-react
 ```
 
 Dependencies:
+
 - `firebase` (Firestore, serverTimestamp)
 - `recharts` (AreaChart, BarChart)
 - `lucide-react` (Icons)
@@ -200,7 +219,7 @@ Dependencies:
 import MoodGraphPremiumFirestore from "./components/tools/MoodGraphPremiumFirestore";
 
 // Add route
-<Route path="/tools/mood-graph" element={<MoodGraphPremiumFirestore />} />
+<Route path="/tools/mood-graph" element={<MoodGraphPremiumFirestore />} />;
 ```
 
 **Option B: Dashboard Integration**
@@ -236,6 +255,7 @@ service cloud.firestore {
 ```
 
 Deploy rules:
+
 ```bash
 firebase deploy --only firestore:rules
 ```
@@ -249,6 +269,7 @@ firebase deploy --only firestore:rules
 5. **Select trigger tags** (Work, Relationships, etc.)
 6. **Click "Save Entry"** button
 7. **Verify Firestore save:**
+
    - Check Firebase Console → Firestore Database → `moods` collection
    - Should see new document with all fields
 
@@ -263,12 +284,13 @@ firebase deploy --only firestore:rules
 ## 📊 Analytics Explained
 
 ### Streak Calculation
+
 ```javascript
 function calcStreak(rows) {
   // Checks consecutive days backwards from today
   // Max lookback: 90 days
   // Breaks on first missing day
-  const set = new Set(rows.map(r => r.date));
+  const set = new Set(rows.map((r) => r.date));
   let streak = 0;
   for (let i = 0; i < 90; i++) {
     const d = new Date();
@@ -282,17 +304,18 @@ function calcStreak(rows) {
 ```
 
 ### Weekly Insight Algorithm
+
 ```javascript
 function buildWeeklyInsight(rows) {
   const last7 = [...rows].slice(0, 7); // Last 7 entries
-  
+
   // Analyzes:
   // 1. Mood frequency → topMood
   // 2. Average score → avgScore (1-9 scale)
   // 3. Peak intensity → maxInt (1-10 scale)
   // 4. Trigger frequency → topTrigger
   // 5. Day-of-week distribution → bestDay (Sun-Sat)
-  
+
   // Generates:
   // - Narrative message (personalized summary)
   // - 3 actionable tips based on data patterns
@@ -300,6 +323,7 @@ function buildWeeklyInsight(rows) {
 ```
 
 **Tip Logic:**
+
 - If `topTrigger` exists → Breathing technique advice
 - If `avgScore < 6` → "Restore" recovery suggestion
 - If `avgScore >= 6` → "Maintain momentum" suggestion
@@ -310,6 +334,7 @@ function buildWeeklyInsight(rows) {
 ## 🎨 UI Design System
 
 ### Color Palette
+
 ```css
 /* Primary Brand */
 --amber-400: #fbbf24;
@@ -332,33 +357,39 @@ bg-slate-950/60
 ### Key Components
 
 **Header (Sticky):**
+
 - `backdrop-blur-md` for glass effect
 - Amber BarChart3 icon in gradient box
 - Stats grid (hidden on mobile, 4-col on desktop)
 - Border: `border-amber-400/20`
 
 **Mood Entry Card:**
+
 - 8-grid emoji buttons (4-col mobile, 8-col desktop)
 - Selected state: `border-amber-400` + gradient background
 - Hover: `hover:scale-110` transition
 - Group hover effect on parent card
 
 **Trigger Tags:**
+
 - Multi-select chips
 - Active: `from-amber-500/30 to-yellow-500/30` gradient
 - Inactive: `bg-white/5` with hover effect
 
 **Charts Container:**
+
 - 2-col grid on desktop, 1-col mobile
 - Shared card styling (slate gradient + amber border)
 - Dark tooltips: `background: #111`
 
 **Weekly Insight Panel:**
+
 - `from-amber-500/10 to-yellow-500/5` gradient background
 - Bullet list for tips
 - Heart icon + "Weekly Insight" title
 
 **Recent Entries:**
+
 - Max height with scroll: `max-h-96 overflow-y-auto`
 - Hover border highlight: `hover:border-amber-400/30`
 - Tag chips: `bg-amber-500/20 text-amber-200`
@@ -370,27 +401,43 @@ bg-slate-950/60
 ### 1. Add More Moods
 
 Edit the `MOODS` array:
+
 ```jsx
 const MOODS = [
   // ... existing moods
-  {key:"Energized",emoji:"⚡",score:8,color:"from-cyan-400 to-blue-400"},
-  {key:"Content",emoji:"☺️",score:7,color:"from-lime-400 to-green-400"}
+  {
+    key: "Energized",
+    emoji: "⚡",
+    score: 8,
+    color: "from-cyan-400 to-blue-400",
+  },
+  {
+    key: "Content",
+    emoji: "☺️",
+    score: 7,
+    color: "from-lime-400 to-green-400",
+  },
 ];
 ```
 
 ### 2. Add More Triggers
 
 Edit the `TRIGGERS` array:
+
 ```jsx
 const TRIGGERS = [
   // ... existing triggers
-  "Exercise", "Diet", "Weather", "Hobbies"
+  "Exercise",
+  "Diet",
+  "Weather",
+  "Hobbies",
 ];
 ```
 
 ### 3. Adjust Analytics Window
 
 Change limit in query:
+
 ```jsx
 // Currently loads 60 entries
 const q = query(
@@ -401,6 +448,7 @@ const q = query(
 ```
 
 Change weekly insight window:
+
 ```jsx
 // Currently analyzes last 7 entries
 const last7 = [...rows].slice(0, 14); // Change to last 14
@@ -409,6 +457,7 @@ const last7 = [...rows].slice(0, 14); // Change to last 14
 ### 4. Change Color Theme
 
 Replace amber/yellow with your brand colors:
+
 ```jsx
 // Find & replace:
 amber-400 → purple-400
@@ -421,6 +470,7 @@ yellow-500 → pink-500
 ### 5. Add User-Specific Data
 
 Add `userId` field to Firestore saves:
+
 ```jsx
 import { auth } from "../../firebase";
 
@@ -447,40 +497,51 @@ const q = query(
 ## 🐛 Troubleshooting
 
 ### Charts Not Showing
+
 **Symptom:** Empty space where charts should be  
 **Fix:** Ensure `recharts` is installed:
+
 ```bash
 npm install recharts
 ```
 
 ### Firestore Permission Errors
+
 **Symptom:** Console error `Missing or insufficient permissions`  
 **Fix:** Update `firestore.rules` to allow read/write:
+
 ```
 match /moods/{moodId} {
   allow read, write: if true;
 }
 ```
+
 Deploy: `firebase deploy --only firestore:rules`
 
 ### No Data Showing
+
 **Symptom:** Empty dashboard with "No entries yet" message  
-**Fix:** 
+**Fix:**
+
 1. Component uses seed data if Firestore is empty on first load
 2. Save an entry to test Firestore connection
 3. Check browser console for errors
 4. Verify Firebase config in `src/firebase.js`
 
 ### Weekly Insight Not Updating
+
 **Symptom:** Insight shows stale data  
 **Fix:** Insight updates automatically when `rows` changes. Ensure:
+
 1. Firestore `onSnapshot` listener is active (check console for errors)
 2. At least 1 entry exists (insight needs data to analyze)
 3. Component hasn't been memoized incorrectly
 
 ### Streak Always Shows 0
+
 **Symptom:** Streak counter stuck at 0  
 **Fix:**
+
 1. Ensure entries have `date` field in "YYYY-MM-DD" format
 2. Check `normalizeDate()` function handles your data structure
 3. Log today's entry to start streak from 1
@@ -491,17 +552,20 @@ Deploy: `firebase deploy --only firestore:rules`
 ## 📈 Performance Notes
 
 ### Build Impact
+
 - **CSS:** +401 B (40.33 kB total)
 - **JS:** No change (435.99 kB - component lazy-loaded)
 - **Warnings:** Pre-existing (BreathingTool, MeditationTimer)
 
 ### Real-time Listener
+
 - Uses `onSnapshot` for live updates
 - Auto-unsubscribes on unmount
 - Graceful error handling with fallback to seed data
 - Limit: 60 documents max to prevent excessive reads
 
 ### Optimization Opportunities
+
 1. **Lazy load charts:** Import Recharts dynamically
 2. **Memoize calculations:** Wrap `buildWeeklyInsight` in `useMemo`
 3. **Virtualize recent entries:** Use react-window if list grows large
@@ -514,27 +578,32 @@ Deploy: `firebase deploy --only firestore:rules`
 ### Additional Features to Consider
 
 1. **Export Data**
+
    - CSV download button
    - PDF report generation
    - Email weekly summaries
 
 2. **Enhanced Analytics**
+
    - Monthly comparison charts
    - Trigger correlation matrix
    - Time-of-day patterns (add timestamp field)
    - Mood prediction (ML model)
 
 3. **Social Features**
+
    - Share insights with therapist
    - Anonymous community trends
    - Support group integration
 
 4. **Reminders & Notifications**
+
    - Daily check-in reminders
    - Streak milestone celebrations
    - Push notifications via Firebase Cloud Messaging
 
 5. **Advanced Insights**
+
    - Mood-trigger correlation scores
    - Best/worst day-of-week analysis
    - Weather API integration
@@ -550,16 +619,18 @@ Deploy: `firebase deploy --only firestore:rules`
 ## 📚 Technical Details
 
 ### Dependencies Used
+
 ```json
 {
-  "firebase": "^10.x",           // Firestore + serverTimestamp
-  "recharts": "^3.3.0",          // Charts (Area, Bar)
-  "lucide-react": "^0.552.0",    // Icons
-  "react": "^18.3.1"             // Core framework
+  "firebase": "^10.x", // Firestore + serverTimestamp
+  "recharts": "^3.3.0", // Charts (Area, Bar)
+  "lucide-react": "^0.552.0", // Icons
+  "react": "^18.3.1" // Core framework
 }
 ```
 
 ### Component Architecture
+
 ```
 MoodGraphPremiumFirestore (Main)
 ├── State Management (9 state variables)
@@ -597,6 +668,7 @@ MoodGraphPremiumFirestore (Main)
 ```
 
 ### File Size Breakdown
+
 - **Total lines:** 387
 - **State logic:** ~50 lines
 - **Analytics:** ~100 lines
@@ -608,6 +680,7 @@ MoodGraphPremiumFirestore (Main)
 ## 🔗 Integration Examples
 
 ### Example 1: Add to Tools Menu
+
 ```jsx
 // In your navigation/sidebar
 <NavLink to="/tools/mood-graph">
@@ -617,6 +690,7 @@ MoodGraphPremiumFirestore (Main)
 ```
 
 ### Example 2: Embed in Wellness Dashboard
+
 ```jsx
 import MoodGraphPremiumFirestore from "@/components/tools/MoodGraphPremiumFirestore";
 
@@ -631,18 +705,19 @@ function WellnessDashboard() {
 ```
 
 ### Example 3: Protected Route
+
 ```jsx
 import { PrivateRoute } from "@/components/PrivateRoute";
 import MoodGraphPremiumFirestore from "@/components/tools/MoodGraphPremiumFirestore";
 
-<Route 
-  path="/tools/mood-graph" 
+<Route
+  path="/tools/mood-graph"
   element={
     <PrivateRoute>
       <MoodGraphPremiumFirestore />
     </PrivateRoute>
-  } 
-/>
+  }
+/>;
 ```
 
 ---
@@ -658,6 +733,7 @@ import MoodGraphPremiumFirestore from "@/components/tools/MoodGraphPremiumFirest
 - [x] Documentation created (MOOD_GRAPH_SETUP.md)
 
 ### Still TODO:
+
 - [ ] Add route to your app router
 - [ ] Deploy Firestore rules with `moods` collection permissions
 - [ ] Test with real user data
@@ -669,6 +745,7 @@ import MoodGraphPremiumFirestore from "@/components/tools/MoodGraphPremiumFirest
 ## 🎉 Summary
 
 You now have a **production-ready Mood Graph** with:
+
 - 8 mood types with emoji selectors
 - 10 trigger tags system
 - Intensity slider + contextual notes
