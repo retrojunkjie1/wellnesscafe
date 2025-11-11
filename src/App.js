@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, createContext, useContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./utils/ThemeContext";
 import { AuthProvider } from "./AuthContext";
@@ -59,14 +59,28 @@ import CheckInPage from "./Views/CheckInPage";
 import DevTools from "./components/DevTools";
 import AuthDebug from "./components/AuthDebug";
 
+// Create context for AI Widget control
+const AIWidgetContext = createContext(null);
+
+export const useAIWidget = () => {
+  const context = useContext(AIWidgetContext);
+  if (!context) {
+    console.warn('useAIWidget must be used within AIWidgetContext provider');
+  }
+  return context;
+};
+
 function App() {
+  const aiWidgetRef = useRef(null);
+  
   return (
     <AuthProvider>
       <ThemeProvider>
-        <Router>
-          <Navbar />
-          <NavigationButtons />
-          <FloatingAIWidget />
+        <AIWidgetContext.Provider value={aiWidgetRef}>
+          <Router>
+            <Navbar />
+            <NavigationButtons />
+            <FloatingAIWidget ref={aiWidgetRef} />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/signup" element={<Signup />} />
@@ -252,8 +266,9 @@ function App() {
             <Route path="/auth-debug" element={<AuthDebug />} />
           </Routes>
         </Router>
-      </ThemeProvider>
-    </AuthProvider>
+      </AIWidgetContext.Provider>
+    </ThemeProvider>
+  </AuthProvider>
   );
 }
 

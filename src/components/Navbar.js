@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../AuthContext";
+import { useAIWidget } from "../App";
 import "./Navbar.css";
 import RadioPlayer from "./RadioPlayer.jsx";
+import GetHelpNow from "./GetHelpNow";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { user, logout } = useAuth();
+  const aiWidgetRef = useAIWidget();
   // location hook removed (unused after navbar style unification)
 
   useEffect(() => {
@@ -40,6 +43,13 @@ const Navbar = () => {
       closeMenu();
     } catch (error) {
       console.error("Failed to log out:", error);
+    }
+  };
+
+  const handleGetHelp = (prompt) => {
+    closeMenu(); // Close mobile menu first
+    if (aiWidgetRef?.current) {
+      aiWidgetRef.current.openWithPrompt(prompt);
     }
   };
 
@@ -143,6 +153,13 @@ const Navbar = () => {
             aria-label="Close menu overlay"
           />
           <ul className="mobile-nav-links">
+            <li className="mobile-help-item">
+              <GetHelpNow 
+                variant="mobile" 
+                context="crisis"
+                onOpenAI={handleGetHelp}
+              />
+            </li>
             <li>
               <Link to="/" onClick={closeMenu}>
                 Home

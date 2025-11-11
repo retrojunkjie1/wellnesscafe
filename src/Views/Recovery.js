@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { AlertTriangle, Pill, MessageSquare, Users2, FlaskConical, Brain, HeartHandshake, Sparkles, PhoneCall, Search } from 'lucide-react';
+import { useAIWidget } from '../App';
+import GetHelpNow from '../components/GetHelpNow';
 import './RecoveryPage.css';
 
 const RecoveryPage = () => {
   const [activeTab, setActiveTab] = useState('understanding');
+  const aiWidgetRef = useAIWidget();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const handleGetHelp = (prompt) => {
+    if (aiWidgetRef?.current) {
+      aiWidgetRef.current.openWithPrompt(prompt);
+    }
+  };
 
   const renderContent = () => {
     switch (activeTab) {
@@ -61,9 +70,11 @@ const RecoveryPage = () => {
             </div>
           </div>
           <div className="hero-actions">
-            <button className="btn-primary" onClick={() => document.getElementById('emergency-resources')?.scrollIntoView({ behavior: 'smooth' })}>
-              Get Help Now
-            </button>
+            <GetHelpNow 
+              variant="hero" 
+              context="crisis"
+              onOpenAI={handleGetHelp}
+            />
             <button className="btn-secondary" onClick={() => document.getElementById('tabs')?.scrollIntoView({ behavior: 'smooth' })}>
               Explore Guide
             </button>

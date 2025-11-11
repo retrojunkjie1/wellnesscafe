@@ -243,6 +243,12 @@
   border-bottom: 1px solid rgba(212, 180, 131, 0.15);
 }
 
+.mobile-nav-links li.mobile-help-item {
+  border-bottom: 2px solid rgba(239, 68, 68, 0.3);
+  padding: 0.5rem 1rem;
+  background: rgba(239, 68, 68, 0.05);
+}
+
 .mobile-nav-links li:last-child {
   border-bottom: none;
 }
