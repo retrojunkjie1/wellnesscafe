@@ -104,25 +104,29 @@ const FloatingAIWidget = forwardRef(
       };
     }, []);
 
-  // Expose methods to parent components via ref
-  useImperativeHandle(ref, () => ({
-    openWithPrompt: (prompt) => {
-      setSearchQuery(prompt);
-      setIsOpen(true);
-      setHasAutoSent(false);
+    // Expose methods to parent components via ref
+    useImperativeHandle(
+      ref,
+      () => ({
+        openWithPrompt: (prompt) => {
+          setSearchQuery(prompt);
+          setIsOpen(true);
+          setHasAutoSent(false);
 
-      // Auto-submit the prompt
-      setTimeout(() => {
-        const syntheticEvent = { preventDefault: () => {} };
-        handleSearch(syntheticEvent);
-      }, 300);
-    },
-    open: () => setIsOpen(true),
-    close: () => setIsOpen(false),
-    isOpen: () => isOpen,
-  }), [isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
+          // Auto-submit the prompt
+          setTimeout(() => {
+            const syntheticEvent = { preventDefault: () => {} };
+            handleSearch(syntheticEvent);
+          }, 300);
+        },
+        open: () => setIsOpen(true),
+        close: () => setIsOpen(false),
+        isOpen: () => isOpen,
+      }),
+      [isOpen]
+    ); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const toggleVoice = () => {
+    const toggleVoice = () => {
       if (!recognitionRef.current) {
         alert(
           "Voice recognition is not supported in your browser. Please try Chrome or Edge."

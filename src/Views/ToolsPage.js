@@ -4,6 +4,7 @@ import "./ToolsPage.css";
 import { Link } from "react-router-dom";
 import PanoramicHero from "../components/PanoramicHero";
 import BreathingTool from "../features/recovery/tools/BreathingTool";
+import DashboardHeader from "../components/DashboardHeader";
 
 const ToolsPage = () => {
   const [selectedPreset, setSelectedPreset] = useState(null);
@@ -268,6 +269,9 @@ const ToolsPage = () => {
     <div className="page tools-page">
       <main className="container">
         <PanoramicHero />
+
+        {/* Premium Dashboard Header */}
+        <DashboardHeader userName="Wellness Champion" />
 
         {/* Enhanced Hero Section */}
         <div className="tools-hero">
