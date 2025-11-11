@@ -1,8 +1,38 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { AlertTriangle, Shield, TrendingUp, Award, Flame, Calendar, Save, CheckCircle } from "lucide-react";
-import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, PieChart, Pie, Cell } from "recharts";
+import {
+  AlertTriangle,
+  Shield,
+  TrendingUp,
+  Award,
+  Flame,
+  Calendar,
+  Save,
+  CheckCircle,
+} from "lucide-react";
+import {
+  AreaChart,
+  Area,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  CartesianGrid,
+  PieChart,
+  Pie,
+  Cell,
+} from "recharts";
 import { db } from "../../firebase";
-import { collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  limit,
+  onSnapshot,
+  serverTimestamp,
+} from "firebase/firestore";
 
 const TRIGGER_TYPES = [
   "People (specific person)",
@@ -14,14 +44,14 @@ const TRIGGER_TYPES = [
   "Social (isolation/conflict)",
   "Physical (pain/fatigue)",
   "Success (fear of failure)",
-  "Boredom (lack of structure)"
+  "Boredom (lack of structure)",
 ];
 
 const HALT_FACTORS = [
   { key: "hungry", label: "Hungry", desc: "Physical hunger or poor nutrition" },
   { key: "angry", label: "Angry", desc: "Irritation, resentment, or rage" },
   { key: "lonely", label: "Lonely", desc: "Isolation or lack of connection" },
-  { key: "tired", label: "Tired", desc: "Physical or emotional exhaustion" }
+  { key: "tired", label: "Tired", desc: "Physical or emotional exhaustion" },
 ];
 
 const COPING_STRATEGIES = [
@@ -34,7 +64,7 @@ const COPING_STRATEGIES = [
   { name: "Delay & distract", category: "Behavioral" },
   { name: "Play the tape forward", category: "Mental" },
   { name: "Gratitude list", category: "Perspective" },
-  { name: "Cold shower", category: "Physical" }
+  { name: "Cold shower", category: "Physical" },
 ];
 
 const todayKey = () => new Date().toISOString().slice(0, 10);
@@ -53,13 +83,25 @@ export default function TriggerJournal() {
 
   // Load entries from Firestore
   useEffect(() => {
-    const q = query(collection(db, "triggers"), orderBy("createdAt", "desc"), limit(60));
-    const unsub = onSnapshot(q, (snap) => {
-      const data = snap.docs.map((d) => ({ id: d.id, ...d.data(), date: normalizeDate(d.data()) }));
-      setRows(data);
-    }, (err) => {
-      console.error("triggers:onSnapshot", err);
-    });
+    const q = query(
+      collection(db, "triggers"),
+      orderBy("createdAt", "desc"),
+      limit(60)
+    );
+    const unsub = onSnapshot(
+      q,
+      (snap) => {
+        const data = snap.docs.map((d) => ({
+          id: d.id,
+          ...d.data(),
+          date: normalizeDate(d.data()),
+        }));
+        setRows(data);
+      },
+      (err) => {
+        console.error("triggers:onSnapshot", err);
+      }
+    );
     return () => unsub();
   }, []);
 
@@ -86,13 +128,17 @@ export default function TriggerJournal() {
         intensity,
         haltFactors,
         copingUsed,
-        copingCategories: [...new Set(copingUsed.map((c) => {
-          const strategy = COPING_STRATEGIES.find((s) => s.name === c);
-          return strategy?.category || "Other";
-        }))],
+        copingCategories: [
+          ...new Set(
+            copingUsed.map((c) => {
+              const strategy = COPING_STRATEGIES.find((s) => s.name === c);
+              return strategy?.category || "Other";
+            })
+          ),
+        ],
         outcome,
         managed: managed !== null ? managed : undefined,
-        createdAt: serverTimestamp()
+        createdAt: serverTimestamp(),
       });
       setDescription("");
       setIntensity(5);
@@ -108,7 +154,14 @@ export default function TriggerJournal() {
 
   // Analytics
   const stats = useMemo(() => {
-    if (rows.length === 0) return { total: 0, managed: 0, avgIntensity: 0, thisWeek: 0, managedPercent: 0 };
+    if (rows.length === 0)
+      return {
+        total: 0,
+        managed: 0,
+        avgIntensity: 0,
+        thisWeek: 0,
+        managedPercent: 0,
+      };
     const managedCount = rows.filter((r) => r.managed === true).length;
     const totalIntensity = rows.reduce((sum, r) => sum + (r.intensity || 0), 0);
     const thisWeek = rows.filter((r) => {
@@ -122,21 +175,24 @@ export default function TriggerJournal() {
       managed: managedCount,
       avgIntensity: (totalIntensity / rows.length).toFixed(1),
       thisWeek,
-      managedPercent: ((managedCount / rows.length) * 100).toFixed(0)
+      managedPercent: ((managedCount / rows.length) * 100).toFixed(0),
     };
   }, [rows]);
 
   const trend14 = useMemo(() => {
     const last14 = [...rows].reverse().slice(-14);
-    return last14.map((r, i) => ({ 
-      name: `D${last14.length - i}`, 
+    return last14.map((r, i) => ({
+      name: `D${last14.length - i}`,
       intensity: r.intensity || 0,
-      managed: r.managed ? 1 : 0
+      managed: r.managed ? 1 : 0,
     }));
   }, [rows]);
 
   const triggerTypeData = useMemo(() => {
-    const counts = TRIGGER_TYPES.reduce((m, t) => { m[t.split(" ")[0]] = 0; return m; }, {});
+    const counts = TRIGGER_TYPES.reduce((m, t) => {
+      m[t.split(" ")[0]] = 0;
+      return m;
+    }, {});
     rows.forEach((r) => {
       const short = (r.triggerType || "").split(" ")[0];
       if (counts[short] != null) counts[short] += 1;
@@ -156,8 +212,19 @@ export default function TriggerJournal() {
   }, [rows]);
 
   const copingData = useMemo(() => {
-    const categories = ["Connection", "Mindfulness", "Physical", "Processing", "Behavioral", "Mental", "Perspective"];
-    const counts = categories.reduce((m, c) => { m[c] = 0; return m; }, {});
+    const categories = [
+      "Connection",
+      "Mindfulness",
+      "Physical",
+      "Processing",
+      "Behavioral",
+      "Mental",
+      "Perspective",
+    ];
+    const counts = categories.reduce((m, c) => {
+      m[c] = 0;
+      return m;
+    }, {});
     rows.forEach((r) => {
       (r.copingCategories || []).forEach((c) => {
         if (counts[c] != null) counts[c] += 1;
@@ -184,8 +251,12 @@ export default function TriggerJournal() {
               <AlertTriangle className="text-white" size={24} />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-red-400">Trigger Journal</h1>
-              <p className="text-xs text-gray-400">Identify patterns • Build awareness • Strengthen response</p>
+              <h1 className="text-2xl font-bold text-red-400">
+                Trigger Journal
+              </h1>
+              <p className="text-xs text-gray-400">
+                Identify patterns • Build awareness • Strengthen response
+              </p>
             </div>
           </div>
           <div className="hidden md:grid grid-cols-3 gap-6 text-sm">
@@ -207,19 +278,25 @@ export default function TriggerJournal() {
               </h2>
               <div className="space-y-4">
                 <div>
-                  <label className="text-sm font-semibold text-red-300 block mb-2">Trigger Type</label>
+                  <label className="text-sm font-semibold text-red-300 block mb-2">
+                    Trigger Type
+                  </label>
                   <select
                     value={triggerType}
                     onChange={(e) => setTriggerType(e.target.value)}
                     className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 text-white outline-none focus:ring-2 focus:ring-red-400/50"
                   >
                     {TRIGGER_TYPES.map((t) => (
-                      <option key={t} value={t}>{t}</option>
+                      <option key={t} value={t}>
+                        {t}
+                      </option>
                     ))}
                   </select>
                 </div>
                 <div>
-                  <label className="text-sm font-semibold text-red-300 block mb-2">Describe the Trigger</label>
+                  <label className="text-sm font-semibold text-red-300 block mb-2">
+                    Describe the Trigger
+                  </label>
                   <textarea
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
@@ -233,8 +310,12 @@ export default function TriggerJournal() {
             {/* Intensity */}
             <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-3xl border border-red-400/30 p-8 backdrop-blur">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-bold text-red-300">Urge/Craving Intensity</h2>
-                <span className="text-4xl font-bold text-white">{intensity}</span>
+                <h2 className="text-lg font-bold text-red-300">
+                  Urge/Craving Intensity
+                </h2>
+                <span className="text-4xl font-bold text-white">
+                  {intensity}
+                </span>
               </div>
               <input
                 type="range"
@@ -255,7 +336,9 @@ export default function TriggerJournal() {
               <h2 className="text-lg font-bold text-red-300 flex items-center gap-2 mb-4">
                 <Shield size={20} /> HALT Check-In
               </h2>
-              <p className="text-sm text-gray-400 mb-6">Which factors are present?</p>
+              <p className="text-sm text-gray-400 mb-6">
+                Which factors are present?
+              </p>
               <div className="grid grid-cols-2 gap-4">
                 {HALT_FACTORS.map((factor) => (
                   <button
@@ -268,7 +351,9 @@ export default function TriggerJournal() {
                     }`}
                   >
                     <div className="font-bold text-white">{factor.label}</div>
-                    <div className="text-xs text-gray-400 mt-1">{factor.desc}</div>
+                    <div className="text-xs text-gray-400 mt-1">
+                      {factor.desc}
+                    </div>
                   </button>
                 ))}
               </div>
@@ -291,7 +376,9 @@ export default function TriggerJournal() {
                     }`}
                   >
                     {strategy.name}
-                    <span className="text-xs ml-1 opacity-60">({strategy.category})</span>
+                    <span className="text-xs ml-1 opacity-60">
+                      ({strategy.category})
+                    </span>
                   </button>
                 ))}
               </div>
@@ -302,7 +389,9 @@ export default function TriggerJournal() {
               <h2 className="text-lg font-bold text-red-300 mb-4">Outcome</h2>
               <div className="space-y-4">
                 <div>
-                  <label className="text-sm font-semibold text-red-300 block mb-2">Did you manage the trigger successfully?</label>
+                  <label className="text-sm font-semibold text-red-300 block mb-2">
+                    Did you manage the trigger successfully?
+                  </label>
                   <div className="flex gap-3">
                     <button
                       onClick={() => setManaged(true)}
@@ -327,7 +416,9 @@ export default function TriggerJournal() {
                   </div>
                 </div>
                 <div>
-                  <label className="text-sm font-semibold text-red-300 block mb-2">What happened next?</label>
+                  <label className="text-sm font-semibold text-red-300 block mb-2">
+                    What happened next?
+                  </label>
                   <textarea
                     value={outcome}
                     onChange={(e) => setOutcome(e.target.value)}
@@ -358,13 +449,24 @@ export default function TriggerJournal() {
 
             <div className="bg-red-500/10 border border-red-400/30 rounded-xl p-4 text-sm text-red-100">
               <p className="font-semibold mb-2">💡 Why Track Triggers?</p>
-              <p className="text-xs">Identifying patterns in triggers helps you anticipate and prepare for high-risk situations before they escalate.</p>
+              <p className="text-xs">
+                Identifying patterns in triggers helps you anticipate and
+                prepare for high-risk situations before they escalate.
+              </p>
             </div>
 
             {/* Quick Stats */}
             <div className="grid grid-cols-2 gap-3">
-              <StatCard icon={<Flame size={14} />} title="This Week" value={stats.thisWeek} />
-              <StatCard icon={<Award size={14} />} title="Managed" value={stats.managed} />
+              <StatCard
+                icon={<Flame size={14} />}
+                title="This Week"
+                value={stats.thisWeek}
+              />
+              <StatCard
+                icon={<Award size={14} />}
+                title="Managed"
+                value={stats.managed}
+              />
             </div>
           </div>
         </div>
@@ -386,16 +488,43 @@ export default function TriggerJournal() {
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={trend14}>
                       <defs>
-                        <linearGradient id="colorTrigger" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#ef4444" stopOpacity={0.8} />
-                          <stop offset="95%" stopColor="#ef4444" stopOpacity={0.1} />
+                        <linearGradient
+                          id="colorTrigger"
+                          x1="0"
+                          y1="0"
+                          x2="0"
+                          y2="1"
+                        >
+                          <stop
+                            offset="5%"
+                            stopColor="#ef4444"
+                            stopOpacity={0.8}
+                          />
+                          <stop
+                            offset="95%"
+                            stopColor="#ef4444"
+                            stopOpacity={0.1}
+                          />
                         </linearGradient>
                       </defs>
                       <CartesianGrid strokeDasharray="3 3" stroke="#2a2a2a" />
                       <XAxis dataKey="name" stroke="#888" />
                       <YAxis domain={[0, 10]} stroke="#888" />
-                      <Tooltip contentStyle={{ background: "#111", border: "1px solid #2a2a2a", borderRadius: "8px", color: "#fff" }} />
-                      <Area type="monotone" dataKey="intensity" stroke="#ef4444" fillOpacity={1} fill="url(#colorTrigger)" />
+                      <Tooltip
+                        contentStyle={{
+                          background: "#111",
+                          border: "1px solid #2a2a2a",
+                          borderRadius: "8px",
+                          color: "#fff",
+                        }}
+                      />
+                      <Area
+                        type="monotone"
+                        dataKey="intensity"
+                        stroke="#ef4444"
+                        fillOpacity={1}
+                        fill="url(#colorTrigger)"
+                      />
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
@@ -412,8 +541,18 @@ export default function TriggerJournal() {
                       <CartesianGrid strokeDasharray="3 3" stroke="#2a2a2a" />
                       <XAxis dataKey="name" stroke="#888" />
                       <YAxis allowDecimals={false} stroke="#888" />
-                      <Tooltip contentStyle={{ background: "#111", border: "1px solid #2a2a2a", borderRadius: "8px" }} />
-                      <Bar dataKey="count" fill="#ef4444" radius={[8, 8, 0, 0]} />
+                      <Tooltip
+                        contentStyle={{
+                          background: "#111",
+                          border: "1px solid #2a2a2a",
+                          borderRadius: "8px",
+                        }}
+                      />
+                      <Bar
+                        dataKey="count"
+                        fill="#ef4444"
+                        radius={[8, 8, 0, 0]}
+                      />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -432,16 +571,27 @@ export default function TriggerJournal() {
                         cx="50%"
                         cy="50%"
                         labelLine={false}
-                        label={({ name, value }) => value > 0 ? `${name}: ${value}` : null}
+                        label={({ name, value }) =>
+                          value > 0 ? `${name}: ${value}` : null
+                        }
                         outerRadius={80}
                         fill="#8884d8"
                         dataKey="value"
                       >
                         {haltData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                          <Cell
+                            key={`cell-${index}`}
+                            fill={COLORS[index % COLORS.length]}
+                          />
                         ))}
                       </Pie>
-                      <Tooltip contentStyle={{ background: "#111", border: "1px solid #2a2a2a", borderRadius: "8px" }} />
+                      <Tooltip
+                        contentStyle={{
+                          background: "#111",
+                          border: "1px solid #2a2a2a",
+                          borderRadius: "8px",
+                        }}
+                      />
                     </PieChart>
                   </ResponsiveContainer>
                 </div>
@@ -457,9 +607,24 @@ export default function TriggerJournal() {
                     <BarChart data={copingData} layout="horizontal">
                       <CartesianGrid strokeDasharray="3 3" stroke="#2a2a2a" />
                       <XAxis type="number" stroke="#888" />
-                      <YAxis type="category" dataKey="name" stroke="#888" width={100} />
-                      <Tooltip contentStyle={{ background: "#111", border: "1px solid #2a2a2a", borderRadius: "8px" }} />
-                      <Bar dataKey="count" fill="#10b981" radius={[0, 8, 8, 0]} />
+                      <YAxis
+                        type="category"
+                        dataKey="name"
+                        stroke="#888"
+                        width={100}
+                      />
+                      <Tooltip
+                        contentStyle={{
+                          background: "#111",
+                          border: "1px solid #2a2a2a",
+                          borderRadius: "8px",
+                        }}
+                      />
+                      <Bar
+                        dataKey="count"
+                        fill="#10b981"
+                        radius={[0, 8, 8, 0]}
+                      />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -473,32 +638,52 @@ export default function TriggerJournal() {
               </h3>
               <div className="space-y-4 max-h-96 overflow-y-auto">
                 {rows.slice(0, 10).map((entry, idx) => (
-                  <div key={idx} className={`p-6 bg-black/30 border-2 rounded-xl transition-all ${
-                    entry.managed === true ? "border-green-400/30" : entry.managed === false ? "border-red-400/30" : "border-white/10"
-                  }`}>
+                  <div
+                    key={idx}
+                    className={`p-6 bg-black/30 border-2 rounded-xl transition-all ${
+                      entry.managed === true
+                        ? "border-green-400/30"
+                        : entry.managed === false
+                        ? "border-red-400/30"
+                        : "border-white/10"
+                    }`}
+                  >
                     <div className="flex items-start justify-between mb-3">
                       <div>
                         <p className="text-sm text-gray-400">{entry.date}</p>
-                        <p className="text-sm font-semibold text-white mt-1">{entry.triggerType}</p>
+                        <p className="text-sm font-semibold text-white mt-1">
+                          {entry.triggerType}
+                        </p>
                       </div>
                       <div className="text-right">
-                        <p className="text-lg font-bold text-red-400">{entry.intensity}/10</p>
+                        <p className="text-lg font-bold text-red-400">
+                          {entry.intensity}/10
+                        </p>
                         {entry.managed !== undefined && (
-                          <span className={`text-xs px-2 py-1 rounded ${
-                            entry.managed ? "bg-green-500/20 text-green-200" : "bg-red-500/20 text-red-200"
-                          }`}>
+                          <span
+                            className={`text-xs px-2 py-1 rounded ${
+                              entry.managed
+                                ? "bg-green-500/20 text-green-200"
+                                : "bg-red-500/20 text-red-200"
+                            }`}
+                          >
                             {entry.managed ? "Managed" : "Relapsed"}
                           </span>
                         )}
                       </div>
                     </div>
-                    <p className="text-sm text-gray-300 mb-3">"{entry.description}"</p>
+                    <p className="text-sm text-gray-300 mb-3">
+                      "{entry.description}"
+                    </p>
                     {entry.haltFactors && entry.haltFactors.length > 0 && (
                       <div className="mb-2">
                         <p className="text-xs text-gray-400 mb-1">HALT: </p>
                         <div className="flex flex-wrap gap-1">
                           {entry.haltFactors.map((h, hidx) => (
-                            <span key={hidx} className="text-xs px-2 py-1 rounded bg-red-500/20 text-red-200 uppercase">
+                            <span
+                              key={hidx}
+                              className="text-xs px-2 py-1 rounded bg-red-500/20 text-red-200 uppercase"
+                            >
                               {h}
                             </span>
                           ))}
@@ -510,7 +695,10 @@ export default function TriggerJournal() {
                         <p className="text-xs text-gray-400 mb-1">Coping: </p>
                         <div className="flex flex-wrap gap-1">
                           {entry.copingUsed.slice(0, 3).map((c, cidx) => (
-                            <span key={cidx} className="text-xs px-2 py-1 rounded bg-green-500/20 text-green-200">
+                            <span
+                              key={cidx}
+                              className="text-xs px-2 py-1 rounded bg-green-500/20 text-green-200"
+                            >
                               {c}
                             </span>
                           ))}
@@ -524,7 +712,8 @@ export default function TriggerJournal() {
                     )}
                     {entry.outcome && (
                       <p className="text-sm text-gray-300 italic">
-                        <span className="text-gray-400">Outcome:</span> "{entry.outcome}"
+                        <span className="text-gray-400">Outcome:</span> "
+                        {entry.outcome}"
                       </p>
                     )}
                   </div>
@@ -550,7 +739,10 @@ function Metric({ title, value }) {
 function StatCard({ icon, title, value }) {
   return (
     <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl border border-red-400/30 p-4 backdrop-blur">
-      <p className="text-xs text-gray-400 mb-2 flex items-center gap-2">{icon}{title}</p>
+      <p className="text-xs text-gray-400 mb-2 flex items-center gap-2">
+        {icon}
+        {title}
+      </p>
       <p className="text-2xl font-bold text-red-400">{value}</p>
     </div>
   );

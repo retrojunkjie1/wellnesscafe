@@ -1,8 +1,39 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Heart, Sparkles, Calendar, Save, TrendingUp, Award, Flame, BookOpen, Plus, X } from "lucide-react";
-import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
+import {
+  Heart,
+  Sparkles,
+  Calendar,
+  Save,
+  TrendingUp,
+  Award,
+  Flame,
+  BookOpen,
+  Plus,
+  X,
+} from "lucide-react";
+import {
+  AreaChart,
+  Area,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  CartesianGrid,
+} from "recharts";
 import { db } from "../../firebase";
-import { collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp, deleteDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  limit,
+  onSnapshot,
+  serverTimestamp,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 
 const PROMPTS = [
   "What made you smile today?",
@@ -14,10 +45,19 @@ const PROMPTS = [
   "What act of kindness touched your heart?",
   "What in nature are you thankful for?",
   "What lesson are you grateful to have learned?",
-  "What comfort or security do you appreciate?"
+  "What comfort or security do you appreciate?",
 ];
 
-const CATEGORIES = ["People", "Health", "Growth", "Nature", "Comfort", "Achievement", "Kindness", "Recovery"];
+const CATEGORIES = [
+  "People",
+  "Health",
+  "Growth",
+  "Nature",
+  "Comfort",
+  "Achievement",
+  "Kindness",
+  "Recovery",
+];
 
 const todayKey = () => new Date().toISOString().slice(0, 10);
 
@@ -32,13 +72,25 @@ export default function GratitudeJournal() {
 
   // Load entries from Firestore
   useEffect(() => {
-    const q = query(collection(db, "gratitude"), orderBy("createdAt", "desc"), limit(90));
-    const unsub = onSnapshot(q, (snap) => {
-      const data = snap.docs.map((d) => ({ id: d.id, ...d.data(), date: normalizeDate(d.data()) }));
-      setRows(data);
-    }, (err) => {
-      console.error("gratitude:onSnapshot", err);
-    });
+    const q = query(
+      collection(db, "gratitude"),
+      orderBy("createdAt", "desc"),
+      limit(90)
+    );
+    const unsub = onSnapshot(
+      q,
+      (snap) => {
+        const data = snap.docs.map((d) => ({
+          id: d.id,
+          ...d.data(),
+          date: normalizeDate(d.data()),
+        }));
+        setRows(data);
+      },
+      (err) => {
+        console.error("gratitude:onSnapshot", err);
+      }
+    );
     return () => unsub();
   }, []);
 
@@ -66,17 +118,17 @@ export default function GratitudeJournal() {
   };
 
   const save = async () => {
-    if (entries.every(e => !e.text.trim())) return;
+    if (entries.every((e) => !e.text.trim())) return;
     setSaving(true);
     try {
-      const validEntries = entries.filter(e => e.text.trim());
+      const validEntries = entries.filter((e) => e.text.trim());
       await addDoc(collection(db, "gratitude"), {
         date: dateKey,
         prompt,
         entries: validEntries,
         reflection,
         count: validEntries.length,
-        createdAt: serverTimestamp()
+        createdAt: serverTimestamp(),
       });
       setEntries([{ text: "", category: "People" }]);
       setReflection("");
@@ -96,7 +148,8 @@ export default function GratitudeJournal() {
 
   // Analytics
   const stats = useMemo(() => {
-    if (rows.length === 0) return { total: 0, streak: 0, avgCount: 0, thisMonth: 0 };
+    if (rows.length === 0)
+      return { total: 0, streak: 0, avgCount: 0, thisMonth: 0 };
     const totalEntries = rows.reduce((sum, r) => sum + (r.count || 0), 0);
     const streak = calcStreak(rows);
     const thisMonth = countThisMonth(rows);
@@ -104,17 +157,23 @@ export default function GratitudeJournal() {
       total: totalEntries,
       streak,
       avgCount: (totalEntries / rows.length).toFixed(1),
-      thisMonth
+      thisMonth,
     };
   }, [rows]);
 
   const trend14 = useMemo(() => {
     const last14 = [...rows].reverse().slice(-14);
-    return last14.map((r, i) => ({ name: `D${last14.length - i}`, count: r.count || 0 }));
+    return last14.map((r, i) => ({
+      name: `D${last14.length - i}`,
+      count: r.count || 0,
+    }));
   }, [rows]);
 
   const categoryData = useMemo(() => {
-    const counts = CATEGORIES.reduce((m, c) => { m[c] = 0; return m; }, {});
+    const counts = CATEGORIES.reduce((m, c) => {
+      m[c] = 0;
+      return m;
+    }, {});
     rows.forEach((r) => {
       (r.entries || []).forEach((e) => {
         if (counts[e.category] != null) counts[e.category] += 1;
@@ -139,8 +198,12 @@ export default function GratitudeJournal() {
               <Heart className="text-white" size={24} />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-green-400">Gratitude Journal</h1>
-              <p className="text-xs text-gray-400">Count blessings • Build positivity • Shift perspective</p>
+              <h1 className="text-2xl font-bold text-green-400">
+                Gratitude Journal
+              </h1>
+              <p className="text-xs text-gray-400">
+                Count blessings • Build positivity • Shift perspective
+              </p>
             </div>
           </div>
           <div className="hidden md:grid grid-cols-3 gap-6 text-sm">
@@ -170,7 +233,7 @@ export default function GratitudeJournal() {
               </div>
               <p className="text-xl text-white italic mb-6">"{prompt}"</p>
               <div className="h-px bg-gradient-to-r from-transparent via-green-500/30 to-transparent mb-6" />
-              
+
               {/* Entries */}
               <div className="space-y-4">
                 {entries.map((entry, idx) => (
@@ -178,17 +241,23 @@ export default function GratitudeJournal() {
                     <div className="flex-1 space-y-2">
                       <textarea
                         value={entry.text}
-                        onChange={(e) => updateEntry(idx, "text", e.target.value)}
+                        onChange={(e) =>
+                          updateEntry(idx, "text", e.target.value)
+                        }
                         placeholder={`Gratitude #${idx + 1}...`}
                         className="w-full h-24 bg-black/40 border border-white/10 rounded-xl p-4 outline-none focus:ring-2 focus:ring-green-400/50 text-white placeholder-gray-500 resize-none"
                       />
                       <select
                         value={entry.category}
-                        onChange={(e) => updateEntry(idx, "category", e.target.value)}
+                        onChange={(e) =>
+                          updateEntry(idx, "category", e.target.value)
+                        }
                         className="w-full bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-green-400/50"
                       >
                         {CATEGORIES.map((cat) => (
-                          <option key={cat} value={cat}>{cat}</option>
+                          <option key={cat} value={cat}>
+                            {cat}
+                          </option>
                         ))}
                       </select>
                     </div>
@@ -237,7 +306,7 @@ export default function GratitudeJournal() {
               </p>
               <button
                 onClick={save}
-                disabled={saving || entries.every(e => !e.text.trim())}
+                disabled={saving || entries.every((e) => !e.text.trim())}
                 className="w-full px-6 py-4 rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white text-sm font-bold transition-all hover:scale-105 shadow-lg disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 <Save size={18} />
@@ -247,13 +316,24 @@ export default function GratitudeJournal() {
 
             <div className="bg-green-500/10 border border-green-400/30 rounded-xl p-4 text-sm text-green-100">
               <p className="font-semibold mb-2">💡 Why Gratitude?</p>
-              <p className="text-xs">Daily gratitude practice rewires your brain to notice positivity, reduces stress, and improves emotional resilience.</p>
+              <p className="text-xs">
+                Daily gratitude practice rewires your brain to notice
+                positivity, reduces stress, and improves emotional resilience.
+              </p>
             </div>
 
             {/* Quick Stats */}
             <div className="grid grid-cols-2 gap-3">
-              <StatCard icon={<Flame size={14} />} title="This Month" value={stats.thisMonth} />
-              <StatCard icon={<Award size={14} />} title="All Time" value={stats.total} />
+              <StatCard
+                icon={<Flame size={14} />}
+                title="This Month"
+                value={stats.thisMonth}
+              />
+              <StatCard
+                icon={<Award size={14} />}
+                title="All Time"
+                value={stats.total}
+              />
             </div>
           </div>
         </div>
@@ -275,16 +355,43 @@ export default function GratitudeJournal() {
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={trend14}>
                       <defs>
-                        <linearGradient id="colorGratitude" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#10b981" stopOpacity={0.8} />
-                          <stop offset="95%" stopColor="#10b981" stopOpacity={0.1} />
+                        <linearGradient
+                          id="colorGratitude"
+                          x1="0"
+                          y1="0"
+                          x2="0"
+                          y2="1"
+                        >
+                          <stop
+                            offset="5%"
+                            stopColor="#10b981"
+                            stopOpacity={0.8}
+                          />
+                          <stop
+                            offset="95%"
+                            stopColor="#10b981"
+                            stopOpacity={0.1}
+                          />
                         </linearGradient>
                       </defs>
                       <CartesianGrid strokeDasharray="3 3" stroke="#2a2a2a" />
                       <XAxis dataKey="name" stroke="#888" />
                       <YAxis allowDecimals={false} stroke="#888" />
-                      <Tooltip contentStyle={{ background: "#111", border: "1px solid #2a2a2a", borderRadius: "8px", color: "#fff" }} />
-                      <Area type="monotone" dataKey="count" stroke="#10b981" fillOpacity={1} fill="url(#colorGratitude)" />
+                      <Tooltip
+                        contentStyle={{
+                          background: "#111",
+                          border: "1px solid #2a2a2a",
+                          borderRadius: "8px",
+                          color: "#fff",
+                        }}
+                      />
+                      <Area
+                        type="monotone"
+                        dataKey="count"
+                        stroke="#10b981"
+                        fillOpacity={1}
+                        fill="url(#colorGratitude)"
+                      />
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
@@ -299,10 +406,26 @@ export default function GratitudeJournal() {
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={categoryData}>
                       <CartesianGrid strokeDasharray="3 3" stroke="#2a2a2a" />
-                      <XAxis dataKey="name" stroke="#888" angle={-45} textAnchor="end" height={80} />
+                      <XAxis
+                        dataKey="name"
+                        stroke="#888"
+                        angle={-45}
+                        textAnchor="end"
+                        height={80}
+                      />
                       <YAxis allowDecimals={false} stroke="#888" />
-                      <Tooltip contentStyle={{ background: "#111", border: "1px solid #2a2a2a", borderRadius: "8px" }} />
-                      <Bar dataKey="count" fill="#10b981" radius={[8, 8, 0, 0]} />
+                      <Tooltip
+                        contentStyle={{
+                          background: "#111",
+                          border: "1px solid #2a2a2a",
+                          borderRadius: "8px",
+                        }}
+                      />
+                      <Bar
+                        dataKey="count"
+                        fill="#10b981"
+                        radius={[8, 8, 0, 0]}
+                      />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -323,41 +446,52 @@ export default function GratitudeJournal() {
                 </button>
               </div>
               <div className="space-y-4 max-h-96 overflow-y-auto">
-                {rows.slice(0, showAllEntries ? rows.length : 5).map((entry) => (
-                  <div key={entry.id} className="p-6 bg-black/30 border border-white/10 rounded-xl hover:border-green-400/30 transition-all">
-                    <div className="flex items-start justify-between mb-3">
-                      <div>
-                        <p className="text-sm text-gray-400">{entry.date}</p>
-                        <p className="text-xs text-green-400 italic mt-1">"{entry.prompt}"</p>
-                      </div>
-                      <button
-                        onClick={() => deleteEntry(entry.id)}
-                        className="text-red-400 hover:text-red-300 transition-all"
-                      >
-                        <X size={16} />
-                      </button>
-                    </div>
-                    <div className="space-y-2">
-                      {(entry.entries || []).map((item, idx) => (
-                        <div key={idx} className="flex items-start gap-3">
-                          <span className="text-green-400 mt-1">•</span>
-                          <div className="flex-1">
-                            <p className="text-sm text-white">{item.text}</p>
-                            <span className="text-xs px-2 py-1 rounded-md bg-green-500/20 text-green-200 inline-block mt-1">
-                              {item.category}
-                            </span>
-                          </div>
+                {rows
+                  .slice(0, showAllEntries ? rows.length : 5)
+                  .map((entry) => (
+                    <div
+                      key={entry.id}
+                      className="p-6 bg-black/30 border border-white/10 rounded-xl hover:border-green-400/30 transition-all"
+                    >
+                      <div className="flex items-start justify-between mb-3">
+                        <div>
+                          <p className="text-sm text-gray-400">{entry.date}</p>
+                          <p className="text-xs text-green-400 italic mt-1">
+                            "{entry.prompt}"
+                          </p>
                         </div>
-                      ))}
-                    </div>
-                    {entry.reflection && (
-                      <div className="mt-4 pt-4 border-t border-white/10">
-                        <p className="text-xs text-gray-400 mb-1">Reflection:</p>
-                        <p className="text-sm text-gray-300 italic">"{entry.reflection}"</p>
+                        <button
+                          onClick={() => deleteEntry(entry.id)}
+                          className="text-red-400 hover:text-red-300 transition-all"
+                        >
+                          <X size={16} />
+                        </button>
                       </div>
-                    )}
-                  </div>
-                ))}
+                      <div className="space-y-2">
+                        {(entry.entries || []).map((item, idx) => (
+                          <div key={idx} className="flex items-start gap-3">
+                            <span className="text-green-400 mt-1">•</span>
+                            <div className="flex-1">
+                              <p className="text-sm text-white">{item.text}</p>
+                              <span className="text-xs px-2 py-1 rounded-md bg-green-500/20 text-green-200 inline-block mt-1">
+                                {item.category}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      {entry.reflection && (
+                        <div className="mt-4 pt-4 border-t border-white/10">
+                          <p className="text-xs text-gray-400 mb-1">
+                            Reflection:
+                          </p>
+                          <p className="text-sm text-gray-300 italic">
+                            "{entry.reflection}"
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  ))}
               </div>
             </div>
           </div>
@@ -379,7 +513,10 @@ function Metric({ title, value }) {
 function StatCard({ icon, title, value }) {
   return (
     <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl border border-green-400/30 p-4 backdrop-blur">
-      <p className="text-xs text-gray-400 mb-2 flex items-center gap-2">{icon}{title}</p>
+      <p className="text-xs text-gray-400 mb-2 flex items-center gap-2">
+        {icon}
+        {title}
+      </p>
       <p className="text-2xl font-bold text-green-400">{value}</p>
     </div>
   );
@@ -408,6 +545,9 @@ function calcStreak(rows) {
 
 function countThisMonth(rows) {
   const now = new Date();
-  const ym = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+  const ym = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(
+    2,
+    "0"
+  )}`;
   return rows.filter((r) => (r.date || "").startsWith(ym)).length;
 }

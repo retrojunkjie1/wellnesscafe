@@ -1,15 +1,44 @@
 import React, { useEffect, useMemo, useState, useRef } from "react";
-import { Play, Pause, RotateCcw, Clock, Music, Award, Flame, TrendingUp, Volume2, VolumeX } from "lucide-react";
-import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
+import {
+  Play,
+  Pause,
+  RotateCcw,
+  Clock,
+  Music,
+  Award,
+  Flame,
+  TrendingUp,
+  Volume2,
+  VolumeX,
+} from "lucide-react";
+import {
+  AreaChart,
+  Area,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  CartesianGrid,
+} from "recharts";
 import { db } from "../../firebase";
-import { collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  limit,
+  onSnapshot,
+  serverTimestamp,
+} from "firebase/firestore";
 
 const PRESETS = [
   { name: "Quick Reset", duration: 300, desc: "5-min centering" },
   { name: "Standard", duration: 600, desc: "10-min practice" },
   { name: "Deep Dive", duration: 900, desc: "15-min session" },
   { name: "Extended", duration: 1200, desc: "20-min immersion" },
-  { name: "Custom", duration: 0, desc: "Set your own" }
+  { name: "Custom", duration: 0, desc: "Set your own" },
 ];
 
 const SOUNDS = [
@@ -18,7 +47,7 @@ const SOUNDS = [
   { id: "singing-bowl", name: "Singing Bowl", desc: "Resonant tones" },
   { id: "rain", name: "Rain", desc: "Ambient rainfall" },
   { id: "ocean", name: "Ocean Waves", desc: "Rhythmic waves" },
-  { id: "forest", name: "Forest", desc: "Birds & breeze" }
+  { id: "forest", name: "Forest", desc: "Birds & breeze" },
 ];
 
 const TECHNIQUES = [
@@ -27,11 +56,15 @@ const TECHNIQUES = [
   "Loving-kindness",
   "Mantra repetition",
   "Open monitoring",
-  "Visualization"
+  "Visualization",
 ];
 
 const todayKey = () => new Date().toISOString().slice(0, 10);
-const secondsToClock = (s) => `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
+const secondsToClock = (s) =>
+  `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(
+    2,
+    "0"
+  )}`;
 
 export default function MeditationTimerPremium() {
   const [preset, setPreset] = useState(PRESETS[1]);
@@ -45,18 +78,30 @@ export default function MeditationTimerPremium() {
   const [note, setNote] = useState("");
   const [sessions, setSessions] = useState([]);
   const [muted, setMuted] = useState(false);
-  
+
   const audioRef = useRef(null);
 
   // Load sessions from Firestore
   useEffect(() => {
-    const q = query(collection(db, "meditation"), orderBy("createdAt", "desc"), limit(60));
-    const unsub = onSnapshot(q, (snap) => {
-      const data = snap.docs.map((d) => ({ id: d.id, ...d.data(), date: normalizeDate(d.data()) }));
-      setSessions(data);
-    }, (err) => {
-      console.error("meditation:onSnapshot", err);
-    });
+    const q = query(
+      collection(db, "meditation"),
+      orderBy("createdAt", "desc"),
+      limit(60)
+    );
+    const unsub = onSnapshot(
+      q,
+      (snap) => {
+        const data = snap.docs.map((d) => ({
+          id: d.id,
+          ...d.data(),
+          date: normalizeDate(d.data()),
+        }));
+        setSessions(data);
+      },
+      (err) => {
+        console.error("meditation:onSnapshot", err);
+      }
+    );
     return () => unsub();
   }, []);
 
@@ -82,7 +127,8 @@ export default function MeditationTimerPremium() {
   const start = () => {
     if (elapsed === 0) {
       // Starting fresh
-      const finalDuration = preset.name === "Custom" ? customMinutes * 60 : preset.duration;
+      const finalDuration =
+        preset.name === "Custom" ? customMinutes * 60 : preset.duration;
       setDuration(finalDuration);
       setElapsed(0);
     }
@@ -123,7 +169,7 @@ export default function MeditationTimerPremium() {
         technique,
         sound: sound.id,
         note,
-        createdAt: serverTimestamp()
+        createdAt: serverTimestamp(),
       };
       await addDoc(collection(db, "meditation"), session);
       setSessions((prev) => [session, ...prev].slice(0, 60));
@@ -135,8 +181,16 @@ export default function MeditationTimerPremium() {
 
   // Analytics
   const stats = useMemo(() => {
-    if (sessions.length === 0) return { total: 0, totalMinutes: 0, streak: 0, avgDuration: 0, thisWeek: 0 };
-    const totalMinutes = sessions.reduce((sum, s) => sum + (s.duration || 0), 0) / 60;
+    if (sessions.length === 0)
+      return {
+        total: 0,
+        totalMinutes: 0,
+        streak: 0,
+        avgDuration: 0,
+        thisWeek: 0,
+      };
+    const totalMinutes =
+      sessions.reduce((sum, s) => sum + (s.duration || 0), 0) / 60;
     const streak = calcStreak(sessions);
     const thisWeek = sessions.filter((s) => {
       const sessionDate = new Date(s.date || Date.now());
@@ -149,21 +203,30 @@ export default function MeditationTimerPremium() {
       totalMinutes: Math.floor(totalMinutes),
       streak,
       avgDuration: Math.floor(totalMinutes / sessions.length),
-      thisWeek
+      thisWeek,
     };
   }, [sessions]);
 
   const trend14 = useMemo(() => {
     const last14 = [...sessions].reverse().slice(-14);
-    return last14.map((s, i) => ({ name: `D${last14.length - i}`, minutes: Math.floor((s.duration || 0) / 60) }));
+    return last14.map((s, i) => ({
+      name: `D${last14.length - i}`,
+      minutes: Math.floor((s.duration || 0) / 60),
+    }));
   }, [sessions]);
 
   const techniqueData = useMemo(() => {
-    const counts = TECHNIQUES.reduce((m, t) => { m[t] = 0; return m; }, {});
+    const counts = TECHNIQUES.reduce((m, t) => {
+      m[t] = 0;
+      return m;
+    }, {});
     sessions.forEach((s) => {
       if (counts[s.technique] != null) counts[s.technique] += 1;
     });
-    return TECHNIQUES.map((t) => ({ name: t.split(" ")[0], count: counts[t] || 0 }));
+    return TECHNIQUES.map((t) => ({
+      name: t.split(" ")[0],
+      count: counts[t] || 0,
+    }));
   }, [sessions]);
 
   const progress = duration > 0 ? (elapsed / duration) * 100 : 0;
@@ -185,8 +248,12 @@ export default function MeditationTimerPremium() {
               <Clock className="text-white" size={24} />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-purple-400">Meditation Timer</h1>
-              <p className="text-xs text-gray-400">Practice mindfulness • Build consistency • Track progress</p>
+              <h1 className="text-2xl font-bold text-purple-400">
+                Meditation Timer
+              </h1>
+              <p className="text-xs text-gray-400">
+                Practice mindfulness • Build consistency • Track progress
+              </p>
             </div>
           </div>
           <div className="hidden md:grid grid-cols-3 gap-6 text-sm">
@@ -206,7 +273,14 @@ export default function MeditationTimerPremium() {
               {/* Circular progress */}
               <div className="relative w-64 h-64 mb-8">
                 <svg className="transform -rotate-90" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(139, 92, 246, 0.1)" strokeWidth="8" />
+                  <circle
+                    cx="50"
+                    cy="50"
+                    r="45"
+                    fill="none"
+                    stroke="rgba(139, 92, 246, 0.1)"
+                    strokeWidth="8"
+                  />
                   <circle
                     cx="50"
                     cy="50"
@@ -220,8 +294,18 @@ export default function MeditationTimerPremium() {
                   />
                 </svg>
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <p className="text-6xl font-bold text-purple-400">{secondsToClock(running || completed ? remaining : duration)}</p>
-                  <p className="text-sm text-gray-400 mt-2">{completed ? "Complete!" : running ? "Remaining" : "Duration"}</p>
+                  <p className="text-6xl font-bold text-purple-400">
+                    {secondsToClock(
+                      running || completed ? remaining : duration
+                    )}
+                  </p>
+                  <p className="text-sm text-gray-400 mt-2">
+                    {completed
+                      ? "Complete!"
+                      : running
+                      ? "Remaining"
+                      : "Duration"}
+                  </p>
                 </div>
               </div>
 
@@ -258,7 +342,9 @@ export default function MeditationTimerPremium() {
 
               {/* Presets */}
               <div className="w-full">
-                <h3 className="text-sm font-semibold text-purple-300 mb-3">Duration Presets</h3>
+                <h3 className="text-sm font-semibold text-purple-300 mb-3">
+                  Duration Presets
+                </h3>
                 <div className="grid grid-cols-5 gap-2">
                   {PRESETS.map((p) => (
                     <button
@@ -278,7 +364,9 @@ export default function MeditationTimerPremium() {
                 </div>
                 {preset.name === "Custom" && (
                   <div className="mt-4">
-                    <label className="text-sm text-purple-300 block mb-2">Minutes:</label>
+                    <label className="text-sm text-purple-300 block mb-2">
+                      Minutes:
+                    </label>
                     <input
                       type="number"
                       min="1"
@@ -301,14 +389,18 @@ export default function MeditationTimerPremium() {
           <div className="space-y-6">
             {/* Technique */}
             <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-3xl border border-purple-400/30 p-6 backdrop-blur">
-              <h3 className="text-sm font-semibold text-purple-300 mb-3">Technique</h3>
+              <h3 className="text-sm font-semibold text-purple-300 mb-3">
+                Technique
+              </h3>
               <select
                 value={technique}
                 onChange={(e) => setTechnique(e.target.value)}
                 className="w-full bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-white outline-none focus:ring-2 focus:ring-purple-400/50"
               >
                 {TECHNIQUES.map((t) => (
-                  <option key={t} value={t}>{t}</option>
+                  <option key={t} value={t}>
+                    {t}
+                  </option>
                 ))}
               </select>
             </div>
@@ -320,18 +412,24 @@ export default function MeditationTimerPremium() {
               </h3>
               <select
                 value={sound.id}
-                onChange={(e) => setSound(SOUNDS.find((s) => s.id === e.target.value))}
+                onChange={(e) =>
+                  setSound(SOUNDS.find((s) => s.id === e.target.value))
+                }
                 className="w-full bg-black/40 border border-white/10 rounded-lg px-3 py-2 text-white outline-none focus:ring-2 focus:ring-purple-400/50"
               >
                 {SOUNDS.map((s) => (
-                  <option key={s.id} value={s.id}>{s.name} - {s.desc}</option>
+                  <option key={s.id} value={s.id}>
+                    {s.name} - {s.desc}
+                  </option>
                 ))}
               </select>
             </div>
 
             {/* Note */}
             <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-3xl border border-purple-400/30 p-6 backdrop-blur">
-              <h3 className="text-sm font-semibold text-purple-300 mb-3">Session Note</h3>
+              <h3 className="text-sm font-semibold text-purple-300 mb-3">
+                Session Note
+              </h3>
               <textarea
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
@@ -342,8 +440,16 @@ export default function MeditationTimerPremium() {
 
             {/* Stats */}
             <div className="grid grid-cols-2 gap-3">
-              <StatCard icon={<Flame size={14} />} title="This Week" value={stats.thisWeek} />
-              <StatCard icon={<Award size={14} />} title="Avg Min" value={stats.avgDuration} />
+              <StatCard
+                icon={<Flame size={14} />}
+                title="This Week"
+                value={stats.thisWeek}
+              />
+              <StatCard
+                icon={<Award size={14} />}
+                title="Avg Min"
+                value={stats.avgDuration}
+              />
             </div>
           </div>
         </div>
@@ -365,16 +471,43 @@ export default function MeditationTimerPremium() {
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={trend14}>
                       <defs>
-                        <linearGradient id="colorMeditation" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#a855f7" stopOpacity={0.8} />
-                          <stop offset="95%" stopColor="#a855f7" stopOpacity={0.1} />
+                        <linearGradient
+                          id="colorMeditation"
+                          x1="0"
+                          y1="0"
+                          x2="0"
+                          y2="1"
+                        >
+                          <stop
+                            offset="5%"
+                            stopColor="#a855f7"
+                            stopOpacity={0.8}
+                          />
+                          <stop
+                            offset="95%"
+                            stopColor="#a855f7"
+                            stopOpacity={0.1}
+                          />
                         </linearGradient>
                       </defs>
                       <CartesianGrid strokeDasharray="3 3" stroke="#2a2a2a" />
                       <XAxis dataKey="name" stroke="#888" />
                       <YAxis stroke="#888" />
-                      <Tooltip contentStyle={{ background: "#111", border: "1px solid #2a2a2a", borderRadius: "8px", color: "#fff" }} />
-                      <Area type="monotone" dataKey="minutes" stroke="#a855f7" fillOpacity={1} fill="url(#colorMeditation)" />
+                      <Tooltip
+                        contentStyle={{
+                          background: "#111",
+                          border: "1px solid #2a2a2a",
+                          borderRadius: "8px",
+                          color: "#fff",
+                        }}
+                      />
+                      <Area
+                        type="monotone"
+                        dataKey="minutes"
+                        stroke="#a855f7"
+                        fillOpacity={1}
+                        fill="url(#colorMeditation)"
+                      />
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
@@ -391,8 +524,18 @@ export default function MeditationTimerPremium() {
                       <CartesianGrid strokeDasharray="3 3" stroke="#2a2a2a" />
                       <XAxis dataKey="name" stroke="#888" />
                       <YAxis allowDecimals={false} stroke="#888" />
-                      <Tooltip contentStyle={{ background: "#111", border: "1px solid #2a2a2a", borderRadius: "8px" }} />
-                      <Bar dataKey="count" fill="#a855f7" radius={[8, 8, 0, 0]} />
+                      <Tooltip
+                        contentStyle={{
+                          background: "#111",
+                          border: "1px solid #2a2a2a",
+                          borderRadius: "8px",
+                        }}
+                      />
+                      <Bar
+                        dataKey="count"
+                        fill="#a855f7"
+                        radius={[8, 8, 0, 0]}
+                      />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -406,21 +549,33 @@ export default function MeditationTimerPremium() {
               </h3>
               <div className="space-y-3 max-h-96 overflow-y-auto">
                 {sessions.slice(0, 10).map((session, idx) => (
-                  <div key={idx} className="p-4 bg-black/30 border border-white/10 rounded-xl hover:border-purple-400/30 transition-all">
+                  <div
+                    key={idx}
+                    className="p-4 bg-black/30 border border-white/10 rounded-xl hover:border-purple-400/30 transition-all"
+                  >
                     <div className="flex items-center justify-between mb-2">
                       <div>
-                        <p className="text-sm text-white font-semibold">{session.technique}</p>
+                        <p className="text-sm text-white font-semibold">
+                          {session.technique}
+                        </p>
                         <p className="text-xs text-gray-400">{session.date}</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-lg font-bold text-purple-400">{Math.floor((session.duration || 0) / 60)} min</p>
+                        <p className="text-lg font-bold text-purple-400">
+                          {Math.floor((session.duration || 0) / 60)} min
+                        </p>
                         {session.sound && session.sound !== "none" && (
-                          <p className="text-xs text-gray-400">{SOUNDS.find((s) => s.id === session.sound)?.name || "Sound"}</p>
+                          <p className="text-xs text-gray-400">
+                            {SOUNDS.find((s) => s.id === session.sound)?.name ||
+                              "Sound"}
+                          </p>
                         )}
                       </div>
                     </div>
                     {session.note && (
-                      <p className="text-sm text-gray-300 italic mt-2">"{session.note}"</p>
+                      <p className="text-sm text-gray-300 italic mt-2">
+                        "{session.note}"
+                      </p>
                     )}
                   </div>
                 ))}
@@ -448,7 +603,10 @@ function Metric({ title, value }) {
 function StatCard({ icon, title, value }) {
   return (
     <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl border border-purple-400/30 p-4 backdrop-blur">
-      <p className="text-xs text-gray-400 mb-2 flex items-center gap-2">{icon}{title}</p>
+      <p className="text-xs text-gray-400 mb-2 flex items-center gap-2">
+        {icon}
+        {title}
+      </p>
       <p className="text-2xl font-bold text-purple-400">{value}</p>
     </div>
   );

@@ -32,6 +32,11 @@ import BreathingToolPage from "./Views/tools/BreathingToolPage";
 import MeditationTimerPage from "./Views/tools/MeditationTimerPage";
 import TriggerTrackerPage from "./Views/tools/TriggerTrackerPage";
 import MoodCheckInPage from "./Views/tools/MoodCheckInPage";
+import GratitudeJournalPage from "./Views/tools/GratitudeJournalPage";
+import MeditationTimerPremiumPage from "./Views/tools/MeditationTimerPremiumPage";
+import EmotionTrackerPage from "./Views/tools/EmotionTrackerPage";
+import TriggerJournalPage from "./Views/tools/TriggerJournalPage";
+import WeeklyReviewPage from "./Views/tools/WeeklyReviewPage";
 import BlogPage from "./Views/BlogPage";
 import PrivacyPage from "./Views/PrivacyPage";
 import TraumaEducationPage from "./Views/TraumaEducationPage";
@@ -150,6 +155,46 @@ function App() {
             <Route path="/tools" element={<ToolsPage />} />
             <Route path="/tools/breathing" element={<BreathingToolPage />} />
             <Route path="/tools/meditation" element={<MeditationTimerPage />} />
+            <Route
+              path="/tools/gratitude-journal"
+              element={
+                <ProtectedRoute requireVerified>
+                  <GratitudeJournalPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/tools/meditation-premium"
+              element={
+                <ProtectedRoute requireVerified>
+                  <MeditationTimerPremiumPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/tools/emotion-tracker"
+              element={
+                <ProtectedRoute requireVerified>
+                  <EmotionTrackerPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/tools/trigger-journal"
+              element={
+                <ProtectedRoute requireVerified>
+                  <TriggerJournalPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/tools/weekly-review"
+              element={
+                <ProtectedRoute requireVerified>
+                  <WeeklyReviewPage />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/tools/trigger-tracker"
               element={

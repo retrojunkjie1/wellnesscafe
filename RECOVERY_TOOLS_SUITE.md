@@ -13,10 +13,12 @@
 ## 🛠️ Tools Overview
 
 ### 1. **Gratitude Journal** 💚
+
 **File:** `src/components/tools/GratitudeJournal.jsx`  
 **Theme:** Green (#10b981, #34d399)
 
 **Features:**
+
 - 10 daily gratitude prompts with shuffle button
 - Multi-entry system (up to 10 per day)
 - 8 category tags (People, Health, Growth, Nature, Comfort, Achievement, Kindness, Recovery)
@@ -28,6 +30,7 @@
 - Recent entries with delete option
 
 **Firestore Collection:** `gratitude`
+
 ```javascript
 {
   date: "2025-11-10",
@@ -40,6 +43,7 @@
 ```
 
 **Key Analytics:**
+
 - Total gratitude items logged
 - Current streak (consecutive days)
 - Average items per day
@@ -49,10 +53,12 @@
 ---
 
 ### 2. **Meditation Timer Premium** 💜
+
 **File:** `src/components/tools/MeditationTimerPremium.jsx`  
 **Theme:** Purple (#a855f7, #8b5cf6)
 
 **Features:**
+
 - 5 duration presets (5/10/15/20 min + custom)
 - Circular progress visualization
 - 6 meditation techniques selector
@@ -66,6 +72,7 @@
 - Streak tracking
 
 **Firestore Collection:** `meditation`
+
 ```javascript
 {
   date: "2025-11-10",
@@ -78,6 +85,7 @@
 ```
 
 **Key Analytics:**
+
 - Total sessions logged
 - Total minutes meditated
 - Streak (consecutive days)
@@ -88,10 +96,12 @@
 ---
 
 ### 3. **Emotion Tracker** 💗
+
 **File:** `src/components/tools/EmotionTracker.jsx`  
 **Theme:** Pink (#ec4899, #f472b6)
 
 **Features:**
+
 - 12-emotion wheel with color-coded families
 - Intensity slider (1-10)
 - Body sensation mapping (10 body areas)
@@ -103,6 +113,7 @@
 - Streak tracking
 
 **Emotion Families:**
+
 - Happy (Joy, Love, Excitement)
 - Calm (Peace, Contentment)
 - Energized (Excitement, Hope)
@@ -111,6 +122,7 @@
 - Anxious (Fear, Anxiety)
 
 **Firestore Collection:** `emotions`
+
 ```javascript
 {
   date: "2025-11-10",
@@ -125,6 +137,7 @@
 ```
 
 **Key Analytics:**
+
 - Total entries logged
 - Average intensity
 - Streak tracking
@@ -135,10 +148,12 @@
 ---
 
 ### 4. **Trigger Journal** 🔴
+
 **File:** `src/components/tools/TriggerJournal.jsx`  
 **Theme:** Red (#ef4444, #f97316)
 
 **Features:**
+
 - 10 trigger type categories
 - Intensity slider (1-10)
 - HALT check-in (Hungry, Angry, Lonely, Tired)
@@ -152,12 +167,15 @@
 - Success rate calculation
 
 **Trigger Types:**
+
 - People, Places, Times, Stress, Emotions, Sensory, Social, Physical, Success, Boredom
 
 **Coping Categories:**
+
 - Connection, Mindfulness, Physical, Processing, Behavioral, Mental, Perspective
 
 **Firestore Collection:** `triggers`
+
 ```javascript
 {
   date: "2025-11-10",
@@ -174,6 +192,7 @@
 ```
 
 **Key Analytics:**
+
 - Total triggers logged
 - Triggers managed successfully
 - Success rate percentage
@@ -185,10 +204,12 @@
 ---
 
 ### 5. **Weekly Review Dashboard** 💙
+
 **File:** `src/components/tools/WeeklyReview.jsx`  
 **Theme:** Indigo (#6366f1, #8b5cf6)
 
 **Features:**
+
 - Automatic weekly data aggregation
 - Wellness score calculation (0-100%)
 - Cross-tool analytics integration
@@ -199,6 +220,7 @@
 - Focus areas for next week
 
 **Wellness Score Components:**
+
 - Mood tracking (20 points)
 - Gratitude practice (15 points)
 - Meditation (15 points)
@@ -208,6 +230,7 @@
 
 **Data Sources:**
 Pulls from all Firestore collections:
+
 - `moods`
 - `gratitude`
 - `meditation`
@@ -217,6 +240,7 @@ Pulls from all Firestore collections:
 - `dailyIntentions`
 
 **Key Metrics:**
+
 - Total entries across all tools
 - Average mood score
 - Total meditation minutes
@@ -226,6 +250,7 @@ Pulls from all Firestore collections:
 - Tool engagement rates
 
 **Insights Engine:**
+
 - Automatically generates 3-5 insights
 - Success celebrations
 - Warning alerts for low engagement
@@ -237,20 +262,21 @@ Pulls from all Firestore collections:
 
 ### Color Themes
 
-| Tool | Primary | Secondary | Use Case |
-|------|---------|-----------|----------|
-| Gratitude Journal | Green-400 (#10b981) | Emerald-500 (#34d399) | Positivity, growth |
-| Meditation Timer | Purple-400 (#a855f7) | Indigo-500 (#6366f1) | Mindfulness, calm |
-| Emotion Tracker | Pink-400 (#ec4899) | Rose-500 (#f472b6) | Feelings, heart |
-| Trigger Journal | Red-400 (#ef4444) | Orange-500 (#f97316) | Alert, awareness |
-| Weekly Review | Indigo-400 (#6366f1) | Violet-500 (#8b5cf6) | Insight, analysis |
-| Mood Graph | Amber-400 (#fbbf24) | Yellow-500 (#eab308) | Tracking, data |
-| Urge Surfing | Orange-400 (#fb923c) | Amber-500 (#f59e0b) | Energy, action |
-| Daily Intentions | Amber-400 (#fbbf24) | Yellow-500 (#eab308) | Morning, sunshine |
+| Tool              | Primary              | Secondary             | Use Case           |
+| ----------------- | -------------------- | --------------------- | ------------------ |
+| Gratitude Journal | Green-400 (#10b981)  | Emerald-500 (#34d399) | Positivity, growth |
+| Meditation Timer  | Purple-400 (#a855f7) | Indigo-500 (#6366f1)  | Mindfulness, calm  |
+| Emotion Tracker   | Pink-400 (#ec4899)   | Rose-500 (#f472b6)    | Feelings, heart    |
+| Trigger Journal   | Red-400 (#ef4444)    | Orange-500 (#f97316)  | Alert, awareness   |
+| Weekly Review     | Indigo-400 (#6366f1) | Violet-500 (#8b5cf6)  | Insight, analysis  |
+| Mood Graph        | Amber-400 (#fbbf24)  | Yellow-500 (#eab308)  | Tracking, data     |
+| Urge Surfing      | Orange-400 (#fb923c) | Amber-500 (#f59e0b)   | Energy, action     |
+| Daily Intentions  | Amber-400 (#fbbf24)  | Yellow-500 (#eab308)  | Morning, sunshine  |
 
 ### Shared Components
 
 **Glass Morphism Cards:**
+
 ```css
 bg-gradient-to-br from-slate-800/50 to-slate-900/50
 rounded-3xl
@@ -260,6 +286,7 @@ backdrop-blur
 ```
 
 **Sticky Header:**
+
 ```css
 sticky top-0
 backdrop-blur-md
@@ -268,6 +295,7 @@ border-b border-{color}-400/20
 ```
 
 **Stat Cards:**
+
 ```css
 bg-gradient-to-br from-slate-800/50 to-slate-900/50
 rounded-2xl
@@ -277,6 +305,7 @@ backdrop-blur
 ```
 
 **Ambient Glow:**
+
 ```jsx
 <div className="fixed inset-0 z-0 pointer-events-none">
   <div className="absolute top-20 left-10 w-96 h-96 bg-{color}-500/10 rounded-full blur-3xl animate-pulse" />
@@ -288,11 +317,13 @@ backdrop-blur
 
 ## 📊 Build Results
 
-**Before:** 
+**Before:**
+
 - CSS: 40.33 kB
 - JS: 435.99 kB
 
 **After (+5 tools):**
+
 - CSS: 41.7 kB (+1.37 kB) ✅
 - JS: 435.99 kB (no change - lazy loaded) ✅
 
@@ -329,7 +360,7 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     // Existing rules...
-    
+
     // New tool collections
     match /gratitude/{entryId} {
       allow read, write: if true; // Or add auth
@@ -348,6 +379,7 @@ service cloud.firestore {
 ```
 
 Deploy rules:
+
 ```bash
 firebase deploy --only firestore:rules
 ```
@@ -383,33 +415,33 @@ firebase deploy --only firestore:rules
 ```jsx
 // Quick access cards on main dashboard
 <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-  <ToolCard 
-    to="/tools/gratitude" 
-    icon={<Heart />} 
+  <ToolCard
+    to="/tools/gratitude"
+    icon={<Heart />}
     title="Gratitude"
     color="green"
   />
-  <ToolCard 
-    to="/tools/meditation" 
-    icon={<Clock />} 
+  <ToolCard
+    to="/tools/meditation"
+    icon={<Clock />}
     title="Meditate"
     color="purple"
   />
-  <ToolCard 
-    to="/tools/emotions" 
-    icon={<Activity />} 
+  <ToolCard
+    to="/tools/emotions"
+    icon={<Activity />}
     title="Emotions"
     color="pink"
   />
-  <ToolCard 
-    to="/tools/triggers" 
-    icon={<AlertTriangle />} 
+  <ToolCard
+    to="/tools/triggers"
+    icon={<AlertTriangle />}
     title="Triggers"
     color="red"
   />
-  <ToolCard 
-    to="/tools/review" 
-    icon={<Calendar />} 
+  <ToolCard
+    to="/tools/review"
+    icon={<Calendar />}
     title="Review"
     color="indigo"
   />
@@ -423,6 +455,7 @@ firebase deploy --only firestore:rules
 ### 1. Change Color Themes
 
 Find and replace color classes:
+
 ```jsx
 // Example: Change Gratitude from green to blue
 green-400 → blue-400
@@ -433,6 +466,7 @@ emerald-500 → cyan-500
 ### 2. Modify Categories/Options
 
 Each tool has constants at the top:
+
 ```jsx
 // GratitudeJournal.jsx
 const CATEGORIES = ["People", "Health", ...]; // Edit here
@@ -450,6 +484,7 @@ const TRIGGER_TYPES = [...]; // Edit here
 ### 3. Add User-Specific Data
 
 Add `userId` to all saves:
+
 ```jsx
 import { auth } from "../../firebase";
 
@@ -473,19 +508,20 @@ const q = query(
 ### 4. Customize Insights
 
 Edit insight generation in each tool:
+
 ```jsx
 // Example: Weekly Review
 const weeklyInsights = useMemo(() => {
   const insights = [];
-  
+
   // Add your custom logic here
   if (yourCondition) {
-    insights.push({ 
-      type: 'success', 
-      message: 'Your custom message!' 
+    insights.push({
+      type: "success",
+      message: "Your custom message!",
     });
   }
-  
+
   return insights;
 }, [data]);
 ```
@@ -494,37 +530,41 @@ const weeklyInsights = useMemo(() => {
 
 ## 📚 Complete Tool Matrix
 
-| Tool | Entries | Analytics | Charts | Special Features |
-|------|---------|-----------|--------|------------------|
-| **Mood Graph** | Mood + triggers + intensity | Avg score, top mood, streak | Area, Bar | AI weekly insights |
-| **Gratitude** | Multi-entry + categories | Total, avg/day, streak | Area, Bar | Prompt shuffle, reflection |
-| **Meditation** | Duration + technique + sound | Total min, avg session, streak | Area, Bar | Circular timer, presets |
-| **Emotions** | Multi-emotion + body map | Avg intensity, streak | Area, Radar | Body heatmap, families |
-| **Triggers** | Type + HALT + coping | Success rate, avg intensity | Area, Bar, Pie | HALT analysis, outcome |
-| **Urge Surfing** | Real-time intensity samples | Duration, patterns | Line, Bar | Breathing sync, heatmap |
-| **Daily Intentions** | Habits + focus + reflection | Streak, habits, focus time | Area, Bar | Morning/evening split |
-| **Weekly Review** | Cross-tool aggregation | Wellness score (0-100%) | Line, Bar, Radar | Auto insights, focus areas |
+| Tool                 | Entries                      | Analytics                      | Charts           | Special Features           |
+| -------------------- | ---------------------------- | ------------------------------ | ---------------- | -------------------------- |
+| **Mood Graph**       | Mood + triggers + intensity  | Avg score, top mood, streak    | Area, Bar        | AI weekly insights         |
+| **Gratitude**        | Multi-entry + categories     | Total, avg/day, streak         | Area, Bar        | Prompt shuffle, reflection |
+| **Meditation**       | Duration + technique + sound | Total min, avg session, streak | Area, Bar        | Circular timer, presets    |
+| **Emotions**         | Multi-emotion + body map     | Avg intensity, streak          | Area, Radar      | Body heatmap, families     |
+| **Triggers**         | Type + HALT + coping         | Success rate, avg intensity    | Area, Bar, Pie   | HALT analysis, outcome     |
+| **Urge Surfing**     | Real-time intensity samples  | Duration, patterns             | Line, Bar        | Breathing sync, heatmap    |
+| **Daily Intentions** | Habits + focus + reflection  | Streak, habits, focus time     | Area, Bar        | Morning/evening split      |
+| **Weekly Review**    | Cross-tool aggregation       | Wellness score (0-100%)        | Line, Bar, Radar | Auto insights, focus areas |
 
 ---
 
 ## 🎯 User Journey Flow
 
 ### Daily Practice (Morning)
+
 1. **Daily Intentions** - Set intentions + choose habits
 2. **Meditation Timer** - 10-minute session
 3. **Gratitude Journal** - Log 3 things
 
 ### As-Needed (Throughout Day)
+
 4. **Mood Graph** - Check in on emotions
 5. **Emotion Tracker** - Name + map feelings
 6. **Trigger Journal** - Log high-risk situations
 7. **Urge Surfing** - Ride out cravings
 
 ### Evening Reflection
+
 8. **Daily Intentions** - Complete habits + reflect
 9. **Gratitude Journal** - Evening reflection
 
 ### Weekly Planning
+
 10. **Weekly Review** - Analyze patterns + set goals
 
 ---
@@ -532,30 +572,38 @@ const weeklyInsights = useMemo(() => {
 ## 🐛 Troubleshooting
 
 ### Charts Not Rendering
+
 **Issue:** Empty space where charts should be  
 **Fix:** Ensure `recharts` installed:
+
 ```bash
 npm install recharts
 ```
 
 ### Firestore Permission Errors
+
 **Issue:** Console errors about missing permissions  
 **Fix:** Update `firestore.rules` and deploy:
+
 ```bash
 firebase deploy --only firestore:rules
 ```
 
 ### No Data Showing
+
 **Issue:** Empty dashboards  
-**Fix:** 
+**Fix:**
+
 1. Save an entry in each tool
 2. Check browser console for errors
 3. Verify Firebase config in `src/firebase.js`
 4. Ensure Firestore collections exist
 
 ### Weekly Review Empty
+
 **Issue:** Weekly Review shows zeros  
 **Fix:**
+
 1. Ensure other tools have data with `date` field
 2. Check date range (last 7 days)
 3. Verify Firestore query permissions
@@ -599,16 +647,16 @@ score += Math.min((intentionsDays / 7) * 15, 15);
 function calcStreak(rows) {
   const set = new Set(rows.map((r) => r.date));
   let streak = 0;
-  
+
   for (let i = 0; i < 90; i++) {
     const d = new Date();
     d.setDate(d.getDate() - i);
     const key = d.toISOString().slice(0, 10);
-    
+
     if (set.has(key)) streak++;
     else break; // Streak ends on first missing day
   }
-  
+
   return streak;
 }
 ```
@@ -656,17 +704,20 @@ You now have **8 premium recovery tools** fully deployed:
 ## 🚀 Next Steps
 
 ### Immediate (Required)
+
 1. Add routes to your app
 2. Update Firestore rules
 3. Test each tool with sample data
 
 ### Short-Term (Recommended)
+
 1. Add navigation/menu links
 2. Create dashboard overview page
 3. Add onboarding flow
 4. Customize colors for your brand
 
 ### Long-Term (Optional)
+
 1. Add data export (CSV/PDF)
 2. Email weekly summaries
 3. Push notifications for reminders

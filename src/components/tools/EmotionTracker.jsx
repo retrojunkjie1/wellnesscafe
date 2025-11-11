@@ -1,8 +1,39 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Heart, Activity, MapPin, Save, TrendingUp, Award, Flame, Calendar, AlertCircle } from "lucide-react";
-import { AreaChart, Area, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
+import {
+  Heart,
+  Activity,
+  MapPin,
+  Save,
+  TrendingUp,
+  Award,
+  Flame,
+  Calendar,
+  AlertCircle,
+} from "lucide-react";
+import {
+  AreaChart,
+  Area,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  Radar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  CartesianGrid,
+} from "recharts";
 import { db } from "../../firebase";
-import { collection, addDoc, query, orderBy, limit, onSnapshot, serverTimestamp } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  limit,
+  onSnapshot,
+  serverTimestamp,
+} from "firebase/firestore";
 
 const EMOTIONS = {
   joy: { name: "Joy", color: "#fbbf24", family: "Happy" },
@@ -16,12 +47,20 @@ const EMOTIONS = {
   anxiety: { name: "Anxiety", color: "#ec4899", family: "Anxious" },
   frustration: { name: "Frustration", color: "#f97316", family: "Tense" },
   loneliness: { name: "Loneliness", color: "#8b5cf6", family: "Down" },
-  hope: { name: "Hope", color: "#10b981", family: "Energized" }
+  hope: { name: "Hope", color: "#10b981", family: "Energized" },
 };
 
 const BODY_AREAS = [
-  "Head", "Neck", "Shoulders", "Chest", "Stomach", 
-  "Arms", "Hands", "Back", "Legs", "Feet"
+  "Head",
+  "Neck",
+  "Shoulders",
+  "Chest",
+  "Stomach",
+  "Arms",
+  "Hands",
+  "Back",
+  "Legs",
+  "Feet",
 ];
 
 const INTENSITIES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -40,13 +79,25 @@ export default function EmotionTracker() {
 
   // Load entries from Firestore
   useEffect(() => {
-    const q = query(collection(db, "emotions"), orderBy("createdAt", "desc"), limit(60));
-    const unsub = onSnapshot(q, (snap) => {
-      const data = snap.docs.map((d) => ({ id: d.id, ...d.data(), date: normalizeDate(d.data()) }));
-      setRows(data);
-    }, (err) => {
-      console.error("emotions:onSnapshot", err);
-    });
+    const q = query(
+      collection(db, "emotions"),
+      orderBy("createdAt", "desc"),
+      limit(60)
+    );
+    const unsub = onSnapshot(
+      q,
+      (snap) => {
+        const data = snap.docs.map((d) => ({
+          id: d.id,
+          ...d.data(),
+          date: normalizeDate(d.data()),
+        }));
+        setRows(data);
+      },
+      (err) => {
+        console.error("emotions:onSnapshot", err);
+      }
+    );
     return () => unsub();
   }, []);
 
@@ -69,12 +120,14 @@ export default function EmotionTracker() {
       await addDoc(collection(db, "emotions"), {
         date: dateKey,
         emotions: selectedEmotions.map((key) => EMOTIONS[key].name),
-        families: [...new Set(selectedEmotions.map((key) => EMOTIONS[key].family))],
+        families: [
+          ...new Set(selectedEmotions.map((key) => EMOTIONS[key].family)),
+        ],
         intensity,
         bodyAreas,
         context,
         coping,
-        createdAt: serverTimestamp()
+        createdAt: serverTimestamp(),
       });
       setSelectedEmotions([]);
       setBodyAreas([]);
@@ -89,7 +142,8 @@ export default function EmotionTracker() {
 
   // Analytics
   const stats = useMemo(() => {
-    if (rows.length === 0) return { total: 0, streak: 0, avgIntensity: 0, thisWeek: 0 };
+    if (rows.length === 0)
+      return { total: 0, streak: 0, avgIntensity: 0, thisWeek: 0 };
     const totalIntensity = rows.reduce((sum, r) => sum + (r.intensity || 0), 0);
     const streak = calcStreak(rows);
     const thisWeek = rows.filter((r) => {
@@ -102,18 +156,24 @@ export default function EmotionTracker() {
       total: rows.length,
       streak,
       avgIntensity: (totalIntensity / rows.length).toFixed(1),
-      thisWeek
+      thisWeek,
     };
   }, [rows]);
 
   const trend14 = useMemo(() => {
     const last14 = [...rows].reverse().slice(-14);
-    return last14.map((r, i) => ({ name: `D${last14.length - i}`, intensity: r.intensity || 0 }));
+    return last14.map((r, i) => ({
+      name: `D${last14.length - i}`,
+      intensity: r.intensity || 0,
+    }));
   }, [rows]);
 
   const familyData = useMemo(() => {
     const families = ["Happy", "Calm", "Energized", "Down", "Tense", "Anxious"];
-    const counts = families.reduce((m, f) => { m[f] = 0; return m; }, {});
+    const counts = families.reduce((m, f) => {
+      m[f] = 0;
+      return m;
+    }, {});
     rows.forEach((r) => {
       (r.families || []).forEach((f) => {
         if (counts[f] != null) counts[f] += 1;
@@ -123,7 +183,10 @@ export default function EmotionTracker() {
   }, [rows]);
 
   const bodyHeatmap = useMemo(() => {
-    const counts = BODY_AREAS.reduce((m, a) => { m[a] = 0; return m; }, {});
+    const counts = BODY_AREAS.reduce((m, a) => {
+      m[a] = 0;
+      return m;
+    }, {});
     rows.forEach((r) => {
       (r.bodyAreas || []).forEach((a) => {
         if (counts[a] != null) counts[a] += 1;
@@ -148,8 +211,12 @@ export default function EmotionTracker() {
               <Heart className="text-white" size={24} />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-pink-400">Emotion Tracker</h1>
-              <p className="text-xs text-gray-400">Name feelings • Map body sensations • Discover patterns</p>
+              <h1 className="text-2xl font-bold text-pink-400">
+                Emotion Tracker
+              </h1>
+              <p className="text-xs text-gray-400">
+                Name feelings • Map body sensations • Discover patterns
+              </p>
             </div>
           </div>
           <div className="hidden md:grid grid-cols-3 gap-6 text-sm">
@@ -185,13 +252,18 @@ export default function EmotionTracker() {
                         : undefined,
                       borderColor: selectedEmotions.includes(key)
                         ? emotion.color
-                        : undefined
+                        : undefined,
                     }}
                   >
-                    <div className="text-sm font-semibold" style={{ color: emotion.color }}>
+                    <div
+                      className="text-sm font-semibold"
+                      style={{ color: emotion.color }}
+                    >
                       {emotion.name}
                     </div>
-                    <div className="text-xs text-gray-400 mt-1">{emotion.family}</div>
+                    <div className="text-xs text-gray-400 mt-1">
+                      {emotion.family}
+                    </div>
                   </button>
                 ))}
               </div>
@@ -203,7 +275,9 @@ export default function EmotionTracker() {
                 <h2 className="text-lg font-bold text-pink-300 flex items-center gap-2">
                   <Activity size={20} /> Intensity Level
                 </h2>
-                <span className="text-4xl font-bold text-white">{intensity}</span>
+                <span className="text-4xl font-bold text-white">
+                  {intensity}
+                </span>
               </div>
               <input
                 type="range"
@@ -244,7 +318,9 @@ export default function EmotionTracker() {
             {/* Context & Coping */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl border border-pink-400/30 p-6 backdrop-blur">
-                <h3 className="text-sm font-semibold text-pink-300 mb-3">What triggered this?</h3>
+                <h3 className="text-sm font-semibold text-pink-300 mb-3">
+                  What triggered this?
+                </h3>
                 <textarea
                   value={context}
                   onChange={(e) => setContext(e.target.value)}
@@ -253,7 +329,9 @@ export default function EmotionTracker() {
                 />
               </div>
               <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl border border-pink-400/30 p-6 backdrop-blur">
-                <h3 className="text-sm font-semibold text-pink-300 mb-3">How are you coping?</h3>
+                <h3 className="text-sm font-semibold text-pink-300 mb-3">
+                  How are you coping?
+                </h3>
                 <textarea
                   value={coping}
                   onChange={(e) => setCoping(e.target.value)}
@@ -285,13 +363,24 @@ export default function EmotionTracker() {
               <p className="font-semibold mb-2 flex items-center gap-2">
                 <AlertCircle size={16} /> Why Track Emotions?
               </p>
-              <p className="text-xs">Naming emotions reduces their intensity. Body awareness helps you process feelings before they escalate.</p>
+              <p className="text-xs">
+                Naming emotions reduces their intensity. Body awareness helps
+                you process feelings before they escalate.
+              </p>
             </div>
 
             {/* Quick Stats */}
             <div className="grid grid-cols-2 gap-3">
-              <StatCard icon={<Flame size={14} />} title="This Week" value={stats.thisWeek} />
-              <StatCard icon={<Award size={14} />} title="All Time" value={stats.total} />
+              <StatCard
+                icon={<Flame size={14} />}
+                title="This Week"
+                value={stats.thisWeek}
+              />
+              <StatCard
+                icon={<Award size={14} />}
+                title="All Time"
+                value={stats.total}
+              />
             </div>
           </div>
         </div>
@@ -313,16 +402,43 @@ export default function EmotionTracker() {
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={trend14}>
                       <defs>
-                        <linearGradient id="colorEmotion" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#ec4899" stopOpacity={0.8} />
-                          <stop offset="95%" stopColor="#ec4899" stopOpacity={0.1} />
+                        <linearGradient
+                          id="colorEmotion"
+                          x1="0"
+                          y1="0"
+                          x2="0"
+                          y2="1"
+                        >
+                          <stop
+                            offset="5%"
+                            stopColor="#ec4899"
+                            stopOpacity={0.8}
+                          />
+                          <stop
+                            offset="95%"
+                            stopColor="#ec4899"
+                            stopOpacity={0.1}
+                          />
                         </linearGradient>
                       </defs>
                       <CartesianGrid strokeDasharray="3 3" stroke="#2a2a2a" />
                       <XAxis dataKey="name" stroke="#888" />
                       <YAxis domain={[0, 10]} stroke="#888" />
-                      <Tooltip contentStyle={{ background: "#111", border: "1px solid #2a2a2a", borderRadius: "8px", color: "#fff" }} />
-                      <Area type="monotone" dataKey="intensity" stroke="#ec4899" fillOpacity={1} fill="url(#colorEmotion)" />
+                      <Tooltip
+                        contentStyle={{
+                          background: "#111",
+                          border: "1px solid #2a2a2a",
+                          borderRadius: "8px",
+                          color: "#fff",
+                        }}
+                      />
+                      <Area
+                        type="monotone"
+                        dataKey="intensity"
+                        stroke="#ec4899"
+                        fillOpacity={1}
+                        fill="url(#colorEmotion)"
+                      />
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
@@ -339,8 +455,20 @@ export default function EmotionTracker() {
                       <PolarGrid stroke="#444" />
                       <PolarAngleAxis dataKey="family" stroke="#888" />
                       <PolarRadiusAxis stroke="#888" />
-                      <Radar name="Count" dataKey="count" stroke="#ec4899" fill="#ec4899" fillOpacity={0.6} />
-                      <Tooltip contentStyle={{ background: "#111", border: "1px solid #2a2a2a", borderRadius: "8px" }} />
+                      <Radar
+                        name="Count"
+                        dataKey="count"
+                        stroke="#ec4899"
+                        fill="#ec4899"
+                        fillOpacity={0.6}
+                      />
+                      <Tooltip
+                        contentStyle={{
+                          background: "#111",
+                          border: "1px solid #2a2a2a",
+                          borderRadius: "8px",
+                        }}
+                      />
                     </RadarChart>
                   </ResponsiveContainer>
                 </div>
@@ -355,18 +483,21 @@ export default function EmotionTracker() {
               <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
                 {bodyHeatmap.map(({ area, count }) => {
                   const maxCount = Math.max(...bodyHeatmap.map((b) => b.count));
-                  const opacity = maxCount > 0 ? (count / maxCount) * 0.8 + 0.2 : 0.2;
+                  const opacity =
+                    maxCount > 0 ? (count / maxCount) * 0.8 + 0.2 : 0.2;
                   return (
                     <div
                       key={area}
                       className="p-4 rounded-xl border border-pink-400/30 text-center transition-all"
                       style={{
                         backgroundColor: `rgba(236, 72, 153, ${opacity * 0.3})`,
-                        borderColor: `rgba(236, 72, 153, ${opacity})`
+                        borderColor: `rgba(236, 72, 153, ${opacity})`,
                       }}
                     >
                       <p className="text-sm font-semibold text-white">{area}</p>
-                      <p className="text-xs text-pink-300 mt-1">{count} times</p>
+                      <p className="text-xs text-pink-300 mt-1">
+                        {count} times
+                      </p>
                     </div>
                   );
                 })}
@@ -380,26 +511,37 @@ export default function EmotionTracker() {
               </h3>
               <div className="space-y-4 max-h-96 overflow-y-auto">
                 {rows.slice(0, 10).map((entry, idx) => (
-                  <div key={idx} className="p-6 bg-black/30 border border-white/10 rounded-xl hover:border-pink-400/30 transition-all">
+                  <div
+                    key={idx}
+                    className="p-6 bg-black/30 border border-white/10 rounded-xl hover:border-pink-400/30 transition-all"
+                  >
                     <div className="flex items-start justify-between mb-3">
                       <div>
                         <p className="text-sm text-gray-400">{entry.date}</p>
                         <div className="flex flex-wrap gap-2 mt-2">
                           {(entry.emotions || []).map((emotion, eidx) => (
-                            <span key={eidx} className="text-xs px-2 py-1 rounded-md bg-pink-500/20 text-pink-200">
+                            <span
+                              key={eidx}
+                              className="text-xs px-2 py-1 rounded-md bg-pink-500/20 text-pink-200"
+                            >
                               {emotion}
                             </span>
                           ))}
                         </div>
                       </div>
-                      <p className="text-lg font-bold text-pink-400">{entry.intensity}/10</p>
+                      <p className="text-lg font-bold text-pink-400">
+                        {entry.intensity}/10
+                      </p>
                     </div>
                     {entry.bodyAreas && entry.bodyAreas.length > 0 && (
                       <div className="mb-3">
                         <p className="text-xs text-gray-400 mb-1">Body: </p>
                         <div className="flex flex-wrap gap-1">
                           {entry.bodyAreas.map((area, aidx) => (
-                            <span key={aidx} className="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-300">
+                            <span
+                              key={aidx}
+                              className="text-xs px-2 py-1 rounded bg-pink-500/10 text-pink-300"
+                            >
                               {area}
                             </span>
                           ))}
@@ -408,12 +550,14 @@ export default function EmotionTracker() {
                     )}
                     {entry.context && (
                       <p className="text-sm text-gray-300 mb-2">
-                        <span className="text-gray-400">Context:</span> "{entry.context}"
+                        <span className="text-gray-400">Context:</span> "
+                        {entry.context}"
                       </p>
                     )}
                     {entry.coping && (
                       <p className="text-sm text-gray-300">
-                        <span className="text-gray-400">Coping:</span> "{entry.coping}"
+                        <span className="text-gray-400">Coping:</span> "
+                        {entry.coping}"
                       </p>
                     )}
                   </div>
@@ -439,7 +583,10 @@ function Metric({ title, value }) {
 function StatCard({ icon, title, value }) {
   return (
     <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-2xl border border-pink-400/30 p-4 backdrop-blur">
-      <p className="text-xs text-gray-400 mb-2 flex items-center gap-2">{icon}{title}</p>
+      <p className="text-xs text-gray-400 mb-2 flex items-center gap-2">
+        {icon}
+        {title}
+      </p>
       <p className="text-2xl font-bold text-pink-400">{value}</p>
     </div>
   );
