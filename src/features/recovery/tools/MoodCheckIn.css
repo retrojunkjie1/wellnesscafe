@@ -93,7 +93,11 @@
 
 /* Affirmation Preview */
 .affirmation-preview {
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(255, 255, 255, 0.05));
+  background: linear-gradient(
+    135deg,
+    rgba(212, 175, 55, 0.1),
+    rgba(255, 255, 255, 0.05)
+  );
   border-left: 3px solid var(--wc-gold);
   border-radius: 8px;
   padding: 1.5rem;
@@ -192,8 +196,13 @@
 }
 
 @keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 .results-header h2 {
@@ -209,7 +218,11 @@
 
 /* Affirmation Card */
 .affirmation-card {
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(255, 255, 255, 0.05));
+  background: linear-gradient(
+    135deg,
+    rgba(212, 175, 55, 0.15),
+    rgba(255, 255, 255, 0.05)
+  );
   border-radius: 12px;
   padding: 2rem;
   margin-bottom: 2rem;
@@ -224,7 +237,12 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--wc-gold), var(--wc-brown), var(--wc-gold));
+  background: linear-gradient(
+    90deg,
+    var(--wc-gold),
+    var(--wc-brown),
+    var(--wc-gold)
+  );
 }
 
 .affirmation-icon {
@@ -263,7 +281,11 @@
 
 /* Upgrade Prompt */
 .upgrade-prompt {
-  background: linear-gradient(135deg, rgba(139, 69, 19, 0.3), rgba(212, 175, 55, 0.1));
+  background: linear-gradient(
+    135deg,
+    rgba(139, 69, 19, 0.3),
+    rgba(212, 175, 55, 0.1)
+  );
   border: 2px solid var(--wc-gold);
   border-radius: 12px;
   padding: 2rem;

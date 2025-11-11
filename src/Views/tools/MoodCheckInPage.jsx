@@ -59,8 +59,8 @@ const MoodCheckInPage = () => {
             <span className="benefit-icon">📈</span>
             <h3>Early Detection</h3>
             <p>
-              Catch negative patterns before they escalate. Prevention is
-              easier than recovery.
+              Catch negative patterns before they escalate. Prevention is easier
+              than recovery.
             </p>
           </div>
           <div className="benefit-card">
@@ -114,8 +114,8 @@ const MoodCheckInPage = () => {
           <p>
             <strong>Note:</strong> This is a wellness tool, not a substitute for
             professional mental health care. If you're experiencing persistent
-            low mood or crisis, please reach out to a healthcare provider or call
-            988 (Suicide & Crisis Lifeline).
+            low mood or crisis, please reach out to a healthcare provider or
+            call 988 (Suicide & Crisis Lifeline).
           </p>
         </div>
       </div>
@@ -141,4 +141,3 @@ const MoodCheckInPage = () => {
 };
 
 export default MoodCheckInPage;
-

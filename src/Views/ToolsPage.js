@@ -162,7 +162,8 @@ const ToolsPage = () => {
       name: "Mood Check-In",
       icon: "😊",
       status: "active",
-      description: "Daily mood tracking with affirmations and gratitude prompts",
+      description:
+        "Daily mood tracking with affirmations and gratitude prompts",
       features: [
         "1-10 mood scale",
         "Personalized affirmations",
