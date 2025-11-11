@@ -1,27 +1,35 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { 
-  TrendingUp, Clock, Star, ArrowRight, Sparkles, 
-  CheckCircle, Lock, Zap, Users 
-} from 'lucide-react';
-import './PremiumToolCard.css';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import {
+  TrendingUp,
+  Clock,
+  Star,
+  ArrowRight,
+  Sparkles,
+  CheckCircle,
+  Lock,
+  Zap,
+  Users,
+} from "lucide-react";
+import "./PremiumToolCard.css";
 
 /**
  * Premium Tool Card - Luxury micro-interactions and animations
  * Features: Hover effects, usage stats, recommendations, 3D transforms
  */
-const PremiumToolCard = ({ 
-  tool, 
-  isComingSoon = false, 
+const PremiumToolCard = ({
+  tool,
+  isComingSoon = false,
   isRecommended = false,
-  userStats = null 
+  userStats = null,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   // Mock usage stats - would come from Firebase/context in production
   const stats = userStats || {
-    lastUsed: tool.status === 'active' ? '2 hours ago' : null,
-    totalSessions: tool.status === 'active' ? Math.floor(Math.random() * 50) + 5 : 0,
+    lastUsed: tool.status === "active" ? "2 hours ago" : null,
+    totalSessions:
+      tool.status === "active" ? Math.floor(Math.random() * 50) + 5 : 0,
     avgRating: 4.8,
     weeklyUsage: Math.floor(Math.random() * 10) + 1,
   };
@@ -31,7 +39,7 @@ const PremiumToolCard = ({
       return (
         <div className="tool-badge coming-soon">
           <Lock size={14} />
-          <span>{tool.eta || 'Coming Soon'}</span>
+          <span>{tool.eta || "Coming Soon"}</span>
         </div>
       );
     }
@@ -60,9 +68,7 @@ const PremiumToolCard = ({
       <div className="card-shimmer"></div>
 
       {/* Status Badge */}
-      <div className="card-badges">
-        {renderStatusBadge()}
-      </div>
+      <div className="card-badges">{renderStatusBadge()}</div>
 
       {/* Icon Section */}
       <div className="tool-icon-section">
@@ -121,7 +127,7 @@ const PremiumToolCard = ({
               <span className="progress-count">{stats.weeklyUsage}/7 days</span>
             </div>
             <div className="progress-bar">
-              <div 
+              <div
                 className="progress-fill"
                 style={{ width: `${(stats.weeklyUsage / 7) * 100}%` }}
               />
@@ -140,21 +146,22 @@ const PremiumToolCard = ({
         ) : (
           <button className="tool-button">
             <span>Start Session</span>
-            <ArrowRight size={18} className={`arrow-icon ${isHovered ? 'animated' : ''}`} />
+            <ArrowRight
+              size={18}
+              className={`arrow-icon ${isHovered ? "animated" : ""}`}
+            />
           </button>
         )}
       </div>
 
       {/* Hover Glow Effect */}
-      {isHovered && !isComingSoon && (
-        <div className="card-glow"></div>
-      )}
+      {isHovered && !isComingSoon && <div className="card-glow"></div>}
     </>
   );
 
   if (isComingSoon) {
     return (
-      <div 
+      <div
         className="premium-tool-card coming-soon-card"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -167,7 +174,7 @@ const PremiumToolCard = ({
   return (
     <Link
       to={tool.link}
-      className={`premium-tool-card ${isRecommended ? 'recommended-card' : ''}`}
+      className={`premium-tool-card ${isRecommended ? "recommended-card" : ""}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >

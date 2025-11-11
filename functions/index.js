@@ -237,7 +237,7 @@ exports.articleRead = functions.https.onRequest(async (req, res) => {
       allowedAttributes: {
         a: ["href", "name", "target", "rel"],
         img: ["src", "alt", "title"],
-        '*': ["class"]
+        "*": ["class"],
       },
       transformTags: {
         a: (tagName, attribs) => ({
@@ -317,9 +317,15 @@ exports.syncAssistants = functions.pubsub
         const toStr = (v) => (typeof v === "string" ? v.trim() : "");
         const toArr = (v) =>
           Array.isArray(v)
-            ? v.map(String).map((s) => s.trim()).filter(Boolean)
+            ? v
+                .map(String)
+                .map((s) => s.trim())
+                .filter(Boolean)
             : typeof v === "string"
-            ? v.split(/[|/,;]+/).map((s) => s.trim()).filter(Boolean)
+            ? v
+                .split(/[|/,;]+/)
+                .map((s) => s.trim())
+                .filter(Boolean)
             : [];
         const out = {
           type: ["housing", "legal", "funding", "sobriety"].includes(
@@ -336,14 +342,20 @@ exports.syncAssistants = functions.pubsub
             url: toStr(input?.contact?.url || input?.website || input?.url),
           },
           applyOnline: Boolean(
-            input?.applyOnline || input?.has_application || input?.application_url
+            input?.applyOnline ||
+              input?.has_application ||
+              input?.application_url
           ),
-          applicationUrl: toStr(input?.applicationUrl || input?.application_url),
+          applicationUrl: toStr(
+            input?.applicationUrl || input?.application_url
+          ),
           description: toStr(input?.description || input?.summary),
           address: {
             street: toStr(input?.address?.street || input?.street),
             city: toStr(input?.address?.city || input?.city),
-            state: toStr(input?.address?.state || input?.state || input?.state_code),
+            state: toStr(
+              input?.address?.state || input?.state || input?.state_code
+            ),
             zip: toStr(input?.address?.zip || input?.zip || input?.postal_code),
           },
           insurance: toArr(input?.insurance || input?.insurance_types),
@@ -362,7 +374,10 @@ exports.syncAssistants = functions.pubsub
         const ctrl = new AbortController();
         const t = setTimeout(() => ctrl.abort(), timeoutMs);
         try {
-          const res = await fetch(url, { signal: ctrl.signal, headers: { 'accept': 'application/json' } });
+          const res = await fetch(url, {
+            signal: ctrl.signal,
+            headers: { accept: "application/json" },
+          });
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
           return await res.json();
         } finally {
@@ -375,16 +390,16 @@ exports.syncAssistants = functions.pubsub
         const url = sources.samhsa_url; // expects JSON array
         const data = await fetchJson(url);
         if (!Array.isArray(data)) return [];
-        return data.map((r) => ({ ...r, source: 'SAMHSA' }));
+        return data.map((r) => ({ ...r, source: "SAMHSA" }));
       };
       const fetchOpenReferral = async () => {
         const url = sources.openref_url; // expects HSDS-like JSON array
         const data = await fetchJson(url);
         if (!Array.isArray(data)) return [];
-        return data.map((r) => ({ ...r, source: 'OpenReferral' }));
+        return data.map((r) => ({ ...r, source: "OpenReferral" }));
       };
       const fetchStateFeeds = async () => {
-        const urls = String(sources.state_urls || '')
+        const urls = String(sources.state_urls || "")
           .split(/[\s,]+/)
           .map((s) => s.trim())
           .filter(Boolean);
@@ -395,7 +410,7 @@ exports.syncAssistants = functions.pubsub
             return Array.isArray(arr) ? arr : [];
           })
         );
-        return lists.flat().map((r) => ({ ...r, source: 'State' }));
+        return lists.flat().map((r) => ({ ...r, source: "State" }));
       };
 
       const [samhsa, openref, states] = await Promise.all([
@@ -406,7 +421,10 @@ exports.syncAssistants = functions.pubsub
 
       const allRaw = [...samhsa, ...openref, ...states];
       // De-dup by name+city+state key, prefer verified listings
-      const pickKey = (r) => `${(r.name||'').toLowerCase()}|${(r.city||'').toLowerCase()}|${(r.state||'').toUpperCase()}`;
+      const pickKey = (r) =>
+        `${(r.name || "").toLowerCase()}|${(r.city || "").toLowerCase()}|${(
+          r.state || ""
+        ).toUpperCase()}`;
       const merged = new Map();
       for (const r of allRaw) {
         const k = pickKey(r);
@@ -420,7 +438,10 @@ exports.syncAssistants = functions.pubsub
         .filter((d) => d.name && d.state);
 
       // Upsert into assistant collection and state-indexed soberHomes path
-      const assistantCount = await upsertBatch("assistant_sobriety", normalized);
+      const assistantCount = await upsertBatch(
+        "assistant_sobriety",
+        normalized
+      );
 
       // Optional: mirror to soberHomes/{state}/homes for fast state views
       const byState = new Map();
@@ -438,8 +459,7 @@ exports.syncAssistants = functions.pubsub
           address: [d.address?.street, d.city, d.state, d.address?.zip]
             .filter(Boolean)
             .join(", "),
-          contact:
-            d.contact?.url || d.contact?.phone || d.contact?.email || "",
+          contact: d.contact?.url || d.contact?.phone || d.contact?.email || "",
         });
       }
       let mirrorCount = 0;
@@ -459,3 +479,14 @@ exports.syncAssistants = functions.pubsub
 
 // Express app that handles /api/news and /api/image
 exports.api = functions.https.onRequest(newsProxyApp);
+
+// Oxford House scraper functions
+const {
+  scrapeOxfordHousesScheduled,
+  scrapeOxfordHousesManual,
+  getOxfordScrapingStatus,
+} = require("./scrapeOxfordHouses");
+
+exports.scrapeOxfordHousesScheduled = scrapeOxfordHousesScheduled;
+exports.scrapeOxfordHousesManual = scrapeOxfordHousesManual;
+exports.getOxfordScrapingStatus = getOxfordScrapingStatus;

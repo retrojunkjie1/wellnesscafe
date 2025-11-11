@@ -4,7 +4,7 @@ import PageBanner from "../components/PageBanner";
 import AskWellnessAI from "../components/AskWellnessAI";
 import { SOBER_STATES, STATE_META } from "../data/soberHomes";
 import { db } from "../firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 
 const toTitle = (s) =>
   s
@@ -17,6 +17,8 @@ const SoberHomesState = () => {
   const { state } = useParams();
   const [data, setData] = useState(null);
   const [fsHomes, setFsHomes] = useState([]);
+  const [oxfordHouses, setOxfordHouses] = useState([]);
+  const [scrapingMetadata, setScrapingMetadata] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
@@ -24,6 +26,8 @@ const SoberHomesState = () => {
   const PAGE_SIZE = 20;
   const [city, setCity] = useState("");
   const [insurance, setInsurance] = useState("");
+  const [showOnlyVacancies, setShowOnlyVacancies] = useState(false);
+  const [genderFilter, setGenderFilter] = useState("");
 
   const slug = (state || "").toLowerCase();
   const stateName = STATE_META[slug]?.name || toTitle(state || "");
@@ -57,18 +61,55 @@ const SoberHomesState = () => {
     (async () => {
       if (!db) {
         setFsHomes([]);
+        setOxfordHouses([]);
         return;
       }
       try {
+        // Fetch traditional sober homes
         const snap = await getDocs(collection(db, `soberHomes/${slug}/homes`));
         const rows = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
         if (!alive) return;
         setFsHomes(rows);
+
+        // Fetch Oxford Houses
+        const oxfordSnap = await getDocs(
+          collection(db, `soberHomes/${slug}/homes`)
+        );
+        const oxfordRows = oxfordSnap.docs
+          .map((d) => {
+            const data = d.data();
+            // Check if this is an Oxford House (has sourceUrl or specific fields)
+            if (data.sourceUrl?.includes('oxfordvacancies')) {
+              return { 
+                id: d.id, 
+                ...data,
+                // Convert Firestore Timestamps to Dates for display
+                lastUpdated: data.lastUpdated?.toDate ? data.lastUpdated.toDate() : data.lastUpdated,
+                scrapedAt: data.scrapedAt?.toDate ? data.scrapedAt.toDate() : data.scrapedAt,
+              };
+            }
+            return null;
+          })
+          .filter(Boolean);
+        
+        if (!alive) return;
+        setOxfordHouses(oxfordRows);
+
+        // Fetch scraping metadata
+        const metaDoc = await getDoc(doc(db, "scrapingMetadata", "oxfordHouses"));
+        if (metaDoc.exists() && alive) {
+          const metaData = metaDoc.data();
+          setScrapingMetadata({
+            ...metaData,
+            lastScraped: metaData.lastScraped?.toDate ? metaData.lastScraped.toDate() : metaData.lastScraped,
+          });
+        }
       } catch (e) {
         // eslint-disable-next-line no-console
         console.warn("firestore homes fetch failed", e);
         if (!alive) return;
         setFsHomes([]);
+        setOxfordHouses([]);
       }
     })();
     return () => {
@@ -149,9 +190,20 @@ const SoberHomesState = () => {
     ];
   };
 
+  // Merge Oxford Houses with regular homes
+  const allHomes = [
+    ...fsHomes,
+    ...oxfordHouses.map(house => ({
+      ...house,
+      name: house.houseName,
+      type: 'Oxford House - Peer-Run Sober Living',
+      isOxfordHouse: true,
+    })),
+  ];
+
   const homes =
-    Array.isArray(fsHomes) && fsHomes.length > 0
-      ? fsHomes
+    allHomes.length > 0
+      ? allHomes
       : data?.homes && data.homes.length > 0
       ? data.homes
       : buildFallbackHomes(stateName);
@@ -206,6 +258,13 @@ const SoberHomesState = () => {
     else if (typeof h?.category === "string") catsArr = [h.category];
     const cats = catsArr.join(" ").toLowerCase();
     const insArr = normalizeInsurance(h).map((x) => x.toLowerCase());
+    
+    // Oxford House specific filters
+    const hasVacancy = h.isOxfordHouse ? h.hasVacancy : true;
+    const matchesGender = h.isOxfordHouse && genderFilter 
+      ? h.gender === genderFilter 
+      : true;
+    
     return (
       // text query across key fields
       (!q ||
@@ -217,7 +276,11 @@ const SoberHomesState = () => {
       // city filter
       (!city || cityLower === city.toLowerCase()) &&
       // insurance filter
-      (!insurance || insArr.includes(insurance.toLowerCase()))
+      (!insurance || insArr.includes(insurance.toLowerCase())) &&
+      // vacancy filter (Oxford Houses only)
+      (!showOnlyVacancies || hasVacancy) &&
+      // gender filter (Oxford Houses only)
+      matchesGender
     );
   });
   const total = filtered.length;
@@ -231,6 +294,27 @@ const SoberHomesState = () => {
     type: h.type,
   }));
 
+  // Helper to check if data is stale
+  const isDataStale = (date) => {
+    if (!date) return true;
+    const now = new Date();
+    const diffDays = (now - new Date(date)) / (1000 * 60 * 60 * 24);
+    return diffDays > 7;
+  };
+
+  // Format date for display
+  const formatDate = (date) => {
+    if (!date) return "Unknown";
+    const d = new Date(date);
+    return d.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+    });
+  };
+
   return (
     <div>
       <PageBanner
@@ -242,9 +326,39 @@ const SoberHomesState = () => {
           <h1>Sober Living Homes in {stateName}</h1>
           <p>
             Curated list of sober living and transitional recovery housing
-            resources.
+            resources including real-time Oxford House vacancies.
           </p>
         </div>
+
+        {/* Data Freshness Indicator */}
+        {scrapingMetadata && (
+          <div
+            className={`p-4 rounded-lg mb-4 ${
+              isDataStale(scrapingMetadata.lastScraped)
+                ? "bg-yellow-50 border border-yellow-200"
+                : "bg-green-50 border border-green-200"
+            }`}
+          >
+            <div className="flex items-start justify-between">
+              <div>
+                <h3 className="font-semibold text-sm mb-1">
+                  {isDataStale(scrapingMetadata.lastScraped)
+                    ? "⚠️ Data may be outdated"
+                    : "✅ Oxford House data is fresh"}
+                </h3>
+                <p className="text-sm text-gray-700">
+                  Last updated: {formatDate(scrapingMetadata.lastScraped)}
+                </p>
+                {scrapingMetadata.totalHouses > 0 && (
+                  <p className="text-sm text-gray-700 mt-1">
+                    {scrapingMetadata.totalHouses} Oxford Houses tracked •{" "}
+                    {scrapingMetadata.housesWithVacancies} with vacancies
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 py-3 border-b border-gray-200">
           <div className="flex-1 flex flex-col md:flex-row gap-3">
@@ -291,7 +405,33 @@ const SoberHomesState = () => {
                 </option>
               ))}
             </select>
-            {(city || insurance || query) && (
+            <select
+              value={genderFilter}
+              onChange={(e) => {
+                setGenderFilter(e.target.value);
+                setPage(1);
+              }}
+              className="w-full md:w-40 rounded-md border border-gray-300 px-3 py-2 text-sm backdrop-blur-md bg-white/60"
+              aria-label="Filter by gender"
+            >
+              <option value="">All genders</option>
+              <option value="M">Men</option>
+              <option value="W">Women</option>
+              <option value="MC">Men + Children</option>
+            </select>
+            <label className="flex items-center gap-2 px-3 py-2 text-sm cursor-pointer">
+              <input
+                type="checkbox"
+                checked={showOnlyVacancies}
+                onChange={(e) => {
+                  setShowOnlyVacancies(e.target.checked);
+                  setPage(1);
+                }}
+                className="rounded border-gray-300"
+              />
+              <span className="whitespace-nowrap">Only vacancies</span>
+            </label>
+            {(city || insurance || query || genderFilter || showOnlyVacancies) && (
               <button
                 type="button"
                 className="ghost-btn"
@@ -299,6 +439,8 @@ const SoberHomesState = () => {
                   setQuery("");
                   setCity("");
                   setInsurance("");
+                  setGenderFilter("");
+                  setShowOnlyVacancies(false);
                   setPage(1);
                 }}
               >
@@ -316,93 +458,189 @@ const SoberHomesState = () => {
             const key = h.id || `${h.name}-${h.city}`;
             const contactUrl =
               typeof h.contact === "string" ? h.contact : h.contact?.website;
+            const isOxford = h.isOxfordHouse;
+            
             return (
-              <div key={key} className="p-card">
-                <h3>{h.name}</h3>
+              <div key={key} className={`p-card ${isOxford ? 'border-l-4 border-blue-500' : ''}`}>
+                <div className="flex items-start justify-between mb-2">
+                  <h3>{h.name}</h3>
+                  {isOxford && (
+                    <span className="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded-full">
+                      Oxford House
+                    </span>
+                  )}
+                </div>
+                
                 <p className="text-gray-700 my-1.5">
-                  {h.city}
+                  📍 {h.city}
                   {h.county ? `, ${h.county}` : ""}
                 </p>
-                <p className="text-gray-800 my-1.5">{h.type}</p>
-                {h.verified && (
-                  <span className="specialty-tag mr-1.5">Verified</span>
-                )}
-                {Array.isArray(h.categories) && h.categories.length > 0 && (
-                  <p className="my-1.5">
-                    {h.categories.map((c) => (
-                      <span key={c} className="specialty-tag mr-1.5">
-                        {c}
-                      </span>
-                    ))}
-                  </p>
-                )}
-                {normalizeInsurance(h).length > 0 && (
-                  <p className="my-1.5">
-                    {normalizeInsurance(h).map((i) => (
-                      <span key={i} className="specialty-tag mr-1.5">
-                        {i}
-                      </span>
-                    ))}
-                  </p>
-                )}
-                {h.description && (
-                  <p className="text-gray-700 my-1.5">{h.description}</p>
-                )}
-                {h.address && (
-                  <p className="text-gray-700 my-1.5">{h.address}</p>
-                )}
-                {h.apply && <p className="text-gray-600 my-2">{h.apply}</p>}
-                {(h.referral || h.financing) && (
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {h.referral && (
-                      <span className="specialty-tag">
-                        Referrals:{" "}
-                        {Object.entries(h.referral)
-                          .filter(([, v]) => v)
-                          .map(([k]) => k)
-                          .join(", ") || "—"}
-                      </span>
+                
+                {isOxford && (
+                  <>
+                    <div className="my-2 p-3 bg-gray-50 rounded-lg">
+                      <div className="grid grid-cols-2 gap-2 text-sm">
+                        <div>
+                          <span className="font-semibold">Gender:</span>{" "}
+                          {h.gender === "M"
+                            ? "Men"
+                            : h.gender === "W"
+                            ? "Women"
+                            : h.gender === "MC"
+                            ? "Men + Children"
+                            : h.gender}
+                        </div>
+                        <div>
+                          <span className="font-semibold">Capacity:</span>{" "}
+                          {h.capacity} beds
+                        </div>
+                        <div className="col-span-2">
+                          <span className="font-semibold">Vacancies:</span>{" "}
+                          <span
+                            className={`font-bold ${
+                              h.vacancies > 0 ? "text-green-600" : "text-red-600"
+                            }`}
+                          >
+                            {h.vacancies > 0
+                              ? `${h.vacancies} bed${h.vacancies === 1 ? "" : "s"} available`
+                              : "Full"}
+                          </span>
+                        </div>
+                        {h.meetingTime && (
+                          <div className="col-span-2">
+                            <span className="font-semibold">House Meeting:</span>{" "}
+                            {h.meetingTime}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    
+                    {h.contact && (
+                      <div className="my-2">
+                        <p className="text-sm text-gray-700">
+                          <span className="font-semibold">House:</span>{" "}
+                          {h.contact.housePhone || "—"}
+                        </p>
+                        {h.contact.managerName && (
+                          <p className="text-sm text-gray-700">
+                            <span className="font-semibold">Manager:</span>{" "}
+                            {h.contact.managerName}
+                            {h.contact.managerPhone && ` • ${h.contact.managerPhone}`}
+                          </p>
+                        )}
+                      </div>
                     )}
-                    {h.financing && (
-                      <span className="specialty-tag">
-                        Financing:{" "}
-                        {Object.entries(h.financing)
-                          .filter(([, v]) => v)
-                          .map(([k]) => k)
-                          .join(", ") || "—"}
-                      </span>
+                    
+                    {h.lastUpdated && (
+                      <p className="text-xs text-gray-500 mt-2">
+                        Updated: {formatDate(h.lastUpdated)}
+                      </p>
                     )}
-                  </div>
+                  </>
                 )}
-                {contactUrl && (
-                  <p className="mt-2">
+                
+                {!isOxford && (
+                  <>
+                    <p className="text-gray-800 my-1.5">{h.type}</p>
+                    {h.verified && (
+                      <span className="specialty-tag mr-1.5">Verified</span>
+                    )}
+                    {Array.isArray(h.categories) && h.categories.length > 0 && (
+                      <p className="my-1.5">
+                        {h.categories.map((c) => (
+                          <span key={c} className="specialty-tag mr-1.5">
+                            {c}
+                          </span>
+                        ))}
+                      </p>
+                    )}
+                    {normalizeInsurance(h).length > 0 && (
+                      <p className="my-1.5">
+                        {normalizeInsurance(h).map((i) => (
+                          <span key={i} className="specialty-tag mr-1.5">
+                            {i}
+                          </span>
+                        ))}
+                      </p>
+                    )}
+                    {h.description && (
+                      <p className="text-gray-700 my-1.5">{h.description}</p>
+                    )}
+                    {h.address && (
+                      <p className="text-gray-700 my-1.5">{h.address}</p>
+                    )}
+                    {h.apply && <p className="text-gray-600 my-2">{h.apply}</p>}
+                    {(h.referral || h.financing) && (
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {h.referral && (
+                          <span className="specialty-tag">
+                            Referrals:{" "}
+                            {Object.entries(h.referral)
+                              .filter(([, v]) => v)
+                              .map(([k]) => k)
+                              .join(", ") || "—"}
+                          </span>
+                        )}
+                        {h.financing && (
+                          <span className="specialty-tag">
+                            Financing:{" "}
+                            {Object.entries(h.financing)
+                              .filter(([, v]) => v)
+                              .map(([k]) => k)
+                              .join(", ") || "—"}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </>
+                )}
+                
+                {/* Contact Actions */}
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {isOxford && h.contact?.housePhone && (
+                    <a
+                      href={`tel:${h.contact.housePhone}`}
+                      className="ghost-btn text-sm"
+                    >
+                      📞 Call House
+                    </a>
+                  )}
+                  {isOxford && h.contact?.managerPhone && (
+                    <a
+                      href={`tel:${h.contact.managerPhone}`}
+                      className="ghost-btn text-sm"
+                    >
+                      📞 Call Manager
+                    </a>
+                  )}
+                  {contactUrl && (
                     <a
                       href={contactUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="ghost-btn"
+                      className="ghost-btn text-sm"
                     >
-                      Visit site
+                      🌐 Visit site
                     </a>
-                  </p>
-                )}
-                {typeof h.contact === "object" && (
-                  <div className="flex gap-2 mt-2">
-                    {h.contact?.phone && (
-                      <a href={`tel:${h.contact.phone}`} className="ghost-btn">
-                        Call
-                      </a>
-                    )}
-                    {h.contact?.email && (
-                      <a
-                        href={`mailto:${h.contact.email}`}
-                        className="ghost-btn"
-                      >
-                        Email
-                      </a>
-                    )}
-                  </div>
-                )}
+                  )}
+                  {!isOxford && typeof h.contact === "object" && (
+                    <>
+                      {h.contact?.phone && (
+                        <a href={`tel:${h.contact.phone}`} className="ghost-btn text-sm">
+                          📞 Call
+                        </a>
+                      )}
+                      {h.contact?.email && (
+                        <a
+                          href={`mailto:${h.contact.email}`}
+                          className="ghost-btn text-sm"
+                        >
+                          ✉️ Email
+                        </a>
+                      )}
+                    </>
+                  )}
+                </div>
               </div>
             );
           })}

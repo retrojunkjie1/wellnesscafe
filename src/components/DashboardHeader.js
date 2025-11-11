@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { TrendingUp, Award, Flame, Target, Sparkles } from 'lucide-react';
-import './DashboardHeader.css';
+import React, { useState, useEffect } from "react";
+import { TrendingUp, Award, Flame, Target, Sparkles } from "lucide-react";
+import "./DashboardHeader.css";
 
 /**
  * Premium Dashboard Header - Luxury wellness overview
@@ -23,7 +23,7 @@ const DashboardHeader = ({ userName = "Friend" }) => {
         setWellnessScore(Math.floor(currentScore));
       }
     }, 20);
-    
+
     return () => clearInterval(timer);
   }, [targetScore]);
 
@@ -38,24 +38,24 @@ const DashboardHeader = ({ userName = "Friend" }) => {
   };
 
   const achievements = [
-    { id: 1, icon: '🔥', name: '7-Day Streak', unlocked: true },
-    { id: 2, icon: '🌟', name: 'Rising Star', unlocked: true },
-    { id: 3, icon: '🎯', name: 'Goal Crusher', unlocked: false },
-    { id: 4, icon: '🏆', name: 'Wellness Pro', unlocked: false },
+    { id: 1, icon: "🔥", name: "7-Day Streak", unlocked: true },
+    { id: 2, icon: "🌟", name: "Rising Star", unlocked: true },
+    { id: 3, icon: "🎯", name: "Goal Crusher", unlocked: false },
+    { id: 4, icon: "🏆", name: "Wellness Pro", unlocked: false },
   ];
 
   const getScoreColor = (score) => {
-    if (score >= 80) return '#10b981'; // Green
-    if (score >= 60) return '#f59e0b'; // Amber
-    if (score >= 40) return '#f97316'; // Orange
-    return '#ef4444'; // Red
+    if (score >= 80) return "#10b981"; // Green
+    if (score >= 60) return "#f59e0b"; // Amber
+    if (score >= 40) return "#f97316"; // Orange
+    return "#ef4444"; // Red
   };
 
   const getScoreLabel = (score) => {
-    if (score >= 80) return 'Excellent';
-    if (score >= 60) return 'Good';
-    if (score >= 40) return 'Fair';
-    return 'Needs Attention';
+    if (score >= 80) return "Excellent";
+    if (score >= 60) return "Good";
+    if (score >= 40) return "Fair";
+    return "Needs Attention";
   };
 
   return (
@@ -69,7 +69,7 @@ const DashboardHeader = ({ userName = "Friend" }) => {
               You're doing amazing. Let's continue your wellness journey today.
             </p>
           </div>
-          
+
           {/* Wellness Score Circle */}
           <div className="wellness-score-container">
             <div className="score-circle">
@@ -91,7 +91,9 @@ const DashboardHeader = ({ userName = "Friend" }) => {
               </svg>
               <div className="score-content">
                 <div className="score-value">{wellnessScore}</div>
-                <div className="score-label">{getScoreLabel(wellnessScore)}</div>
+                <div className="score-label">
+                  {getScoreLabel(wellnessScore)}
+                </div>
               </div>
             </div>
             <p className="score-description">Wellness Score</p>
@@ -109,7 +111,7 @@ const DashboardHeader = ({ userName = "Friend" }) => {
               <div className="stat-value">{stats.streak}</div>
               <div className="stat-label">Day Streak</div>
               <div className="stat-progress-bar">
-                <div 
+                <div
                   className="stat-progress-fill"
                   style={{ width: `${(stats.streak / 30) * 100}%` }}
                 />
@@ -127,12 +129,14 @@ const DashboardHeader = ({ userName = "Friend" }) => {
               <div className="stat-value">{stats.totalSessions}</div>
               <div className="stat-label">Total Sessions</div>
               <div className="stat-progress-bar">
-                <div 
+                <div
                   className="stat-progress-fill"
                   style={{ width: `${(stats.totalSessions / 50) * 100}%` }}
                 />
               </div>
-              <div className="stat-note">Next level: {stats.nextLevelSessions} more</div>
+              <div className="stat-note">
+                Next level: {stats.nextLevelSessions} more
+              </div>
             </div>
           </div>
 
@@ -142,15 +146,23 @@ const DashboardHeader = ({ userName = "Friend" }) => {
               <TrendingUp className="icon-trending" />
             </div>
             <div className="stat-content">
-              <div className="stat-value">{stats.weeklyProgress}/{stats.weeklyGoal}</div>
+              <div className="stat-value">
+                {stats.weeklyProgress}/{stats.weeklyGoal}
+              </div>
               <div className="stat-label">Weekly Goal</div>
               <div className="stat-progress-bar">
-                <div 
+                <div
                   className="stat-progress-fill"
-                  style={{ width: `${(stats.weeklyProgress / stats.weeklyGoal) * 100}%` }}
+                  style={{
+                    width: `${
+                      (stats.weeklyProgress / stats.weeklyGoal) * 100
+                    }%`,
+                  }}
                 />
               </div>
-              <div className="stat-note">{stats.weeklyGoal - stats.weeklyProgress} sessions to go</div>
+              <div className="stat-note">
+                {stats.weeklyGoal - stats.weeklyProgress} sessions to go
+              </div>
             </div>
           </div>
 
@@ -180,12 +192,16 @@ const DashboardHeader = ({ userName = "Friend" }) => {
             {achievements.map((achievement) => (
               <div
                 key={achievement.id}
-                className={`achievement-badge ${achievement.unlocked ? 'unlocked' : 'locked'}`}
+                className={`achievement-badge ${
+                  achievement.unlocked ? "unlocked" : "locked"
+                }`}
                 title={achievement.name}
               >
                 <span className="achievement-icon">{achievement.icon}</span>
                 <span className="achievement-name">{achievement.name}</span>
-                {!achievement.unlocked && <div className="achievement-lock">🔒</div>}
+                {!achievement.unlocked && (
+                  <div className="achievement-lock">🔒</div>
+                )}
               </div>
             ))}
           </div>
@@ -195,15 +211,22 @@ const DashboardHeader = ({ userName = "Friend" }) => {
         <div className="quick-insights">
           <div className="insight-card">
             <span className="insight-emoji">💪</span>
-            <p>You've completed <strong>3 sessions</strong> this week—you're on fire!</p>
+            <p>
+              You've completed <strong>3 sessions</strong> this week—you're on
+              fire!
+            </p>
           </div>
           <div className="insight-card">
             <span className="insight-emoji">🎯</span>
-            <p>Most used tool: <strong>Mindful Breathing</strong></p>
+            <p>
+              Most used tool: <strong>Mindful Breathing</strong>
+            </p>
           </div>
           <div className="insight-card">
             <span className="insight-emoji">📈</span>
-            <p>Your stress levels decreased <strong>25%</strong> this month!</p>
+            <p>
+              Your stress levels decreased <strong>25%</strong> this month!
+            </p>
           </div>
         </div>
       </div>
