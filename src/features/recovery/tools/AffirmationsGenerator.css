@@ -1,0 +1,423 @@
+.affirmations-generator {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 1rem;
+  min-height: 100vh;
+}
+
+.affirmations-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.affirmations-header .header-icon {
+  width: 3rem;
+  height: 3rem;
+  color: var(--wc-gold);
+  margin: 0 auto 1rem;
+}
+
+.affirmations-header h1 {
+  font-size: clamp(2.2rem, 6vw, 3.5rem);
+  background: var(--wc-heading-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+}
+
+.affirmations-header p {
+  font-size: 1.15rem;
+  color: #c0c0c0;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Categories Selector */
+.categories-selector {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  margin-bottom: 3rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.category-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.25rem 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.category-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.category-btn.active {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  border-color: var(--category-color);
+}
+
+.category-icon {
+  font-size: 2rem;
+}
+
+.category-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Affirmation Card */
+.affirmation-card {
+  max-width: 700px;
+  margin: 0 auto 3rem;
+  padding: 3rem 2rem;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.affirmation-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--wc-teal), var(--wc-gold));
+  opacity: 0.6;
+}
+
+.affirmation-card.animating {
+  opacity: 0.5;
+  transform: scale(0.98);
+}
+
+.affirmation-content {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.quote-mark {
+  font-size: 4rem;
+  line-height: 0.5;
+  color: rgba(255, 255, 255, 0.15);
+  font-family: Georgia, serif;
+  position: absolute;
+  left: -1rem;
+  top: 0;
+}
+
+.quote-mark.closing {
+  left: auto;
+  right: -1rem;
+  bottom: -2rem;
+  top: auto;
+}
+
+.affirmation-text {
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 1.6;
+  color: white;
+  text-align: center;
+  padding: 0 2rem;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Actions */
+.affirmation-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.action-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.action-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.refresh-btn:hover {
+  border-color: var(--wc-teal);
+}
+
+.favorite-btn:hover {
+  border-color: #e63946;
+}
+
+.share-btn:hover {
+  border-color: var(--wc-gold);
+}
+
+/* Favorites Section */
+.favorites-section {
+  max-width: 900px;
+  margin: 0 auto 3rem;
+}
+
+.favorites-section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: white;
+  text-align: center;
+}
+
+.favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.favorite-item {
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+}
+
+.favorite-item p {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #e0e0e0;
+  font-style: italic;
+}
+
+/* Info Section */
+.affirmations-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.info-card,
+.tips-card {
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+}
+
+.info-card h3,
+.tips-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: white;
+}
+
+.info-card ul,
+.tips-card ol {
+  margin-bottom: 1.5rem;
+}
+
+.info-card li,
+.tips-card li {
+  margin-bottom: 0.75rem;
+  color: #c0c0c0;
+  line-height: 1.6;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tips-card li {
+  padding-left: 0.5rem;
+}
+
+.upgrade-btn {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--wc-teal), var(--wc-gold));
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.upgrade-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(77, 184, 168, 0.3);
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 1rem;
+}
+
+.upgrade-modal {
+  max-width: 500px;
+  width: 100%;
+  padding: 2.5rem;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(30, 30, 30, 0.98), rgba(20, 20, 20, 0.98));
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+}
+
+.upgrade-modal h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  background: var(--wc-heading-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.upgrade-modal p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #c0c0c0;
+  margin-bottom: 2rem;
+}
+
+.modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--wc-teal), var(--wc-gold));
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(77, 184, 168, 0.3);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .affirmations-generator {
+    padding: 2rem 1rem;
+  }
+
+  .affirmation-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .affirmation-text {
+    font-size: 1.35rem;
+    padding: 0 1rem;
+  }
+
+  .categories-selector {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .category-btn {
+    padding: 1rem 0.75rem;
+  }
+
+  .affirmations-info {
+    grid-template-columns: 1fr;
+  }
+
+  .action-btn {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+  }
+
+  .upgrade-modal {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .affirmation-text {
+    font-size: 1.2rem;
+  }
+
+  .category-icon {
+    font-size: 1.5rem;
+  }
+
+  .category-name {
+    font-size: 0.85rem;
+  }
+
+  .favorites-grid {
+    grid-template-columns: 1fr;
+  }
+}

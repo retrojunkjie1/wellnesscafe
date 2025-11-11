@@ -30,6 +30,8 @@ import ProductPage from "./Views/ProductPage";
 import ToolsPage from "./Views/ToolsPage";
 import BreathingToolPage from "./Views/tools/BreathingToolPage";
 import MeditationTimerPage from "./Views/tools/MeditationTimerPage";
+import AffirmationsGeneratorPage from "./Views/tools/AffirmationsGeneratorPage";
+import StressAssessmentPage from "./Views/tools/StressAssessmentPage";
 import TriggerTrackerPage from "./Views/tools/TriggerTrackerPage";
 import MoodCheckInPage from "./Views/tools/MoodCheckInPage";
 import GratitudeJournalPage from "./Views/tools/GratitudeJournalPage";
@@ -155,6 +157,8 @@ function App() {
             <Route path="/tools" element={<ToolsPage />} />
             <Route path="/tools/breathing" element={<BreathingToolPage />} />
             <Route path="/tools/meditation" element={<MeditationTimerPage />} />
+            <Route path="/tools/affirmations" element={<AffirmationsGeneratorPage />} />
+            <Route path="/tools/stress-assessment" element={<StressAssessmentPage />} />
             <Route
               path="/tools/gratitude-journal"
               element={
