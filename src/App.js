@@ -28,7 +28,7 @@ import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import ProductPage from "./Views/ProductPage";
 import ToolsPage from "./Views/ToolsPage";
-import BreathingToolPage from "./Views/tools/BreathingToolPage";
+// Aurora Breathing replaces the old BreathingToolPage (v2.0 luxury upgrade)
 import AuroraBreathing from "./features/recovery/tools/AuroraBreathing";
 import MeditationTimerPage from "./Views/tools/MeditationTimerPage";
 import AffirmationsGeneratorPage from "./Views/tools/AffirmationsGeneratorPage";
@@ -170,11 +170,7 @@ function App() {
                 }
               />
               <Route path="/tools" element={<ToolsPage />} />
-              <Route path="/tools/breathing" element={<BreathingToolPage />} />
-              <Route
-                path="/tools/aurora-breathing"
-                element={<AuroraBreathing />}
-              />
+              <Route path="/tools/breathing" element={<AuroraBreathing />} />
               <Route
                 path="/tools/meditation"
                 element={<MeditationTimerPage />}
