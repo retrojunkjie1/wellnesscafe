@@ -12,7 +12,7 @@ const ProviderDashboard = () => {
   useEffect(() => {
     const unsub = auth?.onAuthStateChanged((u) => setUser(u || null));
     return () => unsub && unsub();
-  }, []);
+  }, [])npm run build && npx serve -s build -l 65191;
 
   useEffect(() => {
     const fetchProvider = async () => {

@@ -1,5 +1,4 @@
-import ProviderDashboard from './features/providers/ProviderDashboard';import React, { useRef, createContext, useContext } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ProviderDashboard from './features/providers/ProviderDashboard';import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./utils/ThemeContext";
 import { AuthProvider } from "./AuthContext";
 import Navbar from "./components/Navbar";
