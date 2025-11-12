@@ -129,10 +129,10 @@
 .affirmation-preview {
   background: linear-gradient(
     135deg,
-    rgba(212, 175, 55, 0.1),
-    rgba(255, 255, 255, 0.05)
+    rgba(122, 90, 248, 0.15),
+    rgba(177, 156, 255, 0.08)
   );
-  border-left: 3px solid var(--wc-gold);
+  border-left: 3px solid rgba(122, 90, 248, 0.8);
   border-radius: 8px;
   padding: 1.5rem;
   margin-bottom: 2rem;
@@ -143,7 +143,7 @@
 
 .affirmation-preview svg {
   flex-shrink: 0;
-  color: var(--wc-gold);
+  color: rgba(177, 156, 255, 0.9);
   margin-top: 0.25rem;
 }
 
@@ -181,19 +181,19 @@
 
 .gratitude-input:focus {
   outline: none;
-  border-color: var(--wc-gold);
+  border-color: rgba(122, 90, 248, 0.6);
   background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(122, 90, 248, 0.1);
 }
 
 .gratitude-input::placeholder {
   color: var(--wc-cream-muted);
 }
-
 /* Submit Button */
 .submit-btn {
   width: 100%;
-  background: linear-gradient(135deg, var(--wc-brown), var(--wc-gold));
-  color: var(--wc-cream);
+  background: linear-gradient(135deg, rgba(122, 90, 248, 0.8), rgba(177, 156, 255, 0.8));
+  color: white;
   border: none;
   border-radius: 8px;
   padding: 1rem 2rem;
@@ -204,6 +204,9 @@
   margin-bottom: 2rem;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 15px rgba(122, 90, 248, 0.3);
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .submit-btn::after {
@@ -226,7 +229,7 @@
 
 .submit-btn:hover:not(:disabled) {
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.4);
+  box-shadow: 0 8px 24px rgba(122, 90, 248, 0.4);
 }
 
 .submit-btn:disabled {
@@ -275,8 +278,8 @@
 .affirmation-card {
   background: linear-gradient(
     135deg,
-    rgba(212, 175, 55, 0.15),
-    rgba(255, 255, 255, 0.05)
+    rgba(122, 90, 248, 0.15),
+    rgba(177, 156, 255, 0.08)
   );
   border-radius: 12px;
   padding: 2rem;
@@ -294,14 +297,14 @@
   height: 3px;
   background: linear-gradient(
     90deg,
-    var(--wc-gold),
-    var(--wc-brown),
-    var(--wc-gold)
+    rgba(122, 90, 248, 0.8),
+    rgba(177, 156, 255, 0.8),
+    rgba(122, 90, 248, 0.8)
   );
 }
 
 .affirmation-icon {
-  color: var(--wc-gold);
+  color: rgba(177, 156, 255, 0.9);
   margin-bottom: 1rem;
 }
 
@@ -323,27 +326,29 @@
 }
 
 .gratitude-display h3 {
-  color: var(--wc-gold);
+  color: rgba(177, 156, 255, 0.95);
   font-size: 1.1rem;
   margin-bottom: 0.75rem;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .gratitude-display p {
   color: var(--wc-cream);
   line-height: 1.6;
   margin: 0;
-}
-
 /* Upgrade Prompt */
 .upgrade-prompt {
   background: linear-gradient(
     135deg,
-    rgba(139, 69, 19, 0.3),
-    rgba(212, 175, 55, 0.1)
+    rgba(122, 90, 248, 0.2),
+    rgba(177, 156, 255, 0.1)
   );
-  border: 2px solid var(--wc-gold);
+  border: 2px solid rgba(122, 90, 248, 0.6);
   border-radius: 12px;
   padding: 2rem;
+  margin-bottom: 2rem;
+} padding: 2rem;
   margin-bottom: 2rem;
 }
 

@@ -88,8 +88,8 @@
 
 .config-input:focus {
   outline: none;
-  border-color: rgba(212, 180, 131, 0.6);
-  box-shadow: 0 0 0 3px rgba(212, 180, 131, 0.1);
+  border-color: rgba(122, 90, 248, 0.6);
+  box-shadow: 0 0 0 3px rgba(122, 90, 248, 0.1);
   background: rgba(255, 255, 255, 0.12);
 }
 
@@ -159,8 +159,8 @@
 
 .voice-selector:focus {
   outline: none;
-  border-color: rgba(212, 180, 131, 0.6);
-  box-shadow: 0 0 0 2px rgba(212, 180, 131, 0.1);
+  border-color: rgba(122, 90, 248, 0.6);
+  box-shadow: 0 0 0 2px rgba(122, 90, 248, 0.1);
 }
 
 .voice-selector:hover {
@@ -224,11 +224,11 @@
   border-radius: 50%;
   background: linear-gradient(
     135deg,
-    rgba(212, 180, 131, 0.9),
-    rgba(203, 180, 255, 0.9)
+    rgba(122, 90, 248, 0.9),
+    rgba(177, 156, 255, 0.9)
   );
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 6px rgba(122, 90, 248, 0.3);
   transition: transform 0.2s ease;
 }
 
@@ -242,12 +242,12 @@
   border-radius: 50%;
   background: linear-gradient(
     135deg,
-    rgba(212, 180, 131, 0.9),
-    rgba(203, 180, 255, 0.9)
+    rgba(122, 90, 248, 0.9),
+    rgba(177, 156, 255, 0.9)
   );
   cursor: pointer;
   border: none;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 6px rgba(122, 90, 248, 0.3);
   transition: transform 0.2s ease;
 }
 
@@ -288,15 +288,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  filter: drop-shadow(0 4px 20px rgba(212, 180, 131, 0.3));
+  filter: drop-shadow(0 4px 20px rgba(122, 90, 248, 0.3));
 }
 
 .breathing-circle {
   transition: r 1s cubic-bezier(0.4, 0, 0.2, 1);
   fill: url(#breathingGradient);
-  stroke: rgba(212, 180, 131, 0.6);
+  stroke: rgba(122, 90, 248, 0.6);
   stroke-width: 3;
-  filter: drop-shadow(0 0 20px rgba(212, 180, 131, 0.4));
+  filter: drop-shadow(0 0 20px rgba(122, 90, 248, 0.4));
 }
 
 .breathing-circle-bg {
@@ -325,7 +325,7 @@
 .timer-text {
   font-size: 20px;
   font-weight: 600;
-  fill: rgba(212, 180, 131, 0.95);
+  fill: rgba(177, 156, 255, 0.95);
   dy: 35;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
@@ -368,7 +368,7 @@
 .breathing-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-  border-color: rgba(212, 180, 131, 0.4);
+  border-color: rgba(122, 90, 248, 0.4);
 }
 
 .breathing-btn:active {
@@ -378,21 +378,21 @@
 .btn-primary {
   background: linear-gradient(
     135deg,
-    rgba(212, 180, 131, 0.7),
-    rgba(203, 180, 255, 0.7)
+    rgba(122, 90, 248, 0.7),
+    rgba(177, 156, 255, 0.7)
   );
-  border-color: rgba(212, 180, 131, 0.5);
+  border-color: rgba(122, 90, 248, 0.5);
   color: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 4px 15px rgba(212, 180, 131, 0.3);
+  box-shadow: 0 4px 15px rgba(122, 90, 248, 0.3);
 }
 
 .btn-primary:hover {
   background: linear-gradient(
     135deg,
-    rgba(212, 180, 131, 0.85),
-    rgba(203, 180, 255, 0.85)
+    rgba(122, 90, 248, 0.85),
+    rgba(177, 156, 255, 0.85)
   );
-  box-shadow: 0 6px 25px rgba(212, 180, 131, 0.4);
+  box-shadow: 0 6px 25px rgba(122, 90, 248, 0.4);
 }
 
 .btn-secondary {

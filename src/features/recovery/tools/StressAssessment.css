@@ -16,7 +16,7 @@
 .assessment-header .header-icon {
   width: 3rem;
   height: 3rem;
-  color: var(--wc-teal);
+  color: rgba(122, 90, 248, 0.9);
   margin: 0 auto 1rem;
   animation: float 3s ease-in-out infinite;
 }
@@ -42,12 +42,14 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  background: rgba(77, 184, 168, 0.15);
-  border: 1px solid rgba(77, 184, 168, 0.3);
+  background: rgba(122, 90, 248, 0.15);
+  border: 1px solid rgba(122, 90, 248, 0.3);
   border-radius: 20px;
-  color: var(--wc-teal);
+  color: rgba(177, 156, 255, 0.95);
   font-size: 0.9rem;
   font-weight: 500;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 /* Progress Bar */
@@ -62,13 +64,18 @@
   border-radius: 10px;
   overflow: hidden;
   margin-bottom: 0.75rem;
-}
-
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--wc-teal), var(--wc-gold));
-  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 10px;
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      rgba(122, 90, 248, 0.8),
+      rgba(177, 156, 255, 0.8)
+    );
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+  }
   position: relative;
   overflow: hidden;
 }
@@ -123,12 +130,14 @@
 .question-number {
   display: inline-block;
   padding: 0.25rem 0.75rem;
-  background: rgba(77, 184, 168, 0.15);
+  background: rgba(122, 90, 248, 0.15);
   border-radius: 12px;
-  color: var(--wc-teal);
+  color: rgba(177, 156, 255, 0.95);
   font-size: 0.85rem;
   font-weight: 600;
   margin-bottom: 1rem;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .question-text {
@@ -159,17 +168,18 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
-}
-
-.likert-option::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(77, 184, 168, 0.2);
+  .likert-option::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(122, 90, 248, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.5s, height 0.5s;
+  }
   transform: translate(-50%, -50%);
   transition: width 0.5s, height 0.5s;
 }
@@ -186,16 +196,16 @@
 }
 
 .likert-option:hover {
-  border-color: rgba(77, 184, 168, 0.5);
-  background: rgba(77, 184, 168, 0.15);
+  border-color: rgba(122, 90, 248, 0.5);
+  background: rgba(122, 90, 248, 0.15);
   transform: translateY(-4px) scale(1.05);
-  box-shadow: 0 8px 20px rgba(77, 184, 168, 0.2);
+  box-shadow: 0 8px 20px rgba(122, 90, 248, 0.2);
 }
 
 .likert-option.selected {
-  border-color: var(--wc-teal);
-  background: rgba(77, 184, 168, 0.25);
-  box-shadow: 0 8px 24px rgba(77, 184, 168, 0.4);
+  border-color: rgba(122, 90, 248, 0.8);
+  background: rgba(122, 90, 248, 0.25);
+  box-shadow: 0 8px 24px rgba(122, 90, 248, 0.4);
   animation: selectPulse 0.5s ease-out;
 }
 

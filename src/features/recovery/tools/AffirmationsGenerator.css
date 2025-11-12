@@ -136,8 +136,13 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, var(--wc-teal), var(--wc-gold));
-  opacity: 0.6;
+  background: linear-gradient(
+    90deg,
+    rgba(122, 90, 248, 0.8),
+    rgba(177, 156, 255, 0.8),
+    rgba(122, 90, 248, 0.8)
+  );
+  opacity: 0.8;
 }
 
 .affirmation-card.animating {
@@ -202,12 +207,15 @@
   cursor: pointer;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .action-btn:hover {
   background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(122, 90, 248, 0.5);
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(122, 90, 248, 0.2);
 }
 
 .action-btn svg {
@@ -216,13 +224,18 @@
 }
 
 .refresh-btn:hover {
-  border-color: var(--wc-teal);
+  border-color: rgba(122, 90, 248, 0.8);
+  box-shadow: 0 4px 12px rgba(122, 90, 248, 0.3);
 }
 
 .favorite-btn:hover {
   border-color: #e63946;
 }
 
+.share-btn:hover {
+  border-color: rgba(177, 156, 255, 0.8);
+  box-shadow: 0 4px 12px rgba(177, 156, 255, 0.3);
+}
 .share-btn:hover {
   border-color: var(--wc-gold);
 }
