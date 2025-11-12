@@ -29,6 +29,7 @@ import Dashboard from "./components/Dashboard";
 import ProductPage from "./Views/ProductPage";
 import ToolsPage from "./Views/ToolsPage";
 import BreathingToolPage from "./Views/tools/BreathingToolPage";
+import AuroraBreathing from "./features/recovery/tools/AuroraBreathing";
 import MeditationTimerPage from "./Views/tools/MeditationTimerPage";
 import AffirmationsGeneratorPage from "./Views/tools/AffirmationsGeneratorPage";
 import StressAssessmentPage from "./Views/tools/StressAssessmentPage";
@@ -170,6 +171,7 @@ function App() {
               />
               <Route path="/tools" element={<ToolsPage />} />
               <Route path="/tools/breathing" element={<BreathingToolPage />} />
+              <Route path="/tools/aurora-breathing" element={<AuroraBreathing />} />
               <Route
                 path="/tools/meditation"
                 element={<MeditationTimerPage />}
