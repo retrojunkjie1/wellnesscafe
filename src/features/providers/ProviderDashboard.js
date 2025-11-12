@@ -12,7 +12,7 @@ const ProviderDashboard = () => {
   useEffect(() => {
     const unsub = auth?.onAuthStateChanged((u) => setUser(u || null));
     return () => unsub && unsub();
-  }, [])npm run build && npx serve -s build -l 65191;
+  }, []);
 
   useEffect(() => {
     const fetchProvider = async () => {
@@ -21,10 +21,7 @@ const ProviderDashboard = () => {
         return;
       }
       try {
-        const q = query(
-          collection(db, 'providers'),
-          where('ownerUid', '==', user.uid)
-        );
+        const q = query(collection(db, 'providers'), where('ownerUid', '==', user.uid));
         const snap = await getDocs(q);
         if (!snap.empty) {
           setProvider({ id: snap.docs[0].id, ...snap.docs[0].data() });
@@ -41,12 +38,11 @@ const ProviderDashboard = () => {
     if (!provider) return '';
     const avatar = provider.fullName?.charAt(0) || 'W';
     const services = provider.serviceTypes?.map(s => `<span class="chip">${s}</span>`).join('') || '';
-    
+
     return `<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${provider.fullName || 'Provider'} - Wellness Professional</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -77,24 +73,24 @@ h1{font-size:2.5rem;font-weight:700;margin-bottom:8px;background:linear-gradient
 </head>
 <body>
 <div class="container">
-<div class="header">
-<div class="avatar">${avatar}</div>
-<div>
-<h1>${provider.fullName || 'Wellness Professional'}</h1>
-<div class="role">${provider.role || 'Provider'}</div>
-<div class="location">${provider.city || ''}${provider.city && provider.country ? ', ' : ''}${provider.country || ''}</div>
-</div>
-</div>
-${services ? `<div class="services">${services}</div>` : ''}
-<div class="info-grid">
-<div class="info-item"><div class="info-label">Experience</div><div class="info-value">${provider.years || 0} Years</div></div>
-<div class="info-item"><div class="info-label">Rate</div><div class="info-value rate">$${provider.ratePerHour || 0}/hr</div></div>
-${provider.meetingModes?.length ? `<div class="info-item"><div class="info-label">Meeting Modes</div><div class="info-value">${provider.meetingModes.join(', ')}</div></div>` : ''}
-</div>
-${provider.bio ? `<div class="section"><h2>About</h2><p>${provider.bio}</p></div>` : ''}
-${provider.certifications ? `<div class="section"><h2>Certifications</h2><p>${provider.certifications}</p></div>` : ''}
-${provider.calendarUrl ? `<div class="section"><h2>Book a Session</h2><a href="${provider.calendarUrl}" class="cta-button" target="_blank" rel="noopener noreferrer">Schedule Appointment</a></div>` : ''}
-<div class="footer"><p>Professional wellness services with care and confidentiality.</p><div class="powered-by">Powered by <a href="https://wellnesscafelanding.web.app" target="_blank">WellnessCafe</a></div></div>
+  <div class="header">
+    <div class="avatar">${avatar}</div>
+    <div>
+      <h1>${provider.fullName || 'Wellness Professional'}</h1>
+      <div class="role">${provider.role || 'Provider'}</div>
+      <div class="location">${provider.city || ''}${provider.city && provider.country ? ', ' : ''}${provider.country || ''}</div>
+    </div>
+  </div>
+  ${services ? `<div class="services">${services}</div>` : ''}
+  <div class="info-grid">
+    <div class="info-item"><div class="info-label">Experience</div><div class="info-value">${provider.years || 0} Years</div></div>
+    <div class="info-item"><div class="info-label">Rate</div><div class="info-value rate">$${provider.ratePerHour || 0}/hr</div></div>
+    ${provider.meetingModes?.length ? `<div class="info-item"><div class="info-label">Meeting Modes</div><div class="info-value">${provider.meetingModes.join(', ')}</div></div>` : ''}
+  </div>
+  ${provider.bio ? `<div class="section"><h2>About</h2><p>${provider.bio}</p></div>` : ''}
+  ${provider.certifications ? `<div class="section"><h2>Certifications</h2><p>${provider.certifications}</p></div>` : ''}
+  ${provider.calendarUrl ? `<div class="section"><h2>Book a Session</h2><a href="${provider.calendarUrl}" class="cta-button" target="_blank" rel="noopener noreferrer">Schedule Appointment</a></div>` : ''}
+  <div class="footer"><p>Professional wellness services with care and confidentiality.</p><div class="powered-by">Powered by <a href="https://wellnesscafelanding.web.app" target="_blank">WellnessCafe</a></div></div>
 </div>
 </body>
 </html>`;
@@ -106,18 +102,21 @@ ${provider.calendarUrl ? `<div class="section"><h2>Book a Session</h2><a href="$
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `${provider.fullName?.replace(/\s+/g, '-') || 'provider'}-profile.html`;
+    a.download = `${provider?.fullName?.replace(/\s+/g, '-') || 'provider'}-profile.html`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   };
 
-  const copyHTML = () => {
+  const copyHTML = async () => {
     const html = generateHTML();
-    navigator.clipboard.writeText(html).then(() => {
+    try {
+      await navigator.clipboard.writeText(html);
       alert('Profile HTML copied! Paste into any HTML file or website builder.');
-    });
+    } catch {
+      alert('Clipboard copy failed.');
+    }
   };
 
   if (loading) return <section className="pv-wrap"><div className="pv-loading">Loading...</div></section>;
@@ -127,32 +126,50 @@ ${provider.calendarUrl ? `<div class="section"><h2>Book a Session</h2><a href="$
   return (
     <section className="pv-wrap">
       <div className="pv-header-row">
-        <div><h1 className="pv-title">My Provider Dashboard</h1><p className="pv-sub">Manage your profile and share it with clients</p></div>
+        <div>
+          <h1 className="pv-title">My Provider Dashboard</h1>
+          <p className="pv-sub">Manage your profile and share it with clients</p>
+        </div>
       </div>
+
       <div className="pv-card" style={{marginBottom:'2rem'}}>
         <div className="pv-card-head">
           <div className="pv-avatar">{provider.fullName?.charAt(0) || 'W'}</div>
           <div><h3 className="pv-name">{provider.fullName}</h3><div className="pv-role">{provider.role}</div></div>
         </div>
-        {provider.serviceTypes?.length > 0 && <div className="pv-services">{provider.serviceTypes.map((s,i)=><span key={i} className="chip small">{s}</span>)}</div>}
+        {provider.serviceTypes?.length > 0 && (
+          <div className="pv-services">
+            {provider.serviceTypes.map((s,i)=><span key={i} className="chip small">{s}</span>)}
+          </div>
+        )}
         <p className="pv-bio">{provider.bio || 'No bio yet.'}</p>
-        <div className="pv-meta"><span>{provider.city}, {provider.country}</span><span className="pv-rate">${provider.ratePerHour}/hr</span></div>
+        <div className="pv-meta"><span>{provider.city}{provider.city&&provider.country?', ':''}{provider.country}</span><span className="pv-rate">${provider.ratePerHour}</span></div>
         <div className="pv-status">Status: <strong>{provider.verificationStatus || 'pending_review'}</strong> • Verified: <strong>{provider.verified ? 'Yes' : 'No'}</strong></div>
       </div>
-      <div style={{background:'rgba(122,90,248,0.1)',padding:'2rem',borderRadius:'20px',border:'1px solid rgba(122,90,248,0.3)',marginBottom:'2rem'}}>
-        <h2 style={{fontSize:'1.75rem',fontWeight:'700',marginBottom:'1rem',background:'linear-gradient(135deg,#ffffff 0%,#f0e5d8 40%,#e6d7ff 100%)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent'}}>🆓 FREE Profile Sharing</h2>
-        <p style={{color:'rgba(255,255,255,0.75)',marginBottom:'1.5rem',lineHeight:'1.6'}}>Download your profile as HTML or copy the code to share on your website. <strong style={{color:'#b19cff'}}>Completely free!</strong></p>
-        <div style={{display:'flex',gap:'1rem',flexWrap:'wrap'}}>
+
+      <div className="pv-share">
+        <h2>🆓 FREE Profile Sharing</h2>
+        <p>Download your profile as HTML or copy the code to share on your website. <strong>Completely free!</strong></p>
+        <div className="pv-actions">
           <button onClick={downloadHTML} className="pv-solid">📥 Download HTML</button>
           <button onClick={copyHTML} className="pv-ghost">📋 Copy HTML</button>
-          <button onClick={()=>setShowPreview(!showPreview)} className="pv-ghost">👁️ {showPreview?'Hide':'Preview'}</button>
+          <button onClick={()=>setShowPreview(s=>!s)} className="pv-ghost">👁️ {showPreview?'Hide':'Preview'}</button>
         </div>
       </div>
-      {showPreview && <div style={{background:'rgba(31,41,55,0.8)',padding:'2rem',borderRadius:'20px',border:'1px solid rgba(122,90,248,0.3)',marginBottom:'2rem'}}><h3 style={{fontSize:'1.35rem',fontWeight:'700',marginBottom:'1rem',color:'rgba(255,255,255,0.95)'}}>Profile Preview</h3><div style={{background:'white',borderRadius:'12px',overflow:'hidden',boxShadow:'0 8px 32px rgba(0,0,0,0.3)'}}><iframe srcDoc={generateHTML()} style={{width:'100%',height:'600px',border:'none',borderRadius:'12px'}} title="Preview"/></div></div>}
+
+      {showPreview && (
+        <div className="pv-preview">
+          <h3>Profile Preview</h3>
+          <div className="pv-preview-frame">
+            <iframe srcDoc={generateHTML()} style={{width:'100%',height:'600px',border:'none',borderRadius:'12px'}} title="Preview"/>
+          </div>
+        </div>
+      )}
+
       <div className="pv-grid">
-        <div style={{background:'rgba(31,41,55,0.8)',padding:'1.5rem',borderRadius:'16px',border:'1px solid rgba(122,90,248,0.3)'}}><div style={{fontSize:'0.85rem',color:'rgba(255,255,255,0.5)',marginBottom:'0.5rem'}}>EXPERIENCE</div><div style={{fontSize:'1.5rem',fontWeight:'700',color:'#b19cff'}}>{provider.years||0} Years</div></div>
-        <div style={{background:'rgba(31,41,55,0.8)',padding:'1.5rem',borderRadius:'16px',border:'1px solid rgba(122,90,248,0.3)'}}><div style={{fontSize:'0.85rem',color:'rgba(255,255,255,0.5)',marginBottom:'0.5rem'}}>SERVICES</div><div style={{fontSize:'1.5rem',fontWeight:'700',color:'#b19cff'}}>{provider.serviceTypes?.length||0}</div></div>
-        <div style={{background:'rgba(31,41,55,0.8)',padding:'1.5rem',borderRadius:'16px',border:'1px solid rgba(122,90,248,0.3)'}}><div style={{fontSize:'0.85rem',color:'rgba(255,255,255,0.5)',marginBottom:'0.5rem'}}>RATE</div><div style={{fontSize:'1.5rem',fontWeight:'700',color:'#d4b483'}}>${provider.ratePerHour||0}</div></div>
+        <div className="pv-stat"><div className="pv-stat-label">EXPERIENCE</div><div className="pv-stat-value">{provider.years||0} Years</div></div>
+        <div className="pv-stat"><div className="pv-stat-label">SERVICES</div><div className="pv-stat-value">{provider.serviceTypes?.length||0}</div></div>
+        <div className="pv-stat"><div className="pv-stat-label">RATE</div><div className="pv-stat-value pv-rate">${provider.ratePerHour||0}</div></div>
       </div>
     </section>
   );
