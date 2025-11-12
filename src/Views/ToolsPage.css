@@ -505,15 +505,16 @@
 
 .tool-card {
   background: rgba(31, 41, 55, 0.7);
-  backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   border-radius: 20px;
   padding: 32px 24px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(212, 180, 131, 0.2);
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .tool-card::before {
@@ -758,16 +759,18 @@
 }
 
 .resource-item {
-  background: white;
+  background: rgba(198, 40, 40, 0.1);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
   border-radius: 16px;
   padding: 28px;
-  box-shadow: 0 4px 16px rgba(198, 40, 40, 0.1);
-  border: 2px solid #ffcdd2;
+  box-shadow: 0 4px 16px rgba(198, 40, 40, 0.2);
+  border: 2px solid rgba(255, 205, 210, 0.3);
 }
 
 .resource-item h3 {
   font-size: 1.2rem;
-  color: #c62828;
+  color: #ffcdd2;
   margin: 0 0 12px 0;
   font-weight: 600;
 }
@@ -776,23 +779,27 @@
   display: inline-block;
   font-size: 1.3rem;
   font-weight: 700;
-  color: #d32f2f;
+  color: #ffcdd2;
   text-decoration: none;
   padding: 12px 24px;
-  background: #ffebee;
+  background: rgba(211, 47, 47, 0.3);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   border-radius: 12px;
   margin: 12px 0;
   transition: all 0.3s ease;
+  border: 1px solid rgba(255, 205, 210, 0.4);
 }
 
 .resource-link:hover {
-  background: #d32f2f;
+  background: rgba(211, 47, 47, 0.6);
   color: white;
   transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(211, 47, 47, 0.4);
 }
 
 .resource-item p {
-  color: #6c757d;
+  color: rgba(255, 255, 255, 0.75);
   margin: 12px 0 0;
   font-size: 0.95rem;
   line-height: 1.5;
@@ -985,18 +992,20 @@ a {
   color: inherit;
   display: flex;
   flex-direction: column;
+  border-color: rgba(122, 90, 248, 0.3);
 }
 
 .tool-card.active-tool:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 32px rgba(76, 175, 80, 0.25);
-  border-color: #4caf50;
+  box-shadow: 0 12px 40px rgba(122, 90, 248, 0.4), 0 8px 24px rgba(0, 0, 0, 0.4);
+  border-color: #7a5af8;
+  background: rgba(31, 41, 55, 0.9);
 }
 
 .tool-cta {
   margin-top: auto;
   padding-top: 16px;
-  color: #4caf50;
+  color: #b19cff;
   font-weight: 700;
   font-size: 1rem;
   text-align: center;
@@ -1004,6 +1013,6 @@ a {
 }
 
 .tool-card.active-tool:hover .tool-cta {
-  color: #2e7d32;
+  color: #d4b483;
   transform: translateX(4px);
 }
