@@ -54,6 +54,7 @@ const DevTools = () => {
         setModels(modelList);
       }
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error("Error checking Ollama:", err);
       setIsOllamaActive(false);
     }

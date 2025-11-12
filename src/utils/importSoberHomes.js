@@ -47,6 +47,7 @@ const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 const main = async () => {
   const { state: slug, file } = parseArgs();
   if (!slug || !file) {
+    // eslint-disable-next-line no-console
     console.error(
       "Usage: node src/utils/importSoberHomes.js --state=<slug> --file=<jsonPath>"
     );
@@ -56,14 +57,17 @@ const main = async () => {
   const payload = loadJson(file);
   const homes = Array.isArray(payload.homes) ? payload.homes : [];
   if (homes.length === 0) {
+    // eslint-disable-next-line no-console
     console.warn("No homes found in provided JSON. Nothing to import.");
     process.exit(0);
   }
 
   if (!hasFirebaseEnv()) {
+    // eslint-disable-next-line no-console
     console.log(
       `[DRY RUN] Would import ${homes.length} homes to soberHomes/${slug}/homes`
     );
+    // eslint-disable-next-line no-console
     console.log(homes.slice(0, 3));
     process.exit(0);
   }
@@ -76,7 +80,9 @@ const main = async () => {
       "firebase/firestore"
     ));
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error("Failed to load Firebase SDK in Node:", err.message);
+    // eslint-disable-next-line no-console
     console.log(
       `[DRY RUN] Would import ${homes.length} homes to soberHomes/${slug}/homes`
     );
@@ -95,6 +101,7 @@ const main = async () => {
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
+  // eslint-disable-next-line no-console
   console.log(
     `Importing ${homes.length} homes to soberHomes/${slug}/homes ...`
   );
@@ -114,14 +121,17 @@ const main = async () => {
         await sleep(250);
       }
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error(`Failed to write ${baseId}:`, err.message);
     }
   }
+  // eslint-disable-next-line no-console
   console.log(`Done. Imported ${count}/${homes.length} homes.`);
   process.exit(0);
 };
 
 main().catch((err) => {
+  // eslint-disable-next-line no-console
   console.error("Unexpected error:", err);
   process.exit(1);
 });

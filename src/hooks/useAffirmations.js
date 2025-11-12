@@ -110,6 +110,7 @@ export const useAffirmations = () => {
           });
           return data.text;
         } catch (err) {
+          // eslint-disable-next-line no-console
           console.log(
             "Cloud Function not available, using fallback affirmations:",
             err.message

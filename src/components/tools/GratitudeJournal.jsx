@@ -88,6 +88,7 @@ export default function GratitudeJournal() {
         setRows(data);
       },
       (err) => {
+        // eslint-disable-next-line no-console
         console.error("gratitude:onSnapshot", err);
       }
     );
@@ -133,6 +134,7 @@ export default function GratitudeJournal() {
       setEntries([{ text: "", category: "People" }]);
       setReflection("");
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error("gratitude:addDoc", e);
     }
     setSaving(false);
@@ -142,6 +144,7 @@ export default function GratitudeJournal() {
     try {
       await deleteDoc(doc(db, "gratitude", id));
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error("gratitude:deleteDoc", e);
     }
   };

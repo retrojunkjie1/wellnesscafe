@@ -204,6 +204,7 @@ const AffirmationsGenerator = () => {
       try {
         await navigator.share(shareData);
       } catch (err) {
+        // eslint-disable-next-line no-console
         console.log("Share cancelled or failed:", err);
       }
     } else {

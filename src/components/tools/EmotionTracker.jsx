@@ -95,6 +95,7 @@ export default function EmotionTracker() {
         setRows(data);
       },
       (err) => {
+        // eslint-disable-next-line no-console
         console.error("emotions:onSnapshot", err);
       }
     );
@@ -135,6 +136,7 @@ export default function EmotionTracker() {
       setContext("");
       setCoping("");
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error("emotions:addDoc", e);
     }
     setSaving(false);

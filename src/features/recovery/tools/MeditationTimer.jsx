@@ -290,6 +290,7 @@ const MeditationTimer = () => {
       oscillator.stop(audioContext.currentTime + 1);
     } catch (e) {
       // Fallback: use system beep via TTS
+      // eslint-disable-next-line no-console
       console.warn("Audio playback failed:", e);
       if (window.speechSynthesis) {
         const utterance = new SpeechSynthesisUtterance("🔔");

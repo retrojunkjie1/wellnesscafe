@@ -153,6 +153,7 @@ export default function UrgeSurfingDashboard() {
         );
         setAudioURL(url);
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.warn("Guide missing:", e.message);
       }
     };
@@ -167,6 +168,7 @@ export default function UrgeSurfingDashboard() {
         const snap = await getDocs(q);
         setSessions(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error(e);
       }
     };
@@ -194,6 +196,7 @@ export default function UrgeSurfingDashboard() {
         await addDoc(collection(db, "urgeSurfingSessions"), session);
         setSessions((prev) => [session, ...prev].slice(0, 10));
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error("Save error", e);
       }
     }

@@ -18,6 +18,7 @@ export default function Signup() {
       await createUserProfile(userCredential.user, role);
       setMessage("Account created successfully!");
     } catch(err) {
+      // eslint-disable-next-line no-console
       console.error(err);
       setMessage("Error: " + err.message);
     } finally {

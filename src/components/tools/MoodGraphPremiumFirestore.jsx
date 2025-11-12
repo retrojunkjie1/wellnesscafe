@@ -141,6 +141,7 @@ export default function MoodGraphPremiumFirestore() {
         setRows(data);
       },
       (err) => {
+        // eslint-disable-next-line no-console
         console.error("moods:onSnapshot", err);
         if (rows.length === 0) setRows(SEED_ROWS);
       }
@@ -171,6 +172,7 @@ export default function MoodGraphPremiumFirestore() {
       setTags(["Routine"]);
       setIntensity(6);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error("moods:addDoc", e);
     }
     setSaving(false);

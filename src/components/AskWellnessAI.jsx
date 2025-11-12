@@ -53,6 +53,7 @@ const AskWellnessAI = ({ stateSlug, snippets }) => {
         }
       });
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error("AskWellnessAI send error", err);
       const rid = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
       setMessages((m) => [

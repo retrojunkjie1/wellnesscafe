@@ -45,6 +45,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     // If Firebase auth is not available, set loading to false immediately
     if (!auth) {
+      // eslint-disable-next-line no-console
       console.warn("Firebase auth is disabled - running in offline mode");
       setLoading(false);
       return;

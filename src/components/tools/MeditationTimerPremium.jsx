@@ -99,6 +99,7 @@ export default function MeditationTimerPremium() {
         setSessions(data);
       },
       (err) => {
+        // eslint-disable-next-line no-console
         console.error("meditation:onSnapshot", err);
       }
     );
@@ -175,6 +176,7 @@ export default function MeditationTimerPremium() {
       setSessions((prev) => [session, ...prev].slice(0, 60));
       setNote("");
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error("meditation:addDoc", e);
     }
   };

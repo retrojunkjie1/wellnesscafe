@@ -86,6 +86,7 @@ const MoodCheckIn = () => {
         gratitude: gratitude,
         timestamp: new Date().toISOString(),
       };
+      // eslint-disable-next-line no-console
       console.log("Mood Check-In:", checkIn);
     }
   };

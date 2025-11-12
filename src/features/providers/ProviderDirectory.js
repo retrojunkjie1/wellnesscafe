@@ -71,6 +71,7 @@ const ProviderDirectory = () => {
     const loadProviders = async () => {
       // Check if Firestore is available
       if (!db) {
+        // eslint-disable-next-line no-console
         console.warn(
           "Firestore not available - provider directory will show empty"
         );
@@ -99,6 +100,7 @@ const ProviderDirectory = () => {
 
         return unsubscribe;
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error loading providers:", error);
         setLoading(false);
       }

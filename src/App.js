@@ -1,4 +1,4 @@
-import React, { useRef, createContext, useContext } from "react";
+import ProviderDashboard from './features/providers/ProviderDashboard';import React, { useRef, createContext, useContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./utils/ThemeContext";
 import { AuthProvider } from "./AuthContext";
@@ -49,7 +49,6 @@ import NewsPage from "./Views/NewsPage";
 import NewsFeed from "./features/news/NewsFeed.jsx";
 import ArticleReader from "./features/news/ArticleReader.jsx";
 import ResourceDetail from "./Views/ResourceDetail";
-import ProviderDashboard from "./features/providers/ProviderDashboard";
 import AdminVerify from "./features/providers/AdminVerify";
 import AdminImport from "./features/providers/AdminImport";
 import SoberHomesState from "./Views/SoberHomesState";
@@ -66,6 +65,7 @@ const AIWidgetContext = createContext(null);
 export const useAIWidget = () => {
   const context = useContext(AIWidgetContext);
   if (!context) {
+    // eslint-disable-next-line no-console
     console.warn("useAIWidget must be used within AIWidgetContext provider");
   }
   return context;
@@ -98,13 +98,11 @@ function App() {
                 path="/providers/dashboard"
                 element={
                   <ProtectedRoute roles={["provider", "admin"]} requireVerified>
-                    <ProviderDashboard />
                   </ProtectedRoute>
                 }
               />
               <Route
                 path="/providers/dashboard/preview"
-                element={<ProviderDashboard preview />}
               />
               <Route
                 path="/providers/admin/import"

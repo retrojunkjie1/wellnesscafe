@@ -48,6 +48,7 @@ const ProtectedRoute = ({ children, roles, requireVerified }) => {
           setResendMsg("❌ No user session found. Please log in again.");
         }
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error("Email verification failed:", e);
         let errorMessage = "Could not send verification email.";
         if (e.code === "auth/too-many-requests") {

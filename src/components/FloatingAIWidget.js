@@ -88,6 +88,7 @@ const FloatingAIWidget = forwardRef(
         };
 
         recognitionRef.current.onerror = (event) => {
+          // eslint-disable-next-line no-console
           console.error("Speech recognition error:", event.error);
           setIsListening(false);
         };
@@ -143,6 +144,7 @@ const FloatingAIWidget = forwardRef(
           setIsListening(true);
           setTranscript("");
         } catch (error) {
+          // eslint-disable-next-line no-console
           console.error("Failed to start recognition:", error);
         }
       }
@@ -187,6 +189,7 @@ const FloatingAIWidget = forwardRef(
           }, 500);
         }
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("AI response error:", error);
         const errorMsg = {
           id: Date.now() + 1,

@@ -90,6 +90,7 @@ const ProviderDirectory = () => {
 
         return unsubscribe;
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error loading providers:", error);
         setLoading(false);
       }

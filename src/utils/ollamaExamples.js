@@ -18,6 +18,7 @@ import {
 // Example 1: Simple completion (your original example)
 // =====================================================
 export async function example1_SimpleCompletion() {
+  // eslint-disable-next-line no-console
   console.log("Example 1: Generating Firestore schema...");
 
   const response = await generateCompletion(
@@ -25,6 +26,7 @@ export async function example1_SimpleCompletion() {
     "Generate a Firestore schema for user progress tracking."
   );
 
+  // eslint-disable-next-line no-console
   console.log(response);
   return response;
 }
@@ -33,12 +35,14 @@ export async function example1_SimpleCompletion() {
 // Example 2: Using the helper function
 // =====================================================
 export async function example2_FirestoreSchemaHelper() {
+  // eslint-disable-next-line no-console
   console.log("Example 2: Using schema helper...");
 
   const schema = await generateFirestoreSchema(
     "User meditation progress tracking with sessions, duration, timestamps, and mood ratings"
   );
 
+  // eslint-disable-next-line no-console
   console.log(schema);
   return schema;
 }
@@ -47,6 +51,7 @@ export async function example2_FirestoreSchemaHelper() {
 // Example 3: Streaming response
 // =====================================================
 export async function example3_StreamingResponse() {
+  // eslint-disable-next-line no-console
   console.log("Example 3: Streaming response...");
 
   let fullResponse = "";
@@ -60,6 +65,7 @@ export async function example3_StreamingResponse() {
     }
   );
 
+  // eslint-disable-next-line no-console
   console.log("\n\nFull response:", fullResponse);
   return fullResponse;
 }
@@ -68,6 +74,7 @@ export async function example3_StreamingResponse() {
 // Example 4: Chat conversation
 // =====================================================
 export async function example4_ChatConversation() {
+  // eslint-disable-next-line no-console
   console.log("Example 4: Chat conversation...");
 
   const messages = [
@@ -83,6 +90,7 @@ export async function example4_ChatConversation() {
   ];
 
   const response = await chat("deepseek-coder:6.7b", messages);
+  // eslint-disable-next-line no-console
   console.log(response);
   return response;
 }
@@ -91,6 +99,7 @@ export async function example4_ChatConversation() {
 // Example 5: Get coding help
 // =====================================================
 export async function example5_CodingHelp() {
+  // eslint-disable-next-line no-console
   console.log("Example 5: Getting coding help...");
 
   const code = `
@@ -105,6 +114,7 @@ export async function example5_CodingHelp() {
     "Is there a memory leak in this code? How can I fix it?"
   );
 
+  // eslint-disable-next-line no-console
   console.log(answer);
   return answer;
 }
@@ -113,12 +123,14 @@ export async function example5_CodingHelp() {
 // Example 6: Generate React component
 // =====================================================
 export async function example6_GenerateComponent() {
+  // eslint-disable-next-line no-console
   console.log("Example 6: Generating React component...");
 
   const component = await generateReactComponent(
     "A meditation timer card component that displays session duration, ambient sound selection, and a start button"
   );
 
+  // eslint-disable-next-line no-console
   console.log(component);
   return component;
 }
@@ -127,13 +139,16 @@ export async function example6_GenerateComponent() {
 // Example 7: Check Ollama status and list models
 // =====================================================
 export async function example7_CheckStatus() {
+  // eslint-disable-next-line no-console
   console.log("Example 7: Checking Ollama status...");
 
   const isRunning = await isOllamaRunning();
+  // eslint-disable-next-line no-console
   console.log("Ollama is running:", isRunning);
 
   if (isRunning) {
     const models = await listModels();
+    // eslint-disable-next-line no-console
     console.log(
       "Available models:",
       models.map((m) => m.name)
@@ -147,6 +162,7 @@ export async function example7_CheckStatus() {
 // Example 8: Advanced - Code refactoring
 // =====================================================
 export async function example8_RefactorCode() {
+  // eslint-disable-next-line no-console
   console.log("Example 8: Refactoring code...");
 
   const messyCode = `
@@ -175,6 +191,7 @@ Requirements:
 Return ONLY the refactored code.`;
 
   const refactored = await generateCompletion("deepseek-coder:6.7b", prompt);
+  // eslint-disable-next-line no-console
   console.log(refactored);
   return refactored;
 }
@@ -183,6 +200,7 @@ Return ONLY the refactored code.`;
 // Example 9: Generate test cases
 // =====================================================
 export async function example9_GenerateTests() {
+  // eslint-disable-next-line no-console
   console.log("Example 9: Generating test cases...");
 
   const functionCode = `
@@ -214,6 +232,7 @@ Include:
 Return ONLY the test code.`;
 
   const tests = await generateCompletion("deepseek-coder:6.7b", prompt);
+  // eslint-disable-next-line no-console
   console.log(tests);
   return tests;
 }
@@ -222,8 +241,11 @@ Return ONLY the test code.`;
 // Run all examples
 // =====================================================
 export async function runAllExamples() {
+  // eslint-disable-next-line no-console
   console.log("=".repeat(50));
+  // eslint-disable-next-line no-console
   console.log("Running all Ollama client examples");
+  // eslint-disable-next-line no-console
   console.log("=".repeat(50));
 
   try {
@@ -237,8 +259,10 @@ export async function runAllExamples() {
     await example8_RefactorCode();
     await example9_GenerateTests();
 
+    // eslint-disable-next-line no-console
     console.log("\n✅ All examples completed!");
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("❌ Error running examples:", error);
   }
 }

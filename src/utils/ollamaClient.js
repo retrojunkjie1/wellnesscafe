@@ -34,6 +34,7 @@ export async function generateCompletion(model, prompt, options = {}) {
     const data = await response.json();
     return data.response;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Ollama generation error:", error);
     throw error;
   }
@@ -95,6 +96,7 @@ export async function generateStreamingCompletion(
       }
     }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Ollama streaming error:", error);
     throw error;
   }
@@ -129,6 +131,7 @@ export async function chat(model, messages, options = {}) {
     const data = await response.json();
     return data.message.content;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Ollama chat error:", error);
     throw error;
   }
@@ -168,6 +171,7 @@ export async function listModels() {
     const data = await response.json();
     return data.models || [];
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error listing models:", error);
     return [];
   }

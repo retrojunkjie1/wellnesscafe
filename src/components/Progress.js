@@ -21,6 +21,7 @@ const Progress = () => {
 
     // Check if Firestore is available
     if (!db) {
+      // eslint-disable-next-line no-console
       console.warn(
         "Firestore not available - progress tracking will show empty"
       );

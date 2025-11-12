@@ -31,6 +31,7 @@ const CheckIn = ({ onComplete }) => {
 
     // Check if Firestore is available
     if (!db) {
+      // eslint-disable-next-line no-console
       console.warn(
         "Firestore not available - check-in will be stored locally only"
       );
@@ -98,6 +99,7 @@ const CheckIn = ({ onComplete }) => {
       setGratitude("");
       setJournal("");
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Error saving check-in:", error);
       alert("Failed to save check-in. Please try again.");
     }

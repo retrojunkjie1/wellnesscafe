@@ -169,6 +169,7 @@ export default function DailyIntentionsDashboard() {
         setSessions(rows);
         setStreak(calcStreak(rows));
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error("Load error:", e);
       }
     };
@@ -233,6 +234,7 @@ export default function DailyIntentionsDashboard() {
       setTimer(0);
       setRunning(false);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error("Save error:", e);
     }
     setSaving(false);

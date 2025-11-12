@@ -92,6 +92,7 @@ export default function WeeklyReview() {
 
         setData(results);
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error("weeklyReview:loadData", e);
       }
       setLoading(false);

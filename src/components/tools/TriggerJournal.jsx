@@ -99,6 +99,7 @@ export default function TriggerJournal() {
         setRows(data);
       },
       (err) => {
+        // eslint-disable-next-line no-console
         console.error("triggers:onSnapshot", err);
       }
     );
@@ -147,6 +148,7 @@ export default function TriggerJournal() {
       setOutcome("");
       setManaged(null);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error("triggers:addDoc", e);
     }
     setSaving(false);

@@ -42,6 +42,7 @@ const Navbar = () => {
       await logout();
       closeMenu();
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error("Failed to log out:", error);
     }
   };

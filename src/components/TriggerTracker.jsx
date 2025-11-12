@@ -270,6 +270,7 @@ const TriggerTracker = () => {
       // eslint-disable-next-line no-console
       console.log("✅ Trigger logged successfully");
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error("Save error:", err);
       setSaveError(err.message);
     } finally {

@@ -133,6 +133,7 @@ const DashboardHeaderEnhanced = ({ userName = "Friend" }) => {
               }
             });
           } catch (error) {
+            // eslint-disable-next-line no-console
             console.log(`Could not load ${name}:`, error);
           }
         }
@@ -214,6 +215,7 @@ const DashboardHeaderEnhanced = ({ userName = "Friend" }) => {
         setWeeklyComparison(weeklyComp);
         setLoading(false);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error loading analytics:", error);
         // Set default data if Firebase fails
         setActivityData(generateDefaultActivity());

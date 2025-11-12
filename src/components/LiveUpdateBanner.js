@@ -15,6 +15,7 @@ const LiveUpdateBanner = () => {
   useEffect(() => {
     // Only set up Firestore listener if db is available
     if (!db) {
+      // eslint-disable-next-line no-console
       console.warn("Firestore not available - using default announcement");
       return;
     }
@@ -27,6 +28,7 @@ const LiveUpdateBanner = () => {
         }
       },
       (error) => {
+        // eslint-disable-next-line no-console
         console.error("Error fetching announcement:", error);
         // Fallback is already set in state
       }

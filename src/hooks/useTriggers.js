@@ -68,6 +68,7 @@ export const useTriggers = () => {
           setError(null);
         },
         (err) => {
+          // eslint-disable-next-line no-console
           console.error("Error fetching triggers:", err);
           setError(err.message);
           setLoading(false);
@@ -76,6 +77,7 @@ export const useTriggers = () => {
 
       return () => unsubscribe();
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error("Error setting up triggers listener:", err);
       setError(err.message);
       setLoading(false);
@@ -109,6 +111,7 @@ export const useTriggers = () => {
         const triggersRef = collection(db, "users", uid, "triggers");
         await addDoc(triggersRef, base);
       } catch (err) {
+        // eslint-disable-next-line no-console
         console.error("Error adding trigger:", err);
         throw err;
       }
@@ -129,6 +132,7 @@ export const useTriggers = () => {
           updatedAt: serverTimestamp(),
         });
       } catch (err) {
+        // eslint-disable-next-line no-console
         console.error("Error updating trigger:", err);
         throw err;
       }

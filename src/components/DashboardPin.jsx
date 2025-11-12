@@ -46,6 +46,7 @@ const DashboardPin = () => {
       setAffirmation(randomAffirmation);
       localStorage.setItem(localKey, randomAffirmation);
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error("Affirmation fetch error:", err);
       setAffirmation(fallbackAffirmations[0]);
     }

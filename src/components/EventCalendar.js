@@ -58,6 +58,7 @@ const EventCalendar = () => {
     const loadEvents = async () => {
       // Check if Firestore is available
       if (!db) {
+        // eslint-disable-next-line no-console
         console.warn(
           "Firestore not available - event calendar will show empty"
         );
@@ -119,6 +120,7 @@ const EventCalendar = () => {
 
         return unsubscribe;
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Error loading events:", error);
         setLoading(false);
       }

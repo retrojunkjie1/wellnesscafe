@@ -45,8 +45,10 @@ export const migrateAssistanceProgramsToFirestore = async () => {
       });
     }
     
+    // eslint-disable-next-line no-console
     console.log("✅ Migration complete: Assistance programs uploaded");
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("❌ Migration failed:", error);
   }
 };
@@ -68,8 +70,10 @@ export const migrateRecoveryCentersToFirestore = async () => {
       });
     }
     
+    // eslint-disable-next-line no-console
     console.log("✅ Migration complete: Recovery centers uploaded");
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("❌ Migration failed:", error);
   }
 };
@@ -91,8 +95,10 @@ export const migrateSoberLivingsToFirestore = async () => {
       });
     }
     
+    // eslint-disable-next-line no-console
     console.log("✅ Migration complete: Sober livings uploaded");
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("❌ Migration failed:");
   }
 };
@@ -113,8 +119,10 @@ export const migrateCrisisHotlinesToFirestore = async () => {
       });
     }
     
+    // eslint-disable-next-line no-console
     console.log("✅ Migration complete: Crisis hotlines uploaded");
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("❌ Migration failed:", error);
   }
 };
@@ -135,6 +143,7 @@ export const fetchAssistancePrograms = async () => {
     }));
     return programs;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error fetching programs:", error);
     return [];
   }
@@ -153,6 +162,7 @@ export const fetchProgramsByCategory = async (category) => {
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error fetching programs by category:", error);
     return [];
   }
@@ -171,6 +181,7 @@ export const fetchHighPriorityPrograms = async () => {
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error fetching high-priority programs:", error);
     return [];
   }
@@ -192,10 +203,12 @@ export const fetchProgramById = async (programId) => {
       
       return { ...docSnap.data(), id: docSnap.id };
     } else {
+      // eslint-disable-next-line no-console
       console.log("Program not found");
       return null;
     }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error fetching program:", error);
     return null;
   }
@@ -215,6 +228,7 @@ export const fetchRecoveryCentersByState = async (state) => {
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error fetching recovery centers:", error);
     return [];
   }
@@ -246,6 +260,7 @@ export const fetchSoberLivingsByFilters = async (filters) => {
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error fetching sober livings:", error);
     return [];
   }
@@ -273,9 +288,11 @@ export const addProgramToFavorites = async (userId, programId) => {
       favorites: (await getDoc(programRef)).data().favorites + 1
     });
     
+    // eslint-disable-next-line no-console
     console.log("✅ Program added to favorites");
     return true;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error adding to favorites:", error);
     return false;
   }
@@ -293,9 +310,11 @@ export const removeProgramFromFavorites = async (userId, programId) => {
       updatedAt: serverTimestamp()
     });
     
+    // eslint-disable-next-line no-console
     console.log("✅ Program removed from favorites");
     return true;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error removing from favorites:", error);
     return false;
   }
@@ -320,6 +339,7 @@ export const fetchUserFavorites = async (userId) => {
     
     return favorites.filter(program => program !== null);
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error fetching favorites:", error);
     return [];
   }
@@ -346,9 +366,11 @@ export const createApplication = async (userId, programId, applicationData) => {
       updatedAt: serverTimestamp()
     });
     
+    // eslint-disable-next-line no-console
     console.log("✅ Application created:", applicationRef.id);
     return applicationRef.id;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error creating application:", error);
     return null;
   }
@@ -380,9 +402,11 @@ export const updateApplicationStatus = async (applicationId, status, notes = "")
     
     await updateDoc(applicationRef, updates);
     
+    // eslint-disable-next-line no-console
     console.log("✅ Application status updated");
     return true;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error updating application:", error);
     return false;
   }
@@ -402,6 +426,7 @@ export const fetchUserApplications = async (userId) => {
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error fetching applications:", error);
     return [];
   }
@@ -422,6 +447,7 @@ export const trackProgramView = async (programId) => {
       lastViewed: serverTimestamp()
     });
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error tracking view:", error);
   }
 };
@@ -438,6 +464,7 @@ export const trackLinkClick = async (programId, linkType) => {
       timestamp: serverTimestamp()
     });
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error tracking link click:", error);
   }
 };
@@ -454,6 +481,7 @@ export const trackSearch = async (query, resultsCount) => {
       timestamp: serverTimestamp()
     });
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error tracking search:", error);
   }
 };
@@ -475,9 +503,11 @@ export const addNewProgram = async (programData) => {
       favorites: 0
     });
     
+    // eslint-disable-next-line no-console
     console.log("✅ Program added:", docRef.id);
     return docRef.id;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error adding program:", error);
     return null;
   }
@@ -494,9 +524,11 @@ export const updateProgram = async (programId, updates) => {
       updatedAt: serverTimestamp()
     });
     
+    // eslint-disable-next-line no-console
     console.log("✅ Program updated");
     return true;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error updating program:", error);
     return false;
   }
@@ -508,9 +540,11 @@ export const updateProgram = async (programId, updates) => {
 export const deleteProgram = async (programId) => {
   try {
     await deleteDoc(doc(db, "assistancePrograms", programId));
+    // eslint-disable-next-line no-console
     console.log("✅ Program deleted");
     return true;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("Error deleting program:", error);
     return false;
   }

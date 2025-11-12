@@ -23,6 +23,7 @@ const speak = (text, priority = false, selectedVoice = null) => {
     }
     window.speechSynthesis.speak(u);
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log("TTS not available:", e);
   }
 };
@@ -378,6 +379,7 @@ const BreathingTool = ({
           voiceEnabled,
         });
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error("Save failed:", e);
       } finally {
         setSaving(false);
