@@ -169,7 +169,7 @@
 .gratitude-input {
   width: 100%;
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(212, 180, 131, 0.2);
   border-radius: 8px;
   padding: 1rem;
   color: var(--wc-cream);
@@ -192,7 +192,11 @@
 /* Submit Button */
 .submit-btn {
   width: 100%;
-  background: linear-gradient(135deg, rgba(122, 90, 248, 0.8), rgba(177, 156, 255, 0.8));
+  background: linear-gradient(
+    135deg,
+    rgba(122, 90, 248, 0.8),
+    rgba(177, 156, 255, 0.8)
+  );
   color: white;
   border: none;
   border-radius: 8px;
@@ -337,18 +341,19 @@
   color: var(--wc-cream);
   line-height: 1.6;
   margin: 0;
-/* Upgrade Prompt */
-.upgrade-prompt {
-  background: linear-gradient(
-    135deg,
-    rgba(122, 90, 248, 0.2),
-    rgba(177, 156, 255, 0.1)
-  );
-  border: 2px solid rgba(122, 90, 248, 0.6);
-  border-radius: 12px;
+  /* Upgrade Prompt */
+  .upgrade-prompt {
+    background: linear-gradient(
+      135deg,
+      rgba(122, 90, 248, 0.2),
+      rgba(177, 156, 255, 0.1)
+    );
+    border: 2px solid rgba(122, 90, 248, 0.6);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
   padding: 2rem;
-  margin-bottom: 2rem;
-} padding: 2rem;
   margin-bottom: 2rem;
 }
 
