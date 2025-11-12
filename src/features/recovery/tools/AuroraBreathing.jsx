@@ -1,110 +1,162 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { PlayCircle, Sparkles, Pause } from 'lucide-react';
-import { collection, addDoc } from "firebase/firestore";
+// src/features/recovery/tools/AuroraBreathing.jsx
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { PlayCircle, PauseCircle, Volume2, VolumeX, Mic, MicOff, Sparkles } from "lucide-react";
 import { db } from "../../../firebase";
+import { addDoc, collection } from "firebase/firestore";
 
-/**
- * Aurora Breathing Experience
- * 
- * Luxury breathing session with:
- * - Animated aurora background (pulsing gradient)
- * - Floating particle system
- * - Smooth orb animation synced to breathing phases
- * - Pre/post mood tracking
- * - AI-style feedback modal
- * - Firestore integration
- */
+// ---- Config (edit to taste) ----
+const PATTERN = { inhale: 4000, hold: 7000, exhale: 8000, rest: 2000 }; // 4-7-8 breathing technique
+const SOUNDS = {
+  ocean: "/sounds/ocean.mp3",
+  forest: "/sounds/forest.mp3",
+  wind: "/sounds/wind.mp3"
+};
+
+const gradientForMood = (value) => {
+  if (value <= 3) { return "from-[#ff4e50] to-[#9f5fff]"; }
+  if (value <= 6) { return "from-[#7b61ff] to-[#44e0b7]"; }
+  return "from-[#00d4ff] to-[#50fa7b]";
+};
+
+const phaseOrder = ["inhale", "hold", "exhale", "rest"];
+
+const nextPhase = (p) => {
+  const i = phaseOrder.indexOf(p);
+  return phaseOrder[(i + 1) % phaseOrder.length];
+};
+
+const phaseDuration = (p) => PATTERN[p] || 4000;
+
+const speak = (text) => {
+  try {
+    const msg = new SpeechSynthesisUtterance(text);
+    const voices = window.speechSynthesis.getVoices();
+    if (voices && voices.length > 0) { msg.voice = voices.find((v) => /en/i.test(v.lang)) || voices[0]; }
+    msg.rate = 0.88;
+    msg.pitch = 1.0;
+    msg.volume = 1.0;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(msg);
+  } catch (_e) { }
+};
+
 const AuroraBreathing = () => {
   const [mood, setMood] = useState(5);
   const [phase, setPhase] = useState("ready");
-  const [isRunning, setIsRunning] = useState(false);
+  const [running, setRunning] = useState(false);
+  const [voiceOn, setVoiceOn] = useState(false);
+  const [soundOn, setSoundOn] = useState(true);
+  const [soundKey, setSoundKey] = useState("ocean");
   const [showSummary, setShowSummary] = useState(false);
-  const [timer, setTimer] = useState(0);
+  const [preMood, setPreMood] = useState(5);
   const [breathCount, setBreathCount] = useState(0);
   const [sessionDuration, setSessionDuration] = useState(0);
+  const startTsRef = useRef(null);
+  const timerRef = useRef(null);
+  const audioRef = useRef(null);
 
-  // Handle breathing cycle animation with 4-7-8 technique
+  // prepare audio element
   useEffect(() => {
-    if (!isRunning) return;
-    
-    const phases = [
-      { name: "inhale", duration: 4000 },
-      { name: "hold", duration: 7000 },
-      { name: "exhale", duration: 8000 },
-      { name: "rest", duration: 2000 }
-    ];
-    
-    let currentPhaseIndex = 0;
-    
-    const runPhase = () => {
-      const currentPhase = phases[currentPhaseIndex];
-      setPhase(currentPhase.name);
-      
-      // Increment breath count on exhale complete
-      if (currentPhase.name === "rest") {
-        setBreathCount(prev => prev + 1);
-      }
-      
-      currentPhaseIndex = (currentPhaseIndex + 1) % phases.length;
-      
-      return setTimeout(runPhase, currentPhase.duration);
+    const el = new Audio(SOUNDS[soundKey]);
+    el.loop = true;
+    el.preload = "auto";
+    audioRef.current = el;
+    return () => { try { el.pause(); } catch (_e) { } };
+  }, [soundKey]);
+
+  // control audio playback
+  useEffect(() => {
+    const el = audioRef.current;
+    if (!el) { return; }
+    const run = async () => {
+      try {
+        if (running && soundOn) { await el.play(); }
+        else { el.pause(); }
+      } catch (_e) { }
     };
-    
-    const timeout = runPhase();
-    return () => clearTimeout(timeout);
-  }, [isRunning]);
+    run();
+  }, [running, soundOn, soundKey]);
 
-  // Track session duration
+  // breathing cycle controller
   useEffect(() => {
-    if (!isRunning) return;
-    
+    if (!running) { return; }
+    if (phase === "ready") { setPhase("inhale"); return; }
+    if (voiceOn) {
+      if (phase === "inhale") { speak("Inhale slowly"); }
+      if (phase === "hold") { speak("Hold"); }
+      if (phase === "exhale") { speak("Exhale gently"); }
+      if (phase === "rest") { speak("Rest"); }
+    }
+    clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      setPhase((p) => {
+        const newPhase = nextPhase(p);
+        // Increment breath count when completing a full cycle (after rest phase)
+        if (p === "rest") {
+          setBreathCount((prev) => prev + 1);
+        }
+        return newPhase;
+      });
+    }, phaseDuration(phase));
+    return () => clearTimeout(timerRef.current);
+  }, [running, phase, voiceOn]);
+
+  // Session duration tracker
+  useEffect(() => {
+    if (!running) return;
     const interval = setInterval(() => {
-      setSessionDuration(prev => prev + 1);
+      setSessionDuration((prev) => prev + 1);
     }, 1000);
-    
     return () => clearInterval(interval);
-  }, [isRunning]);
+  }, [running]);
 
   const startSession = () => {
-    setIsRunning(true);
+    setPreMood(mood);
     setShowSummary(false);
-    setTimer(Date.now());
+    setPhase("ready");
     setBreathCount(0);
     setSessionDuration(0);
-    setPhase("inhale");
+    startTsRef.current = Date.now();
+    setRunning(true);
   };
 
   const endSession = async () => {
-    const duration = ((Date.now() - timer) / 1000 / 60).toFixed(1);
-    const postMood = mood + 2 > 10 ? 10 : mood + 2;
-    
+    setRunning(false);
+    setPhase("ready");
+    const mins = ((Date.now() - (startTsRef.current || Date.now())) / 60000);
+    const post = Math.min(10, preMood + 2); // simple uplift; replace with your AI calc later
     try {
-      await addDoc(collection(db, "breathingSessions"), {
-        sessionDate: new Date().toISOString(),
-        preMood: mood,
-        postMood: postMood,
-        duration: parseFloat(duration),
-        breathCount: breathCount,
-        technique: "4-7-8 Aurora",
-        createdAt: new Date(),
-      });
-    } catch (error) {
-      console.error("Error saving session:", error);
-    }
-    
-    setIsRunning(false);
+      if (db) {
+        await addDoc(collection(db, "breathingSessions"), {
+          sessionDate: new Date().toISOString(),
+          technique: "4-7-8 Aurora",
+          preMood,
+          postMood: post,
+          durationMins: Number(mins.toFixed(1)),
+          breathCount,
+          createdAt: new Date(),
+        });
+      }
+    } catch (_e) { }
     setShowSummary(true);
   };
+
+  const orbTargetScale = useMemo(() => {
+    if (!running) { return 1; }
+    if (phase === "inhale") { return 1.4; }
+    if (phase === "exhale") { return 0.82; }
+    return 1.0;
+  }, [running, phase]);
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
   const getPhaseColor = () => {
-    switch(phase) {
+    switch (phase) {
       case "inhale": return "#7b61ff";
       case "hold": return "#9d7fff";
       case "exhale": return "#44e0b7";
@@ -114,273 +166,217 @@ const AuroraBreathing = () => {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0e0e10] text-gray-100">
+    <div className="relative min-h-screen w-full overflow-hidden bg-[#0b0c10] text-gray-100">
+      {/* Mood-reactive aurora wash */}
+      <div className={`absolute inset-0 bg-gradient-to-br ${gradientForMood(mood)} opacity-20 transition-all duration-700`} />
       
-      {/* Animated Aurora Layer - Pulsing gradient background */}
-      <motion.div 
-        className="absolute inset-0"
-        animate={{
-          background: [
-            "radial-gradient(ellipse at top right, rgba(123, 97, 255, 0.2), transparent 50%), radial-gradient(ellipse at bottom left, rgba(68, 224, 183, 0.2), transparent 50%)",
-            "radial-gradient(ellipse at top left, rgba(123, 97, 255, 0.25), transparent 55%), radial-gradient(ellipse at bottom right, rgba(68, 224, 183, 0.25), transparent 55%)",
-            "radial-gradient(ellipse at top right, rgba(123, 97, 255, 0.2), transparent 50%), radial-gradient(ellipse at bottom left, rgba(68, 224, 183, 0.2), transparent 50%)",
-          ]
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      />
+      {/* Soft radial lights */}
+      <div className="pointer-events-none absolute inset-0 mix-blend-screen">
+        <div className="absolute -top-20 -right-24 h-96 w-96 rounded-full blur-3xl bg-[#7b61ff33]" />
+        <div className="absolute -bottom-24 -left-20 h-[30rem] w-[30rem] rounded-full blur-3xl bg-[#44e0b733]" />
+      </div>
       
-      {/* Floating Particles - Energy field simulation */}
+      {/* Particles */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(20)].map((_, i) => (
-          <motion.div 
+        {[...Array(22)].map((_, i) => (
+          <motion.span
             key={i}
-            className="absolute w-1.5 h-1.5 bg-white/10 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            initial={{ opacity: 0, scale: 0 }}
+            className="absolute h-1.5 w-1.5 rounded-full bg-white/12"
+            initial={{ opacity: 0, y: Math.random() * 800, x: Math.random() * 1200 }}
             animate={{
-              opacity: [0, 0.6, 0],
-              y: [-100, -800],
-              x: [0, (Math.random() - 0.5) * 400],
-              scale: [0, 1.5, 0],
+              opacity: [0, 0.8, 0],
+              y: [Math.random() * 800, -200],
+              x: [Math.random() * 1200, Math.random() * 1200 + 200]
             }}
-            transition={{
-              duration: 15 + Math.random() * 10,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: Math.random() * 10,
-            }}
+            transition={{ duration: 14 + Math.random() * 18, repeat: Infinity, ease: "easeInOut" }}
           />
         ))}
       </div>
 
-      {/* Main Content */}
-      <div className="relative z-10 w-full max-w-xl mx-auto px-6 space-y-10 text-center">
-
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+      {/* Controls top-right */}
+      <div className="absolute right-6 top-6 z-20 flex items-center gap-2">
+        <button
+          onClick={() => setSoundOn((v) => !v)}
+          className="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 transition"
+          title={soundOn ? "Mute ambient sound" : "Enable ambient sound"}
         >
-          <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-[#7b61ff] via-[#9d7fff] to-[#44e0b7] bg-clip-text text-transparent">
-            Aurora Breathing
-          </h1>
-          <p className="text-gray-400 text-sm">4-7-8 Technique • Luxury Experience</p>
-        </motion.div>
+          {soundOn ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
+        </button>
+        <button
+          onClick={() => setVoiceOn((v) => !v)}
+          className="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 transition"
+          title={voiceOn ? "Disable voice guidance" : "Enable voice guidance"}
+        >
+          {voiceOn ? <Mic className="w-5 h-5" /> : <MicOff className="w-5 h-5" />}
+        </button>
+        <select
+          value={soundKey}
+          onChange={(e) => setSoundKey(e.target.value)}
+          className="px-3 py-2 rounded-full bg-white/10 text-sm outline-none hover:bg-white/15 transition cursor-pointer"
+        >
+          <option value="ocean">Ocean Calm</option>
+          <option value="forest">Forest Pulse</option>
+          <option value="wind">Mountain Air</option>
+        </select>
+      </div>
 
-        {/* Mood Input */}
-        {!isRunning && !showSummary && (
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="bg-white/5 backdrop-blur-lg rounded-2xl p-6 border border-white/10 shadow-2xl"
-          >
-            <p className="text-sm text-gray-400 mb-3">How are you feeling right now? (1–10)</p>
-            <div className="flex items-center gap-4">
-              <input 
-                type="range"
-                min="1"
-                max="10"
-                value={mood}
-                onChange={(e) => setMood(parseInt(e.target.value))}
-                className="w-full h-2 bg-gray-700/50 rounded-lg appearance-none cursor-pointer accent-[#7b61ff]"
-                style={{
-                  background: `linear-gradient(to right, #7b61ff 0%, #7b61ff ${(mood - 1) * 11.11}%, rgba(255,255,255,0.1) ${(mood - 1) * 11.11}%, rgba(255,255,255,0.1) 100%)`
+      {/* Main card */}
+      <div className="relative z-10 mx-auto flex min-h-screen max-w-3xl flex-col items-center justify-center px-6">
+        {/* Mood slider */}
+        <div className="w-full rounded-2xl bg-white/6 p-6 backdrop-blur-lg shadow-lg">
+          <p className="text-sm text-gray-300">How are you feeling right now? (1–10)</p>
+          <div className="mt-3 flex items-center gap-3">
+            <input
+              type="range"
+              min="1"
+              max="10"
+              value={mood}
+              onChange={(e) => setMood(parseInt(e.target.value))}
+              className="w-full accent-[#7b61ff]"
+              disabled={running}
+            />
+            <span className="text-xl font-bold text-[#7b61ff]">{mood}</span>
+          </div>
+        </div>
+
+        {/* Orb */}
+        <div className="mt-8 w-full rounded-2xl bg-white/6 p-10 backdrop-blur-xl shadow-xl">
+          {/* Session stats */}
+          {running && (
+            <div className="flex justify-between items-center mb-6 text-sm text-gray-300">
+              <div className="flex items-center gap-2">
+                <span className="text-[#7b61ff]">⏱</span>
+                <span>{formatTime(sessionDuration)}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-[#44e0b7]">🌊</span>
+                <span>{breathCount} breaths</span>
+              </div>
+            </div>
+          )}
+
+          <div className="relative mx-auto flex h-[320px] w-full items-center justify-center">
+            <AnimatePresence>
+              <motion.div
+                key={phase}
+                animate={{
+                  scale: orbTargetScale,
+                  boxShadow: `0 0 140px ${phase === "inhale" ? "#7b61ff66" : phase === "exhale" ? "#44e0b766" : "#ffffff22"}`
+                }}
+                transition={{
+                  duration: running ? (phase === "hold" ? 0.6 : 1.4) : 0.5,
+                  ease: "easeInOut"
+                }}
+                className="flex h-56 w-56 items-center justify-center rounded-full bg-gradient-to-br from-[#7b61ff] to-[#44e0b7] shadow-[0_0_40px_rgba(68,224,183,0.55)]"
+              >
+                <span className="select-none text-2xl font-semibold tracking-wide drop-shadow">
+                  {(running ? phase : "READY").toUpperCase()}
+                </span>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Outer ring pulse */}
+            {running && (
+              <motion.div
+                className="absolute inset-0 rounded-full border-2"
+                style={{ borderColor: getPhaseColor() }}
+                animate={{
+                  scale: [1, 1.15, 1],
+                  opacity: [0.3, 0.6, 0.3],
+                }}
+                transition={{
+                  duration: phaseDuration(phase) / 1000,
+                  ease: "easeInOut",
+                  repeat: Infinity,
                 }}
               />
-              <span className="text-2xl font-bold text-[#7b61ff] min-w-[3rem] text-center">
-                {mood}
-              </span>
-            </div>
-          </motion.div>
-        )}
+            )}
+          </div>
 
-        {/* Session Timer */}
-        {isRunning && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="flex justify-center gap-6 text-sm text-gray-400"
-          >
-            <div className="bg-white/5 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
-              ⏱ {formatTime(sessionDuration)}
-            </div>
-            <div className="bg-white/5 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
-              🌊 {breathCount} breaths
-            </div>
-          </motion.div>
-        )}
-
-        {/* Breathing Orb - The centerpiece */}
-        <div className="relative h-72 flex items-center justify-center">
-          <AnimatePresence mode="wait">
-            <motion.div
+          {/* Phase instruction */}
+          {running && (
+            <motion.p
               key={phase}
-              animate={{
-                scale: phase === "inhale" ? 1.5 : phase === "exhale" ? 0.7 : phase === "hold" ? 1.5 : 1,
-                opacity: 1,
-              }}
-              transition={{ 
-                duration: phase === "inhale" ? 4 : phase === "hold" ? 7 : phase === "exhale" ? 8 : 2, 
-                ease: "easeInOut" 
-              }}
-              className="absolute h-56 w-56 rounded-full flex items-center justify-center 
-                bg-gradient-to-br from-[#7b61ff] via-[#9d7fff] to-[#44e0b7]"
-              style={{
-                boxShadow: `0 0 120px ${getPhaseColor()}66, 0 0 60px ${getPhaseColor()}33`,
-              }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-4 text-center text-sm text-gray-400 italic"
             >
-              <motion.span 
-                className="text-2xl font-semibold tracking-wider drop-shadow-lg uppercase"
-                animate={{ opacity: [0.7, 1, 0.7] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                {phase === "ready" ? "READY" : phase.toUpperCase()}
-              </motion.span>
-            </motion.div>
-          </AnimatePresence>
+              {phase === "inhale" && "Breathe in slowly through your nose..."}
+              {phase === "hold" && "Hold your breath gently..."}
+              {phase === "exhale" && "Exhale slowly through your mouth..."}
+              {phase === "rest" && "Rest and prepare for the next breath..."}
+            </motion.p>
+          )}
 
-          {/* Outer ring pulse */}
-          {isRunning && (
-            <motion.div
-              className="absolute h-64 w-64 rounded-full border-2 border-white/20"
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.3, 0, 0.3],
-              }}
-              transition={{
-                duration: phase === "inhale" ? 4 : phase === "hold" ? 7 : phase === "exhale" ? 8 : 2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            />
+          {/* CTA */}
+          <div className="mt-6 flex items-center justify-center gap-3">
+            {!running ? (
+              <button
+                onClick={() => startSession()}
+                className="flex items-center gap-2 rounded-full bg-gradient-to-r from-[#7b61ff] to-[#44e0b7] px-8 py-4 font-semibold shadow-lg transition-transform hover:scale-105"
+              >
+                <PlayCircle className="h-6 w-6" /> START SESSION
+              </button>
+            ) : (
+              <button
+                onClick={() => endSession()}
+                className="flex items-center gap-2 rounded-full bg-white/10 px-8 py-4 font-semibold text-gray-100 shadow-lg transition-colors hover:bg-white/20"
+              >
+                <PauseCircle className="h-6 w-6" /> END SESSION
+              </button>
+            )}
+          </div>
+          
+          {!running && (
+            <p className="mt-3 text-center text-sm text-gray-400 italic">
+              Breathe with the orb. Inhale • Hold • Exhale • Rest.
+            </p>
           )}
         </div>
 
-        {/* Instruction Text */}
-        {isRunning && (
-          <motion.p
-            key={phase}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="text-gray-400 text-sm"
-          >
-            {phase === "inhale" && "Breathe in slowly through your nose..."}
-            {phase === "hold" && "Hold your breath gently..."}
-            {phase === "exhale" && "Exhale slowly through your mouth..."}
-            {phase === "rest" && "Rest and prepare for the next breath..."}
-          </motion.p>
-        )}
-
-        {/* Control Buttons */}
-        {!isRunning && !showSummary && (
-          <motion.button 
+        {/* Summary */}
+        {showSummary && (
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            onClick={startSession}
-            className="flex items-center justify-center gap-3 mx-auto px-10 py-4 
-              bg-gradient-to-r from-[#7b61ff] to-[#44e0b7] rounded-full 
-              shadow-[0_0_40px_rgba(123,97,255,0.4)] text-lg font-semibold 
-              hover:scale-105 hover:shadow-[0_0_60px_rgba(123,97,255,0.6)] 
-              transition-all duration-300"
+            className="mt-8 w-full rounded-2xl bg-white/10 p-8 backdrop-blur-xl shadow-xl"
           >
-            <PlayCircle className="w-6 h-6" /> START SESSION
-          </motion.button>
-        )}
-
-        {isRunning && (
-          <motion.button 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            onClick={endSession}
-            className="mx-auto px-8 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md
-              rounded-full transition-all duration-300 text-sm text-gray-300
-              border border-white/10 flex items-center gap-2 justify-center"
-          >
-            <Pause className="w-4 h-4" /> END SESSION
-          </motion.button>
-        )}
-
-        {/* Summary Modal - AI Feedback */}
-        <AnimatePresence>
-          {showSummary && (
-            <motion.div 
-              initial={{ opacity: 0, y: 20, scale: 0.95 }} 
-              animate={{ opacity: 1, y: 0, scale: 1 }} 
-              exit={{ opacity: 0, y: -20, scale: 0.95 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl 
-                rounded-3xl p-8 border border-white/20 shadow-2xl text-left space-y-5"
-            >
-              <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r 
-                from-[#7b61ff] to-[#44e0b7] flex items-center gap-3">
-                <Sparkles className="w-7 h-7 text-[#7b61ff]" /> 
-                Session Complete
-              </h2>
-              
-              <div className="space-y-3">
-                <div className="flex items-center justify-between py-3 border-b border-white/10">
-                  <span className="text-gray-400">Duration</span>
-                  <span className="text-white font-semibold">{formatTime(sessionDuration)}</span>
-                </div>
-                
-                <div className="flex items-center justify-between py-3 border-b border-white/10">
-                  <span className="text-gray-400">Breaths Completed</span>
-                  <span className="text-white font-semibold">{breathCount} cycles</span>
-                </div>
-                
-                <div className="flex items-center justify-between py-3 border-b border-white/10">
-                  <span className="text-gray-400">Calm Score</span>
-                  <span className="text-white font-semibold">
-                    {mood} → {mood + 2 > 10 ? 10 : mood + 2}
-                    <span className="text-[#44e0b7] ml-2">↑ +{mood + 2 > 10 ? 10 - mood : 2}</span>
-                  </span>
-                </div>
-              </div>
-
-              <div className="bg-[#7b61ff]/10 border border-[#7b61ff]/30 rounded-2xl p-5 mt-6">
-                <p className="text-[#44e0b7] font-semibold mb-2 flex items-center gap-2">
-                  <Sparkles className="w-4 h-4" /> AI Insight
-                </p>
-                <p className="text-gray-300 text-sm leading-relaxed">
-                  Your heart-mind rhythm shows <em className="text-[#7b61ff]">restorative alignment</em>. 
-                  The {breathCount} breath cycles activated your parasympathetic nervous system, 
-                  promoting deep calm. Continue consistent breathing for 5-7 minutes daily 
-                  to reinforce neural pathways of peace and clarity.
-                </p>
-              </div>
-              
-              <button 
+            <h3 className="mb-2 flex items-center gap-2 text-2xl font-semibold text-[#7b61ff]">
+              <Sparkles className="h-5 w-5" /> Session Summary
+            </h3>
+            <div className="space-y-2 text-gray-200">
+              <p>
+                <strong>Duration:</strong> {formatTime(sessionDuration)}
+              </p>
+              <p>
+                <strong>Breaths:</strong> {breathCount} cycles
+              </p>
+              <p>
+                Calm Score improved from <strong>{preMood}</strong> → <strong>{Math.min(10, preMood + 2)}</strong>
+                {preMood < 10 && <span className="text-[#44e0b7]"> ↑+2</span>}
+              </p>
+            </div>
+            <div className="mt-4 p-4 rounded-lg bg-white/5 border border-white/10">
+              <p className="text-sm text-gray-300 flex items-start gap-2">
+                <span className="text-[#7b61ff]">��</span>
+                <span>
+                  <strong>AI Insight:</strong> Your heart-mind rhythm shows restorative alignment. 
+                  The {breathCount} breath cycles activated your parasympathetic system. 
+                  Try 3–5 rounds daily and add a short gratitude reflection after breathing 
+                  for enhanced emotional resilience.
+                </span>
+              </p>
+            </div>
+            <div className="mt-6">
+              <button
                 onClick={() => setShowSummary(false)}
-                className="w-full mt-6 px-6 py-3 bg-gradient-to-r from-[#7b61ff] to-[#44e0b7] 
-                  rounded-full font-semibold text-white hover:scale-105 
-                  transition-transform duration-300 shadow-[0_0_30px_rgba(123,97,255,0.4)]"
+                className="rounded-full bg-gradient-to-r from-[#7b61ff] to-[#44e0b7] px-6 py-2 font-semibold transition-transform hover:scale-105"
               >
                 CONTINUE JOURNEY
               </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Footer tagline */}
-        <motion.p 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-          className="text-gray-500 text-sm italic"
-        >
-          Feel the flow. Let energy and calm harmonize ✨
-        </motion.p>
+            </div>
+          </motion.div>
+        )}
       </div>
     </div>
   );
