@@ -11,18 +11,21 @@
 ### Major Enhancements
 
 1. **🎵 Ambient Audio System**
+
    - Three soundscapes: Ocean Calm, Forest Pulse, Mountain Air
    - Looping playback synced to session
    - Real-time switching via dropdown
    - Toggle on/off with sound button
 
 2. **🎤 Voice Guidance**
+
    - Web Speech API integration
    - Phase-specific instructions: "Inhale slowly", "Hold", "Exhale gently", "Rest"
    - Toggle on/off with microphone button
    - Adjustable rate (0.88x for calm delivery)
 
 3. **🎨 Mood-Reactive Background**
+
    - Dynamic gradient based on mood slider (1-10)
    - Low mood (1-3): Warm red-purple gradient
    - Mid mood (4-6): Purple-teal (default)
@@ -30,17 +33,20 @@
    - Smooth 700ms transitions
 
 4. **🎛️ Top-Right Control Panel**
+
    - Sound toggle (Volume2/VolumeX icons)
    - Voice toggle (Mic/MicOff icons)
    - Sound selector dropdown (Ocean/Forest/Wind)
    - Glassmorphism design with hover states
 
 5. **💫 Enhanced Particle System**
+
    - Increased from 20 to 22 particles
    - More dynamic animation timings (14-32s range)
    - Improved drift patterns
 
 6. **⏱️ Session Stats Display**
+
    - Real-time timer (MM:SS format)
    - Breath counter with emoji indicators
    - Visible during active session only
@@ -58,14 +64,15 @@
 
 ```javascript
 const PATTERN = {
-  inhale: 4000,  // 4 seconds
-  hold: 7000,    // 7 seconds
-  exhale: 8000,  // 8 seconds
-  rest: 2000     // 2 seconds
+  inhale: 4000, // 4 seconds
+  hold: 7000, // 7 seconds
+  exhale: 8000, // 8 seconds
+  rest: 2000, // 2 seconds
 };
 ```
 
 **Variations you can try:**
+
 - **Box Breathing:** `{ inhale: 4000, hold: 4000, exhale: 4000, rest: 4000 }`
 - **4-4-6:** `{ inhale: 4000, hold: 4000, exhale: 6000, rest: 0 }`
 - **Calming 5-5-5:** `{ inhale: 5000, hold: 5000, exhale: 5000, rest: 0 }`
@@ -77,11 +84,12 @@ const PATTERN = {
 const SOUNDS = {
   ocean: "/sounds/ocean.mp3",
   forest: "/sounds/forest.mp3",
-  wind: "/sounds/wind.mp3"
+  wind: "/sounds/wind.mp3",
 };
 ```
 
 **To add more sounds:**
+
 1. Add MP3 file to `public/sounds/`
 2. Add entry to `SOUNDS` object
 3. Add `<option>` to select dropdown
@@ -90,8 +98,12 @@ const SOUNDS = {
 
 ```javascript
 const gradientForMood = (value) => {
-  if (value <= 3) { return "from-[#ff4e50] to-[#9f5fff]"; } // Stressed
-  if (value <= 6) { return "from-[#7b61ff] to-[#44e0b7]"; } // Neutral
+  if (value <= 3) {
+    return "from-[#ff4e50] to-[#9f5fff]";
+  } // Stressed
+  if (value <= 6) {
+    return "from-[#7b61ff] to-[#44e0b7]";
+  } // Neutral
   return "from-[#00d4ff] to-[#50fa7b]"; // Calm
 };
 ```
@@ -103,6 +115,7 @@ const gradientForMood = (value) => {
 ### Voice Guidance System
 
 **How it works:**
+
 - Uses Web Speech Synthesis API (built into browsers)
 - Detects English voice from system voices
 - Speaks at 0.88x rate for calming effect
@@ -110,12 +123,14 @@ const gradientForMood = (value) => {
 - Speaks at start of each phase
 
 **Phase Prompts:**
+
 - Inhale: "Inhale slowly"
 - Hold: "Hold"
 - Exhale: "Exhale gently"
 - Rest: "Rest"
 
 **Browser Support:**
+
 - ✅ Chrome/Edge (excellent)
 - ✅ Safari (good, iOS requires user interaction)
 - ✅ Firefox (good)
@@ -124,17 +139,23 @@ const gradientForMood = (value) => {
 ### Ambient Audio System
 
 **Implementation:**
+
 ```javascript
 useEffect(() => {
   const el = new Audio(SOUNDS[soundKey]);
   el.loop = true;
   el.preload = "auto";
   audioRef.current = el;
-  return () => { try { el.pause(); } catch (_e) { } };
+  return () => {
+    try {
+      el.pause();
+    } catch (_e) {}
+  };
 }, [soundKey]);
 ```
 
 **Features:**
+
 - Pre-loads audio on mount
 - Loops automatically
 - Switches smoothly between sounds
@@ -142,6 +163,7 @@ useEffect(() => {
 - Cleanup on unmount
 
 **Autoplay Policy:**
+
 - Audio starts when user clicks START SESSION (user gesture)
 - Complies with browser autoplay restrictions
 - No permission prompt needed
@@ -149,17 +171,21 @@ useEffect(() => {
 ### Mood-Reactive Gradient
 
 **Effect:**
+
 - Affects entire background overlay
 - 20% opacity to remain subtle
 - 700ms transition for smooth mood changes
 - Works even during active session (mood slider disabled when running)
 
 **Mood Scale:**
+
 1. **Very Low (1-3):** Warm red-purple (#ff4e50 → #9f5fff)
+
    - Energizing, grounding colors
    - For when feeling down or anxious
 
 2. **Moderate (4-6):** Purple-teal (#7b61ff → #44e0b7)
+
    - Default WellnessCafe palette
    - Balanced, neutral energy
 
@@ -172,12 +198,15 @@ useEffect(() => {
 **Location:** Top-right corner (z-20 layer)
 
 **Buttons:**
+
 1. **Sound Toggle**
+
    - On: Volume2 icon
    - Off: VolumeX icon
    - Mutes/unmutes ambient audio
 
 2. **Voice Toggle**
+
    - On: Mic icon
    - Off: MicOff icon
    - Enables/disables speech guidance
@@ -188,6 +217,7 @@ useEffect(() => {
    - Smooth transition (old audio pauses, new starts)
 
 **Styling:**
+
 - Glassmorphism: `bg-white/10`
 - Hover: `bg-white/20`
 - Rounded-full buttons
@@ -217,6 +247,7 @@ useEffect(() => {
 ```
 
 **User Actions:**
+
 - Adjust mood slider (1-10)
 - Toggle voice guidance (default: OFF)
 - Toggle ambient sound (default: ON)
@@ -244,6 +275,7 @@ useEffect(() => {
 ```
 
 **Active Elements:**
+
 - 🎵 Ocean/Forest/Wind audio playing (if enabled)
 - 🗣️ Voice saying "Inhale slowly" (if enabled)
 - ⏱ Timer counting up
@@ -278,6 +310,7 @@ useEffect(() => {
 ```
 
 **Data Saved to Firestore:**
+
 ```javascript
 {
   sessionDate: "2025-11-11T14:30:00.000Z",
@@ -297,13 +330,23 @@ useEffect(() => {
 ### New Imports
 
 ```javascript
-import { PlayCircle, PauseCircle, Volume2, VolumeX, Mic, MicOff, Sparkles } from "lucide-react";
+import {
+  PlayCircle,
+  PauseCircle,
+  Volume2,
+  VolumeX,
+  Mic,
+  MicOff,
+  Sparkles,
+} from "lucide-react";
 ```
 
 **Removed:**
+
 - `Pause` (replaced with `PauseCircle` for consistency)
 
 **Added:**
+
 - `PauseCircle` - Better visual match with `PlayCircle`
 - `Volume2`, `VolumeX` - Sound toggle icons
 - `Mic`, `MicOff` - Voice toggle icons
@@ -320,6 +363,7 @@ const audioRef = useRef(null);
 ```
 
 **Changed:**
+
 - `isRunning` → `running` (cleaner naming)
 - `timer` → `startTsRef` (more accurate - stores timestamp)
 - Added refs for audio element and timers
@@ -327,16 +371,25 @@ const audioRef = useRef(null);
 ### New Helper Functions
 
 ```javascript
-const speak = (text) => { /* Web Speech API */ };
-const gradientForMood = (value) => { /* Returns gradient class */ };
+const speak = (text) => {
+  /* Web Speech API */
+};
+const gradientForMood = (value) => {
+  /* Returns gradient class */
+};
 const phaseOrder = ["inhale", "hold", "exhale", "rest"];
-const nextPhase = (p) => { /* Cycles through phases */ };
-const phaseDuration = (p) => { /* Returns phase duration */ };
+const nextPhase = (p) => {
+  /* Cycles through phases */
+};
+const phaseDuration = (p) => {
+  /* Returns phase duration */
+};
 ```
 
 ### Breathing Cycle Refactor
 
 **Before (v1.0):**
+
 ```javascript
 const phases = [
   { name: "inhale", duration: 4000 },
@@ -345,34 +398,47 @@ const phases = [
   { name: "rest", duration: 2000 },
 ];
 let currentPhaseIndex = 0;
-const runPhase = () => { /* ... */ };
+const runPhase = () => {
+  /* ... */
+};
 ```
 
 **After (v2.0):**
+
 ```javascript
 useEffect(() => {
-  if (!running) { return; }
-  if (phase === "ready") { setPhase("inhale"); return; }
-  
+  if (!running) {
+    return;
+  }
+  if (phase === "ready") {
+    setPhase("inhale");
+    return;
+  }
+
   if (voiceOn) {
-    if (phase === "inhale") { speak("Inhale slowly"); }
+    if (phase === "inhale") {
+      speak("Inhale slowly");
+    }
     // ... other phases
   }
-  
+
   clearTimeout(timerRef.current);
   timerRef.current = setTimeout(() => {
     setPhase((p) => {
       const newPhase = nextPhase(p);
-      if (p === "rest") { setBreathCount((prev) => prev + 1); }
+      if (p === "rest") {
+        setBreathCount((prev) => prev + 1);
+      }
       return newPhase;
     });
   }, phaseDuration(phase));
-  
+
   return () => clearTimeout(timerRef.current);
 }, [running, phase, voiceOn]);
 ```
 
 **Improvements:**
+
 - Cleaner logic with helper functions
 - Voice guidance integrated directly
 - Proper cleanup with refs
@@ -412,16 +478,16 @@ useEffect(() => {
 
 ## Browser Compatibility
 
-| Feature | Chrome | Safari | Firefox | Edge |
-|---------|--------|--------|---------|------|
-| Aurora Background | ✅ | ✅ | ✅ | ✅ |
-| Particles | ✅ | ✅ | ✅ | ✅ |
-| Orb Animation | ✅ | ✅ | ✅ | ✅ |
-| Ambient Audio | ✅ | ✅* | ✅ | ✅ |
-| Voice Guidance | ✅ | ✅* | ✅ | ✅ |
-| Firestore | ✅ | ✅ | ✅ | ✅ |
+| Feature           | Chrome | Safari | Firefox | Edge |
+| ----------------- | ------ | ------ | ------- | ---- |
+| Aurora Background | ✅     | ✅     | ✅      | ✅   |
+| Particles         | ✅     | ✅     | ✅      | ✅   |
+| Orb Animation     | ✅     | ✅     | ✅      | ✅   |
+| Ambient Audio     | ✅     | ✅\*   | ✅      | ✅   |
+| Voice Guidance    | ✅     | ✅\*   | ✅      | ✅   |
+| Firestore         | ✅     | ✅     | ✅      | ✅   |
 
-*Safari requires user interaction before audio/speech (START SESSION button counts)
+\*Safari requires user interaction before audio/speech (START SESSION button counts)
 
 ---
 
@@ -431,6 +497,7 @@ useEffect(() => {
 
 **Current:** Fixed +2 mood improvement
 **Future:** Calculate based on:
+
 - Session duration
 - Breath count
 - Pre-mood baseline
@@ -438,6 +505,7 @@ useEffect(() => {
 - Historical data
 
 **Implementation:**
+
 ```javascript
 const calculateMoodImprovement = (preMood, duration, breathCount) => {
   let improvement = 1; // Base improvement
@@ -487,6 +555,7 @@ npm install framer-motion lucide-react
 ### 2. Audio Files (Required)
 
 Add these files to `public/sounds/`:
+
 - `ocean.mp3` - Ocean waves ambient sound
 - `forest.mp3` - Forest ambience with birds
 - `wind.mp3` - Mountain wind sounds
@@ -501,7 +570,9 @@ Ensure `src/firebase.js` exports `db`:
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
-const firebaseConfig = { /* your config */ };
+const firebaseConfig = {
+  /* your config */
+};
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 ```
@@ -512,7 +583,7 @@ export const db = getFirestore(app);
 // src/App.js
 import AuroraBreathing from "./features/recovery/tools/AuroraBreathing";
 
-<Route path="/tools/aurora-breathing" element={<AuroraBreathing />} />
+<Route path="/tools/aurora-breathing" element={<AuroraBreathing />} />;
 ```
 
 ---
@@ -560,6 +631,7 @@ import AuroraBreathing from "./features/recovery/tools/AuroraBreathing";
 ```
 
 **Indexes:** (Create in Firebase Console if querying)
+
 - `sessionDate` (descending)
 - `preMood` (ascending/descending)
 - `breathCount` (descending)
@@ -569,16 +641,19 @@ import AuroraBreathing from "./features/recovery/tools/AuroraBreathing";
 ## Success Metrics
 
 **User Engagement:**
+
 - Average session length: 5+ minutes ✅ (v1.0: 3.5 min)
 - Completion rate: 80%+ ✅ (v1.0: 75%)
 - Repeat usage: 3+ sessions/week
 
 **Wellness Impact:**
+
 - Mood improvement: Average +2 points ✅
 - Stress reduction: 70%+ report calm
 - Satisfaction: 4.5+/5 rating
 
 **Technical Performance:**
+
 - Load time: <2s ✅
 - Animation FPS: 60 ✅
 - Memory usage: <50 MB ✅
@@ -589,6 +664,7 @@ import AuroraBreathing from "./features/recovery/tools/AuroraBreathing";
 ## Changelog
 
 ### v2.0 (November 11, 2025)
+
 - ✨ Added ambient audio system (3 soundscapes)
 - ✨ Added voice guidance (Web Speech API)
 - ✨ Added mood-reactive background gradients
@@ -604,6 +680,7 @@ import AuroraBreathing from "./features/recovery/tools/AuroraBreathing";
 - 📝 Complete documentation rewrite
 
 ### v1.0 (November 11, 2025)
+
 - 🎉 Initial Aurora Breathing Experience
 - 🌅 Animated aurora background
 - ✨ 20 floating particles
@@ -618,11 +695,13 @@ import AuroraBreathing from "./features/recovery/tools/AuroraBreathing";
 ## Credits
 
 **Design Inspiration:**
+
 - Apple Mindfulness app (smoothness)
 - Tesla UI (minimalism)
 - Ikuku Design (elemental calm)
 
 **Built With:**
+
 - React 18.3.1
 - Framer Motion 12.23.24
 - Lucide Icons 0.552.0
@@ -650,9 +729,10 @@ import AuroraBreathing from "./features/recovery/tools/AuroraBreathing";
 ✅ **Tesla Minimalism** - Clean UI, essential features only  
 ✅ **Ikuku Calm** - Elemental design, nature sounds, gentle voice  
 ✅ **Production Ready** - Optimized, tested, documented  
-✅ **User Delight** - Mood-reactive, multi-sensory, personalized  
+✅ **User Delight** - Mood-reactive, multi-sensory, personalized
 
 **Next Steps:**
+
 1. Add audio files to `public/sounds/` (see guide)
 2. Build and deploy (see below)
 3. Share with users

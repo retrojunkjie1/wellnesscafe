@@ -19,12 +19,14 @@ This is the **WellnessCafe Luxury Standard** - what users experience when they e
 ### 🎨 Visual Experience
 
 1. **Animated Aurora Background**
+
    - Dual pulsing gradients (purple #7b61ff + teal #44e0b7)
    - 8-second animation cycle
    - Smooth transitions between ellipses
    - Creates living, breathing environment
 
 2. **Floating Particle System**
+
    - 20 particles simulating energy fields
    - Independent animation timings (15-25s each)
    - Opacity fade in/out
@@ -32,6 +34,7 @@ This is the **WellnessCafe Luxury Standard** - what users experience when they e
    - Creates sense of air and calm energy
 
 3. **Breathing Orb Animation**
+
    - Center stage element (224px × 224px)
    - Scales based on breathing phase:
      - Inhale: 1.5x (expansion)
@@ -55,14 +58,16 @@ This is the **WellnessCafe Luxury Standard** - what users experience when they e
 ## 4-7-8 Breathing Technique
 
 **The Pattern:**
+
 - Inhale: 4 seconds
-- Hold: 7 seconds  
+- Hold: 7 seconds
 - Exhale: 8 seconds
 - Rest: 2 seconds
 
 **Total cycle:** 21 seconds per breath
 
 **Benefits:**
+
 - Activates parasympathetic nervous system
 - Reduces anxiety and stress
 - Improves sleep quality
@@ -94,6 +99,7 @@ This is the **WellnessCafe Luxury Standard** - what users experience when they e
 ```
 
 **Elements:**
+
 - Mood slider (1-10) with gradient fill
 - Static READY orb with gentle glow
 - Luxury gradient button
@@ -118,6 +124,7 @@ This is the **WellnessCafe Luxury Standard** - what users experience when they e
 ```
 
 **Elements:**
+
 - Timer display (MM:SS)
 - Breath counter
 - Animated orb (expanding/contracting)
@@ -147,6 +154,7 @@ This is the **WellnessCafe Luxury Standard** - what users experience when they e
 ```
 
 **Elements:**
+
 - Session metrics (duration, breaths, mood improvement)
 - AI-generated insight
 - Gradient CTA button
@@ -159,11 +167,11 @@ This is the **WellnessCafe Luxury Standard** - what users experience when they e
 ### State Management
 
 ```javascript
-const [mood, setMood] = useState(5);              // Pre-session mood (1-10)
-const [phase, setPhase] = useState("ready");      // Current breathing phase
+const [mood, setMood] = useState(5); // Pre-session mood (1-10)
+const [phase, setPhase] = useState("ready"); // Current breathing phase
 const [isRunning, setIsRunning] = useState(false); // Session active?
 const [showSummary, setShowSummary] = useState(false); // Show results?
-const [timer, setTimer] = useState(0);             // Session start time
+const [timer, setTimer] = useState(0); // Session start time
 const [breathCount, setBreathCount] = useState(0); // Completed breaths
 const [sessionDuration, setSessionDuration] = useState(0); // Seconds elapsed
 ```
@@ -173,28 +181,28 @@ const [sessionDuration, setSessionDuration] = useState(0); // Seconds elapsed
 ```javascript
 useEffect(() => {
   if (!isRunning) return;
-  
+
   const phases = [
     { name: "inhale", duration: 4000 },
     { name: "hold", duration: 7000 },
     { name: "exhale", duration: 8000 },
-    { name: "rest", duration: 2000 }
+    { name: "rest", duration: 2000 },
   ];
-  
+
   let currentPhaseIndex = 0;
-  
+
   const runPhase = () => {
     const currentPhase = phases[currentPhaseIndex];
     setPhase(currentPhase.name);
-    
+
     if (currentPhase.name === "rest") {
-      setBreathCount(prev => prev + 1); // Count completed breath
+      setBreathCount((prev) => prev + 1); // Count completed breath
     }
-    
+
     currentPhaseIndex = (currentPhaseIndex + 1) % phases.length;
     return setTimeout(runPhase, currentPhase.duration);
   };
-  
+
   const timeout = runPhase();
   return () => clearTimeout(timeout);
 }, [isRunning]);
@@ -206,7 +214,7 @@ useEffect(() => {
 const endSession = async () => {
   const duration = ((Date.now() - timer) / 1000 / 60).toFixed(1);
   const postMood = mood + 2 > 10 ? 10 : mood + 2;
-  
+
   await addDoc(collection(db, "breathingSessions"), {
     sessionDate: new Date().toISOString(),
     preMood: mood,
@@ -216,7 +224,7 @@ const endSession = async () => {
     technique: "4-7-8 Aurora",
     createdAt: new Date(),
   });
-  
+
   setIsRunning(false);
   setShowSummary(true);
 };
@@ -225,6 +233,7 @@ const endSession = async () => {
 **Firestore Collection:** `breathingSessions`
 
 **Document Structure:**
+
 ```javascript
 {
   sessionDate: "2025-11-11T14:30:00.000Z",
@@ -244,18 +253,18 @@ const endSession = async () => {
 ### Aurora Background
 
 ```jsx
-<motion.div 
+<motion.div
   animate={{
     background: [
       "radial-gradient(ellipse at top right, rgba(123, 97, 255, 0.2), transparent 50%), radial-gradient(ellipse at bottom left, rgba(68, 224, 183, 0.2), transparent 50%)",
       "radial-gradient(ellipse at top left, rgba(123, 97, 255, 0.25), transparent 55%), radial-gradient(ellipse at bottom right, rgba(68, 224, 183, 0.25), transparent 55%)",
       "radial-gradient(ellipse at top right, rgba(123, 97, 255, 0.2), transparent 50%), radial-gradient(ellipse at bottom left, rgba(68, 224, 183, 0.2), transparent 50%)",
-    ]
+    ],
   }}
   transition={{
     duration: 8,
     repeat: Infinity,
-    ease: "easeInOut"
+    ease: "easeInOut",
   }}
 />
 ```
@@ -265,22 +274,24 @@ const endSession = async () => {
 ### Floating Particles
 
 ```jsx
-{[...Array(20)].map((_, i) => (
-  <motion.div 
-    animate={{
-      opacity: [0, 0.6, 0],
-      y: [-100, -800],
-      x: [0, (Math.random() - 0.5) * 400],
-      scale: [0, 1.5, 0],
-    }}
-    transition={{
-      duration: 15 + Math.random() * 10,
-      repeat: Infinity,
-      ease: "easeInOut",
-      delay: Math.random() * 10,
-    }}
-  />
-))}
+{
+  [...Array(20)].map((_, i) => (
+    <motion.div
+      animate={{
+        opacity: [0, 0.6, 0],
+        y: [-100, -800],
+        x: [0, (Math.random() - 0.5) * 400],
+        scale: [0, 1.5, 0],
+      }}
+      transition={{
+        duration: 15 + Math.random() * 10,
+        repeat: Infinity,
+        ease: "easeInOut",
+        delay: Math.random() * 10,
+      }}
+    />
+  ));
+}
 ```
 
 **Effect:** Gentle upward drift with fade in/out, simulating energy fields
@@ -290,12 +301,26 @@ const endSession = async () => {
 ```jsx
 <motion.div
   animate={{
-    scale: phase === "inhale" ? 1.5 : phase === "exhale" ? 0.7 : phase === "hold" ? 1.5 : 1,
+    scale:
+      phase === "inhale"
+        ? 1.5
+        : phase === "exhale"
+        ? 0.7
+        : phase === "hold"
+        ? 1.5
+        : 1,
     opacity: 1,
   }}
-  transition={{ 
-    duration: phase === "inhale" ? 4 : phase === "hold" ? 7 : phase === "exhale" ? 8 : 2, 
-    ease: "easeInOut" 
+  transition={{
+    duration:
+      phase === "inhale"
+        ? 4
+        : phase === "hold"
+        ? 7
+        : phase === "exhale"
+        ? 8
+        : 2,
+    ease: "easeInOut",
   }}
   style={{
     boxShadow: `0 0 120px ${getPhaseColor()}66, 0 0 60px ${getPhaseColor()}33`,
@@ -339,6 +364,7 @@ box-shadow: 0 0 40px rgba(123, 97, 255, 0.4);
 ```
 
 **Hover:**
+
 ```css
 transform: scale(1.05);
 box-shadow: 0 0 60px rgba(123, 97, 255, 0.6);
@@ -359,6 +385,7 @@ box-shadow: 0 0 60px rgba(123, 97, 255, 0.6);
 ```
 
 **Icons Used:**
+
 - `PlayCircle` - Start button
 - `Pause` - End session button
 - `Sparkles` - AI insight decoration
@@ -368,16 +395,19 @@ box-shadow: 0 0 60px rgba(123, 97, 255, 0.6);
 ## User Experience Goals
 
 1. **Immediate Calm**
+
    - Dark background reduces visual strain
    - Soft colors create spa-like environment
    - Smooth animations prevent jarring transitions
 
 2. **Guided Focus**
+
    - Clear phase indicators (text + animation)
    - Visual cues sync with breath timing
    - Minimal distractions
 
 3. **Progress Awareness**
+
    - Real-time timer and breath counter
    - Mood tracking shows improvement
    - AI insights provide validation
@@ -393,16 +423,19 @@ box-shadow: 0 0 60px rgba(123, 97, 255, 0.6);
 ## Accessibility
 
 ### Keyboard Navigation
+
 - All interactive elements focusable
 - Tab order follows visual hierarchy
 - Enter/Space trigger buttons
 
 ### Screen Readers
+
 - Phase announcements: "Inhale", "Hold", "Exhale", "Rest"
 - Timer updates every 10 seconds
 - Summary reads all metrics
 
 ### Motion Preferences
+
 ```css
 @media (prefers-reduced-motion: reduce) {
   * {
@@ -419,11 +452,13 @@ box-shadow: 0 0 60px rgba(123, 97, 255, 0.6);
 ### Optimization Techniques
 
 1. **Animation Performance**
+
    - Uses `transform` and `opacity` (GPU-accelerated)
    - Avoids layout-triggering properties
    - Framer Motion optimizations
 
 2. **Particle System**
+
    - Only 20 particles (lightweight)
    - Staggered timings prevent simultaneous calculations
    - Uses `position: absolute` (no layout)
@@ -434,6 +469,7 @@ box-shadow: 0 0 60px rgba(123, 97, 255, 0.6);
    - Timer uses requestAnimationFrame alternative
 
 ### Bundle Impact
+
 - Component: ~8 kB
 - Framer Motion: Already included
 - No additional dependencies
@@ -443,11 +479,13 @@ box-shadow: 0 0 60px rgba(123, 97, 255, 0.6);
 ## Integration
 
 ### Route
+
 ```jsx
 <Route path="/tools/aurora-breathing" element={<AuroraBreathing />} />
 ```
 
 ### Link from Tools Page
+
 ```jsx
 <Link to="/tools/aurora-breathing">
   <div className="tool-card premium">
@@ -464,6 +502,7 @@ box-shadow: 0 0 60px rgba(123, 97, 255, 0.6);
 ## Future Enhancements
 
 ### Phase 2
+
 - [ ] Voice guidance (optional)
 - [ ] Custom breath ratios (4-4-4, 5-5-5, etc.)
 - [ ] Background music integration
@@ -471,6 +510,7 @@ box-shadow: 0 0 60px rgba(123, 97, 255, 0.6);
 - [ ] Dark/light theme toggle
 
 ### Phase 3
+
 - [ ] Streak tracking
 - [ ] Weekly insights graph
 - [ ] Social sharing (anonymous)
@@ -500,16 +540,19 @@ box-shadow: 0 0 60px rgba(123, 97, 255, 0.6);
 ## Success Metrics
 
 **User Engagement:**
+
 - Average session length: Target 5+ minutes
 - Completion rate: Target 80%+
 - Repeat usage: Target 3+ sessions/week
 
 **Wellness Impact:**
+
 - Mood improvement: Average +2 points
 - Stress reduction: Target 70%+ report calm
 - Satisfaction: Target 4.5+/5 rating
 
 **Technical Performance:**
+
 - Load time: <2s
 - Animation FPS: 60 (smooth)
 - Memory usage: <50 MB
@@ -524,7 +567,7 @@ The **Aurora Breathing Experience** represents the WellnessCafe luxury standard:
 🎨 **Visual Beauty** - Living aurora background + particle system  
 🧘 **Proven Technique** - 4-7-8 breathing backed by science  
 📊 **Smart Tracking** - Firebase integration with AI insights  
-📱 **Universal** - Works flawlessly on all devices  
+📱 **Universal** - Works flawlessly on all devices
 
 **Status:** Ready for production  
 **URL:** https://wellnesscafelanding.web.app/tools/aurora-breathing

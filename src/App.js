@@ -171,7 +171,10 @@ function App() {
               />
               <Route path="/tools" element={<ToolsPage />} />
               <Route path="/tools/breathing" element={<BreathingToolPage />} />
-              <Route path="/tools/aurora-breathing" element={<AuroraBreathing />} />
+              <Route
+                path="/tools/aurora-breathing"
+                element={<AuroraBreathing />}
+              />
               <Route
                 path="/tools/meditation"
                 element={<MeditationTimerPage />}

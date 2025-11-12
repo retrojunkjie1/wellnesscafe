@@ -13,6 +13,7 @@ Add these three MP3 files to this directory:
 ## Audio Specifications
 
 ### Recommended Settings:
+
 - **Format:** MP3
 - **Bitrate:** 128-192 kbps (balance between quality and file size)
 - **Sample Rate:** 44.1 kHz
@@ -21,21 +22,26 @@ Add these three MP3 files to this directory:
 - **Fade:** Smooth loop points for seamless playback
 
 ### File Sizes:
+
 - Target: 3-5 MB per file
 - Maximum: 10 MB per file
 
 ## Where to Find Ambient Sounds
 
 ### Free Sources:
+
 1. **Freesound.org** - https://freesound.org
+
    - Search: "ocean waves loop", "forest ambient", "wind ambience"
    - Filter: CC0 or CC-BY licenses
 
 2. **Pixabay Audio** - https://pixabay.com/music/
+
    - Search: "nature sounds", "ambient"
    - All files are royalty-free
 
 3. **Zapsplat** - https://www.zapsplat.com
+
    - Free with attribution
    - High-quality nature sounds
 
@@ -44,6 +50,7 @@ Add these three MP3 files to this directory:
    - Download as MP3
 
 ### Premium Sources:
+
 1. **Epidemic Sound** - https://www.epidemicsound.com
 2. **AudioJungle** - https://audiojungle.net
 3. **Pond5** - https://www.pond5.com
@@ -73,9 +80,11 @@ Replace the `SOUNDS` constant in `AuroraBreathing.jsx`:
 
 ```javascript
 const SOUNDS = {
-  ocean: "https://firebasestorage.googleapis.com/v0/b/YOUR-PROJECT-ID.appspot.com/o/sounds%2Focean.mp3?alt=media",
-  forest: "https://firebasestorage.googleapis.com/v0/b/YOUR-PROJECT-ID.appspot.com/o/sounds%2Fforest.mp3?alt=media",
-  wind: "https://firebasestorage.googleapis.com/v0/b/YOUR-PROJECT-ID.appspot.com/o/sounds%2Fwind.mp3?alt=media"
+  ocean:
+    "https://firebasestorage.googleapis.com/v0/b/YOUR-PROJECT-ID.appspot.com/o/sounds%2Focean.mp3?alt=media",
+  forest:
+    "https://firebasestorage.googleapis.com/v0/b/YOUR-PROJECT-ID.appspot.com/o/sounds%2Fforest.mp3?alt=media",
+  wind: "https://firebasestorage.googleapis.com/v0/b/YOUR-PROJECT-ID.appspot.com/o/sounds%2Fwind.mp3?alt=media",
 };
 ```
 
@@ -84,7 +93,7 @@ const SOUNDS = {
 ### Browser Console Test:
 
 ```javascript
-const audio = new Audio('/sounds/ocean.mp3');
+const audio = new Audio("/sounds/ocean.mp3");
 audio.play(); // Should play ocean sounds
 audio.pause(); // Should stop
 ```
@@ -98,18 +107,21 @@ audio.pause(); // Should stop
 ## Troubleshooting
 
 ### "Audio failed to load" Error:
+
 - Check file paths match exactly (case-sensitive)
 - Verify files are in `public/sounds/` directory
 - Clear browser cache (Cmd+Shift+R on Mac)
 - Check browser console for CORS errors
 
 ### No Sound Playing:
+
 - Check browser audio permissions
 - Verify volume is not muted (both browser and system)
 - Check if autoplay is blocked (requires user interaction first)
 - Try different browser (Safari has stricter autoplay policies)
 
 ### Choppy Playback:
+
 - Reduce file size (lower bitrate)
 - Ensure smooth loop points in audio file
 - Check CPU usage (too many particles/animations)
