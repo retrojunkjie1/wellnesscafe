@@ -13,14 +13,16 @@
 **First scrape completed at:** 11:20 PM EST
 
 ### Statistics:
+
 - **Total Oxford Houses Scraped:** 27 houses
 - **Houses with Vacancies:** 16 houses (59% availability)
 - **States Covered:** 14 states
 - **Database Collections:** 2 (oxfordHouses + state sub-collections)
 
 ### State Breakdown:
+
 - Tennessee (TN): 4 houses
-- North Carolina (NC): 4 houses  
+- North Carolina (NC): 4 houses
 - Florida (FL): 3 houses
 - Texas (TX): 3 houses
 - Louisiana (LA): 2 houses
@@ -41,12 +43,14 @@
 ### Cloud Functions (All Live)
 
 1. **scrapeOxfordHousesScheduled**
+
    - ✅ Deployed to us-central1
    - ⏰ Runs daily at 2 AM EST
    - 📅 Next scheduled run: Tomorrow at 2 AM EST
    - Status: Active
 
 2. **scrapeOxfordHousesManual**
+
    - ✅ Deployed to us-central1
    - 🔗 Endpoint: https://us-central1-wellnesscafelanding.cloudfunctions.net/scrapeOxfordHousesManual
    - 🎯 Trigger: POST request
@@ -73,6 +77,7 @@
 ## 🎯 Features Delivered
 
 ### Backend (Cloud Functions)
+
 - [x] Automated daily scraping at 2 AM EST
 - [x] Manual trigger endpoint for on-demand updates
 - [x] Status/metadata endpoint for monitoring
@@ -82,6 +87,7 @@
 - [x] Scraping metadata tracking
 
 ### Data Schema
+
 - [x] Normalized Oxford House data structure
 - [x] Validation functions
 - [x] Helper utilities (filter, sort, search)
@@ -91,6 +97,7 @@
 - [x] Last updated timestamps
 
 ### Frontend Integration
+
 - [x] Display Oxford Houses with distinctive styling
 - [x] Blue left border for Oxford Houses
 - [x] "Oxford House" badge
@@ -111,21 +118,25 @@
 ### For Users (Frontend)
 
 1. **Visit Sober Homes Page:**
+
    - Go to: https://wellnesscafelanding.web.app/resources/soberLivingHomes/[state]
    - Example: https://wellnesscafelanding.web.app/resources/soberLivingHomes/tennessee
 
 2. **Check Data Freshness:**
+
    - Green banner = Data is fresh (< 7 days old)
    - Yellow banner = Data may be outdated (> 7 days old)
    - Shows last updated timestamp
 
 3. **Filter Options:**
+
    - **Search:** Type house name, city, or county
    - **City Filter:** Select specific city from dropdown
    - **Gender Filter:** Men, Women, or Men + Children
    - **Vacancy Filter:** Check "Only vacancies" to see available beds only
 
 4. **View Oxford Houses:**
+
    - Look for cards with blue left border
    - "Oxford House" badge at top right
    - Vacancy status with color coding
@@ -140,16 +151,19 @@
 ### For Admins (Backend)
 
 1. **Trigger Manual Scrape:**
+
    ```bash
    curl -X POST https://us-central1-wellnesscafelanding.cloudfunctions.net/scrapeOxfordHousesManual
    ```
 
 2. **Check Scraping Status:**
+
    ```bash
    curl https://us-central1-wellnesscafelanding.cloudfunctions.net/getOxfordScrapingStatus
    ```
 
 3. **View Function Logs:**
+
    ```bash
    firebase functions:log --only scrapeOxfordHousesScheduled
    ```
@@ -164,12 +178,14 @@
 ## 🔄 Automatic Updates
 
 ### Daily Schedule
+
 - **Time:** 2:00 AM EST daily
 - **Function:** scrapeOxfordHousesScheduled
 - **Duration:** ~30 seconds
 - **Cost:** ~$0.05/month (within free tier)
 
 ### What Gets Updated
+
 - All Oxford House listings from oxfordvacancies.com
 - Vacancy counts (real-time availability)
 - Contact information
@@ -178,6 +194,7 @@
 - Scraping metadata (stats, state breakdown)
 
 ### Data Retention
+
 - Current data: Always available
 - Historical data: Not tracked (future enhancement)
 - Scraping metadata: Latest run only
@@ -219,6 +236,7 @@ scrapingMetadata/
 ## 🎨 UI Examples
 
 ### Data Freshness Indicator (Green - Fresh)
+
 ```
 ✅ Oxford House data is fresh
 Last updated: Nov 11, 2025, 11:20 PM
@@ -226,6 +244,7 @@ Last updated: Nov 11, 2025, 11:20 PM
 ```
 
 ### Data Freshness Indicator (Yellow - Stale)
+
 ```
 ⚠️ Data may be outdated
 Last updated: Nov 4, 2025, 11:20 PM
@@ -233,6 +252,7 @@ Last updated: Nov 4, 2025, 11:20 PM
 ```
 
 ### Oxford House Card
+
 ```
 ╔══════════════════════════════════════╗
 ║ Abbey Road          [Oxford House]   ║ ← Blue left border
@@ -279,6 +299,7 @@ Last updated: Nov 4, 2025, 11:20 PM
 ## 📈 Next Steps
 
 ### Immediate (Optional)
+
 1. Test frontend on live site: https://wellnesscafelanding.web.app
 2. Verify Oxford Houses appear in state pages
 3. Test filters and search functionality
@@ -286,6 +307,7 @@ Last updated: Nov 4, 2025, 11:20 PM
 5. Test contact buttons on mobile
 
 ### Short-term Enhancements
+
 1. Improve county-to-state mapping accuracy
 2. Add more states to coverage
 3. Implement change detection (only update modified records)
@@ -293,6 +315,7 @@ Last updated: Nov 4, 2025, 11:20 PM
 5. Create admin dashboard for monitoring
 
 ### Long-term Vision
+
 1. Historical vacancy tracking and trends
 2. User favorites and saved searches
 3. SMS/email alerts for vacancy notifications
@@ -306,16 +329,19 @@ Last updated: Nov 4, 2025, 11:20 PM
 ## 🛠️ Maintenance
 
 ### Weekly
+
 - Check scraping logs for errors
 - Verify data freshness on frontend
 - Monitor Firestore storage usage
 
 ### Monthly
+
 - Review scraping success rate
 - Update county-to-state mapping if needed
 - Check for oxfordvacancies.com structure changes
 
 ### Quarterly
+
 - Analyze usage patterns
 - Plan new features based on user feedback
 - Review and optimize costs
@@ -325,6 +351,7 @@ Last updated: Nov 4, 2025, 11:20 PM
 ## 💰 Cost Estimate
 
 ### Current Usage
+
 - **Cloud Functions:** 30 invocations/month × ~30 sec = ~$0.05/month
 - **Firestore Storage:** 1.5 MB (27 houses) = Free tier
 - **Firestore Reads:** ~10,000/month = Free tier
@@ -352,11 +379,13 @@ Last updated: Nov 4, 2025, 11:20 PM
 ## 📞 Support
 
 **Endpoints:**
+
 - Manual Scrape: https://us-central1-wellnesscafelanding.cloudfunctions.net/scrapeOxfordHousesManual
 - Status Check: https://us-central1-wellnesscafelanding.cloudfunctions.net/getOxfordScrapingStatus
 - Live Site: https://wellnesscafelanding.web.app
 
 **Documentation:**
+
 - Full Documentation: `OXFORD_HOUSE_SCRAPER_DOCS.md`
 - Data Schema: `src/schemas/oxfordHouseSchema.js`
 - Cloud Functions: `functions/scrapeOxfordHouses.js`
@@ -366,4 +395,4 @@ Last updated: Nov 4, 2025, 11:20 PM
 
 **🚀 Your sober living homes directory is now LIVE with automated daily updates! 🏠**
 
-*Last Updated: November 11, 2025*
+_Last Updated: November 11, 2025_
