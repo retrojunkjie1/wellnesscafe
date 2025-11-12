@@ -270,9 +270,6 @@ const ToolsPage = () => {
       <main className="container">
         <PanoramicHero />
 
-        {/* Premium Dashboard Header with Analytics */}
-        <DashboardHeaderEnhanced userName="Wellness Champion" />
-
         {/* Enhanced Hero Section */}
         <div className="tools-hero">
           <div className="tools-hero-content">
