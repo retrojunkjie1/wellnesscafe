@@ -69,6 +69,19 @@ const COPING_STRATEGIES = [
 
 const todayKey = () => new Date().toISOString().slice(0, 10);
 
+function calcStreak(rows) {
+  const set = new Set(rows.map((r) => r.date || todayKey()));
+  let s = 0;
+  for (let i = 0; i < 90; i++) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const key = d.toISOString().slice(0, 10);
+    if (set.has(key)) s++;
+    else break;
+  }
+  return s;
+}
+
 export default function TriggerJournal() {
   const [dateKey] = useState(todayKey());
   const [triggerType, setTriggerType] = useState(TRIGGER_TYPES[0]);
@@ -756,17 +769,4 @@ function normalizeDate(d) {
     return new Date(d.createdAt.seconds * 1000).toISOString().slice(0, 10);
   }
   return todayKey();
-}
-
-function calcStreak(rows) {
-  const set = new Set(rows.map((r) => r.date || todayKey()));
-  let s = 0;
-  for (let i = 0; i < 90; i++) {
-    const d = new Date();
-    d.setDate(d.getDate() - i);
-    const key = d.toISOString().slice(0, 10);
-    if (set.has(key)) s++;
-    else break;
-  }
-  return s;
 }

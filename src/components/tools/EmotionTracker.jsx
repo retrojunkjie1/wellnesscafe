@@ -63,8 +63,6 @@ const BODY_AREAS = [
   "Feet",
 ];
 
-const INTENSITIES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
 const todayKey = () => new Date().toISOString().slice(0, 10);
 
 export default function EmotionTracker() {

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useRef } from "react";
+import React, {useEffect, useMemo, useState, useRef, useCallback} from "react";
 import {
   Play,
   Pause,
@@ -123,7 +123,7 @@ export default function MeditationTimerPremium() {
       });
     }, 1000);
     return () => clearInterval(interval);
-  }, [running, duration]);
+  }, [running, duration, playCompletionSound, saveSession]);
 
   const start = () => {
     if (elapsed === 0) {
@@ -154,15 +154,15 @@ export default function MeditationTimerPremium() {
     reset();
   };
 
-  const playCompletionSound = () => {
+  const playCompletionSound = useCallback(() => {
     if (muted || sound.id === "none") return;
     // In production, load actual audio file
     if (audioRef.current) {
       audioRef.current.play().catch(() => {});
     }
-  };
+  }, [muted, sound]);
 
-  const saveSession = async (durationSecs) => {
+  const saveSession = useCallback(async (durationSecs) => {
     try {
       const session = {
         date: todayKey(),
@@ -179,7 +179,7 @@ export default function MeditationTimerPremium() {
       // eslint-disable-next-line no-console
       console.error("meditation:addDoc", e);
     }
-  };
+  }, [technique, sound, note]);
 
   // Analytics
   const stats = useMemo(() => {

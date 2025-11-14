@@ -4,6 +4,7 @@ import React, {
   useEffect,
   forwardRef,
   useImperativeHandle,
+  useCallback,
 } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, Mic, MicOff, Send, Loader2 } from "lucide-react";
@@ -116,7 +117,7 @@ const FloatingAIWidget = forwardRef(
 
           // Auto-submit the prompt
           setTimeout(() => {
-            const syntheticEvent = { preventDefault: () => {} };
+            const syntheticEvent = {preventDefault: () => {}};
             handleSearch(syntheticEvent);
           }, 300);
         },
@@ -124,8 +125,8 @@ const FloatingAIWidget = forwardRef(
         close: () => setIsOpen(false),
         isOpen: () => isOpen,
       }),
-      [isOpen]
-    ); // eslint-disable-line react-hooks/exhaustive-deps
+      [isOpen, handleSearch]
+    );
 
     const toggleVoice = () => {
       if (!recognitionRef.current) {
@@ -150,7 +151,7 @@ const FloatingAIWidget = forwardRef(
       }
     };
 
-    const handleSearch = async (e) => {
+    const handleSearch = useCallback(async (e) => {
       e.preventDefault();
       if (!searchQuery.trim() || isLoading) return;
 
@@ -160,7 +161,7 @@ const FloatingAIWidget = forwardRef(
       setIsLoading(true);
 
       // Add user message to chat
-      const userMsg = { id: Date.now(), role: "user", text: userMessage };
+      const userMsg = {id: Date.now(), role: "user", text: userMessage};
       setMessages((prev) => [...prev, userMsg]);
 
       try {
@@ -200,7 +201,7 @@ const FloatingAIWidget = forwardRef(
       } finally {
         setIsLoading(false);
       }
-    };
+    }, [searchQuery, isLoading, navigate]);
 
     // Intelligent response generator
     const getAIResponse = async (query) => {

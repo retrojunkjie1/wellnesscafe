@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, {useState, useEffect, useRef, useCallback} from "react";
 import "./MeditationTimer.css";
 
 const MeditationTimer = () => {
@@ -171,6 +171,29 @@ const MeditationTimer = () => {
 
   const durations = [5, 10, 15, 20, 25, 30];
 
+  const handleComplete = useCallback(() => {
+    setIsRunning(false);
+    setSessionComplete(true);
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+    playCompletionBell();
+
+    // Save stats to localStorage
+    const newSessions = totalSessions + 1;
+    const newMinutes = totalMinutes + duration;
+    setTotalSessions(newSessions);
+    setTotalMinutes(newMinutes);
+    localStorage.setItem(
+      "meditationStats",
+      JSON.stringify({
+        sessions: newSessions,
+        minutes: newMinutes,
+        lastSession: new Date().toISOString(),
+      })
+    );
+  }, [totalSessions, totalMinutes, duration]);
+
   useEffect(() => {
     if (isRunning && !isPaused) {
       timerRef.current = setInterval(() => {
@@ -203,30 +226,7 @@ const MeditationTimer = () => {
         clearInterval(timerRef.current);
       }
     };
-  }, [isRunning, isPaused, duration, intervalBells, bellInterval]);
-
-  const handleComplete = () => {
-    setIsRunning(false);
-    setSessionComplete(true);
-    if (audioRef.current) {
-      audioRef.current.pause();
-    }
-    playCompletionBell();
-
-    // Save stats to localStorage
-    const newSessions = totalSessions + 1;
-    const newMinutes = totalMinutes + duration;
-    setTotalSessions(newSessions);
-    setTotalMinutes(newMinutes);
-    localStorage.setItem(
-      "meditationStats",
-      JSON.stringify({
-        sessions: newSessions,
-        minutes: newMinutes,
-        lastSession: new Date().toISOString(),
-      })
-    );
-  };
+  }, [isRunning, isPaused, duration, intervalBells, bellInterval, handleComplete]);
 
   const startSession = () => {
     setIsRunning(true);

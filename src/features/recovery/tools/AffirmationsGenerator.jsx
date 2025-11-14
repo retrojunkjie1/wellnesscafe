@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import { Helmet } from "react-helmet-async";
 import { Sparkles, RefreshCw, Share2, Heart, Lock } from "lucide-react";
 import "./AffirmationsGenerator.css";
@@ -148,16 +148,7 @@ const AffirmationsGenerator = () => {
   const [favorites, setFavorites] = useState([]);
   const [showUpgradePrompt, setShowUpgradePrompt] = useState(false);
 
-  useEffect(() => {
-    generateRandomAffirmation(selectedCategory);
-    // Load favorites from localStorage
-    const saved = localStorage.getItem("affirmationFavorites");
-    if (saved) {
-      setFavorites(JSON.parse(saved));
-    }
-  }, []);
-
-  const generateRandomAffirmation = (category) => {
+  const generateRandomAffirmation = useCallback((category) => {
     setIsAnimating(true);
     const affirmations = CATEGORIES[category].affirmations;
     const randomIndex = Math.floor(Math.random() * affirmations.length);
@@ -166,7 +157,16 @@ const AffirmationsGenerator = () => {
       setCurrentAffirmation(affirmations[randomIndex]);
       setIsAnimating(false);
     }, 300);
-  };
+  }, []);
+
+  useEffect(() => {
+    generateRandomAffirmation(selectedCategory);
+    // Load favorites from localStorage
+    const saved = localStorage.getItem("affirmationFavorites");
+    if (saved) {
+      setFavorites(JSON.parse(saved));
+    }
+  }, [generateRandomAffirmation, selectedCategory]);
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
