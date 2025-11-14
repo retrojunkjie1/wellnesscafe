@@ -1,0 +1,388 @@
+/* Luxury Wellness Cafe Dashboard - Premium Design */
+
+.dashboard-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 3rem clamp(1.5rem, 5vw, 4rem);
+  min-height: 100vh;
+  background: transparent;
+}
+
+/* Luxury Header with Gradient Text */
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  padding: 2rem 0;
+  position: relative;
+}
+
+.dashboard-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #d4b483, transparent);
+  opacity: 0.6;
+}
+
+.dashboard-header h1 {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
+  background: linear-gradient(135deg, #fff 0%, #d4b483 50%, #fff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+}
+
+.dashboard-header p {
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 300;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+/* Premium Grid Layout */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Luxury Glass Morphism Cards */
+.dashboard-card {
+  background: linear-gradient(145deg, rgba(30, 25, 45, 0.7) 0%, rgba(20, 20, 35, 0.85) 100%);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  backdrop-filter: blur(20px) saturate(1.2);
+  border-radius: 24px;
+  padding: 2.5rem;
+  border: 1px solid rgba(212, 180, 131, 0.15);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 180, 131, 0.5), transparent);
+}
+
+.dashboard-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(212, 180, 131, 0.4);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(212, 180, 131, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.dashboard-card h3 {
+  font-size: 1.5rem;
+  color: #fff;
+  margin-bottom: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+.dashboard-card p {
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 2rem;
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+/* Premium Buttons */
+.dashboard-btn {
+  background: linear-gradient(135deg, #d4b483 0%, #b8935c 100%);
+  color: #1a1520;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 12px rgba(212, 180, 131, 0.3);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.dashboard-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.dashboard-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(212, 180, 131, 0.4);
+  background: linear-gradient(135deg, #e6c896 0%, #d4b483 100%);
+}
+
+.dashboard-btn:active {
+  transform: translateY(-1px);
+}
+
+/* Check-in Status - Luxury Success State */
+.checkin-status {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.15) 0%, rgba(102, 187, 106, 0.1) 100%);
+  border-radius: 16px;
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
+
+.checkin-status p {
+  color: #a5d6a7;
+  font-weight: 500;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.checkin-status small {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.85rem;
+}
+
+/* Dashboard wrapper for check-in modal */
+.dashboard-wrapper {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+.back-to-dashboard-btn {
+  display: block;
+  margin: 2rem auto 0;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 1rem 2.5rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.back-to-dashboard-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(212, 180, 131, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Premium Recovery Tool Cards */
+.recovery-tool-card {
+  background: linear-gradient(145deg, rgba(40, 35, 60, 0.75) 0%, rgba(30, 25, 50, 0.9) 100%);
+  border: 1px solid rgba(212, 180, 131, 0.2);
+  position: relative;
+}
+
+.recovery-tool-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(212, 180, 131, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.recovery-tool-card:hover {
+  border-color: rgba(212, 180, 131, 0.5);
+  transform: translateY(-10px);
+  box-shadow: 
+    0 24px 60px rgba(0, 0, 0, 0.6),
+    0 0 60px rgba(212, 180, 131, 0.15);
+}
+
+.tool-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.tool-icon {
+  font-size: 3rem;
+  line-height: 1;
+  filter: drop-shadow(0 4px 12px rgba(212, 180, 131, 0.3));
+}
+
+.tool-header h3 {
+  margin: 0;
+  font-size: 1.4rem;
+  text-align: left;
+  color: #fff;
+  font-weight: 400;
+}
+
+.tool-header p {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.65);
+  text-align: left;
+}
+
+.tool-stats-mini {
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.2) 0%, rgba(102, 187, 106, 0.15) 100%);
+  border-radius: 10px;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  color: #a5d6a7;
+  font-weight: 500;
+  border: 1px solid rgba(76, 175, 80, 0.2);
+  text-align: center;
+  backdrop-filter: blur(5px);
+}
+
+.tool-btn {
+  background: linear-gradient(135deg, #d4b483 0%, #c9a66a 100%);
+  color: #1a1520;
+  box-shadow: 0 4px 16px rgba(212, 180, 131, 0.3);
+}
+
+.tool-btn:hover {
+  background: linear-gradient(135deg, #e6c896 0%, #d4b483 100%);
+  box-shadow: 0 6px 24px rgba(212, 180, 131, 0.5);
+}
+
+/* Luxury All Tools Overview Card */
+.tools-overview-card {
+  background: linear-gradient(145deg, rgba(212, 180, 131, 0.12) 0%, rgba(255, 152, 0, 0.08) 100%);
+  border: 1px solid rgba(212, 180, 131, 0.3);
+}
+
+.tools-overview-card:hover {
+  border-color: rgba(212, 180, 131, 0.6);
+  box-shadow: 
+    0 20px 60px rgba(212, 180, 131, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.secondary-btn {
+  background: linear-gradient(135deg, rgba(255, 152, 0, 0.9) 0%, rgba(255, 167, 38, 0.9) 100%);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(255, 152, 0, 0.3);
+}
+
+.secondary-btn:hover {
+  background: linear-gradient(135deg, rgba(255, 167, 38, 0.95) 0%, rgba(255, 152, 0, 0.95) 100%);
+  box-shadow: 0 6px 24px rgba(255, 152, 0, 0.4);
+}
+
+/* Luxury Stats Grid */
+.dashboard-stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  padding: 0;
+}
+
+.dashboard-stat-item {
+  background: linear-gradient(145deg, rgba(30, 25, 45, 0.6) 0%, rgba(20, 20, 35, 0.8) 100%);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(212, 180, 131, 0.15);
+  border-radius: 20px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.dashboard-stat-item:hover {
+  border-color: rgba(212, 180, 131, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+.dashboard-stat-item .stat-value {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 300;
+  background: linear-gradient(135deg, #d4b483 0%, #e6c896 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+  letter-spacing: -1px;
+}
+
+.dashboard-stat-item .stat-label {
+  display: block;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Full-width luxury card for heatmap */
+.dashboard-card.full-width {
+  grid-column: 1 / -1;
+  padding: 0;
+  overflow: hidden;
+  background: linear-gradient(145deg, rgba(30, 25, 45, 0.75) 0%, rgba(20, 20, 35, 0.9) 100%);
+}
+
+.dashboard-card.full-width > * {
+  margin: 0;
+}
+
+/* Luxury accent lines */
+.dashboard-card-accent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #d4b483, transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.dashboard-card:hover .dashboard-card-accent {
+  opacity: 0.6;
+}
+
+/* Luxury loading state */
+.dashboard-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;

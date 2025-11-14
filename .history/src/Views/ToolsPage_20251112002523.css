@@ -1,0 +1,1018 @@
+/* ToolsPage.css - Luxury Glass Morphism Design */
+
+.tools-page {
+  background: transparent; /* Use global Aspen background */
+  min-height: 100vh;
+}
+
+/* Enhanced Hero Section - Luxury Glass Style */
+.tools-hero {
+  text-align: center;
+  padding: 60px 20px;
+  background: rgba(31, 41, 55, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
+  margin: 32px 0;
+  color: white;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tools-hero-content h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  background: linear-gradient(135deg, #ffffff 0%, #f0e5d8 40%, #e6d7ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto 32px;
+  opacity: 0.95;
+  color: rgba(255, 255, 255, 0.9);
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.tools-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-top: 24px;
+}
+
+.stat-box {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.stat-box:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.stat-label {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+/* Section Styling */
+.section {
+  margin: 48px 0;
+  padding: 0 20px;
+}
+
+.section-header-center {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.section-header-center h2 {
+  font-size: 2.5rem;
+  margin: 0 0 12px 0;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ffffff 0%, #f0e5d8 40%, #e6d7ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.section-header-center p {
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 700px;
+  margin: 0 auto;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+/* Why These Tools Section - Luxury Glass */
+.why-tools {
+  background: rgba(31, 41, 55, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 48px 32px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 32px;
+  margin-top: 40px;
+}
+
+.benefit-card {
+  text-align: center;
+  padding: 32px 24px;
+  background: rgba(31, 41, 55, 0.6);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.benefit-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(122, 90, 248, 0.25),
+    0 8px 24px rgba(0, 0, 0, 0.3);
+  border-color: rgba(122, 90, 248, 0.5);
+  background: rgba(31, 41, 55, 0.8);
+}
+
+.benefit-icon {
+  font-size: 2rem;
+  margin-bottom: 16px;
+  display: inline-block;
+  transition: transform 0.3s ease;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 50%;
+  padding: 16px;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.benefit-card:hover .benefit-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.benefit-card h3 {
+  font-size: 1.4rem;
+  margin: 0 0 12px 0;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.benefit-card p {
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.6;
+  margin: 0;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+/* Breathing Presets - Luxury Glass Style */
+.techniques-guide {
+  padding: 64px 32px;
+  background: rgba(31, 41, 55, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.presets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.preset-card {
+  background: rgba(31, 41, 55, 0.6);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 32px 24px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.preset-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    rgba(122, 90, 248, 0.8),
+    rgba(177, 156, 255, 0.8),
+    rgba(212, 180, 131, 0.6)
+  );
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+  border-radius: 20px 20px 0 0;
+}
+
+.preset-card:hover::before,
+.preset-card.selected::before {
+  transform: scaleX(1);
+}
+
+.preset-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(122, 90, 248, 0.25),
+    0 8px 24px rgba(0, 0, 0, 0.3);
+  border-color: rgba(122, 90, 248, 0.5);
+  background: rgba(31, 41, 55, 0.8);
+}
+
+.preset-card.selected {
+  border-color: rgba(122, 90, 248, 0.6);
+  background: rgba(31, 41, 55, 0.85);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(122, 90, 248, 0.3);
+}
+
+.preset-icon {
+  font-size: 1.75rem;
+  margin-bottom: 16px;
+  display: inline-block;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.preset-card h3 {
+  font-size: 1.3rem;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0 0 8px 0;
+  font-weight: 600;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.preset-pattern {
+  display: inline-block;
+  background: linear-gradient(
+    135deg,
+    rgba(212, 180, 131, 0.3),
+    rgba(203, 180, 255, 0.3)
+  );
+  color: rgba(255, 255, 255, 0.95);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 8px 0 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.preset-description {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.5;
+  margin: 12px 0;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.preset-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+  text-align: left;
+}
+
+.preset-benefits li {
+  padding: 6px 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.preset-benefits li::before {
+  content: "✓";
+  color: rgba(212, 180, 131, 0.9);
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+/* Expandable Techniques Section - Luxury Glass */
+.techniques-expandable {
+  margin-top: 32px;
+  background: rgba(31, 41, 55, 0.6);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.expand-btn {
+  width: 100%;
+  padding: 20px 24px;
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  text-align: left;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.expand-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(212, 180, 131, 0.95);
+}
+
+.techniques-list {
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.technique-item {
+  padding: 20px;
+  background: rgba(31, 41, 55, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  border-left: 3px solid rgba(212, 180, 131, 0.8);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.technique-item:last-child {
+  margin-bottom: 0;
+}
+
+.technique-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.technique-header h4 {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0;
+  font-weight: 600;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.technique-pattern {
+  background: linear-gradient(
+    135deg,
+    rgba(212, 180, 131, 0.3),
+    rgba(203, 180, 255, 0.3)
+  );
+  color: rgba(255, 255, 255, 0.95);
+  padding: 6px 14px;
+  border-radius: 16px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.technique-item p {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  margin: 12px 0;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.technique-best-for {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.technique-best-for strong {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Breathing Tool Section - Luxury Glass */
+.breathing-tool-section {
+  background: rgba(31, 41, 55, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 48px 32px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.tool-introduction {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.tool-introduction h2 {
+  font-size: 2.2rem;
+  margin: 0 0 12px 0;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ffffff 0%, #f0e5d8 40%, #e6d7ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.tool-introduction p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 700px;
+  margin: 0 auto;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.tool-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Tools Catalog - Luxury Glass */
+.tools-catalog {
+  padding: 48px 0;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.tool-card {
+  background: rgba(31, 41, 55, 0.7);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 32px 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(212, 180, 131, 0.2);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.tool-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    rgba(122, 90, 248, 0.8),
+    rgba(177, 156, 255, 0.8),
+    rgba(212, 180, 131, 0.6)
+  );
+  border-radius: 20px 20px 0 0;
+}
+
+.tool-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(122, 90, 248, 0.25),
+    0 8px 24px rgba(0, 0, 0, 0.4);
+  border-color: rgba(122, 90, 248, 0.5);
+  background: rgba(31, 41, 55, 0.85);
+}
+
+.coming-soon-tool {
+  opacity: 0.85;
+}
+
+.coming-soon-tool::before {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 167, 38, 0.6),
+    rgba(251, 140, 0, 0.6)
+  );
+}
+
+.coming-soon-tool:hover {
+  opacity: 1;
+  border-color: rgba(255, 167, 38, 0.5);
+}
+
+.tool-icon {
+  font-size: 1.75rem;
+  margin-bottom: 16px;
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 50%;
+  padding: 16px;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.tool-card:hover .tool-icon {
+  transform: scale(1.1);
+}
+
+.tool-status-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: linear-gradient(
+    135deg,
+    rgba(76, 175, 80, 0.8),
+    rgba(102, 187, 106, 0.8)
+  );
+  color: white;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.tool-eta-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 167, 38, 0.8),
+    rgba(251, 140, 0, 0.8)
+  );
+  color: white;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.tool-card h3 {
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 8px 0 12px 0;
+  font-weight: 600;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.tool-card p {
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.6;
+  margin: 12px 0 16px;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.tool-features {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+}
+
+.tool-features li {
+  padding: 8px 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.95rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.tool-features li:last-child {
+  border-bottom: none;
+}
+
+/* Success Stories - Luxury Glass */
+.success-stories {
+  background: rgba(31, 41, 55, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 64px 32px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+  margin-top: 40px;
+}
+
+.testimonial-card {
+  background: rgba(31, 41, 55, 0.6);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+  border-color: rgba(212, 180, 131, 0.5);
+  background: rgba(31, 41, 55, 0.75);
+}
+
+.testimonial-rating {
+  color: rgba(255, 167, 38, 0.9);
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+}
+
+.testimonial-text {
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
+  font-size: 1.05rem;
+  font-style: italic;
+  margin: 16px 0;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.testimonial-author {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.9rem;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+/* Professional Resources - Luxury Glass */
+.professional-resources {
+  background: rgba(31, 41, 55, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 48px 32px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.resources-content h2 {
+  font-size: 2rem;
+  color: rgba(255, 107, 107, 0.95);
+  margin: 0 0 16px 0;
+  font-weight: 700;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.resources-content p {
+  font-size: 1.1rem;
+  color: #6c757d;
+  max-width: 700px;
+  margin: 0 auto 32px;
+}
+
+.crisis-resources {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.resource-item {
+  background: rgba(198, 40, 40, 0.1);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 4px 16px rgba(198, 40, 40, 0.2);
+  border: 2px solid rgba(255, 205, 210, 0.3);
+}
+
+.resource-item h3 {
+  font-size: 1.2rem;
+  color: #ffcdd2;
+  margin: 0 0 12px 0;
+  font-weight: 600;
+}
+
+.resource-link {
+  display: inline-block;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffcdd2;
+  text-decoration: none;
+  padding: 12px 24px;
+  background: rgba(211, 47, 47, 0.3);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  margin: 12px 0;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 205, 210, 0.4);
+}
+
+.resource-link:hover {
+  background: rgba(211, 47, 47, 0.6);
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(211, 47, 47, 0.4);
+}
+
+.resource-item p {
+  color: rgba(255, 255, 255, 0.75);
+  margin: 12px 0 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Additional Links */
+.additional-links {
+  padding: 48px 0;
+}
+
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.link-card {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 32px 24px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  display: block;
+}
+
+.link-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(102, 126, 234, 0.2);
+  border-color: #667eea;
+}
+
+.link-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  display: inline-block;
+}
+
+.link-card h3 {
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin: 0 0 12px 0;
+  font-weight: 600;
+}
+
+.link-card p {
+  color: #6c757d;
+  line-height: 1.6;
+  margin: 12px 0 16px;
+}
+
+.link-action {
+  color: #667eea;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .tools-hero-content h1 {
+    font-size: 2.5rem;
+  }
+
+  .section-header-center h2 {
+    font-size: 2rem;
+  }
+
+  .tools-stats {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .tools-hero {
+    padding: 40px 20px;
+  }
+
+  .tools-hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .section {
+    margin: 32px 0;
+  }
+
+  .section-header-center h2 {
+    font-size: 1.75rem;
+  }
+
+  .why-tools,
+  .techniques-guide,
+  .breathing-tool-section,
+  .success-stories,
+  .professional-resources {
+    padding: 32px 20px;
+  }
+
+  .benefits-grid,
+  .presets-grid,
+  .tools-grid,
+  .testimonials-grid,
+  .crisis-resources,
+  .links-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tool-introduction h2 {
+    font-size: 1.75rem;
+  }
+
+  .technique-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .stat-value {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .tools-hero-content h1 {
+    font-size: 1.75rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .section-header-center h2 {
+    font-size: 1.5rem;
+  }
+
+  .preset-card,
+  .tool-card,
+  .testimonial-card,
+  .resource-item,
+  .link-card {
+    padding: 24px 16px;
+  }
+
+  .benefit-icon,
+  .preset-icon,
+  .tool-icon,
+  .link-icon {
+    font-size: 2.5rem;
+  }
+}
+
+/* Animation Utilities */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Smooth transitions */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a {
+  transition: all 0.3s ease;
+}
+
+/* Clickable Tool Cards */
+.tool-card.active-tool {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  border-color: rgba(122, 90, 248, 0.3);
+}
+
+.tool-card.active-tool:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(122, 90, 248, 0.4), 0 8px 24px rgba(0, 0, 0, 0.4);
+  border-color: #7a5af8;
+  background: rgba(31, 41, 55, 0.9);
+}
+
+.tool-cta {
+  margin-top: auto;
+  padding-top: 16px;
+  color: #b19cff;
+  font-weight: 700;
+  font-size: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.tool-card.active-tool:hover .tool-cta {
+  color: #d4b483;
+  transform: translateX(4px);
+}
