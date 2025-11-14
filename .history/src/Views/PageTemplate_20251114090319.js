@@ -116,6 +116,3 @@ PageTemplate.propTypes = {
   ctaText: PropTypes.string.isRequired,
   ctaLink: PropTypes.string,
   pageType: PropTypes.string.isRequired,
-};
-
-export default PageTemplate;

@@ -7,7 +7,7 @@ import journalImage from "../assets/images/wellnesscafe-journal-vs1.png";
 import bowlImage from "../assets/images/wellnesscafe-bowl-v1.png";
 import { Link } from "react-router-dom";
 
-const PageTemplate = ({ title, intro, features, ctaText, ctaLink = "/signup", pageType }) => {
+const PageTemplate = ({ title, intro, features, ctaText, pageType }) => {
   const getPageImage = () => {
     switch (pageType) {
       case "recovery":
@@ -94,9 +94,7 @@ const PageTemplate = ({ title, intro, features, ctaText, ctaLink = "/signup", pa
       {/* === CTA SECTION === */}
       <section className="page-cta">
         <p>{ctaText}</p>
-        <Link to={ctaLink}>
-          <button className="cta-button">Explore More</button>
-        </Link>
+        <button className="cta-button">Explore More</button>
       </section>
     </div>
   );
@@ -114,7 +112,6 @@ PageTemplate.propTypes = {
     })
   ).isRequired,
   ctaText: PropTypes.string.isRequired,
-  ctaLink: PropTypes.string,
   pageType: PropTypes.string.isRequired,
 };
 

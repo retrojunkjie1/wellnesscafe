@@ -213,12 +213,6 @@ const EnhancedNewsFeed = () => {
             ALLOWED_TAGS: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'img', 'a', 'ul', 'ol', 'li', 'strong', 'em', 'br', 'blockquote', 'div', 'span'],
             ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'target', 'rel', 'class', 'id']
           })
-        }} />
-      </div>
-    );
-  }
-
-  const featuredArticle = filteredArticles[0];
   const trendingArticles = filteredArticles.filter(a => a.isTrending).slice(0, 3);
   const regularArticles = filteredArticles.slice(3);
 
