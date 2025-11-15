@@ -1,0 +1,52 @@
+[
+  {
+    "title": "Sunrise Mindful Yoga at Denver Botanic Gardens",
+    "date": "2025-11-15T15:00:00Z",
+    "dateText": "Nov 15, 2025 • 8–9 AM",
+    "location": "Denver CO",
+    "category": "Yoga & Mindfulness",
+    "desc": "Gentle vinyasa among the gardens. Open to all levels; bring a mat and water.",
+    "image": "/images/rituals.jpg",
+    "url": "https://www.botanicgardens.org/"
+  },
+  {
+    "title": "Community Breathwork + Sound Bath",
+    "date": "2025-11-20T02:00:00Z",
+    "dateText": "Nov 19, 2025 • 7–8:30 PM",
+    "location": "Boulder CO",
+    "category": "Healing Arts & Energy Work",
+    "desc": "Guided breathwork with crystal bowls. Wear comfy layers; mats provided.",
+    "image": "/images/naaa.jpg",
+    "url": "https://www.bouldercolorado.gov/"
+  },
+  {
+    "title": "Recovery-Friendly Employers Career Fair",
+    "date": "2025-12-02T17:00:00Z",
+    "dateText": "Dec 2, 2025 • 10 AM–1 PM",
+    "location": "Colorado Springs CO",
+    "category": "Wellness & Recovery",
+    "desc": "Meet employers supporting recovery pathways; resume help on-site.",
+    "image": "/images/community.jpg",
+    "url": "https://coloradosprings.gov/"
+  },
+  {
+    "title": "Mindfulness & AI Tools For Focus",
+    "date": "2025-12-05T01:00:00Z",
+    "dateText": "Dec 4, 2025 • 6–7 PM",
+    "location": "Denver CO",
+    "category": "Mindfulness & Innovation",
+    "desc": "Hands-on session exploring guided meditations and AI-assisted routines.",
+    "image": "/images/checkin.jpg",
+    "url": "https://www.denverlibrary.org/"
+  },
+  {
+    "title": "Winter Solstice Community Walk + Tea",
+    "date": "2025-12-21T23:00:00Z",
+    "dateText": "Dec 21, 2025 • 4–6 PM",
+    "location": "Fort Collins CO",
+    "category": "Yoga & Mindfulness",
+    "desc": "Gentle group walk, reflective journaling, and herbal tea circle.",
+    "image": "/images/rituals.jpg",
+    "url": "https://www.fcgov.com/"
+  }
+]

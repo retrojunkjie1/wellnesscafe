@@ -161,7 +161,7 @@ const AuthDebug = () => {
               <td style={{ padding: "0.5rem", fontWeight: "bold" }}>
                 NODE_ENV:
               </td>
-              <td style={{ padding: "0.5rem" }}>{process.env.NODE_ENV}</td>
+              <td style={{ padding: "0.5rem" }}>{import.meta.env.NODE_ENV}</td>
             </tr>
             <tr style={{ borderBottom: "1px solid #ddd" }}>
               <td style={{ padding: "0.5rem", fontWeight: "bold" }}>
@@ -174,7 +174,7 @@ const AuthDebug = () => {
                 Firebase API Key Present:
               </td>
               <td style={{ padding: "0.5rem" }}>
-                {process.env.REACT_APP_FIREBASE_API_KEY ? "✅ Yes" : "❌ No"}
+                {import.meta.env.VITE_FIREBASE_API_KEY ? "✅ Yes" : "❌ No"}
               </td>
             </tr>
             <tr style={{ borderBottom: "1px solid #ddd" }}>
@@ -182,7 +182,7 @@ const AuthDebug = () => {
                 Firebase Project ID:
               </td>
               <td style={{ padding: "0.5rem" }}>
-                {process.env.REACT_APP_FIREBASE_PROJECT_ID || "❌ Not Set"}
+                {import.meta.env.VITE_FIREBASE_PROJECT_ID || "❌ Not Set"}
               </td>
             </tr>
           </tbody>

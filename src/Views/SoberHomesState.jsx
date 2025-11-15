@@ -325,7 +325,7 @@ const SoberHomesState = () => {
   return (
     <div>
       <PageBanner
-        imageSrc={`${process.env.PUBLIC_URL}/images/community.jpg`}
+        imageSrc={`${import.meta.env.PUBLIC_URL}/images/community.jpg`}
         altText={`Sober Living in ${stateName}`}
       />
       <main className="container max-w-[980px] my-8 mx-auto px-4">
