@@ -1,100 +1,48 @@
 // src/components/LuxuryNavbar.jsx
 import React,{useEffect,useState} from "react";
+import { useAuth } from "../AuthContext";
 import "./LuxuryNavbar.css";
 
 const NAV_SECTIONS=[
   {
     key:"recovery",
     label:"Recovery",
-    align:"center",
-    mega:{
-      quickLinks:[
-        {label:"AI-Powered Recovery",href:"/recovery/ai"},
-        {label:"Sobriety Dashboard",href:"/recovery/dashboard"},
-        {label:"Urge Surfing Lab",href:"/tools/urge-surfing"},
-      ],
-      featuredTools:[
-        {
-          label:"Trigger Tracker",
-          href:"/tools/trigger-tracker",
-          desc:"Map patterns, people, and places that spike your nervous system."
-        },
-        {
-          label:"Daily Check-In",
-          href:"/tools/check-in",
-          desc:"Simple structured check-ins that keep you honest and grounded."
-        }
-      ],
-      spotlight:{
-        label:"Precision Recovery",
-        desc:"A calm, data-aware recovery hub that learns your rhythms over time.",
-        href:"/recovery"
-      }
-    }
+    items:[
+      {label:"Recovery Hub",href:"/recovery"},
+      {label:"Sobriety Dashboard",href:"/dashboard"},
+      {label:"Trauma Education",href:"/trauma-education"},
+      {label:"Trigger Tracker",href:"/tools/trigger-tracker"},
+      {label:"Daily Check-In",href:"/check-in"},
+    ]
   },
   {
     key:"tools",
     label:"Tools",
-    align:"center",
-    mega:{
-      quickLinks:[
-        {label:"Guided Mindfulness",href:"/tools/mindfulness"},
-        {label:"Breathwork Studio",href:"/tools/breathwork"},
-        {label:"Acuwellness",href:"/tools/acuwellness"},
-      ],
-      featuredTools:[
-        {
-          label:"Urge Surfing",
-          href:"/tools/urge-surfing",
-          desc:"Ride cravings like waves instead of letting them crash your day."
-        },
-        {
-          label:"Affirmation Engine",
-          href:"/tools/affirmations",
-          desc:"AI-tuned affirmations matched to your current emotional state."
-        }
-      ],
-      spotlight:{
-        label:"Wellness Tools Board",
-        desc:"One page where all your rituals, tools, and trackers live together.",
-        href:"/tools"
-      }
-    }
+    items:[
+      {label:"Tools Dashboard",href:"/tools"},
+      {label:"Session Templates",href:"/sessions/templates"},
+      {label:"Meditation Timer",href:"/tools/meditation"},
+      {label:"Breathwork",href:"/tools/breathing"},
+      {label:"Acuwellness",href:"/acuwellness"},
+      {label:"Mood Check-In",href:"/tools/mood-checkin"},
+      {label:"Affirmations",href:"/tools/affirmations"},
+    ]
   },
   {
     key:"providers",
     label:"Providers",
-    align:"right",
-    mega:{
-      quickLinks:[
-        {label:"Therapists",href:"/providers/therapists"},
-        {label:"Sober Coaches",href:"/providers/coaches"},
-        {label:"Spiritual Guides",href:"/providers/spiritual"},
-        {label:"Clinics & Retreats",href:"/providers/clinics"},
-      ],
-      featuredTools:[
-        {
-          label:"Match With A Guide",
-          href:"/providers/match",
-          desc:"Answer a few questions and let the AI shortlist aligned providers."
-        },
-        {
-          label:"Provider Marketplace",
-          href:"/providers",
-          desc:"Curated wellness professionals who understand recovery first."
-        }
-      ],
-      spotlight:{
-        label:"WellnessCafe Network",
-        desc:"A global network of recovery-minded practitioners and spaces.",
-        href:"/providers"
-      }
-    }
+    items:[
+      {label:"Provider Directory",href:"/providers/directory"},
+      {label:"Join as Provider",href:"/providers/apply"},
+      {label:"About Providers",href:"/providers"},
+      {label:"Sober Living Homes",href:"/assistance"},
+      {label:"Provider Benefits",href:"/providers/benefits"},
+    ]
   }
 ];
 
 const LuxuryNavbar=()=>{
-
+  const { currentUser, logout } = useAuth();
   const [isMobileOpen,setIsMobileOpen]=useState(false);
   const [activeMega,setActiveMega]=useState(null);
   const [isScrolled,setIsScrolled]=useState(false);
@@ -165,43 +113,15 @@ const LuxuryNavbar=()=>{
                 <span className="wc-caret">▾</span>
               </button>
 
-              {/* Mega menu (desktop only via CSS) */}
-              <div className={`wc-mega wc-mega-menu wc-mega--${section.align||"center"}`}>
-                <div className="wc-mega-col wc-mega-col--quick">
-                  <div className="wc-mega-label">Quick paths</div>
-                  <ul>
-                    {section.mega.quickLinks.map((item)=>(
-                      <li key={item.href}>
-                        <a href={item.href} className="wc-mega-link">{item.label}</a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="wc-mega-col wc-mega-col--featured">
-                  <div className="wc-mega-label">Featured tools</div>
-                  {section.mega.featuredTools.map((item)=>(
-                    <a key={item.href} href={item.href} className="wc-mega-card">
-                      <div className="wc-mega-card-title">{item.label}</div>
-                      <div className="wc-mega-card-desc">{item.desc}</div>
-                    </a>
+              {/* Compact dropdown menu */}
+              <div className="wc-dropdown">
+                <ul>
+                  {section.items.map((item)=>(
+                    <li key={item.href}>
+                      <a href={item.href} className="wc-dropdown-link">{item.label}</a>
+                    </li>
                   ))}
-                </div>
-
-                <div className="wc-mega-col wc-mega-col--spotlight">
-                  <div className="wc-mega-spotlight">
-                    <div className="wc-mega-spotlight-kicker">Spotlight</div>
-                    <div className="wc-mega-spotlight-title">
-                      {section.mega.spotlight.label}
-                    </div>
-                    <div className="wc-mega-spotlight-desc">
-                      {section.mega.spotlight.desc}
-                    </div>
-                    <a href={section.mega.spotlight.href} className="wc-mega-spotlight-cta">
-                      Enter space ↗
-                    </a>
-                  </div>
-                </div>
+                </ul>
               </div>
             </div>
           ))}
@@ -209,9 +129,24 @@ const LuxuryNavbar=()=>{
 
         {/* Right controls */}
         <div className="wc-navbar-right">
-          <a href="/get-help" className="wc-cta-pill">
+          <a href="/assistance" className="wc-cta-pill">
             <span>Get Help Now</span>
           </a>
+
+          {/* Auth buttons */}
+          {currentUser ? (
+            <div className="wc-auth-group">
+              <a href="/dashboard" className="wc-auth-link">Dashboard</a>
+              <button onClick={logout} className="wc-auth-link wc-auth-logout">
+                Logout
+              </button>
+            </div>
+          ) : (
+            <div className="wc-auth-group">
+              <a href="/login" className="wc-auth-link">Login</a>
+              <a href="/signup" className="wc-auth-link-primary">Sign Up</a>
+            </div>
+          )}
 
           {/* Mobile hamburger */}
           <button
@@ -234,9 +169,7 @@ const LuxuryNavbar=()=>{
           {NAV_SECTIONS.map((section)=>(
             <div key={section.key} className="wc-mobile-group">
               <div className="wc-mobile-group-title">{section.label}</div>
-
-              <div className="wc-mobile-subtitle">Quick paths</div>
-              {section.mega.quickLinks.map((item)=>(
+              {section.items.map((item)=>(
                 <a
                   key={item.href}
                   href={item.href}
@@ -246,29 +179,39 @@ const LuxuryNavbar=()=>{
                   {item.label}
                 </a>
               ))}
-
-              <div className="wc-mobile-subtitle">Featured</div>
-              {section.mega.featuredTools.map((item)=>(
-                <a
-                  key={item.href}
-                  href={item.href}
-                  className="wc-mobile-card"
-                  onClick={toggleMobileMenu}
-                >
-                  <div className="wc-mobile-card-title">{item.label}</div>
-                  <div className="wc-mobile-card-desc">{item.desc}</div>
-                </a>
-              ))}
             </div>
           ))}
 
           <a
-            href="/get-help"
+            href="/assistance"
             className="wc-mobile-emergency"
             onClick={toggleMobileMenu}
           >
             Get Help Now • 24/7
           </a>
+
+          {/* Mobile auth section */}
+          <div className="wc-mobile-auth">
+            {currentUser ? (
+              <>
+                <a href="/dashboard" className="wc-mobile-link" onClick={toggleMobileMenu}>
+                  Dashboard
+                </a>
+                <button onClick={()=>{logout();toggleMobileMenu();}} className="wc-mobile-link wc-mobile-logout">
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <a href="/login" className="wc-mobile-link" onClick={toggleMobileMenu}>
+                  Login
+                </a>
+                <a href="/signup" className="wc-mobile-link-primary" onClick={toggleMobileMenu}>
+                  Sign Up
+                </a>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </header>

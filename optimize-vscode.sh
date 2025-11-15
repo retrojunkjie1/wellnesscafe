@@ -1,4 +1,4 @@
-#!/bin/bash
+git commit -m "feat: Implement new Luxury Navbar with mega-menus and mobile support"git push origin main#!/bin/bash
 # 🧠 WELLNESSCAFE AI — VS CODE OPTIMIZATION SCRIPT
 # ------------------------------------------------
 # This script cleans your environment, optimizes VS Code,

@@ -76,6 +76,10 @@ import Upgrade from "./pages/Upgrade.jsx";
 import AuroraDashboard from "./pages/premium/AuroraDashboard.jsx";
 import UsersAdmin from "./pages/admin/UsersAdmin.jsx";
 
+// Wellness Sessions (Milestone 4)
+import SessionTemplates from "./features/wellness-sessions/SessionTemplates.jsx";
+import ActiveSession from "./features/wellness-sessions/ActiveSession.jsx";
+
 // Create context for AI Widget control
 const AIWidgetContext = createContext(null);
 
@@ -306,6 +310,10 @@ function App() {
                 path="/tools/stress-assessment"
                 element={<StressAssessmentPage />}
               />
+
+              {/* Wellness Sessions (Milestone 4) */}
+              <Route path="/sessions/templates" element={<SessionTemplates />} />
+              <Route path="/sessions/active" element={<ActiveSession />} />
 
               {/* Debug */}
               <Route path="/auth-debug" element={<AuthDebug />} />
