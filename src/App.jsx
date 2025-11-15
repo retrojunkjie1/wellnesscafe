@@ -11,7 +11,7 @@ import ProviderRoute from './components/access/ProviderRoute.jsx';
 import AdminRoute from './components/access/AdminRoute.jsx';
 
 // Component & Page Imports
-import Navbar from "./components/Navbar";
+import LuxuryNavbar from "./components/LuxuryNavbar";
 import NavigationButtons from "./components/NavigationButtons";
 import FloatingAIWidget from "./components/FloatingAIWidget";
 import Login from "./components/Login";
@@ -95,7 +95,7 @@ function App() {
       <ThemeProvider>
         <AIWidgetContext.Provider value={aiWidgetRef}>
           <Router>
-            <Navbar />
+            <LuxuryNavbar />
             <NavigationButtons />
             <FloatingAIWidget ref={aiWidgetRef} />
             <Routes>
