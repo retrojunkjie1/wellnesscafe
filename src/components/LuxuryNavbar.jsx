@@ -6,6 +6,7 @@ const NAV_SECTIONS=[
   {
     key:"recovery",
     label:"Recovery",
+    align:"center",
     mega:{
       quickLinks:[
         {label:"AI-Powered Recovery",href:"/recovery/ai"},
@@ -34,6 +35,7 @@ const NAV_SECTIONS=[
   {
     key:"tools",
     label:"Tools",
+    align:"center",
     mega:{
       quickLinks:[
         {label:"Guided Mindfulness",href:"/tools/mindfulness"},
@@ -62,6 +64,7 @@ const NAV_SECTIONS=[
   {
     key:"providers",
     label:"Providers",
+    align:"right",
     mega:{
       quickLinks:[
         {label:"Therapists",href:"/providers/therapists"},
@@ -98,7 +101,13 @@ const LuxuryNavbar=()=>{
 
   useEffect(()=>{
     const onScroll=()=>{
-      if(window.scrollY>24){setIsScrolled(true);}else{setIsScrolled(false);}
+      if(window.scrollY>24){
+        setIsScrolled(true);
+        // Auto-close mega menu on scroll
+        setActiveMega(null);
+      }else{
+        setIsScrolled(false);
+      }
     };
     window.addEventListener("scroll",onScroll);
     return ()=>window.removeEventListener("scroll",onScroll);
@@ -157,7 +166,7 @@ const LuxuryNavbar=()=>{
               </button>
 
               {/* Mega menu (desktop only via CSS) */}
-              <div className="wc-mega">
+              <div className={`wc-mega wc-mega-menu wc-mega--${section.align||"center"}`}>
                 <div className="wc-mega-col wc-mega-col--quick">
                   <div className="wc-mega-label">Quick paths</div>
                   <ul>
@@ -200,19 +209,6 @@ const LuxuryNavbar=()=>{
 
         {/* Right controls */}
         <div className="wc-navbar-right">
-          <div className="wc-sound-pill">
-            <span className="wc-sound-dot" />
-            <select
-              className="wc-sound-select"
-              defaultValue="NTS Ambient"
-              aria-label="Soundscape"
-            >
-              <option>NTS Ambient</option>
-              <option>Lo-Fi Calm</option>
-              <option>Ocean Breath</option>
-              <option>Guided Silence</option>
-            </select>
-          </div>
           <a href="/get-help" className="wc-cta-pill">
             <span>Get Help Now</span>
           </a>

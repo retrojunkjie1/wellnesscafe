@@ -107,6 +107,16 @@ useEffect(() => {
 
   return (
     <div className="newsfeed-container">
+      {/* Soundscape Selector */}
+      <div className="news-sound-picker">
+        <select className="news-sound-select" defaultValue="NTS Ambient" aria-label="Select soundscape">
+          <option>NTS Ambient</option>
+          <option>Lo-Fi Calm</option>
+          <option>Ocean Breath</option>
+          <option>Guided Silence</option>
+        </select>
+      </div>
+
       <h2 className="newsfeed-title heading-rich">Top Stories</h2>
       {error ? (
         <p style={{ textAlign: "center", opacity: 0.85 }}>{error}</p>

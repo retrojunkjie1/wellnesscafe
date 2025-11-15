@@ -405,3 +405,60 @@ select:not([class*="glass"]):not([class*="ai-"]):not([class*="ad-"]):not(
   ):not([class*="newsletter-"]):invalid:focus {
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1); /* Red glow for invalid focus */
 }
+
+/* ===================================
+   RADIO PLAYER WAVEFORM ANIMATION
+   =================================== */
+.wc-wave{
+  display:flex;
+  align-items:flex-end;
+  gap:2px;
+  margin-left:4px;
+  height:10px;
+  opacity:0.35;
+  transition:opacity 0.18s ease;
+}
+
+.wc-wave--on{
+  opacity:1;
+}
+
+.wc-wave-bar{
+  width:2px;
+  border-radius:999px;
+  background:linear-gradient(to top,#22c55e,#a855f7);
+  transform-origin:bottom;
+  animation-duration:0.9s;
+  animation-iteration-count:infinite;
+  animation-timing-function:ease-in-out;
+}
+
+.wc-wave-bar--1{
+  height:4px;
+  animation-name:wcWaveOne;
+}
+
+.wc-wave-bar--2{
+  height:7px;
+  animation-name:wcWaveTwo;
+}
+
+.wc-wave-bar--3{
+  height:5px;
+  animation-name:wcWaveThree;
+}
+
+@keyframes wcWaveOne{
+  0%,100%{transform:scaleY(0.6);}
+  50%{transform:scaleY(1.4);}
+}
+
+@keyframes wcWaveTwo{
+  0%,100%{transform:scaleY(0.8);}
+  50%{transform:scaleY(1.6);}
+}
+
+@keyframes wcWaveThree{
+  0%,100%{transform:scaleY(0.7);}
+  50%{transform:scaleY(1.3);}
+}
