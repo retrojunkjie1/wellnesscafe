@@ -1,0 +1,1 @@
+import{j as r}from"./react-vendor-B5xUu9wX.js";import"./ai-engine-BQFxlMsO.js";import"./core-libs-BseDu1u3.js";import"./ui-heavy-8XJPmDUO.js";function o(){return r.jsx("div",{style:{padding:20},children:"Upgrade Page"})}export{o as default};

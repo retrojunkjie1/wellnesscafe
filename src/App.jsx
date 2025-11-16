@@ -1,84 +1,97 @@
-import React, { createContext, useContext, useRef } from "react";
+import React, { createContext, useContext, useRef, Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { ThemeProvider } from "./utils/ThemeContext";
 import { AuthProvider } from "./AuthContext";
 
-// New Route Guards
-import ProtectedRoute from './components/access/ProtectedRoute.jsx';
-import PremiumRoute from './components/access/PremiumRoute.jsx';
-import ProviderRoute from './components/access/ProviderRoute.jsx';
-import AdminRoute from './components/access/AdminRoute.jsx';
+// New Route Guards (keep these as static - small and critical)
+import ProtectedRoute from "./components/access/ProtectedRoute.jsx";
+import PremiumRoute from "./components/access/PremiumRoute.jsx";
+import ProviderRoute from "./components/access/ProviderRoute.jsx";
+import AdminRoute from "./components/access/AdminRoute.jsx";
 
-// Component & Page Imports
+// Core UI Components (keep as static - always needed)
 import LuxuryNavbar from "./components/LuxuryNavbar";
 import NavigationButtons from "./components/NavigationButtons";
 import FloatingAIWidget from "./components/FloatingAIWidget";
 import Login from "./components/Login";
-import Dashboard from "./components/Dashboard";
-import DevTools from "./components/DevTools";
-import AuthDebug from "./components/AuthDebug";
 
-import HomePage from "./Views/HomePage";
-import Recovery from "./Views/Recovery";
-import Yoga from "./Views/Yoga";
-import Acuwellness from "./Views/Acuwellness";
-import Spiritual from "./Views/Spiritual";
-import EventsPage from "./Views/EventsPage";
-import AssistPage from "./Views/AssistPage";
-import ProvidersPage from "./Views/ProvidersPage";
-import AboutPage from "./Views/AboutPage";
-import ProductPage from "./Views/ProductPage";
-import ToolsPage from "./Views/ToolsPage";
-import BlogPage from "./Views/BlogPage";
-import PrivacyPage from "./Views/PrivacyPage";
-import TraumaEducationPage from "./Views/TraumaEducationPage";
-import CareersPage from "./Views/CareersPage";
-import FAQPage from "./Views/FAQPage";
-import NewsPage from "./Views/NewsPage";
-import ResourceDetail from "./Views/ResourceDetail";
-import SoberHomesState from "./Views/SoberHomesState";
-import AssistantsPage from "./Views/AssistantsPage";
-import CheckInPage from "./Views/CheckInPage";
+// Lazy-loaded heavy components
+const Dashboard = lazy(() => import("./components/Dashboard"));
+const DevTools = lazy(() => import("./components/DevTools"));
+const AuthDebug = lazy(() => import("./components/AuthDebug"));
 
-// Feature-specific Imports
-import Signup from "./features/auth/Signup";
-import ProviderDashboard from "./features/providers/ProviderDashboard";
-import ProviderSignup from "./features/providers/ProviderSignup";
-import ProviderDirectory from "./features/providers/ProviderDirectory";
-import BenefitsDetail from "./features/providers/BenefitsDetail";
-import ExpectationsDetail from "./features/providers/ExpectationsDetail";
-import TestimonialsDetail from "./features/providers/TestimonialsDetail";
-import StrategicInitiatives from "./features/providers/StrategicInitiatives";
-import LeadershipPage from "./features/providers/LeadershipPage";
-import ContactPage from "./features/providers/ContactPage";
-import AdminVerify from "./features/providers/AdminVerify";
-import AdminImport from "./features/providers/AdminImport";
-import AuroraBreathing from "./features/recovery/tools/AuroraBreathing";
-import NewsFeed from "./features/news/NewsFeed.jsx";
-import ArticleReader from "./features/news/ArticleReader.jsx";
-import AdminAssistants from "./features/admin/AdminAssistants.jsx";
+// Lazy-loaded Views
+const HomePage = lazy(() => import("./Views/HomePage"));
+const Recovery = lazy(() => import("./Views/Recovery"));
+const Yoga = lazy(() => import("./Views/Yoga"));
+const Acuwellness = lazy(() => import("./Views/Acuwellness"));
+const Spiritual = lazy(() => import("./Views/Spiritual"));
+const EventsPage = lazy(() => import("./Views/EventsPage"));
+const AssistPage = lazy(() => import("./Views/AssistPage"));
+const ProvidersPage = lazy(() => import("./Views/ProvidersPage"));
+const AboutPage = lazy(() => import("./Views/AboutPage"));
+const ProductPage = lazy(() => import("./Views/ProductPage"));
+const ToolsPage = lazy(() => import("./Views/ToolsPage"));
+const BlogPage = lazy(() => import("./Views/BlogPage"));
+const PrivacyPage = lazy(() => import("./Views/PrivacyPage"));
+const TraumaEducationPage = lazy(() => import("./Views/TraumaEducationPage"));
+const CareersPage = lazy(() => import("./Views/CareersPage"));
+const FAQPage = lazy(() => import("./Views/FAQPage"));
+const NewsPage = lazy(() => import("./Views/NewsPage"));
+const ResourceDetail = lazy(() => import("./Views/ResourceDetail"));
+const SoberHomesState = lazy(() => import("./Views/SoberHomesState"));
+const AssistantsPage = lazy(() => import("./Views/AssistantsPage"));
+const CheckInPage = lazy(() => import("./Views/CheckInPage"));
 
-// Tool Pages
-import MeditationTimerPage from "./Views/tools/MeditationTimerPage";
-import AffirmationsGeneratorPage from "./Views/tools/AffirmationsGeneratorPage";
-import StressAssessmentPage from "./Views/tools/StressAssessmentPage";
-import TriggerTrackerPage from "./Views/tools/TriggerTrackerPage";
-import MoodCheckInPage from "./Views/tools/MoodCheckInPage";
-import GratitudeJournalPage from "./Views/tools/GratitudeJournalPage";
-import MeditationTimerPremiumPage from "./Views/tools/MeditationTimerPremiumPage";
-import EmotionTrackerPage from "./Views/tools/EmotionTrackerPage";
-import TriggerJournalPage from "./Views/tools/TriggerJournalPage";
-import WeeklyReviewPage from "./Views/tools/WeeklyReviewPage";
+// Lazy-loaded Feature components
+const Signup = lazy(() => import("./features/auth/Signup"));
+const ProviderDashboard = lazy(() => import("./features/providers/ProviderDashboard"));
+const ProviderSignup = lazy(() => import("./features/providers/ProviderSignup"));
+const ProviderDirectory = lazy(() => import("./features/providers/ProviderDirectory"));
+const BenefitsDetail = lazy(() => import("./features/providers/BenefitsDetail"));
+const ExpectationsDetail = lazy(() => import("./features/providers/ExpectationsDetail"));
+const TestimonialsDetail = lazy(() => import("./features/providers/TestimonialsDetail"));
+const StrategicInitiatives = lazy(() => import("./features/providers/StrategicInitiatives"));
+const LeadershipPage = lazy(() => import("./features/providers/LeadershipPage"));
+const ContactPage = lazy(() => import("./features/providers/ContactPage"));
+const AdminVerify = lazy(() => import("./features/providers/AdminVerify"));
+const AdminImport = lazy(() => import("./features/providers/AdminImport"));
+const AuroraBreathing = lazy(() => import("./features/recovery/tools/AuroraBreathing"));
+const NewsFeed = lazy(() => import("./features/news/NewsFeed.jsx"));
+const ArticleReader = lazy(() => import("./features/news/ArticleReader.jsx"));
+const AdminAssistants = lazy(() => import("./features/admin/AdminAssistants.jsx"));
 
-// New Premium/Admin Pages
-import Upgrade from "./pages/Upgrade.jsx";
-import AuroraDashboard from "./pages/premium/AuroraDashboard.jsx";
-import UsersAdmin from "./pages/admin/UsersAdmin.jsx";
+// Lazy-loaded Tool Pages
+const MeditationTimerPage = lazy(() => import("./Views/tools/MeditationTimerPage"));
+const AffirmationsGeneratorPage = lazy(() => import("./Views/tools/AffirmationsGeneratorPage"));
+const StressAssessmentPage = lazy(() => import("./Views/tools/StressAssessmentPage"));
+const TriggerTrackerPage = lazy(() => import("./Views/tools/TriggerTrackerPage"));
+const MoodCheckInPage = lazy(() => import("./Views/tools/MoodCheckInPage"));
+const GratitudeJournalPage = lazy(() => import("./Views/tools/GratitudeJournalPage"));
+const MeditationTimerPremiumPage = lazy(() => import("./Views/tools/MeditationTimerPremiumPage"));
+const EmotionTrackerPage = lazy(() => import("./Views/tools/EmotionTrackerPage"));
+const TriggerJournalPage = lazy(() => import("./Views/tools/TriggerJournalPage"));
+const WeeklyReviewPage = lazy(() => import("./Views/tools/WeeklyReviewPage"));
 
-// Wellness Sessions (Milestone 4)
-import SessionTemplates from "./features/wellness-sessions/SessionTemplates.jsx";
-import ActiveSession from "./features/wellness-sessions/ActiveSession.jsx";
+// Lazy-loaded Premium/Admin Pages
+const Upgrade = lazy(() => import("./pages/Upgrade.jsx"));
+const AuroraDashboard = lazy(() => import("./pages/premium/AuroraDashboard.jsx"));
+const UsersAdmin = lazy(() => import("./pages/admin/UsersAdmin.jsx"));
+
+// Lazy-loaded Wellness Sessions (AI-heavy)
+const SessionTemplates = lazy(() => import("./features/wellness-sessions/SessionTemplates.jsx"));
+const ActiveSession = lazy(() => import("./features/wellness-sessions/ActiveSession.jsx"));
+
+// Loading fallback component
+const LoadingFallback = () => (
+  <div className="flex items-center justify-center min-h-screen">
+    <div className="text-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
+      <p className="text-slate-600">Loading...</p>
+    </div>
+  </div>
+);
 
 // Create context for AI Widget control
 const AIWidgetContext = createContext(null);
@@ -102,7 +115,8 @@ function App() {
             <LuxuryNavbar />
             <NavigationButtons />
             <FloatingAIWidget ref={aiWidgetRef} />
-            <Routes>
+            <Suspense fallback={<LoadingFallback />}>
+              <Routes>
               {/* Core & Auth Routes */}
               <Route path="/" element={<HomePage />} />
               <Route path="/signup" element={<Signup />} />
@@ -317,7 +331,8 @@ function App() {
 
               {/* Debug */}
               <Route path="/auth-debug" element={<AuthDebug />} />
-            </Routes>
+              </Routes>
+            </Suspense>
           </Router>
         </AIWidgetContext.Provider>
       </ThemeProvider>

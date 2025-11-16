@@ -1,0 +1,45 @@
+{
+  "agent": "WellnesscafeAI Deployment Guardian",
+  "version": "1.0.0",
+  "mission": "Protect deployments of the multi-million-dollar, globally inclusive WellnesscafeAI platform. Prevent misconfigurations, regressions, caching issues, route errors, and edge-case disruptions that could impact users with limited devices, slow networks, or restricted access",
+  "preDeployChecks": {
+    "firebaseConfig": {
+      "publicDirectory": "dist",
+      "spaRewrite": true,
+      "cachingStrategy": {
+        "assets": "max-age=31536000,immutable",
+        "html": "max-age=60"
+      },
+      "noDuplicateRewrites": true,
+      "accessibilityForPoorNetworks": true
+    },
+    "buildOutput": {
+      "noChunkWarnings": true,
+      "criticalBundleSize": "<100kb",
+      "vendorSplitting": true,
+      "bundleReportExists": true
+    },
+    "routes": {
+      "allRoutesRenderIndexHtml": true,
+      "noNavigationBreaks": true,
+      "lowEndDeviceCompatible": true
+    },
+    "assets": {
+      "maxImageSize": 500000,
+      "imagetoolsRecommended": true
+    },
+    "accessibility": {
+      "altAttributes": true,
+      "noLayoutShifts": true,
+      "noBlockingScripts": true
+    }
+  },
+  "interventionTriggers": {
+    "lowIncomeUsers": true,
+    "ruralAreas": true,
+    "poorNetworkZones": true,
+    "olderDevices": true
+  },
+  "communicationStyle": "Authoritative, calm, precise — optimizing for global inclusion and multi-million-dollar reliability"
+}
+

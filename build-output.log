@@ -1,0 +1,180 @@
+
+> wellcafeland@0.1.0 build
+> vite build
+
+[33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
+vite v5.4.21 building for production...
+transforming...
+✓ 3304 modules transformed.
+rendering chunks...
+warnings when minifying css:
+▲ [WARNING] Expected identifier but found whitespace [css-syntax-error]
+
+    <stdin>:2730:6:
+      2730 │ color: var(--text-strong);
+           ╵       ^
+
+
+▲ [WARNING] Unexpected "var(" [css-syntax-error]
+
+    <stdin>:2730:7:
+      2730 │ color: var(--text-strong);
+           ╵        ~~~~
+
+
+▲ [WARNING] Expected identifier but found whitespace [css-syntax-error]
+
+    <stdin>:2744:12:
+      2744 │ line-height: 1.55;
+           ╵             ^
+
+
+▲ [WARNING] Unexpected "1.55" [css-syntax-error]
+
+    <stdin>:2744:13:
+      2744 │ line-height: 1.55;
+           ╵              ~~~~
+
+
+computing gzip size...
+dist/index.html                                        1.33 kB │ gzip:   0.57 kB
+dist/assets/wellnesscafe-bowl-v2-D8TDnhjW.png         86.92 kB
+dist/assets/wellnesscafe-bowl-v1-w5tSrwOr.png        230.96 kB
+dist/assets/WellnessCafe-Product-v1-BZ8nvy8h.png   2,420.52 kB
+dist/assets/wellnesscafe-journal-vs1-CJWdGiPR.png  2,574.92 kB
+dist/assets/Aspen-7-C0I4nZLi.png                   2,609.21 kB
+dist/assets/Aspen-5-BepS6iOB.png                   2,678.65 kB
+dist/assets/well-cafe-v5-BX-P-T6c.png              2,793.64 kB
+dist/assets/well-cafe-v1-DH44prg9.png              2,857.04 kB
+dist/assets/well-cafe-v3-D9GbF-aF.png              2,885.54 kB
+dist/assets/well-cafe-v2-yltoy-Xt.png              3,136.77 kB
+dist/assets/ComplianceNotice-By9t6nSY.css              0.19 kB │ gzip:   0.17 kB
+dist/assets/Thumbnail-CcIFdY3Q.css                     0.20 kB │ gzip:   0.18 kB
+dist/assets/PageBanner-Bczo-3qV.css                    0.44 kB │ gzip:   0.26 kB
+dist/assets/react-vendor-DOnzI3fN.css                  0.82 kB │ gzip:   0.24 kB
+dist/assets/BlogPage-pUDmegnf.css                      1.08 kB │ gzip:   0.46 kB
+dist/assets/ProductPage-Dtvq5017.css                   2.01 kB │ gzip:   0.87 kB
+dist/assets/EventsPage-DnjxTXUh.css                    2.08 kB │ gzip:   0.85 kB
+dist/assets/AboutPage-Dtzp6PVN.css                     2.20 kB │ gzip:   0.80 kB
+dist/assets/Acuwellness-D4JS2mEl.css                   2.69 kB │ gzip:   0.86 kB
+dist/assets/news-CoMiaHPf.css                          3.13 kB │ gzip:   1.22 kB
+dist/assets/Header-B4rEVW-M.css                        3.54 kB │ gzip:   1.35 kB
+dist/assets/DevTools-Byv58BZT.css                      4.48 kB │ gzip:   1.35 kB
+dist/assets/ProviderDirectory-ByivrVut.css             5.11 kB │ gzip:   1.53 kB
+dist/assets/Yoga-DYEQtC7z.css                          7.11 kB │ gzip:   1.84 kB
+dist/assets/ResourceDetail-uItRDjP7.css                7.25 kB │ gzip:   1.91 kB
+dist/assets/PageTemplate-CllCo7k2.css                  7.47 kB │ gzip:   1.81 kB
+dist/assets/ai-engine-BQSxPaH7.css                     8.05 kB │ gzip:   2.07 kB
+dist/assets/ToolsPage-bOVfOC1q.css                    10.78 kB │ gzip:   2.76 kB
+dist/assets/AssistPage-CcENJI1N.css                   15.42 kB │ gzip:   3.06 kB
+dist/assets/HomePage-Hhd07VFW.css                     19.29 kB │ gzip:   4.32 kB
+dist/assets/Recovery-DKRcgfMH.css                     22.20 kB │ gzip:   4.30 kB
+dist/assets/dashboard-BJr3pwLM.css                    36.24 kB │ gzip:   7.35 kB
+dist/assets/tools-DyNGwsz0.css                        56.14 kB │ gzip:   9.56 kB
+dist/assets/index-gxPE5ntY.css                        89.71 kB │ gzip:  16.00 kB
+dist/assets/Aspen-5-Cs-AnjPT.js                        0.06 kB │ gzip:   0.08 kB
+dist/assets/wellnesscafe-bowl-v2-Lr1jIdTX.js           0.07 kB │ gzip:   0.09 kB
+dist/assets/iowa-DzdoINGx.js                           0.09 kB │ gzip:   0.11 kB
+dist/assets/ohio-CY-hd30Z.js                           0.09 kB │ gzip:   0.11 kB
+dist/assets/utah-fWPPGE_F.js                           0.09 kB │ gzip:   0.11 kB
+dist/assets/idaho-BnVCFG86.js                          0.10 kB │ gzip:   0.11 kB
+dist/assets/maine-Br1Qq285.js                          0.10 kB │ gzip:   0.11 kB
+dist/assets/texas-DUuvUwEr.js                          0.10 kB │ gzip:   0.11 kB
+dist/assets/hawaii-BrcD4Wcc.js                         0.10 kB │ gzip:   0.11 kB
+dist/assets/kansas-Bjy04Std.js                         0.10 kB │ gzip:   0.11 kB
+dist/assets/nevada-CiqMPpSN.js                         0.10 kB │ gzip:   0.11 kB
+dist/assets/oregon-Dk_WRrS3.js                         0.10 kB │ gzip:   0.11 kB
+dist/assets/georgia-DSDiQzaU.js                        0.10 kB │ gzip:   0.11 kB
+dist/assets/indiana-D3xr0gXT.js                        0.10 kB │ gzip:   0.11 kB
+dist/assets/montana-C_o9dPux.js                        0.10 kB │ gzip:   0.11 kB
+dist/assets/vermont-Dz5T6Zu7.js                        0.10 kB │ gzip:   0.11 kB
+dist/assets/wyoming-CYOgjqWp.js                        0.10 kB │ gzip:   0.11 kB
+dist/assets/colorado-CX46SX3n.js                       0.10 kB │ gzip:   0.11 kB
+dist/assets/illinois-Bi9pPc48.js                       0.10 kB │ gzip:   0.11 kB
+dist/assets/kentucky-BwGMFrGW.js                       0.10 kB │ gzip:   0.11 kB
+dist/assets/maryland-Dfi8VZSw.js                       0.10 kB │ gzip:   0.11 kB
+dist/assets/michigan-TppxKRMt.js                       0.10 kB │ gzip:   0.11 kB
+dist/assets/missouri-D8CVYh3r.js                       0.10 kB │ gzip:   0.11 kB
+dist/assets/nebraska-CQIvF1Y3.js                       0.10 kB │ gzip:   0.11 kB
+dist/assets/new-york-DAvdPYFA.js                       0.10 kB │ gzip:   0.11 kB
+dist/assets/oklahoma-D2vSBSXN.js                       0.10 kB │ gzip:   0.11 kB
+dist/assets/virginia-D62aufii.js                       0.10 kB │ gzip:   0.11 kB
+dist/assets/louisiana-zllWXTk1.js                      0.10 kB │ gzip:   0.11 kB
+dist/assets/minnesota-z5mhkGdy.js                      0.10 kB │ gzip:   0.11 kB
+dist/assets/tennessee-kdTkqYQm.js                      0.10 kB │ gzip:   0.11 kB
+dist/assets/wisconsin-Dedt9sZN.js                      0.10 kB │ gzip:   0.11 kB
+dist/assets/new-jersey-Bfmyfn5u.js                     0.10 kB │ gzip:   0.12 kB
+dist/assets/new-mexico-V7PzmBlG.js                     0.10 kB │ gzip:   0.12 kB
+dist/assets/washington-hSfwpaPk.js                     0.10 kB │ gzip:   0.12 kB
+dist/assets/mississippi-CDTi7jOX.js                    0.10 kB │ gzip:   0.11 kB
+dist/assets/north-dakota-CMJX9dTz.js                   0.10 kB │ gzip:   0.12 kB
+dist/assets/pennsylvania-tpAg4UCo.js                   0.10 kB │ gzip:   0.12 kB
+dist/assets/rhode-island-BEwydJXo.js                   0.10 kB │ gzip:   0.12 kB
+dist/assets/south-dakota-_VGrACF5.js                   0.10 kB │ gzip:   0.12 kB
+dist/assets/massachusetts-BXmv3tcl.js                  0.10 kB │ gzip:   0.12 kB
+dist/assets/new-hampshire-C25h9Dhh.js                  0.10 kB │ gzip:   0.12 kB
+dist/assets/west-virginia-DyXNIpbX.js                  0.10 kB │ gzip:   0.12 kB
+dist/assets/north-carolina-B41ZKAuK.js                 0.10 kB │ gzip:   0.12 kB
+dist/assets/south-carolina-CwdNHxfZ.js                 0.10 kB │ gzip:   0.12 kB
+dist/assets/WellnessCafe-Product-v1-Dixo0VFW.js        0.18 kB │ gzip:   0.15 kB
+dist/assets/Upgrade-Djewsay0.js                        0.24 kB │ gzip:   0.20 kB
+dist/assets/UsersAdmin-Naj9q2Ec.js                     0.25 kB │ gzip:   0.21 kB
+dist/assets/TraumaEducationPage-9UUUY_mG.js            0.34 kB │ gzip:   0.25 kB
+dist/assets/PanoramicHero-DXUD-ShE.js                  0.38 kB │ gzip:   0.27 kB
+dist/assets/PageBanner-DlLiJ1Yv.js                     0.63 kB │ gzip:   0.38 kB
+dist/assets/CareersPage-BDJQakub.js                    0.92 kB │ gzip:   0.49 kB
+dist/assets/NewsPage-ORv4tFSC.js                       0.96 kB │ gzip:   0.52 kB
+dist/assets/CheckInPage-BYauwiUt.js                    1.00 kB │ gzip:   0.55 kB
+dist/assets/FAQPage-CNzDzOwt.js                        1.29 kB │ gzip:   0.62 kB
+dist/assets/Thumbnail-DSSzYLh1.js                      1.58 kB │ gzip:   0.84 kB
+dist/assets/PrivacyPage-l-qkLal8.js                    1.61 kB │ gzip:   0.74 kB
+dist/assets/delaware-Dj2vn-zJ.js                       1.75 kB │ gzip:   0.77 kB
+dist/assets/AdminVerify-DWbob8uT.js                    2.08 kB │ gzip:   0.84 kB
+dist/assets/PageTemplate-U9OxkPpv.js                   2.19 kB │ gzip:   0.82 kB
+dist/assets/connecticut-DSk5plxL.js                    2.34 kB │ gzip:   0.92 kB
+dist/assets/arkansas-BB_cniIm.js                       2.54 kB │ gzip:   1.02 kB
+dist/assets/ProvidersPage-KQzyb1Hv.js                  2.71 kB │ gzip:   1.05 kB
+dist/assets/BlogPage-Bmx-UWN6.js                       3.09 kB │ gzip:   1.48 kB
+dist/assets/florida-xoTJ8knu.js                        3.23 kB │ gzip:   1.18 kB
+dist/assets/arizona-CkENjSxC.js                        3.29 kB │ gzip:   1.31 kB
+dist/assets/Signup-Bp7zvH9t.js                         3.31 kB │ gzip:   1.37 kB
+dist/assets/alaska-B22NSB-U.js                         3.32 kB │ gzip:   1.27 kB
+dist/assets/ProductPage-CkKqb_pM.js                    3.36 kB │ gzip:   1.37 kB
+dist/assets/AboutPage-CmJsqK7Z.js                      3.47 kB │ gzip:   1.42 kB
+dist/assets/AdminImport-BKiVcM8O.js                    3.67 kB │ gzip:   1.68 kB
+dist/assets/california-D3R-Dfi8.js                     3.69 kB │ gzip:   1.38 kB
+dist/assets/Spiritual-DfhSFmYv.js                      4.22 kB │ gzip:   1.81 kB
+dist/assets/EventsPage-BgJJGdV9.js                     4.28 kB │ gzip:   1.79 kB
+dist/assets/alabama-7AdxO6jh.js                        4.56 kB │ gzip:   1.57 kB
+dist/assets/Acuwellness-B-FMHq6N.js                    4.80 kB │ gzip:   2.06 kB
+dist/assets/Header-CJ0vZwAX.js                         4.81 kB │ gzip:   2.01 kB
+dist/assets/index-B7Anqe97.js                          4.96 kB │ gzip:   1.55 kB
+dist/assets/BenefitsDetail-D5_vwoWT.js                 5.22 kB │ gzip:   2.25 kB
+dist/assets/ExpectationsDetail-CvO2GK7I.js             5.68 kB │ gzip:   2.26 kB
+dist/assets/AssistantsPage-D3VJFa_V.js                 6.00 kB │ gzip:   1.99 kB
+dist/assets/AdminAssistants-CXa8hiHy.js                6.08 kB │ gzip:   1.99 kB
+dist/assets/AuthDebug-DIuzgtZo.js                      6.63 kB │ gzip:   1.52 kB
+dist/assets/news-iBfakU5N.js                           6.91 kB │ gzip:   2.63 kB
+dist/assets/ToolsPage-C8swxTs_.js                      7.06 kB │ gzip:   2.35 kB
+dist/assets/DevTools-L7GW_cyS.js                       7.37 kB │ gzip:   2.38 kB
+dist/assets/ProviderDirectory-z5p2rM6X.js              7.56 kB │ gzip:   2.58 kB
+dist/assets/ContactPage-Di_wCGzO.js                    7.87 kB │ gzip:   2.53 kB
+dist/assets/StrategicInitiatives-B_smgf8i.js           8.43 kB │ gzip:   2.67 kB
+dist/assets/LeadershipPage-C43uuXIN.js                 8.77 kB │ gzip:   2.93 kB
+dist/assets/Yoga-VpYpPCok.js                          10.10 kB │ gzip:   3.15 kB
+dist/assets/TestimonialsDetail-k6CwESYP.js            10.35 kB │ gzip:   4.00 kB
+dist/assets/HomePage-DOdfhaJL.js                      11.93 kB │ gzip:   3.79 kB
+dist/assets/ProviderSignup-hN35ZGO8.js                12.06 kB │ gzip:   3.32 kB
+dist/assets/SoberHomesState-CCW_nuDQ.js               16.02 kB │ gzip:   5.44 kB
+dist/assets/honolulu-B3qbrjvR.js                      20.70 kB │ gzip:   3.70 kB
+dist/assets/Recovery-BgOe0x0o.js                      24.01 kB │ gzip:   6.35 kB
+dist/assets/ResourceDetail-BxYQ8SkY.js                26.36 kB │ gzip:   7.96 kB
+dist/assets/AssistPage-Bs5t4rXw.js                    34.63 kB │ gzip:  10.57 kB
+dist/assets/index-DIOk37Xh.js                         34.73 kB │ gzip:  10.06 kB
+dist/assets/ai-engine-BQFxlMsO.js                     49.32 kB │ gzip:  14.08 kB
+dist/assets/dashboard-BjjB8eee.js                     55.03 kB │ gzip:  16.03 kB
+dist/assets/tools-BhhzX-ru.js                        177.15 kB │ gzip:  44.00 kB
+dist/assets/react-vendor-B5xUu9wX.js                 193.88 kB │ gzip:  63.09 kB
+dist/assets/ui-heavy-8XJPmDUO.js                     508.23 kB │ gzip: 149.45 kB
+dist/assets/core-libs-BseDu1u3.js                    622.64 kB │ gzip: 148.69 kB
+✓ built in 2m 15s

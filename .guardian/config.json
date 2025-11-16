@@ -1,0 +1,38 @@
+{
+  "agent": "WellnesscafeAI Build Guardian",
+  "version": "2.0.0",
+  "mission": "Protect performance for rich and poor, young and old, native and Western, reached and unreached—ensuring everyone can access high-quality wellness technology",
+  "baseline": {
+    "mainBundleSize": 34730,
+    "mainBundleGzipped": 10060,
+    "maxChunkSize": 622640,
+    "optimizationDate": "2024-11-15",
+    "totalChunks": 8,
+    "lazyLoadedComponents": 50
+  },
+  "thresholds": {
+    "bundleSizeIncrease": 50000,
+    "chunkSizeWarning": 500000,
+    "imageSizeLimit": 300000,
+    "staticImportWarning": true,
+    "lazyLoadRequired": true,
+    "criticalPathMax": 100000,
+    "lowEndDeviceTarget": true,
+    "globalAccessibility": true
+  },
+  "monitoring": {
+    "checkOnChange": true,
+    "autoProposeFixes": true,
+    "trackBundleSize": true,
+    "monitorGlobalAccess": true,
+    "protectLowResourceUsers": true,
+    "enforceInclusivity": true
+  },
+  "inclusivityTargets": {
+    "poorNetworkRegions": true,
+    "oldDevices": true,
+    "underResourcedCommunities": true,
+    "modernTechLacking": true
+  }
+}
+
