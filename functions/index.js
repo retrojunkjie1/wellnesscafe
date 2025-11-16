@@ -1,6 +1,25 @@
+// Load .env only in local development (not during Firebase deployment)
+if(process.env.NODE_ENV !== "production"){
+  try{
+    require("dotenv").config();
+  }catch(e){
+    console.warn("dotenv not available:",e.message);
+  }
+}
+
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
-const stripe = require("stripe")(functions.config().stripe.secret);
+// Stripe - lazy initialization to avoid errors if secret not set
+const getStripe = ()=>{
+  const secret = process.env.STRIPE_SECRET;
+  if(!secret){
+    throw new Error("STRIPE_SECRET environment variable not set");
+  }
+  return require("stripe")(secret);
+};
+const {routeLLM} = require("./aiProviders");
+const {rememberTextForUser} = require("./aiMemory");
+const aiBrain = require("./aiBrain");
 
 // Initialize Firebase Admin
 if (!admin.apps.length) {
@@ -31,6 +50,7 @@ exports.createCheckoutSession = functions.https.onCall(async (data, context) => 
   }
 
   try {
+    const stripe = getStripe();
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
       payment_method_types: ["card"],
@@ -56,11 +76,12 @@ exports.createCheckoutSession = functions.https.onCall(async (data, context) => 
  */
 exports.handleStripeWebhook = functions.https.onRequest((req, res) => {
   const sig = req.headers["stripe-signature"];
-  const webhookSecret = functions.config().stripe.webhook_secret;
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
   let event;
 
   try {
+    const stripe = getStripe();
     event = stripe.webhooks.constructEvent(req.rawBody, sig, webhookSecret);
   } catch (err) {
     console.error("⚠️ Webhook signature verification failed:", err.message);
@@ -94,11 +115,13 @@ exports.handleStripeWebhook = functions.https.onRequest((req, res) => {
  * ============================================================
  * OXFORD HOUSE SCRAPER FUNCTIONS
  * ============================================================
+ * Temporarily commented out - uses deprecated functions.pubsub.schedule
+ * TODO: Migrate to Firebase Functions v2+ scheduler API
  */
-const oxfordHouseFunctions = require("./scrapeOxfordHouses");
-exports.scrapeOxfordHousesScheduled = oxfordHouseFunctions.scrapeOxfordHousesScheduled;
-exports.scrapeOxfordHousesManual = oxfordHouseFunctions.scrapeOxfordHousesManual;
-exports.getOxfordScrapingStatus = oxfordHouseFunctions.getOxfordScrapingStatus;
+// const oxfordHouseFunctions = require("./scrapeOxfordHouses");
+// exports.scrapeOxfordHousesScheduled = oxfordHouseFunctions.scrapeOxfordHousesScheduled;
+// exports.scrapeOxfordHousesManual = oxfordHouseFunctions.scrapeOxfordHousesManual;
+// exports.getOxfordScrapingStatus = oxfordHouseFunctions.getOxfordScrapingStatus;
 
 /**
  * ============================================================
@@ -108,124 +131,234 @@ exports.getOxfordScrapingStatus = oxfordHouseFunctions.getOxfordScrapingStatus;
 exports.newsProxy = require("./newsProxy");
 /**
  * ============================================================
- * AI SESSION GENERATOR
- * - mode: "session"    → returns a single sessionPlan
- * - mode: "templates"  → returns 6 personalized templates
+ * AI BRAIN ENDPOINTS
  * ============================================================
  */
-exports.aiSession = functions.https.onRequest(async (req, res) => {
-  try {
-    if (req.method !== "POST") {
-      return res.status(405).send("Method Not Allowed. Use POST.");
+// Text + planning (SessionPlan + Templates)
+exports.aiSession = functions.https.onRequest((req, res) => {
+  return aiBrain.handleSessionRequest(req, res);
+});
+
+// Media router (video / tts / stt / images) – scaffolding for later
+exports.aiMedia = functions.https.onRequest((req, res) => {
+  return aiBrain.handleMediaRequest(req, res);
+});
+
+/**
+ * ============================================================
+ * MULTIMEDIA HELPERS
+ * ============================================================
+ */
+
+// ElevenLabs (voice generation)
+const generateElevenLabsAudio = async(text)=>{
+  const key = process.env.ELEVEN_KEY;
+  if(!key){throw new Error("ELEVEN_KEY missing");}
+
+  const body = {
+    text,
+    voice:"Rachel",
+    model_id:"eleven_multilingual_v2"
+  };
+
+  const resp = await fetch("https://api.elevenlabs.io/v1/text-to-speech",{
+    method:"POST",
+    headers:{
+      "xi-api-key":key,
+      "Content-Type":"application/json"
+    },
+    body:JSON.stringify(body)
+  });
+
+  if(!resp.ok){
+    const t = await resp.text();
+    throw new Error(`ElevenLabs ${resp.status}: ${t}`);
+  }
+
+  const audio = await resp.arrayBuffer();
+  const base64 = Buffer.from(audio).toString("base64");
+  return `data:audio/mp3;base64,${base64}`;
+};
+
+// Deepgram (transcription)
+const deepgramTranscribe = async(audioBase64)=>{
+  const key = process.env.DEEPGRAM_KEY;
+  if(!key){throw new Error("DEEPGRAM_KEY missing");}
+
+  const resp = await fetch("https://api.deepgram.com/v1/listen",{
+    method:"POST",
+    headers:{
+      "Authorization":`Token ${key}`,
+      "Content-Type":"application/json"
+    },
+    body:JSON.stringify({
+      audio:audioBase64
+    })
+  });
+
+  if(!resp.ok){
+    const t = await resp.text();
+    throw new Error(`Deepgram ${resp.status}: ${t}`);
+  }
+
+  const data = await resp.json();
+  return data.results?.channels?.[0]?.alternatives?.[0]?.transcript || "";
+};
+
+// Runway ML (video generation)
+const runwayVideo = async(prompt)=>{
+  const key = process.env.RUNWAY_KEY;
+  if(!key){throw new Error("RUNWAY_KEY missing");}
+
+  const resp = await fetch("https://api.runwayml.com/v1/videos",{
+    method:"POST",
+    headers:{
+      "Authorization":`Bearer ${key}`,
+      "Content-Type":"application/json"
+    },
+    body:JSON.stringify({
+      prompt,
+      model:"gen-2"
+    })
+  });
+
+  if(!resp.ok){
+    const t = await resp.text();
+    throw new Error(`Runway ${resp.status}: ${t}`);
+  }
+
+  const data = await resp.json();
+  return data.output_url || data.url || "";
+};
+
+// Midjourney (image generation)
+const midjourneyImage = async(prompt)=>{
+  const key = process.env.MIDJOURNEY_KEY;
+  if(!key){throw new Error("MIDJOURNEY_KEY missing");}
+
+  const resp = await fetch("https://api.midjourneyapi.io/v2/imagine",{
+    method:"POST",
+    headers:{
+      "Authorization":`Bearer ${key}`,
+      "Content-Type":"application/json"
+    },
+    body:JSON.stringify({prompt})
+  });
+
+  if(!resp.ok){
+    const t = await resp.text();
+    throw new Error(`Midjourney ${resp.status}: ${t}`);
+  }
+
+  const data = await resp.json();
+  return data.imageUrl || data.url || "";
+};
+
+/**
+ * ============================================================
+ * WELLNESSCAFE AI BRAIN
+ * Single entry for multi-agent orchestration
+ * ============================================================
+ *
+ * POST /aiBrain
+ * {
+ *   task: "session_plan" | "provider_help" | "news_summary" | "free_chat" | "templates" | "generate_audio" | "transcribe_audio" | "generate_video" | "generate_image",
+ *   userId: "uid-or-anonymous",
+ *   remember: true|false,
+ *   provider: "fireworks"|"openai"|"groq",
+ *   payload: {...}
+ * }
+ */
+exports.aiBrain = functions.https.onRequest(async(req,res)=>{
+  try{
+    if(req.method !== "POST"){
+      return res.status(405).send("Use POST");
     }
 
-    const {mode, intent, mood, duration, userId, timeOfDay} = req.body || {};
+    const {task,userId,remember,provider,payload} = req.body || {};
 
-    // Very simple personalization hooks for now
-    const safeIntent = intent || "calm_anxiety";
-    const safeMood = mood || "neutral";
-    const safeDuration = duration || 5;
-    const safeUserId = userId || "anonymous";
-    const safeTimeOfDay = timeOfDay || "any";
-
-    // Mode 1: return 6 AI-style templates for the Templates page
-    if (mode === "templates") {
-      // In the future this is where we'll use Firestore + real LLM calls
-      const templates = [
-        {
-          id: `ai-${safeUserId}-1`,
-          intent: "quick_reset",
-          title: "5-Minute Nervous System Reset",
-          summary: "Fast grounding sequence tuned for your current state.",
-          minutes: 5,
-          moodTarget: safeMood,
-          level: "Beginner",
-          icon: "😊",
-          steps: 3
-        },
-        {
-          id: `ai-${safeUserId}-2`,
-          intent: "sleep_prep",
-          title: "Quick Sleep Wind-Down",
-          summary: "Breath and body awareness to help you drop into rest.",
-          minutes: 8,
-          moodTarget: "restless",
-          level: "Beginner",
-          icon: "😴",
-          steps: 2
-        },
-        {
-          id: `ai-${safeUserId}-3`,
-          intent: "morning_reset",
-          title: "Morning Energy + Intention",
-          summary: "Activate your body, then lock in a clean intention.",
-          minutes: 7,
-          moodTarget: "low_energy",
-          level: "All Levels",
-          icon: "🌅",
-          steps: 3
-        },
-        {
-          id: `ai-${safeUserId}-4`,
-          intent: "craving_wave",
-          title: "Ride The Craving Wave",
-          summary: "Urge surfing micro-session for intense cravings.",
-          minutes: 6,
-          moodTarget: "triggered",
-          level: "All Levels",
-          icon: "🌊",
-          steps: 3
-        },
-        {
-          id: `ai-${safeUserId}-5`,
-          intent: "grounding",
-          title: "Body Scan Grounding",
-          summary: "Slow body scan to drop out of looping thoughts.",
-          minutes: 10,
-          moodTarget: "anxious",
-          level: "Intermediate",
-          icon: "🧘‍♂️",
-          steps: 4
-        },
-        {
-          id: `ai-${safeUserId}-6`,
-          intent: "reflection",
-          title: "End-Of-Day Reset",
-          summary: "Close your day with gentle reflection and release.",
-          minutes: 9,
-          moodTarget: safeMood,
-          level: "All Levels",
-          icon: "🌙",
-          steps: 3
-        }
-      ];
-
-      return res.status(200).send({
-        sessionPlan: {
-          mode: "templates",
-          userId: safeUserId,
-          timeOfDay: safeTimeOfDay,
-          templates
-        }
-      });
+    // ============================================================
+    // MULTIMEDIA ROUTES
+    // ============================================================
+    if(task === "generate_audio"){
+      const audioUrl = await generateElevenLabsAudio(payload?.text || payload?.message || "");
+      return res.json({ok:true, audioUrl});
     }
 
-    // Mode 2: default single-session plan (used by SessionDemoPage)
-    const mockSessionPlan = {
-      title: "AI Generated Wellness Session",
-      intent: safeIntent,
-      mood: safeMood,
-      duration: safeDuration,
-      steps: [
-        {type: "CHECK_IN", title: "Start Here"},
-        {type: "BREATH", pattern: "4-4-6"},
-        {type: "MEDITATION", script: "You are safe."}
-      ]
-    };
+    if(task === "transcribe_audio"){
+      const transcript = await deepgramTranscribe(payload?.audioBase64 || "");
+      return res.json({ok:true, transcript});
+    }
 
-    return res.status(200).send({sessionPlan: mockSessionPlan});
-  } catch (err) {
-    console.error("AI Session Error:", err);
-    return res.status(500).send({error: "Internal Server Error"});
+    if(task === "generate_video"){
+      const videoUrl = await runwayVideo(payload?.prompt || payload?.message || "");
+      return res.json({ok:true, videoUrl});
+    }
+
+    if(task === "generate_image"){
+      const imgUrl = await midjourneyImage(payload?.prompt || payload?.message || "");
+      return res.json({ok:true, imgUrl});
+    }
+
+    // ============================================================
+    // TEXT-BASED AI ROUTES
+    // ============================================================
+
+    // 1) Build system prompt based on task
+    let systemPrompt = "You are WELLNESSCAFE AI, a wise, direct, trauma-informed wellness guide. You blend ancient traditions with modern recovery science. You challenge people with love, never glamorize substances, and always prioritize safety.";
+
+    if(task === "session_plan"){
+      systemPrompt += " Design a short, structured wellness session (3-6 steps) using check-ins, breathwork, grounding and reflection. Return clear JSON schema when requested.";
+    }else if(task === "provider_help"){
+      systemPrompt += " Help the user understand what kind of wellness provider or modality might fit their situation, and suggest next steps in simple language.";
+    }else if(task === "news_summary"){
+      systemPrompt += " Summarize wellness-related news in calm, non-alarmist language, focusing on what is actionable and supportive.";
+    }else if(task === "templates"){
+      systemPrompt += " Generate 6 personalized wellness session templates. Return a JSON array with: id, title, summary, minutes, steps (number), level, icon, intent. Make them diverse and helpful.";
+    }
+
+    // 2) Build user message
+    const userMsg = payload?.message || "Help me with a wellness session.";
+
+    const messages = [
+      {role:"user",content:userMsg}
+    ];
+
+    // 3) LLM call (Fireworks/OpenAI/Groq)
+    const llmResult = await routeLLM({
+      task,
+      provider,
+      fast: task === "news_summary",
+      systemPrompt,
+      messages
+    });
+
+    const replyText = llmResult.text || "";
+
+    // 4) Optional long-term memory
+    if(remember && userId){
+      try{
+        await rememberTextForUser({
+          userId,
+          topic: task || "general",
+          text: `User: ${userMsg}\nAssistant: ${replyText}`
+        });
+      }catch(memErr){
+        console.warn("Memory error:",memErr);
+      }
+    }
+
+    return res.json({
+      ok:true,
+      task,
+      provider:llmResult.provider,
+      reply:replyText
+    });
+  }catch(err){
+    console.error("aiBrain error:",err);
+    return res.status(500).json({
+      ok:false,
+      error:err.message || "AI error"
+    });
   }
 });

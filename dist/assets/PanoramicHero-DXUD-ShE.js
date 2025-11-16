@@ -1,1 +1,0 @@
-import{j as r}from"./react-vendor-B5xUu9wX.js";import{P as s}from"./ai-engine-BQFxlMsO.js";import{a as n}from"./Aspen-5-Cs-AnjPT.js";const t=({src:a,alt:o})=>{const m=a||n,e=o||"WellnessCafe background";return r.jsx("div",{className:"panoramic-background",children:r.jsx("img",{src:m,alt:e,className:"hero-panorama-image"})})};t.propTypes={src:s.string,alt:s.string};export{t as P};

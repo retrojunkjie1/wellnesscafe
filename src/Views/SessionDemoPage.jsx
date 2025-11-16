@@ -3,6 +3,8 @@ import {Helmet} from "react-helmet-async";
 import SessionOrchestrator from "../features/wellness-sessions/SessionOrchestrator";
 import {generateSessionId, generateStepId, INTENT_METADATA} from "../domain/sessionPlan";
 import {normalizeAiSessionPlan} from "../core/ai/convertAiSession";
+import {useAuth} from "../AuthContext";
+import {callAISession} from "../utils/api";
 
 /**
  * SessionDemoPage - Test page for SessionPlan system
@@ -12,6 +14,7 @@ import {normalizeAiSessionPlan} from "../core/ai/convertAiSession";
  * - Live AI-generated sessions played in SessionOrchestrator
  */
 const SessionDemoPage = () => {
+  const {currentUser} = useAuth();
   const [activeSession, setActiveSession] = useState(null);
   const [completedSessions, setCompletedSessions] = useState([]);
   const [aiSessionResult, setAiSessionResult] = useState(null);
@@ -19,7 +22,7 @@ const SessionDemoPage = () => {
 
   /**
    * ========================================================
-   * 🔥 LIVE AI SESSION GENERATOR (Firebase → AI)
+   * 🔮 AI SESSION GENERATOR (Updated)
    * ========================================================
    */
   const generateSession = async () => {
@@ -27,29 +30,29 @@ const SessionDemoPage = () => {
       setLoadingAI(true);
       setAiSessionResult(null);
 
-      const response = await fetch(
-        "https://us-central1-wellnesscafelanding.cloudfunctions.net/aiSession",
-        {
-          method: "POST",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify({
-            intent: "calm_anxiety",
-            mood: "overwhelmed",
-            duration: 5
-          })
-        }
-      );
+      const data = await callAISession({
+        mode: "session",
+        intent: "anxiety_relief",
+        mood: "overwhelmed",
+        duration: 5,
+        userId: currentUser?.uid || "demo_user"
+      });
 
-      const data = await response.json();
-      console.log("Raw AI Session Plan:", data.sessionPlan);
+      console.log("Raw AI Session Response:", data);
 
-      const normalized = normalizeAiSessionPlan(data.sessionPlan);
+      // Extract sessionPlan from response
+      const sessionPlan = data.sessionPlan;
+      if(!sessionPlan){
+        throw new Error("No sessionPlan in response");
+      }
+
+      const normalized = normalizeAiSessionPlan(sessionPlan);
       console.log("Normalized AI Session Plan:", normalized);
 
       setAiSessionResult(normalized);
     } catch (err) {
       console.error("AI Session Error:", err);
-      setAiSessionResult({error: "AI session failed. Check logs."});
+      setAiSessionResult({error: "AI session failed."});
     } finally {
       setLoadingAI(false);
     }

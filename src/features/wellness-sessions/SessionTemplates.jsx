@@ -74,17 +74,13 @@ const SessionTemplates = () => {
   const testAiSession = async () => {
     try {
       console.log('🧪 Testing AI Session endpoint...');
-      const res = await fetch("/aiSession", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          mode: "templates",
-          userId: "test",
-          mood: "calm",
-          timeOfDay: "evening"
-        })
+      const {callAISession} = await import("../../utils/api");
+      const data = await callAISession({
+        mode: "templates",
+        userId: "test",
+        mood: "calm",
+        count: 6
       });
-      const data = await res.json();
       console.log('✅ AI Session Response:', data);
       setTestResult(data);
       return data;

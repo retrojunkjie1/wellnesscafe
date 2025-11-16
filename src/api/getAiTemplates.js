@@ -1,18 +1,27 @@
 // src/api/getAiTemplates.js
-export async function getAiTemplates({userId, mood, timeOfDay} = {}) {
+import {callAISession} from "../utils/api";
+
+export async function getAiTemplates({userId, mood, timeOfDay, intentGroup} = {}) {
   try {
-    const res = await fetch("/aiSession", {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        mode: "templates",
-        userId: userId || "anonymous",
-        mood: mood || "neutral",
-        timeOfDay: timeOfDay || "any"
-      })
+    const data = await callAISession({
+      mode: "templates",
+      count: 6,
+      userId: userId || "demo_user",
+      mood: mood || "mixed",
+      intentGroup: intentGroup || "quick_resets"
     });
-    const data = await res.json();
-    return data.sessionPlan?.templates || [];
+    
+    // Handle response format: {templates: [...]} from aiBrain.js
+    if(data.templates && Array.isArray(data.templates)){
+      return data.templates;
+    }
+    
+    // Fallback: check for nested structure
+    if(data.sessionPlan?.templates){
+      return data.sessionPlan.templates;
+    }
+    
+    return [];
   } catch (err) {
     console.error("AI Template Error:", err);
     return [];
