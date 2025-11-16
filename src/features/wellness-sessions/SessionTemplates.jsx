@@ -1,5 +1,5 @@
 // Session Templates - Browse and start pre-built wellness sessions
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
 import { 
@@ -7,6 +7,9 @@ import {
   TEMPLATE_CATEGORIES,
   createSessionFromTemplate 
 } from '../../data/sessionTemplates';
+import { getAiTemplates } from '../../api/getAiTemplates';
+import AiSessionCard from '../../components/AiSessionCard';
+import { normalizeAiSessionPlan } from '../../core/ai/convertAiSession';
 import './SessionTemplates.css';
 
 // Step type icons mapping
@@ -36,6 +39,25 @@ const SessionTemplates = () => {
   
   const [activeCategory, setActiveCategory] = useState('all');
   const [isLoading, setIsLoading] = useState(false);
+  const [aiTemplates, setAiTemplates] = useState([]);
+  const [loadingAI, setLoadingAI] = useState(true);
+  const [testResult, setTestResult] = useState(null);
+
+  // Fetch AI templates on mount
+  useEffect(() => {
+    async function loadAI() {
+      setLoadingAI(true);
+      const results = await getAiTemplates({
+        // later: pass real userId, mood, timeOfDay here
+        userId: currentUser?.uid,
+        mood: "neutral",
+        timeOfDay: "any"
+      });
+      setAiTemplates(results);
+      setLoadingAI(false);
+    }
+    loadAI();
+  }, [currentUser]);
 
   // Filter templates based on active category
   const filteredTemplates = useMemo(() => {
@@ -47,6 +69,31 @@ const SessionTemplates = () => {
 
   // DEBUG: Log filtered templates
   console.log('📋 Filtered templates:', filteredTemplates.length, filteredTemplates);
+
+  // Test function for AI Session endpoint
+  const testAiSession = async () => {
+    try {
+      console.log('🧪 Testing AI Session endpoint...');
+      const res = await fetch("/aiSession", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          mode: "templates",
+          userId: "test",
+          mood: "calm",
+          timeOfDay: "evening"
+        })
+      });
+      const data = await res.json();
+      console.log('✅ AI Session Response:', data);
+      setTestResult(data);
+      return data;
+    } catch (err) {
+      console.error('❌ AI Session Test Error:', err);
+      setTestResult({ error: err.message });
+      return null;
+    }
+  };
 
   // Handle starting a session
   const handleStartSession = (template) => {
@@ -60,8 +107,35 @@ const SessionTemplates = () => {
 
     setIsLoading(true);
 
-    // Create session from template
-    const sessionPlan = createSessionFromTemplate(template.id, currentUser.uid);
+    let sessionPlan;
+
+    // Check if this is an AI template (has no id or has AI-specific structure)
+    if (template.isAi || !template.id || template.summary || template.id?.startsWith('ai-')) {
+      // Convert AI template to session plan format
+      // If steps is a number, create basic step structure
+      let stepsArray = template.steps || [];
+      if (typeof template.steps === 'number') {
+        // Generate basic steps based on intent
+        stepsArray = [
+          { kind: "check_in", title: "Check In", order: 1 },
+          { kind: "breath", title: "Breathwork", order: 2 },
+          { kind: "meditation", title: "Meditation", order: 3 }
+        ].slice(0, template.steps);
+      }
+      
+      const normalized = normalizeAiSessionPlan({
+        ...template,
+        userId: currentUser.uid,
+        title: template.title,
+        aiSummary: template.summary || template.title,
+        totalMinutes: template.minutes || template.totalMinutes || 5,
+        steps: stepsArray
+      });
+      sessionPlan = normalized;
+    } else {
+      // Regular template - create session from template
+      sessionPlan = createSessionFromTemplate(template.id, currentUser.uid);
+    }
     
     if (!sessionPlan) {
       console.error('Failed to create session from template');
@@ -213,6 +287,111 @@ const SessionTemplates = () => {
           <div className="templates-empty-subtext">Try selecting a different category</div>
         </div>
       )}
+
+      {/* =====================================
+           ✨ AI GENERATED SESSIONS SECTION
+         ===================================== */}
+      <div className="mt-16">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-bold text-slate-800">
+            ✨ AI-Generated Sessions For You
+          </h2>
+          <button
+            onClick={testAiSession}
+            className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-medium transition-colors"
+          >
+            🧪 Test Endpoint
+          </button>
+        </div>
+        {testResult && (
+          <div className="mb-6 p-6 bg-gradient-to-br from-purple-50 to-indigo-50 border border-purple-200 rounded-xl shadow-lg">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold text-purple-900">🧪 Test Results</h3>
+              <button
+                onClick={() => setTestResult(null)}
+                className="text-purple-600 hover:text-purple-800 text-sm"
+              >
+                ✕ Close
+              </button>
+            </div>
+            {testResult.error ? (
+              <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                <div className="text-red-800 font-semibold mb-2">❌ Error:</div>
+                <div className="text-red-700 text-sm">{testResult.error}</div>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {testResult.sessionPlan?.templates && (
+                  <div>
+                    <div className="text-sm font-semibold text-purple-800 mb-2">
+                      ✅ Success! Found {testResult.sessionPlan.templates.length} templates
+                    </div>
+                    <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3 mt-3">
+                      {testResult.sessionPlan.templates.map((template, idx) => (
+                        <div
+                          key={template.id || idx}
+                          className="p-4 bg-white/80 backdrop-blur-sm border border-purple-200 rounded-lg shadow-sm"
+                        >
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="text-2xl">{template.icon || "✨"}</span>
+                            <div>
+                              <div className="font-bold text-slate-900 text-sm">
+                                {template.title}
+                              </div>
+                              <div className="text-xs text-purple-600 font-semibold">
+                                AI Generated
+                              </div>
+                            </div>
+                          </div>
+                          <p className="text-xs text-slate-600 mb-2 line-clamp-2">
+                            {template.summary}
+                          </p>
+                          <div className="flex items-center justify-between text-xs text-slate-500">
+                            <span>{template.steps || 0} steps</span>
+                            <span>~{template.minutes || 0} min</span>
+                            <span className="px-2 py-0.5 bg-purple-100 text-purple-700 rounded">
+                              {template.level || "All Levels"}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                <details className="mt-4">
+                  <summary className="cursor-pointer text-sm font-semibold text-purple-700 hover:text-purple-900 mb-2">
+                    📋 View Raw JSON
+                  </summary>
+                  <div className="mt-2 p-4 bg-slate-900 rounded-lg overflow-auto max-h-96">
+                    <pre className="text-xs text-green-400 font-mono">
+                      {JSON.stringify(testResult, null, 2)}
+                    </pre>
+                  </div>
+                </details>
+              </div>
+            )}
+          </div>
+        )}
+        {loadingAI && (
+          <div className="text-slate-500 text-sm">
+            Generating personalized sessions…
+          </div>
+        )}
+        {!loadingAI && aiTemplates.length === 0 && (
+          <div className="text-slate-500 text-sm">
+            No AI sessions available right now.
+          </div>
+        )}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {aiTemplates.map((t) => (
+            <AiSessionCard 
+              key={t.id || t.title}
+              template={t}
+              onStart={handleStartSession}
+            />
+          ))}
+        </div>
+      </div>
 
       {/* Info Section */}
       <div className="templates-info-section">

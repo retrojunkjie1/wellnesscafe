@@ -1,13 +1,15 @@
-import React, { useState } from "react";
-import { Helmet } from "react-helmet-async";
+import React, {useState} from "react";
+import {Helmet} from "react-helmet-async";
 import SessionOrchestrator from "../features/wellness-sessions/SessionOrchestrator";
-import { generateSessionId, generateStepId, INTENT_METADATA } from "../domain/sessionPlan";
+import {generateSessionId, generateStepId, INTENT_METADATA} from "../domain/sessionPlan";
+import {normalizeAiSessionPlan} from "../core/ai/convertAiSession";
 
 /**
  * SessionDemoPage - Test page for SessionPlan system
- * 
- * Demonstrates the complete session flow with sample sessions.
- * Remove this page once AI generation is implemented.
+ *
+ * Demonstrates:
+ * - Static sample sessions
+ * - Live AI-generated sessions played in SessionOrchestrator
  */
 const SessionDemoPage = () => {
   const [activeSession, setActiveSession] = useState(null);
@@ -17,42 +19,51 @@ const SessionDemoPage = () => {
 
   /**
    * ========================================================
-   * 🔥 AI SESSION GENERATOR TEST FUNCTION
+   * 🔥 LIVE AI SESSION GENERATOR (Firebase → AI)
    * ========================================================
    */
-  async function generateSession() {
+  const generateSession = async () => {
     try {
       setLoadingAI(true);
       setAiSessionResult(null);
 
-      const response = await fetch("/aiSession", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          intent: "anxiety_relief",
-          mood: "overwhelmed",
-          duration: 5
-        })
-      });
+      const response = await fetch(
+        "https://us-central1-wellnesscafelanding.cloudfunctions.net/aiSession",
+        {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            intent: "calm_anxiety",
+            mood: "overwhelmed",
+            duration: 5
+          })
+        }
+      );
 
       const data = await response.json();
-      console.log("AI Session Plan:", data.sessionPlan);
-      setAiSessionResult(data.sessionPlan);
+      console.log("Raw AI Session Plan:", data.sessionPlan);
+
+      const normalized = normalizeAiSessionPlan(data.sessionPlan);
+      console.log("Normalized AI Session Plan:", normalized);
+
+      setAiSessionResult(normalized);
     } catch (err) {
       console.error("AI Session Error:", err);
-      setAiSessionResult({ error: "AI session failed. Check logs." });
+      setAiSessionResult({error: "AI session failed. Check logs."});
     } finally {
       setLoadingAI(false);
     }
-  }
+  };
 
-  // Sample Session 1: Quick Anxiety Relief
+  // ===========================
+  // DEMO SESSIONS (STATIC)
+  // ===========================
   const anxietySession = {
     id: generateSessionId(),
     userId: "demo_user",
     intent: "calm_anxiety",
     title: "5-Minute Anxiety Relief",
-    aiSummary: "A quick sequence to calm your nervous system when anxiety spikes. Check in, regulate your breath, and close with grounding awareness.",
+    aiSummary: "A quick sequence to calm your nervous system when anxiety spikes.",
     totalMinutes: 5,
     createdAtIso: new Date().toISOString(),
     steps: [
@@ -63,19 +74,9 @@ const SessionDemoPage = () => {
         title: "Anxiety Check-In",
         description: "Let's see where you're at right now",
         questions: [
-          {
-            id: "q_anxiety",
-            label: "How anxious do you feel right now?",
-            type: "scale",
-            scaleMin: 0,
-            scaleMax: 10,
-          },
-          {
-            id: "q_location",
-            label: "Where do you feel it most in your body?",
-            type: "text",
-          },
-        ],
+          {id: "q_anxiety", label: "How anxious do you feel right now?", type: "scale", scaleMin: 0, scaleMax: 10},
+          {id: "q_location", label: "Where do you feel it most in your body?", type: "text"}
+        ]
       },
       {
         id: generateStepId(2),
@@ -84,9 +85,9 @@ const SessionDemoPage = () => {
         title: "Coherence Breathing",
         description: "Let's calm your nervous system",
         durationSec: 120,
-        pattern: { inhale: 4, exhale: 6 },
+        pattern: {inhale: 4, exhale: 6},
         style: "coherence",
-        coaching: "Breathe into your belly. Soften your jaw. Let each exhale be longer and slower.",
+        coaching: "Breathe into your belly. Soften your jaw. Let each exhale be longer and slower."
       },
       {
         id: generateStepId(3),
@@ -95,29 +96,22 @@ const SessionDemoPage = () => {
         title: "Quick Re-Check",
         description: "Notice any shifts?",
         questions: [
-          {
-            id: "q_anxiety_after",
-            label: "How anxious do you feel now?",
-            type: "scale",
-            scaleMin: 0,
-            scaleMax: 10,
-          },
-        ],
-      },
+          {id: "q_anxiety_after", label: "How anxious do you feel now?", type: "scale", scaleMin: 0, scaleMax: 10}
+        ]
+      }
     ],
     followUpSuggestions: [
       "If still anxious, try a 10-minute version with gentle movement.",
-      "Practice this technique daily for 2 weeks to build lasting resilience.",
-    ],
+      "Practice this technique daily for 2 weeks to build lasting resilience."
+    ]
   };
 
-  // Sample Session 2: Full Wellness Practice
   const fullSession = {
     id: generateSessionId(),
     userId: "demo_user",
     intent: "grounding",
     title: "Complete Grounding Practice",
-    aiSummary: "A comprehensive session combining breath, meditation, and reflection to ground you in the present moment.",
+    aiSummary: "A comprehensive session combining breath, meditation, and reflection.",
     totalMinutes: 12,
     createdAtIso: new Date().toISOString(),
     steps: [
@@ -127,14 +121,8 @@ const SessionDemoPage = () => {
         order: 1,
         title: "Initial Check-In",
         questions: [
-          {
-            id: "q_presence",
-            label: "How present do you feel right now?",
-            type: "scale",
-            scaleMin: 0,
-            scaleMax: 10,
-          },
-        ],
+          {id: "q_presence", label: "How present do you feel right now?", type: "scale", scaleMin: 0, scaleMax: 10}
+        ]
       },
       {
         id: generateStepId(2),
@@ -143,9 +131,9 @@ const SessionDemoPage = () => {
         title: "Box Breathing",
         description: "4-count breathing for mental clarity",
         durationSec: 180,
-        pattern: { inhale: 4, holdTop: 4, exhale: 4, holdBottom: 4 },
+        pattern: {inhale: 4, holdTop: 4, exhale: 4, holdBottom: 4},
         style: "box",
-        coaching: "Equal counts on all four phases. Find your rhythm.",
+        coaching: "Equal counts on all four phases. Find your rhythm."
       },
       {
         id: generateStepId(3),
@@ -155,7 +143,7 @@ const SessionDemoPage = () => {
         description: "Connect with the present moment",
         durationSec: 300,
         style: "grounding",
-        script: `Bring your attention to your feet on the ground.\n\nNotice the contact points. The pressure. The temperature.\n\nFeel the support of the earth beneath you.\n\nYou are here. You are safe. You are grounded.\n\nIf your mind wanders, gently return to the sensation of your feet.\n\nStay with this awareness. Nothing to do. Nowhere to go.\n\nJust here. Just now.`,
+        script: `Bring your attention to your feet on the ground.\n\nNotice the contact points. The pressure. The temperature.\n\nFeel the support of the earth beneath you.\n\nYou are here. You are safe. You are grounded.\n\nIf your mind wanders, gently return to the sensation of your feet.\n\nStay with this awareness. Nothing to do. Nowhere to go.\n\nJust here. Just now.`
       },
       {
         id: generateStepId(4),
@@ -163,28 +151,17 @@ const SessionDemoPage = () => {
         order: 4,
         title: "Closing Reflection",
         questions: [
-          {
-            id: "q_presence_after",
-            label: "How present do you feel now?",
-            type: "scale",
-            scaleMin: 0,
-            scaleMax: 10,
-          },
-          {
-            id: "q_takeaway",
-            label: "What's one thing you're taking from this practice?",
-            type: "text",
-          },
-        ],
-      },
+          {id: "q_presence_after", label: "How present do you feel now?", type: "scale", scaleMin: 0, scaleMax: 10},
+          {id: "q_takeaway", label: "What's one thing you're taking from this practice?", type: "text"}
+        ]
+      }
     ],
     followUpSuggestions: [
       "Practice this grounding sequence each morning for a week.",
-      "Try extending the meditation to 10 minutes as you build comfort.",
-    ],
+      "Try extending the meditation to 10 minutes as you build comfort."
+    ]
   };
 
-  // Sample Session 3: Morning Reset
   const morningSession = {
     id: generateSessionId(),
     userId: "demo_user",
@@ -201,9 +178,9 @@ const SessionDemoPage = () => {
         title: "Morning Energizer",
         description: "Wake up your nervous system",
         durationSec: 90,
-        pattern: { inhale: 3, exhale: 3 },
+        pattern: {inhale: 3, exhale: 3},
         style: "custom",
-        coaching: "Breathe with energy. Fill your lungs completely. Exhale fully.",
+        coaching: "Breathe with energy. Fill your lungs completely. Exhale fully."
       },
       {
         id: generateStepId(2),
@@ -212,7 +189,7 @@ const SessionDemoPage = () => {
         title: "Gratitude Reflection",
         durationSec: 180,
         style: "custom",
-        script: `Think of three things you're grateful for today.\n\nThey can be small. Simple.\n\nNotice how gratitude feels in your body.\n\nLet that feeling expand.\n\nCarry this gratitude into your day.`,
+        script: `Think of three things you're grateful for today.\n\nThey can be small. Simple.\n\nNotice how gratitude feels in your body.\n\nLet that feeling expand.\n\nCarry this gratitude into your day.`
       },
       {
         id: generateStepId(3),
@@ -220,22 +197,21 @@ const SessionDemoPage = () => {
         order: 3,
         title: "Set Your Intention",
         questions: [
-          {
-            id: "q_intention",
-            label: "What's your intention for today?",
-            type: "text",
-          },
-        ],
-      },
+          {id: "q_intention", label: "What's your intention for today?", type: "text"}
+        ]
+      }
     ],
     followUpSuggestions: [
       "Write your intention on a sticky note and place it somewhere visible.",
-      "Check in with your intention at lunch time.",
-    ],
+      "Check in with your intention at lunch time."
+    ]
   };
 
   const sampleSessions = [anxietySession, fullSession, morningSession];
 
+  // ====================
+  // SESSION FLOW HANDLERS
+  // ====================
   const handleStartSession = (session) => {
     setActiveSession(session);
   };
@@ -265,7 +241,9 @@ const SessionDemoPage = () => {
     );
   }
 
-  // Render session selection page
+  // ===========================
+  // PAGE RENDER
+  // ===========================
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-indigo-50">
       <Helmet>
@@ -304,9 +282,20 @@ const SessionDemoPage = () => {
           </button>
 
           {aiSessionResult && (
-            <pre className="mt-4 p-4 bg-white border border-purple-200 rounded-lg text-sm overflow-auto">
-              {JSON.stringify(aiSessionResult, null, 2)}
-            </pre>
+            <>
+              <pre className="mt-4 p-4 bg-white border border-purple-200 rounded-lg text-sm overflow-auto">
+                {JSON.stringify(aiSessionResult, null, 2)}
+              </pre>
+
+              {aiSessionResult.steps && (
+                <button
+                  onClick={() => handleStartSession(aiSessionResult)}
+                  className="mt-4 px-5 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-colors"
+                >
+                  ▶ Play This AI Session
+                </button>
+              )}
+            </>
           )}
         </div>
 
@@ -319,8 +308,7 @@ const SessionDemoPage = () => {
             <p className="text-sm text-emerald-700">
               Total practice time:{" "}
               {Math.floor(
-                completedSessions.reduce((sum, s) => sum + s.durationSeconds, 0) /
-                  60
+                completedSessions.reduce((sum, s) => sum + s.durationSeconds, 0) / 60
               )}{" "}
               minutes
             </p>
@@ -338,14 +326,14 @@ const SessionDemoPage = () => {
               >
                 <div
                   className="inline-flex items-center justify-center w-12 h-12 rounded-full mb-4"
-                  style={{ backgroundColor: `${intentMeta.color}20` }}
+                  style={{backgroundColor: `${intentMeta.color}20`}}
                 >
                   <span className="text-2xl">{intentMeta.icon}</span>
                 </div>
 
                 <div
                   className="mb-1 text-xs uppercase tracking-wide font-semibold"
-                  style={{ color: intentMeta.color }}
+                  style={{color: intentMeta.color}}
                 >
                   {intentMeta.label}
                 </div>
@@ -372,34 +360,6 @@ const SessionDemoPage = () => {
               </div>
             );
           })}
-        </div>
-
-        {/* Info Box */}
-        <div className="mt-12 p-6 bg-blue-50 border border-blue-200 rounded-xl">
-          <h3 className="font-semibold text-blue-900 mb-3">
-            📋 What's Being Tested
-          </h3>
-          <ul className="text-sm text-blue-800 space-y-2">
-            <li>
-              ✅ <strong>SessionPlan Blueprint:</strong> Core type system and
-              validation
-            </li>
-            <li>
-              ✅ <strong>Step Rendering:</strong> CheckIn, Breath, and Meditation
-              components
-            </li>
-            <li>
-              ✅ <strong>Session Orchestrator:</strong> Flow management, progress
-              tracking, data collection
-            </li>
-            <li>
-              🚧 <strong>Firestore Integration:</strong> Coming in next phase
-            </li>
-            <li>
-              🚧 <strong>AI Generation:</strong> OpenAI integration planned for
-              Milestone 3
-            </li>
-          </ul>
         </div>
       </div>
     </div>

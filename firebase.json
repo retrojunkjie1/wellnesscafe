@@ -26,6 +26,10 @@
         "function": "aiAsk"
       },
       {
+        "source": "/aiSession",
+        "function": "aiSession"
+      },
+      {
         "source": "/api/**",
         "function": "api"
       },

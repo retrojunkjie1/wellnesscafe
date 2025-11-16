@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Remove yellow focus rings */
+* {
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+*:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+*:focus {
+  outline: none !important;
+}
+
 /* Rich background with an infinite feel */
 :root {
   --bg: #111827;
