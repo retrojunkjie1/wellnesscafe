@@ -6,10 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="WellnessCafeAI - High-quality wellness resources for everyone, everywhere" />
     <title>WellnessCafe</title>
-    <!-- Preload critical chunks for faster initial load -->
-    <!-- These will be replaced by Vite build with actual hashed filenames -->
+    <!-- Performance optimizations -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://us-central1-wellnesscafelanding.cloudfunctions.net" />
+    <link rel="dns-prefetch" href="https://us-central1-wellnesscafelanding.cloudfunctions.net" />
+    <!-- Preload critical resources -->
+    <link rel="preload" as="script" href="/src/index.jsx" />
   </head>
   <body>
     <div id="root"></div>

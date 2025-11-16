@@ -10,6 +10,18 @@
   z-index: 1; /* Ensure page content is above body::before overlay */
 }
 
+@media (max-width: 768px) {
+  .session-templates-page {
+    padding: 5rem 4% 3rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .session-templates-page {
+    padding: 4.5rem 3% 2rem;
+  }
+}
+
 /* Hero Section */
 .templates-hero {
   text-align: center;

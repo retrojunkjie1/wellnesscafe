@@ -1,1 +1,0 @@
-import{j as r}from"./react-vendor-DQKasmcJ.js";import"./ai-engine-BvKxDwCC.js";import"./core-libs-CRuXokP_.js";import"./ui-heavy-yHDudVwC.js";function m(){return r.jsx("div",{style:{padding:20},children:"Admin User Management"})}export{m as default};

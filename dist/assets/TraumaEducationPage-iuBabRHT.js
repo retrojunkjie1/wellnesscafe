@@ -1,0 +1,1 @@
+import{j as a}from"./react-vendor-C2vFB_vl.js";import"./ai-engine-JLcQPJPS.js";import"./core-libs-c5XOvvj3.js";import"./ui-heavy-C7pdA4pD.js";const s=()=>a.jsxs("div",{className:"page trauma-education-page",children:[a.jsx("h1",{children:"Trauma Education"}),a.jsx("p",{children:"This page is under construction."})]});export{s as default};

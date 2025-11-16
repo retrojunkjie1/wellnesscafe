@@ -65,6 +65,8 @@
   cursor:pointer;
   padding:0.25rem 0;
   text-decoration: none;
+  display:inline-block;
+  -webkit-tap-highlight-color: transparent;
 }
 .wc-nav-link::after{
   content:"";
@@ -138,6 +140,8 @@
   font-size:0.88rem;
   text-decoration:none;
   transition:all 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .wc-dropdown-link:hover{
@@ -249,8 +253,10 @@
              rgba(3,6,24,0.98);
   transform:translateY(-100%);
   transition:transform 0.22s ease;
-  z-index:100;
+  z-index:9999;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
 }
 .wc-mobile-menu--open{
   transform:translateY(0);
@@ -266,6 +272,12 @@
   font-size:1.02rem;
   color:#e5e7ff;
   text-decoration: none;
+  cursor:pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.wc-mobile-link:active{
+  opacity:0.8;
 }
 .wc-mobile-link--sub{
   font-size:0.9rem;
@@ -371,9 +383,14 @@
     display:inline-flex;
     flex-direction: column;
     justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
   .wc-dropdown{
     min-width:180px;
+  }
+  .wc-navbar{
+    padding:0.8rem 1.2rem;
   }
 }
 @media (max-width:640px){
@@ -385,6 +402,13 @@
   }
   .wc-dropdown{
     min-width:160px;
+  }
+  .wc-mobile-inner{
+    padding:3.5rem 1.5rem 1.5rem;
+  }
+  .wc-mobile-link{
+    padding:0.65rem 0;
+    font-size:1.05rem;
   }
 }
 @media (orientation:landscape) and (max-width:900px){

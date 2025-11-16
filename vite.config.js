@@ -15,6 +15,13 @@ export default defineConfig({
   ],
   server: {
     port: 3000,
+    // Enable HTTP/2 for faster loading
+    https: false,
+  },
+  // Optimize dependencies
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom'],
+    exclude: ['@pinecone-database/pinecone'],
   },
   resolve: {
     dedupe: ["react", "react-dom"],

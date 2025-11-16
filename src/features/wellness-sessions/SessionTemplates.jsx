@@ -46,15 +46,22 @@ const SessionTemplates = () => {
   // Fetch AI templates on mount
   useEffect(() => {
     async function loadAI() {
-      setLoadingAI(true);
-      const results = await getAiTemplates({
-        // later: pass real userId, mood, timeOfDay here
-        userId: currentUser?.uid,
-        mood: "neutral",
-        timeOfDay: "any"
-      });
-      setAiTemplates(results);
-      setLoadingAI(false);
+      try {
+        setLoadingAI(true);
+        const results = await getAiTemplates({
+          userId: currentUser?.uid || "demo_user",
+          mood: "neutral",
+          timeOfDay: "any",
+          intentGroup: "quick_resets"
+        });
+        console.log("AI Templates loaded:", results);
+        setAiTemplates(results || []);
+      } catch (err) {
+        console.error("Failed to load AI templates:", err);
+        setAiTemplates([]);
+      } finally {
+        setLoadingAI(false);
+      }
     }
     loadAI();
   }, [currentUser]);
@@ -287,14 +294,49 @@ const SessionTemplates = () => {
       {/* =====================================
            ✨ AI GENERATED SESSIONS SECTION
          ===================================== */}
-      <div className="mt-16">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-slate-800">
+      <div style={{
+        marginTop: '4rem', 
+        paddingTop: '2rem', 
+        borderTop: '1px solid rgba(255,255,255,0.1)',
+        width: '100%'
+      }}>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between',
+          gap: '1rem',
+          marginBottom: '2rem'
+        }}
+        className="sm:flex-row sm:items-center"
+        >
+          <h2 style={{
+            fontSize: '1.5rem',
+            fontWeight: 'bold',
+            color: '#f1f5f9',
+            margin: 0,
+            textShadow: '0 2px 4px rgba(0,0,0,0.3)'
+          }}
+          className="sm:text-2xl"
+          >
             ✨ AI-Generated Sessions For You
           </h2>
           <button
             onClick={testAiSession}
-            className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-medium transition-colors"
+            style={{
+              padding: '0.5rem 1rem',
+              backgroundColor: '#9333ea',
+              color: 'white',
+              borderRadius: '0.5rem',
+              fontSize: '0.875rem',
+              fontWeight: '500',
+              border: 'none',
+              cursor: 'pointer',
+              whiteSpace: 'nowrap',
+              transition: 'background-color 0.2s'
+            }}
+            onMouseEnter={(e) => e.target.style.backgroundColor = '#7e22ce'}
+            onMouseLeave={(e) => e.target.style.backgroundColor = '#9333ea'}
           >
             🧪 Test Endpoint
           </button>
@@ -369,24 +411,37 @@ const SessionTemplates = () => {
           </div>
         )}
         {loadingAI && (
-          <div className="text-slate-500 text-sm">
-            Generating personalized sessions…
+          <div className="text-center py-8">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mb-3"></div>
+            <div className="text-slate-300 text-sm">
+              Generating personalized sessions…
+            </div>
           </div>
         )}
-        {!loadingAI && aiTemplates.length === 0 && (
-          <div className="text-slate-500 text-sm">
-            No AI sessions available right now.
+        {!loadingAI && aiTemplates.length === 0 && !testResult && (
+          <div className="text-center py-8 px-4 bg-slate-800/50 rounded-xl border border-slate-700">
+            <div className="text-slate-400 text-sm mb-2">
+              No AI sessions available right now.
+            </div>
+            <button
+              onClick={testAiSession}
+              className="mt-3 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm font-medium transition-colors"
+            >
+              Try Loading Templates
+            </button>
           </div>
         )}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {aiTemplates.map((t) => (
-            <AiSessionCard 
-              key={t.id || t.title}
-              template={t}
-              onStart={handleStartSession}
-            />
-          ))}
-        </div>
+        {!loadingAI && aiTemplates.length > 0 && (
+          <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            {aiTemplates.map((t) => (
+              <AiSessionCard 
+                key={t.id || t.title || Math.random()}
+                template={t}
+                onStart={handleStartSession}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Info Section */}

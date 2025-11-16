@@ -1,5 +1,6 @@
 // src/components/LuxuryNavbar.jsx
 import React,{useEffect,useState} from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import "./LuxuryNavbar.css";
 
@@ -43,6 +44,7 @@ const NAV_SECTIONS=[
 
 const LuxuryNavbar=()=>{
   const { currentUser, logout } = useAuth();
+  const navigate = useNavigate();
   const [isMobileOpen,setIsMobileOpen]=useState(false);
   const [activeMega,setActiveMega]=useState(null);
   const [isScrolled,setIsScrolled]=useState(false);
@@ -77,6 +79,13 @@ const LuxuryNavbar=()=>{
     setIsMobileOpen((prev)=>!prev);
   };
 
+  const handleLinkClick=(e,href)=>{
+    e.preventDefault();
+    setIsMobileOpen(false);
+    setActiveMega(null);
+    navigate(href);
+  };
+
   const handleMegaEnter=(key)=>{
     setActiveMega(key);
   };
@@ -90,16 +99,16 @@ const LuxuryNavbar=()=>{
       <div className="wc-navbar-inner">
         {/* Brand */}
         <div className="wc-navbar-left">
-          <a href="/" className="wc-brand">
+          <Link to="/" className="wc-brand">
             <span className="wc-brand-mark">WELLNESSCAFE</span>
             <span className="wc-brand-ripple">≋</span>
-          </a>
+          </Link>
         </div>
 
         {/* Desktop center nav */}
         <nav className="wc-navbar-center">
-          <a href="/" className="wc-nav-link">Home</a>
-          <a href="/news" className="wc-nav-link">News</a>
+          <Link to="/" className="wc-nav-link">Home</Link>
+          <Link to="/news" className="wc-nav-link">News</Link>
 
           {NAV_SECTIONS.map((section)=>(
             <div
@@ -118,7 +127,13 @@ const LuxuryNavbar=()=>{
                 <ul>
                   {section.items.map((item)=>(
                     <li key={item.href}>
-                      <a href={item.href} className="wc-dropdown-link">{item.label}</a>
+                      <Link 
+                        to={item.href} 
+                        className="wc-dropdown-link"
+                        onClick={()=>setActiveMega(null)}
+                      >
+                        {item.label}
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -129,22 +144,22 @@ const LuxuryNavbar=()=>{
 
         {/* Right controls */}
         <div className="wc-navbar-right">
-          <a href="/assistance" className="wc-cta-pill">
+          <Link to="/assistance" className="wc-cta-pill">
             <span>Get Help Now</span>
-          </a>
+          </Link>
 
           {/* Auth buttons */}
           {currentUser ? (
             <div className="wc-auth-group">
-              <a href="/dashboard" className="wc-auth-link">Dashboard</a>
+              <Link to="/dashboard" className="wc-auth-link">Dashboard</Link>
               <button onClick={logout} className="wc-auth-link wc-auth-logout">
                 Logout
               </button>
             </div>
           ) : (
             <div className="wc-auth-group">
-              <a href="/login" className="wc-auth-link">Login</a>
-              <a href="/signup" className="wc-auth-link-primary">Sign Up</a>
+              <Link to="/login" className="wc-auth-link">Login</Link>
+              <Link to="/signup" className="wc-auth-link-primary">Sign Up</Link>
             </div>
           )}
 
@@ -163,52 +178,52 @@ const LuxuryNavbar=()=>{
       {/* Mobile menu overlay */}
       <div className={`wc-mobile-menu ${isMobileOpen?"wc-mobile-menu--open":""}`}>
         <div className="wc-mobile-inner">
-          <a href="/" className="wc-mobile-link" onClick={toggleMobileMenu}>Home</a>
-          <a href="/news" className="wc-mobile-link" onClick={toggleMobileMenu}>News</a>
+          <Link to="/" className="wc-mobile-link" onClick={toggleMobileMenu}>Home</Link>
+          <Link to="/news" className="wc-mobile-link" onClick={toggleMobileMenu}>News</Link>
 
           {NAV_SECTIONS.map((section)=>(
             <div key={section.key} className="wc-mobile-group">
               <div className="wc-mobile-group-title">{section.label}</div>
               {section.items.map((item)=>(
-                <a
+                <Link
                   key={item.href}
-                  href={item.href}
+                  to={item.href}
                   className="wc-mobile-link wc-mobile-link--sub"
                   onClick={toggleMobileMenu}
                 >
                   {item.label}
-                </a>
+                </Link>
               ))}
             </div>
           ))}
 
-          <a
-            href="/assistance"
+          <Link
+            to="/assistance"
             className="wc-mobile-emergency"
             onClick={toggleMobileMenu}
           >
             Get Help Now • 24/7
-          </a>
+          </Link>
 
           {/* Mobile auth section */}
           <div className="wc-mobile-auth">
             {currentUser ? (
               <>
-                <a href="/dashboard" className="wc-mobile-link" onClick={toggleMobileMenu}>
+                <Link to="/dashboard" className="wc-mobile-link" onClick={toggleMobileMenu}>
                   Dashboard
-                </a>
+                </Link>
                 <button onClick={()=>{logout();toggleMobileMenu();}} className="wc-mobile-link wc-mobile-logout">
                   Logout
                 </button>
               </>
             ) : (
               <>
-                <a href="/login" className="wc-mobile-link" onClick={toggleMobileMenu}>
+                <Link to="/login" className="wc-mobile-link" onClick={toggleMobileMenu}>
                   Login
-                </a>
-                <a href="/signup" className="wc-mobile-link-primary" onClick={toggleMobileMenu}>
+                </Link>
+                <Link to="/signup" className="wc-mobile-link-primary" onClick={toggleMobileMenu}>
                   Sign Up
-                </a>
+                </Link>
               </>
             )}
           </div>
