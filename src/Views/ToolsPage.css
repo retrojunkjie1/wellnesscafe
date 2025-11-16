@@ -353,3 +353,26 @@
     border-width: 2px;
   }
 }
+
+/* ===================================
+   PRINT STYLES
+   =================================== */
+@media print {
+  .tools-page {
+    padding-top: 0;
+  }
+
+  .tool-cta,
+  button,
+  .btn,
+  .try-tool-btn,
+  .learn-more-btn,
+  .search-btn {
+    display: none;
+  }
+
+  * {
+    background: transparent !important;
+    color: #000 !important;
+  }
+}

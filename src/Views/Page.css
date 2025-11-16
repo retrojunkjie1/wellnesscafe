@@ -255,3 +255,26 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ===================================
+   PRINT STYLES
+   =================================== */
+@media print {
+  .page {
+    padding-top: 0;
+  }
+
+  .hero-actions,
+  .cta-buttons,
+  .btn,
+  .try-tool-btn,
+  .learn-more-btn,
+  .search-btn {
+    display: none;
+  }
+
+  * {
+    background: transparent !important;
+    color: #000 !important;
+  }
+}
