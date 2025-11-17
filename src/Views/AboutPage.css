@@ -166,3 +166,23 @@
     background-attachment: scroll;
   }
 }
+
+/* ===================================
+   PRINT STYLES
+   =================================== */
+@media print {
+  .about-page {
+    padding-top: 0;
+  }
+
+  button,
+  .btn,
+  .cta-button {
+    display: none;
+  }
+
+  * {
+    background: transparent !important;
+    color: #000 !important;
+  }
+}

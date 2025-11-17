@@ -510,3 +510,27 @@
     text-align: center;
   }
 }
+
+/* ===================================
+   PRINT STYLES
+   =================================== */
+@media print {
+  .yoga-page {
+    padding-top: 0;
+  }
+
+  .cta-buttons,
+  .btn-primary-yoga,
+  .btn-secondary-yoga,
+  .try-tool-btn,
+  .learn-more-btn,
+  .search-btn,
+  .book-btn {
+    display: none;
+  }
+
+  * {
+    background: transparent !important;
+    color: #000 !important;
+  }
+}

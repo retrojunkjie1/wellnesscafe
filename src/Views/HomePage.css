@@ -512,3 +512,26 @@
   transform: translateY(-3px) scale(1.05);
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
 }
+
+/* ===================================
+   PRINT STYLES
+   =================================== */
+@media print {
+  .homepage {
+    padding-top: 0;
+  }
+
+  .hero-actions,
+  .luxury-cta-primary,
+  .luxury-cta-secondary,
+  .try-tool-btn,
+  .learn-more-btn,
+  .search-btn {
+    display: none;
+  }
+
+  * {
+    background: transparent !important;
+    color: #000 !important;
+  }
+}
